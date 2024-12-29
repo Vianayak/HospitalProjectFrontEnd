@@ -11,7 +11,12 @@ const HeroSection = () => {
         <div className="carousel-item">
           <img className="d-block w-100" src="/Assets/Images/CarouselImage2.jpg" alt="Second slide" />
         </div>
-        
+        <div className="carousel-item">
+          <img className="d-block w-100" src="/Assets/Images/CarouselImage3.jpg" alt="Third slide" />
+        </div>
+        <div className="carousel-item">
+          <img className="d-block w-100" src="/Assets/Images/CarouselImage4.jpg" alt="Fourth slide" />
+        </div>
       </div>
       <button
         className="carousel-control-prev"
