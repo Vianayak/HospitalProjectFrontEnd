@@ -1,0 +1,16 @@
+
+.dropdown-toggle::after {
+    display: none !important;
+}
+
+
+.dropdown-title::after {
+    content: '▼'; 
+    margin-left: 5px;
+    transition: transform 0.2s ease; 
+}
+
+
+.dropdown-title.active::after {
+    content: '▶'; 
+}

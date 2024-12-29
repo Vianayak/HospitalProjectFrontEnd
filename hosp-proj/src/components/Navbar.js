@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './MyNavbar.css';
 
 function MyNavbar() {
-   
     const [showDropdown, setShowDropdown] = useState('');
 
-  
     const handleMouseEnter = (dropdown) => {
         setShowDropdown(dropdown);
     };
@@ -26,9 +25,17 @@ function MyNavbar() {
                             <Nav.Link href="#home">About Us</Nav.Link>
                             <Nav.Link href="#features">Our Doctors</Nav.Link>
 
-                           
+                            
                             <NavDropdown
-                                title="Speciality"
+                                title={
+                                    <span
+                                        className={`dropdown-title ${
+                                            showDropdown === 'speciality' ? 'active' : ''
+                                        }`}
+                                    >
+                                        Speciality
+                                    </span>
+                                }
                                 id="speciality-dropdown"
                                 show={showDropdown === 'speciality'}
                                 onMouseEnter={() => handleMouseEnter('speciality')}
@@ -41,9 +48,17 @@ function MyNavbar() {
                                 <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
                             </NavDropdown>
 
-                          
+                            
                             <NavDropdown
-                                title="Patient Info"
+                                title={
+                                    <span
+                                        className={`dropdown-title ${
+                                            showDropdown === 'patient-info' ? 'active' : ''
+                                        }`}
+                                    >
+                                        Patient Info
+                                    </span>
+                                }
                                 id="patient-info-dropdown"
                                 show={showDropdown === 'patient-info'}
                                 onMouseEnter={() => handleMouseEnter('patient-info')}
@@ -56,9 +71,17 @@ function MyNavbar() {
                                 <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
                             </NavDropdown>
 
-                          
+                            
                             <NavDropdown
-                                title="Hospitals"
+                                title={
+                                    <span
+                                        className={`dropdown-title ${
+                                            showDropdown === 'hospitals' ? 'active' : ''
+                                        }`}
+                                    >
+                                        Hospitals
+                                    </span>
+                                }
                                 id="hospitals-dropdown"
                                 show={showDropdown === 'hospitals'}
                                 onMouseEnter={() => handleMouseEnter('hospitals')}
