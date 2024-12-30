@@ -21,18 +21,20 @@ const services = [
 
 const ServiceSection = () => {
   return (
-    <div className="service-section">
-      {services.map((service) => (
-        <div
-          key={service.id}
-          className={`service-card ${service.active ? 'active' : ''}`}
-        >
-          <div className="icon">
-            <FontAwesomeIcon icon={service.icon} />
+    <div className="container">
+      <div className="service-section">
+        {services.map((service) => (
+          <div
+            key={service.id}
+            className={`service-card ${service.active ? 'active' : ''}`}
+          >
+            <div className="icon">
+              <FontAwesomeIcon icon={service.icon} />
+            </div>
+            <h3>{service.title}</h3>
           </div>
-          <h3>{service.title}</h3>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 };
