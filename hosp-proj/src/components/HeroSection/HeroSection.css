@@ -1,6 +1,6 @@
 /* HeroSection.css */
 .custom-carousel {
-    height: 500px;
+    height: 450px;
 }
 
 .custom-carousel .carousel-item {
@@ -10,4 +10,8 @@
 .custom-carousel img {
     height: 100%;
     object-fit: cover;
+}
+
+.carousel-control-prev-icon .carousel-control-next-icon{
+    color: black;
 }
