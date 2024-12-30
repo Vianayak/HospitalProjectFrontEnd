@@ -1,0 +1,48 @@
+/* Container for the carousel */
+.carousel-container {
+    width: 100%;
+    overflow: hidden; /* Hides overflow content */
+    position: relative;
+    background-color: #fff;
+    padding: 20px 0;
+  }
+  
+  /* Track for the items */
+  .carousel-track {
+    display: flex;
+    gap: 20px; /* Spacing between items */
+    animation: infiniteScroll 20s linear infinite; /* Smooth infinite animation */
+  }
+  
+  /* Individual cards */
+  .carousel-card {
+    flex: 0 0 auto; /* Prevents shrinking */
+    width: 200px; /* Set consistent card width */
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background: #f7f7f7;
+    padding: 10px;
+  }
+  
+  .carousel-card img {
+    width: 100px;
+    height: auto;
+    margin-bottom: 10px;
+  }
+  
+  .carousel-card p {
+    margin: 0;
+    font-size: 14px;
+    font-weight: bold;
+  }
+  
+  /* Infinite scrolling animation */
+  @keyframes infiniteScroll {
+    0% {
+      transform: translateX(0); /* Start position */
+    }
+    100% {
+      transform: translateX(-50%); /* Move halfway (matches duplicate size) */
+  }
+}

@@ -48,11 +48,8 @@ function MyNavbar() {
                                 onMouseEnter={() => handleMouseEnter('speciality')}
                                 onMouseLeave={handleMouseLeave}
                             >
-                                <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                                <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-                                <NavDropdown.Item href="#action/3.3">Something else here</NavDropdown.Item>
-                                <NavDropdown.Divider />
-                                <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
+                                <NavDropdown.Item href="#action/3.1">General Medicine</NavDropdown.Item>
+                                <NavDropdown.Item href="#action/3.2">ENT</NavDropdown.Item>
                             </NavDropdown>
 
                             
@@ -71,11 +68,8 @@ function MyNavbar() {
                                 onMouseEnter={() => handleMouseEnter('patient-info')}
                                 onMouseLeave={handleMouseLeave}
                             >
-                                <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                                <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-                                <NavDropdown.Item href="#action/3.3">Something else here</NavDropdown.Item>
-                                <NavDropdown.Divider />
-                                <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
+                                <NavDropdown.Item href="#action/3.1">Blog</NavDropdown.Item>
+                                <NavDropdown.Item href="#action/3.2">News</NavDropdown.Item>
                             </NavDropdown>
 
                             
@@ -94,11 +88,9 @@ function MyNavbar() {
                                 onMouseEnter={() => handleMouseEnter('hospitals')}
                                 onMouseLeave={handleMouseLeave}
                             >
-                                <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                                <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-                                <NavDropdown.Item href="#action/3.3">Something else here</NavDropdown.Item>
-                                <NavDropdown.Divider />
-                                <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
+                                <NavDropdown.Item href="#action/3.1">Jubliee Hills</NavDropdown.Item>
+                                <NavDropdown.Item href="#action/3.2">Kukatpally</NavDropdown.Item>
+                                <NavDropdown.Item href="#action/3.3">Miyapur</NavDropdown.Item>
                             </NavDropdown>
                         </Nav>
                     </Navbar.Collapse>
