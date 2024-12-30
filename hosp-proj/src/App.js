@@ -6,6 +6,7 @@ import HeroSection from './components/HeroSection/HeroSection';
 import ServiceSection from './components/ServiceSection/ServiceSection';
 import HospitalSection from './components/HospitalSection/HospitalSection';
 import DoctorGrid from './components/Doctors/DoctorGrid';
+import SpecialtiesCarousel from './components/SpecialtiesCarousel/SpecialtiesCarousel';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <HeroSection/>
       <ServiceSection/>
       <DoctorGrid/>
+      <SpecialtiesCarousel/>
       <HospitalSection/>
     </div>
   );
