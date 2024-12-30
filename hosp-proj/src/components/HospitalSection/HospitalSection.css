@@ -44,7 +44,7 @@
   
   .hospital-icon {  
     font-size: 40px;  
-    color: #007bff;  
+    color: #5A3ECA;  
     margin-bottom: 10px;  
   }  
   
@@ -68,5 +68,5 @@
   .hospital-card:hover {  
     transform: translateY(-5px);  
     box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);  
-    border: 3px solid rgb(156, 156, 36);  
+    border: 3px solid #5A3ECA;  
 }
