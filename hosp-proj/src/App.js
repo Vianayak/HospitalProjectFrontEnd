@@ -4,7 +4,7 @@ import Navbar from './components/Navbar';
 import './App.css';
 import HeroSection from './components/HeroSection/HeroSection';
 import ServiceSection from './components/ServiceSection/ServiceSection';
-import HospitalsSection from './components/HospitalSection/HospitalSection';
+import HospitalSection from './components/HospitalSection/HospitalSection';
 
 function App() {
   return (
@@ -12,7 +12,7 @@ function App() {
       <Navbar/>
       <HeroSection/>
       <ServiceSection/>
-      <HospitalsSection/>
+      <HospitalSection/>
     </div>
   );
 }
