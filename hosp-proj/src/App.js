@@ -7,6 +7,7 @@ import ServiceSection from './components/ServiceSection/ServiceSection';
 import HospitalSection from './components/HospitalSection/HospitalSection';
 import DoctorGrid from './components/Doctors/DoctorGrid';
 import SpecialtiesCarousel from './components/SpecialtiesCarousel/SpecialtiesCarousel';
+import Footer from './components/Footer/Footer';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       <DoctorGrid/>
       <SpecialtiesCarousel/>
       <HospitalSection/>
+      <Footer/>
     </div>
   );
 }
