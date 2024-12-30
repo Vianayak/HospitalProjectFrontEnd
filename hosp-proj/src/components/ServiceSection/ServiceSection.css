@@ -1,44 +1,99 @@
 .service-section {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 20px;
-    padding: 20px;
-    background: #f9f9f9;
-  }
-  
-  .service-card {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 3px;
+    padding: 20px 80px;
+    background: #d8efef;
+    justify-content: center;
+    align-items: center;
+}
+
+.service-card {
     text-align: center;
-    padding: 20px;
+    padding: 15px;
     border-radius: 10px;
-    background: #ffffff;
+    background: #f0f8ff;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, background 0.3s ease, color 0.3s ease;
-  }
-  
-  .service-card.active {
-    background: linear-gradient(135deg, #00c6ff, #0072ff);
-    color: #ffffff;
-  }
-  
-  .service-card .icon {
-    font-size: 36px;
+    width: 180px;
+}
+
+.service-card .icon {
+    font-size: 32px;
     margin-bottom: 10px;
-    color: #000000; /* Default icon color */
-  }
-  
-  .service-card h3 {
-    font-size: 16px;
+    color: #000000;
+}
+
+.service-card h3 {
+    font-size: 14px;
     margin: 0;
-    color: #000000; /* Default text color */
-  }
-  
-  .service-card:hover {
+    color: #000000;
+}
+
+.service-card:hover {
     transform: translateY(-5px);
     background: linear-gradient(135deg, #00c6ff, #0072ff);
-    color: #ffffff; /* Change text color on hover */
-  }
-  
-  .service-card:hover .icon {
-    color: #ffffff; /* Change icon color on hover */
-  }
-  
+    color: #ffffff;
+}
+
+.service-card:hover .icon {
+    color: #ffffff;
+}
+
+@media (max-width: 1024px) {
+    .service-section {
+        padding: 20px 40px;
+    }
+
+    .service-card {
+        width: 180px;
+    }
+
+    .service-card .icon {
+        font-size: 28px;
+    }
+
+    .service-card h3 {
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 768px) {
+    .service-section {
+        padding: 15px 20px;
+        gap: 5px;
+    }
+
+    .service-card {
+        width: 150px;
+    }
+
+    .service-card .icon {
+        font-size: 24px;
+    }
+
+    .service-card h3 {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .service-section {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        padding: 10px;
+    }
+
+    .service-card {
+        width: auto;
+        padding: 10px;
+    }
+
+    .service-card .icon {
+        font-size: 20px;
+    }
+
+    .service-card h3 {
+        font-size: 10px;
+    }
+}

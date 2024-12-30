@@ -11,7 +11,7 @@ import {
 import './ServiceSection.css';
 
 const services = [
-  { id: 1, icon: faCalendarCheck, title: 'Book Appointment', active: true },
+  { id: 1, icon: faCalendarCheck, title: 'Book Appointment', active: false },
   { id: 2, icon: faClipboardCheck, title: 'Book Health Check-Up', active: false },
   { id: 3, icon: faUserMd, title: 'Consult Online', active: false },
   { id: 4, icon: faPills, title: 'Buy Medicine', active: false },

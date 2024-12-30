@@ -1,14 +1,13 @@
 /* HeroSection.css */
 .custom-carousel {
-    height: 500px; /* Set the desired height */
-  }
-  
-  .custom-carousel .carousel-item {
-    height: 100%; /* Ensure all items fill the carousel's height */
-  }
-  
-  .custom-carousel img {
+    height: 500px;
+}
+
+.custom-carousel .carousel-item {
     height: 100%;
-    object-fit: cover; /* Ensures images maintain aspect ratio while filling the space */
-  }
-  
+}
+
+.custom-carousel img {
+    height: 100%;
+    object-fit: cover;
+}
