@@ -46,3 +46,7 @@
       transform: translateX(-50%); /* Move halfway (matches duplicate size) */
   }
 }
+
+.carousel-container:hover .carousel-track {
+  animation-play-state: paused;
+}
