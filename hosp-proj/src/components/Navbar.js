@@ -23,7 +23,7 @@ function MyNavbar() {
                         <img
                             src="/Assets/Images/jaya.jpg"
                             alt="Jaya Hospitals Logo"
-                            style={{ height: '100px', objectFit: 'contain' }}
+                            style={{ height: '60px', objectFit: 'contain' }}
                         />
                         </Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
