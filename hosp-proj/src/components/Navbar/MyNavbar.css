@@ -67,3 +67,16 @@
     padding: 5px 10px;
   }
 }
+
+.search-bar-container {
+  margin-left: auto; /* Push the search bar to the right */
+  display: flex;
+  align-items: center;
+}
+
+.search-bar-wrapper {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+}
+
