@@ -1,64 +1,50 @@
-.dropdown-toggle::after {
-    display: none !important;
-  }
-  
-  .dropdown-title::after {
-    content: '▼'; 
-    margin-left: 5px;
-    transition: transform 0.2s ease; 
-  }
-  
-  .dropdown-title.active::after {
-    content: '▶'; 
-  }
-  
-  /* Media Queries for Responsiveness */
-  @media (max-width: 1024px) {
-    .dropdown-title::after {
-      content: '▼'; /* Keep the dropdown arrow visible */
-      font-size: 16px; /* Slightly reduce the size */
-      margin-left: 4px; /* Adjust spacing */
-    }
-  
-    .dropdown-title.active::after {
-      content: '▶';
-      font-size: 16px; /* Match the font size */
-    }
-  }
-  
-  @media (max-width: 768px) {
-    .dropdown-title::after {
-      content: '▼'; 
-      font-size: 14px; /* Further reduce size for smaller screens */
-      margin-left: 3px;
-    }
-  
-    .dropdown-title.active::after {
-      content: '▶';
-      font-size: 14px;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    .dropdown-title::after {
-      content: '▼'; 
-      font-size: 12px; /* Smallest size for mobile screens */
-      margin-left: 2px;
-    }
-  
-    .dropdown-title.active::after {
-      content: '▶';
-      font-size: 12px;
-    }
-  }
-  
-  #exe{
-    margin-left: auto; /* Push items to the right */
-    display: flex;
-    align-items: center; /* Vertically align items */
-    justify-content: flex-end; 
-  }
+/* Sticky Navbar */
+.sticky-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000; /* Ensure it stays above other elements */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+  background-color: #ffffff; /* Pure white background */
+  padding: 3px; /* Reduce padding for a compact look */
+  padding-right: 130px;
+}
 
-.container {
-  background-color: #ffffff !important; /* Pure white */
+/* Navbar Logo */
+.navbar-logo {
+  height: 80px; /* Slightly smaller logo */
+  object-fit: contain;
+  padding-left: 45px;
+}
+
+/* Align navbar links */
+#exe {
+  margin-left: auto; /* Push items to the right */
+  display: flex;
+  align-items: center; /* Vertically align items */
+  justify-content: flex-end;
+}
+
+
+
+
+/* Responsive Adjustments */
+@media (max-width: 1024px) {
+  .dropdown-title::after {
+    font-size: 14px; /* Slightly reduce arrow size */
+    margin-left: 4px;
+  }
+}
+
+@media (max-width: 768px) {
+  .dropdown-title::after {
+    font-size: 12px; 
+    margin-left: 3px;
+  }
+}
+
+@media (max-width: 480px) {
+  .dropdown-title::after {
+    font-size: 10px; /* Smallest size for mobile screens */
+    margin-left: 2px;
+  }
 }

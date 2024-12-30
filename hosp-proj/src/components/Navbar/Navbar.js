@@ -3,7 +3,6 @@ import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './MyNavbar.css';
 
-
 function MyNavbar() {
     const [showDropdown, setShowDropdown] = useState('');
 
@@ -17,22 +16,20 @@ function MyNavbar() {
 
     return (
         <header>
-            <Navbar bg="white" variant="light" expand="lg">
-                <Container>
-                <Navbar.Brand href="#">
+            <Navbar bg="white" variant="light" expand="lg" className="sticky-navbar">
+             
+                    <Navbar.Brand href="#">
                         <img
                             src="/Assets/Images/jaya.jpg"
                             alt="Jaya Hospitals Logo"
-                            style={{ height: '60px', objectFit: 'contain' }}
+                            className="navbar-logo"
                         />
-                        </Navbar.Brand>
+                    </Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="ml-auto" id="exe">
                             <Nav.Link href="#home">About Us</Nav.Link>
                             <Nav.Link href="#features">Our Doctors</Nav.Link>
-
-                            
                             <NavDropdown
                                 title={
                                     <span
@@ -51,8 +48,6 @@ function MyNavbar() {
                                 <NavDropdown.Item href="#action/3.1">General Medicine</NavDropdown.Item>
                                 <NavDropdown.Item href="#action/3.2">ENT</NavDropdown.Item>
                             </NavDropdown>
-
-                            
                             <NavDropdown
                                 title={
                                     <span
@@ -71,8 +66,6 @@ function MyNavbar() {
                                 <NavDropdown.Item href="#action/3.1">Blog</NavDropdown.Item>
                                 <NavDropdown.Item href="#action/3.2">News</NavDropdown.Item>
                             </NavDropdown>
-
-                            
                             <NavDropdown
                                 title={
                                     <span
@@ -88,13 +81,13 @@ function MyNavbar() {
                                 onMouseEnter={() => handleMouseEnter('hospitals')}
                                 onMouseLeave={handleMouseLeave}
                             >
-                                <NavDropdown.Item href="#action/3.1">Jubliee Hills</NavDropdown.Item>
+                                <NavDropdown.Item href="#action/3.1">Jubilee Hills</NavDropdown.Item>
                                 <NavDropdown.Item href="#action/3.2">Kukatpally</NavDropdown.Item>
                                 <NavDropdown.Item href="#action/3.3">Miyapur</NavDropdown.Item>
                             </NavDropdown>
                         </Nav>
                     </Navbar.Collapse>
-                </Container>
+               
             </Navbar>
         </header>
     );
