@@ -3,6 +3,7 @@ import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './MyNavbar.css';
 
+
 function MyNavbar() {
     const [showDropdown, setShowDropdown] = useState('');
 
@@ -16,12 +17,18 @@ function MyNavbar() {
 
     return (
         <header>
-            <Navbar bg="light" variant="light" expand="lg">
+            <Navbar bg="white" variant="light" expand="lg">
                 <Container>
-                    <Navbar.Brand href="#">LIVE</Navbar.Brand>
+                <Navbar.Brand href="#">
+                        <img
+                            src="/Assets/Images/jaya.jpg"
+                            alt="Jaya Hospitals Logo"
+                            style={{ height: '100px', objectFit: 'contain' }}
+                        />
+                        </Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
-                        <Nav className="ml-auto">
+                        <Nav className="ml-auto" id="exe">
                             <Nav.Link href="#home">About Us</Nav.Link>
                             <Nav.Link href="#features">Our Doctors</Nav.Link>
 

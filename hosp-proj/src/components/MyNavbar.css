@@ -52,3 +52,13 @@
     }
   }
   
+  #exe{
+    margin-left: auto; /* Push items to the right */
+    display: flex;
+    align-items: center; /* Vertically align items */
+    justify-content: flex-end; 
+  }
+
+.container {
+  background-color: #ffffff !important; /* Pure white */
+}
