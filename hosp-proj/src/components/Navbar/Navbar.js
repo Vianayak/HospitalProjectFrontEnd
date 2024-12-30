@@ -20,7 +20,7 @@ function MyNavbar() {
              
                     <Navbar.Brand href="#">
                         <img
-                            src="/Assets/Images/HeaderLogo.png"
+                            src="/Assets/Images/NewLogo.jpeg"
                             alt="Jaya Hospitals Logo"
                             className="navbar-logo"
                         />
