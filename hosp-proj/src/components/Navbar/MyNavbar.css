@@ -1,19 +1,19 @@
 /* Sticky Navbar */
 .sticky-navbar {
-  position: sticky;
+  position: fixed;
   top: 0;
+  width: 100%; /* Ensure it spans the full width */
   z-index: 1000; /* Ensure it stays above other elements */
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
   background-color: #ffffff; /* Pure white background */
-  padding: 3px; /* Reduce padding for a compact look */
-  padding-right: 130px;
+  padding: 5px 20px; /* Compact padding */
 }
 
 /* Navbar Logo */
 .navbar-logo {
-  height: 80px; /* Slightly smaller logo */
+  height: 60px; /* Adjusted to fit compact navbar */
   object-fit: contain;
-  padding-left: 45px;
+  padding-left: 15px; /* Reduced left padding for better alignment */
 }
 
 /* Align navbar links */
@@ -24,6 +24,12 @@
   justify-content: flex-end;
 }
 
+/* Dropdown Titles */
+.dropdown-title::after {
+  
+  margin-left: 5px;
+  transition: transform 0.2s ease;
+}
 
 
 
@@ -33,12 +39,25 @@
     font-size: 14px; /* Slightly reduce arrow size */
     margin-left: 4px;
   }
+
+  .navbar-logo {
+    height: 50px; /* Reduce logo size for smaller screens */
+    padding-left: 10px; /* Adjust padding */
+  }
+
+  .sticky-navbar {
+    padding: 5px 15px; /* Adjust padding */
+  }
 }
 
 @media (max-width: 768px) {
   .dropdown-title::after {
-    font-size: 12px; 
+    font-size: 12px;
     margin-left: 3px;
+  }
+
+  .navbar-logo {
+    height: 40px; /* Further reduce logo size for tablets */
   }
 }
 
@@ -46,5 +65,14 @@
   .dropdown-title::after {
     font-size: 10px; /* Smallest size for mobile screens */
     margin-left: 2px;
+  }
+
+  .navbar-logo {
+    height: 30px; /* Smallest logo size for mobile */
+    padding-left: 5px; /* Minimal padding */
+  }
+
+  .sticky-navbar {
+    padding: 5px 10px; /* Adjust navbar padding for small screens */
   }
 }

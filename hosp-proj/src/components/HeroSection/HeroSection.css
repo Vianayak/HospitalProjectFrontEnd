@@ -1,6 +1,7 @@
 /* HeroSection.css */
 .custom-carousel {
     height: 450px;
+    margin-top: 85px;
 }
 
 .custom-carousel .carousel-item {
