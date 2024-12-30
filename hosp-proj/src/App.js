@@ -8,11 +8,12 @@ import HospitalSection from './components/HospitalSection/HospitalSection';
 import DoctorGrid from './components/Doctors/DoctorGrid';
 import SpecialtiesCarousel from './components/SpecialtiesCarousel/SpecialtiesCarousel';
 import Footer from './components/Footer/Footer';
+import SearchBar from './components/SearchBar/SearchBar';
 
 function App() {
   return (
     <div className="App">
-      <Navbar/>
+      <Navbar />
       <HeroSection/>
       <ServiceSection/>
       <DoctorGrid/>

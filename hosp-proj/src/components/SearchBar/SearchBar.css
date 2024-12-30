@@ -1,0 +1,43 @@
+.search-container {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 30px;
+    padding: 5px 10px;
+    width: 100%;
+    max-width: 400px;
+    background-color: #fff;
+}
+
+.search-input {
+    border: none;
+    outline: none;
+    flex-grow: 1;
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 30px;
+    color: #666;
+}
+
+.search-input::placeholder {
+    color: #aaa;
+}
+
+.search-button {
+    background-color: #7b3ba8; /* Purple color for the button */
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0;
+}
+
+.search-button img {
+    width: 16px;
+    height: 16px;
+    filter: invert(1); /* Makes the icon white */
+}
