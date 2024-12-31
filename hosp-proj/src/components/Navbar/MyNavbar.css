@@ -32,7 +32,9 @@
 
 #exe a:hover,
 #exe .dropdown-item:hover {
-  color: #5A3ECA;
+  background-color: #5A3ECA;
+  color: white;
+
 }
 
 .dropdown-title::after {
