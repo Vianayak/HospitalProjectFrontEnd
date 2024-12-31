@@ -1,6 +1,6 @@
 /* HeroSection.css */
 .custom-carousel {
-    height: 450px;
+    height: 60vh; /* Set height relative to the viewport */
     margin-top: 100px;
 }
 
@@ -10,9 +10,28 @@
 
 .custom-carousel img {
     height: 100%;
+    width: 100%; /* Ensure images stretch to fill the container */
     object-fit: cover;
 }
 
-.carousel-control-prev-icon .carousel-control-next-icon{
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
     color: black;
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+    .custom-carousel {
+        height: 22vh; /* Adjust height for smaller screens */
+        margin-top: 100px; /* Reduce top margin for smaller devices */
+   margin-bottom: 0px;
+    }
+}
+
+@media (max-width: 480px) {
+    .custom-carousel {
+        height: 25vh; /* Further adjust height for very small screens */
+        margin-top: 100px;
+        margin-bottom: 0px;
+    }
 }
