@@ -1,0 +1,57 @@
+.floating-container {
+    position: fixed;
+    bottom: 20px; /* Distance from the bottom of the viewport */
+    right: 20px; /* Distance from the right of the viewport */
+    z-index: 1000; /* Ensures it stays above other content */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .contact {
+    display: flex;
+    align-items: center;
+    background-color: #e0e0e0; /* Light gray background */
+    border-radius: 25px;
+    padding: 5px 15px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #000;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .phone-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+  }
+  
+  .health-check-button,
+  .appointment-button {
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 200px; /* Optional: Adjust button width */
+  }
+  
+  .health-check-button {
+    background-color: #5A3ECA; /* Blue */
+  }
+  
+  .appointment-button {
+    background-color: #ff5722; /* Orange */
+  }
+  
+  .health-check-button:hover {
+    background-color: #5A3ECA;
+  }
+  
+  .appointment-button:hover {
+    background-color: #e64a19;
+  }
+  
