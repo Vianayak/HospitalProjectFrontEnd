@@ -1,43 +1,57 @@
-.search-container {
+/* Search Bar Container */
+.search-bar-container {
+    position: relative;
+    width: 300px;
+  }
+  
+  /* Input Wrapper with Icon */
+  .search-input-wrapper {
     display: flex;
     align-items: center;
-    border: 1px solid #ccc;
-    border-radius: 30px;
-    padding: 5px 10px;
+    position: relative;
+  }
+  
+  /* Search Input */
+  .navbar-search-input {
     width: 100%;
-    max-width: 400px;
-    background-color: #fff;
-}
-
-.search-input {
-    border: none;
-    outline: none;
-    flex-grow: 1;
-    padding: 10px;
+    padding: 8px 40px 8px 10px; /* Extra padding for icon */
+    border: 1px solid #ccc;
+    border-radius: 5px;
     font-size: 14px;
-    border-radius: 30px;
-    color: #666;
-}
-
-.search-input::placeholder {
+  }
+  
+  /* Search Icon */
+  .search-icon {
+    position: absolute;
+    right: 10px;
     color: #aaa;
-}
-
-.search-button {
-    background-color: #7b3ba8; /* Purple color for the button */
-    border: none;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    font-size: 16px;
     cursor: pointer;
-    padding: 0;
-}
-
-.search-button img {
-    width: 16px;
-    height: 16px;
-    filter: invert(1); /* Makes the icon white */
-}
+  }
+  
+  /* Dropdown Container */
+  .search-results-dropdown {
+    position: absolute;
+    top: 50px;
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    z-index: 1000;
+    max-height: 300px;
+    overflow-y: auto;
+  }
+  
+  /* Result Card */
+  .result-card {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+  }
+  
+  /* Font Awesome Link (Add to index.html or public files) */
+  /* <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" /> */
+  
