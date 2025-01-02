@@ -33,6 +33,7 @@ const DoctorCard = ({ doctor }) => {
               {doctor.experience} years of experience
             </p>
             <p className="doctor-location">{doctor.location}</p>
+            <p></p>
             <p className="doctor-availability">{doctor.availability}</p>
           <button
             className="book-appointment-button"
