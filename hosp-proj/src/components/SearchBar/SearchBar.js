@@ -69,10 +69,10 @@ const SearchBar = () => {
           {results.length > 0 ? (
             results.map((result, index) => (
               <div key={index} className="result-card">
-                {result.name && <h3>{result.name}</h3>}
+                {result.name && <h6>{result.name}</h6>}
                 {result.specialization && <p>{result.specialization}</p>}
                 {result.location && <p>Location: {result.location}</p>}
-                {result.title && <h3>{result.title}</h3>}
+                {result.title && <h6>{result.title}</h6>}
                 {result.category && <p>Category: {result.category}</p>}
               </div>
             ))
