@@ -1,0 +1,83 @@
+/* For the container holding the cards */
+.doctor-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Two cards per row */
+  gap: 20px; /* Spacing between cards */
+  padding: 20px;
+  margin: 0 auto; /* Center the grid on the page */
+  max-width: 1200px; /* Limit the maximum width */
+}
+
+/* For each doctor card */
+.doctor-card {
+  display: flex;
+  flex-direction: row; /* Align items horizontally */
+  width: 600px; /* Increase the width of the card */
+  height: 300px; /* Adjust the height of the card */
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  background-color: #fff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.doctor-card:hover {
+  transform: scale(1.05); /* Slight zoom on hover */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Rectangular image aligned to the left */
+.doctor-card img {
+  width: 200px; /* Width of the rectangular image */
+  height: 100%; /* Stretch image to card height */
+  object-fit: cover; /* Ensures the image covers the available space */
+  margin-right: 15px; /* Space between the image and the text */
+}
+
+/* Doctor details */
+.doctor-details {
+  padding: 15px;
+  display: flex;
+  flex-direction: column; /* Align text vertically */
+  justify-content: center; /* Center the text vertically */
+  flex-grow: 1; /* Ensures details section grows to fill space */
+}
+
+.doctor-name {
+  font-size: 1.2em;
+  margin: 0 0 10px;
+  font-weight: bold;
+  color: #333;
+}
+
+.doctor-speciality,
+.doctor-experience,
+.doctor-location {
+  margin: 5px 0;
+  color: #555;
+}
+
+.book-appointment-button {
+  margin-top: 10px;
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.book-appointment-button:hover {
+  background-color: #5A3ECA;
+}
+
+
+.content-wrapper{
+  margin-top: 100px;
+}
+
+.doctor-availability{
+  color: red;
+}
