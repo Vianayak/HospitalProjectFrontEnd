@@ -62,7 +62,7 @@ const DoctorGrid = () => {
   return (
     <div className="doctor-grid">
       {doctors.map((doctor, index) => (
-        <div key={index} className="doctor-card">
+        <div key={index} className="doctor-cards">
           <div className="doctor-image">
             <img src="Assets/Images/Love.jpeg" alt={doctor.name} />
           </div>
