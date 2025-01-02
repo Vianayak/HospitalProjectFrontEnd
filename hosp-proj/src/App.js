@@ -29,7 +29,7 @@ function App() {
       <SpecialtiesCarousel/>
       <HospitalSection/>
       <FloatingButtons/>
-      <Footer/>
+      
       </>
             } 
           />
@@ -37,6 +37,7 @@ function App() {
           {/* Route for Doctor Cards Page */}
           <Route path="/doctor-cards" element={<DoctorList />} />
         </Routes>
+        <Footer/>
       </div>
       </Router>
   );
