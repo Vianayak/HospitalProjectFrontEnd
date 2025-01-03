@@ -66,7 +66,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    background-color: #40299a;
+    background-color: #5A3ECA;
     color: #fff;
   }
   
@@ -142,11 +142,11 @@
   border: none;
   font-size: 20px;
   cursor: pointer;
-  color: #007bff; /* Arrow color */
+  color: #5A3ECA /* Arrow color */
 }
 
 .arrow-button:hover {
-  color: #0056b3; /* Hover effect */
+  color: #5A3ECA; /* Hover effect */
 }
 
 /* Date Selection */
@@ -168,7 +168,7 @@
 
 /* CSS for the selected date */
 .date.active {
-  background-color: #007bff; /* Background color for the selected date */
+  background-color: #5A3ECA; /* Background color for the selected date */
   color: #fff; /* Text color for the selected date */
   font-weight: bold; /* Bold text for the selected date */
   border: none; /* Remove border when selected */
@@ -202,7 +202,7 @@
 }
 
 .time-slot:hover {
-  background: #007bff;
+  background: #5A3ECA;
   color: #fff;
   border: none;
 }
@@ -217,7 +217,7 @@
 
 /* Continue Button */
 .continue-button {
-  background: #007bff;
+  background: #5A3ECA;
   color: #fff;
   padding: 10px 20px;
   border: none;
@@ -228,12 +228,12 @@
 }
 
 .continue-button:hover {
-  background: #0056b3;
+  background: #5A3ECA;
 }
 
 /* Remove hover effect for the selected date */
 .date.active {
-  background-color: #007bff; /* Background color for the selected date */
+  background-color: #5A3ECA; /* Background color for the selected date */
   color: #fff; /* Text color for the selected date */
   font-weight: bold; /* Bold text for the selected date */
   border: none; /* Remove border when selected */
@@ -241,7 +241,7 @@
 
 /* Modify hover state for unselected dates */
 .date:hover {
-  background: #0056b3; /* A different background color on hover for unselected dates */
+  background: #5A3ECA; /* A different background color on hover for unselected dates */
   color: #fff;
   border: none;
 }
@@ -289,7 +289,7 @@
 }
 
 .calendar-day:hover {
-  background-color: #007bff;
+  background-color: #5A3ECA;
   color: #fff;
 }
 
@@ -299,7 +299,7 @@
 }
 
 .calendar-day.active {
-  background-color: #007bff;
+  background-color: #5A3ECA;
   color: #fff;
 }
 
