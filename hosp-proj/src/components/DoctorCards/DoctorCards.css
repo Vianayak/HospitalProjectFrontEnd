@@ -1,228 +1,83 @@
-/* General Styles */
-body {
-  font-family: 'Arial', sans-serif;
-  background-color: #f8f9fa;
-  margin: 0;
-  padding: 0;
-  color: #333;
-}
-
-.content-wrapper {
-  margin-top: 80px;
-  padding: 20px;
-  display: flex;
-  justify-content: center;
-}
-
-/* Doctor List Container */
+/* For the container holding the cards */
 .doctor-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(2, 1fr); /* Two cards per row */
+  gap: 20px; /* Spacing between cards */
   padding: 20px;
-  max-width: 1200px;
-  margin: 0 auto;
+  margin: 0 auto; /* Center the grid on the page */
+  max-width: 1200px; /* Limit the maximum width */
 }
 
-/* Doctor Card */
+/* For each doctor card */
 .doctor-card {
   display: flex;
-  flex-direction: column;
-  background-color: #fff;
+  flex-direction: row; /* Align items horizontally */
+  width: 600px; /* Increase the width of the card */
+  height: 300px; /* Adjust the height of the card */
   border: 1px solid #ddd;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden;
+  background-color: #fff;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .doctor-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  transform: scale(1.05); /* Slight zoom on hover */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
-/* Doctor Image */
-.doctor-image img {
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-  border-bottom: 1px solid #ddd;
+/* Rectangular image aligned to the left */
+.doctor-card img {
+  width: 150px; /* Width of the rectangular image */
+  height: 100%; /* Stretch image to card height */
+  object-fit: cover; /* Ensures the image covers the available space */
+  margin-right: 15px; /* Space between the image and the text */
 }
 
-/* Doctor Details */
+/* Doctor details */
 .doctor-details {
   padding: 15px;
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  flex-direction: column; /* Align text vertically */
+  justify-content: center; /* Center the text vertically */
+  flex-grow: 1; /* Ensures details section grows to fill space */
 }
 
 .doctor-name {
-  font-size: 1.5em;
-  margin: 0;
+  font-size: 1.2em;
+  margin: 0 0 10px;
   font-weight: bold;
-  color: #4A4A4A;
+  color: #333;
 }
 
 .doctor-speciality,
 .doctor-experience,
 .doctor-location {
-  font-size: 1em;
-  margin: 8px 0;
-  color: #666;
-}
-
-.book-appointment-button {
-  margin-top: 15px;
-  padding: 12px 20px;
-  font-size: 1em;
-  font-weight: bold;
-  background-color: #5a3eca;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  align-self: center;
-}
-
-.book-appointment-button:hover {
-  background-color: #6a4edf;
-  transform: scale(1.05);
-}
-
-/* Popup Overlay */
-.popup-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.6);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-/* Popup Container */
-.popup-container {
-  background-color: #fff;
-  display: flex;
-  width: 700px;
-  height: 400px;
-  border-radius: 8px;
-  overflow: hidden;
-  position: relative;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-}
-
-.popup-close {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  cursor: pointer;
+  margin: 5px 0;
   color: #555;
 }
 
-.popup-close:hover {
-  color: #000;
-}
-
-/* Calendar Popup */
-.calendar {
-  margin-top: 20px;
-  text-align: center;
-}
-
-.calendar-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 15px;
-  font-size: 1.2em;
-  font-weight: bold;
-}
-
-.calendar-body {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 5px;
-}
-
-.calendar-day {
-  padding: 10px;
-  background-color: #f9f9f9;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  text-align: center;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.calendar-day:hover {
-  background-color: #5a3eca;
-  color: white;
-}
-
-.calendar-day.active {
-  background-color: #5a3eca;
-  color: white;
-}
-
-.calendar-day.disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-}
-
-/* Time Slots */
-.time-slots {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin: 15px 0;
-  justify-content: center;
-}
-
-.time-slot {
+.book-appointment-button {
+  margin-top: 10px;
   padding: 10px 15px;
-  background-color: #f1f1f1;
-  border: 1px solid #ddd;
+  background-color: #007bff;
+  color: white;
+  border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
-.time-slot.active {
-  background-color: #5a3eca;
-  color: white;
-  border-color: #5a3eca;
+.book-appointment-button:hover {
+  background-color: #0056b3;
 }
 
-.time-slot:hover {
-  background-color: #5a3eca;
-  color: white;
+
+.content-wrapper {
+  margin-top: 100px; /* Set this to the height of your navbar */
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-  .doctor-card {
-    width: 100%;
-  }
-
-  .doctor-details {
-    align-items: center;
-    text-align: center;
-  }
-
-  .popup-container {
-    width: 90%;
-  }
-
-  .calendar {
-    width: 100%;
-  }
+.doctor-availability{
+  color:red;
 }

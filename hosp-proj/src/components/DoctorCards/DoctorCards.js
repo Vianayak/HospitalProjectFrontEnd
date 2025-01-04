@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./DoctorCards.css";
 import "./PopupStyles.css";
-import { FaCalendarAlt } from "react-icons/fa"; // Import calendar icon
+import { FaCalendarAlt } from 'react-icons/fa'; // Import calendar icon
 
 const DoctorCard = ({ doctor }) => {
   const [showPopup, setShowPopup] = useState(false);
@@ -9,11 +9,9 @@ const DoctorCard = ({ doctor }) => {
   const [showOtpForm, setShowOtpForm] = useState(false);
   const [showSchedulePopup, setShowSchedulePopup] = useState(false);
   const [startDate, setStartDate] = useState(new Date()); // Start date for the schedule popup
-  const [selectedDate, setSelectedDate] = useState(new Date()); // Selected date
+  const [selectedDate, setSelectedDate] = useState(null); // Selected date
   const [currentMonth, setCurrentMonth] = useState(new Date()); // Current month for calendar
   const [showCalendar, setShowCalendar] = useState(false); // To control the visibility of the calendar
-  const [selectedTimeSlot, setSelectedTimeSlot] = useState(null); // Selected time slot
-  const [confirmedMessage, setConfirmedMessage] = useState(""); // Confirmation message
 
   const handleBookAppointment = () => {
     setShowPopup(true);
@@ -38,33 +36,68 @@ const DoctorCard = ({ doctor }) => {
     setShowCalendar((prev) => !prev); // Toggle calendar visibility
   };
 
-  const handleDateSelect = (date) => {
-    setSelectedDate(date);
-    setShowCalendar(false); // Hide calendar after selecting a date
+  // Generate 5 consecutive dates starting from `startDate`
+  const generateDates = (start) => {
+    const dates = [];
+    for (let i = 0; i < 5; i++) {
+      const date = new Date(start);
+      date.setDate(start.getDate() + i);
+      dates.push(date);
+    }
+    return dates;
   };
 
-  const handleTimeSlotClick = (timeSlot) => {
-    setSelectedTimeSlot(timeSlot); // Store the selected time slot
+  // Format date to "Day DD MMM"
+  const formatDate = (date) => {
+    const options = { weekday: "short", day: "2-digit", month: "short" };
+    return date.toLocaleDateString("en-US", options);
   };
 
-  const handleConfirmAppointment = () => {
-    setConfirmedMessage(`Your appointment is confirmed for ${selectedDate.toDateString()} at ${selectedTimeSlot}.`);
-    setTimeout(() => setConfirmedMessage(""), 5000); // Clear message after 5 seconds
-    setSelectedTimeSlot(null); // Reset time slot selection
+  // Handle Next Dates
+  const handleNextDates = () => {
+    const nextStartDate = new Date(startDate);
+    nextStartDate.setDate(startDate.getDate() + 5);
+    setStartDate(nextStartDate);
+    
+    // Update current month to the next month when moving forward
+    const nextMonth = new Date(currentMonth);
+    nextMonth.setMonth(currentMonth.getMonth() + 1);
+    setCurrentMonth(nextMonth);
   };
 
+  // Handle Previous Dates
+  const handlePreviousDates = () => {
+    const previousStartDate = new Date(startDate);
+    previousStartDate.setDate(startDate.getDate() - 5);
+
+    // Ensure we don't navigate to dates before today
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Remove time component for accurate comparison
+    if (previousStartDate >= today) {
+      setStartDate(previousStartDate);
+      
+      // Update current month to the previous month when moving backward
+      const previousMonth = new Date(currentMonth);
+      previousMonth.setMonth(currentMonth.getMonth() - 1);
+      setCurrentMonth(previousMonth);
+    }
+  };
+
+  // Function to render the calendar for the current month
   const renderCalendar = () => {
     const firstDay = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), 1);
     const lastDay = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 0);
     const daysInMonth = lastDay.getDate();
-
+    
     const weeks = [];
     let currentWeek = [];
-
+    
+    // Fill the first week with empty days
     for (let i = 0; i < firstDay.getDay(); i++) {
-      currentWeek.push(null);
+      currentWeek.push(null); // Empty space for days before the first of the month
     }
 
+    // Add days of the current month
     for (let day = 1; day <= daysInMonth; day++) {
       currentWeek.push(day);
       if (currentWeek.length === 7 || day === daysInMonth) {
@@ -76,20 +109,17 @@ const DoctorCard = ({ doctor }) => {
     return (
       <div className="calendar">
         <div className="calendar-header">
-          <button onClick={() => setCurrentMonth(new Date(currentMonth.setMonth(currentMonth.getMonth() - 1)))}>&lt;</button>
-          <span>{currentMonth.toLocaleString("default", { month: "short", year: "numeric" })}</span>
-          <button onClick={() => setCurrentMonth(new Date(currentMonth.setMonth(currentMonth.getMonth() + 1)))}>&gt;</button>
+          <span>{currentMonth.toLocaleString("default", { month: "short" })}</span>
         </div>
         <div className="calendar-body">
           {weeks.map((week, weekIndex) => (
-            <div key={weekIndex} className="calendar-week">  
+            <div key={weekIndex} className="calendar-week">
               {week.map((day, dayIndex) => (
                 <button
                   key={dayIndex}
-                  className={`calendar-day ${day ? "" : "empty"}`}
-                  onClick={() =>
-                    day && handleDateSelect(new Date(currentMonth.getFullYear(), currentMonth.getMonth(), day))
-                  }
+                  className={`calendar-day ${day ? "" : "empty"} ${day && day < new Date().getDate() ? "disabled" : ""}`}
+                  disabled={day && day < new Date().getDate()}
+                  onClick={() => setSelectedDate(new Date(currentMonth.getFullYear(), currentMonth.getMonth(), day))}
                 >
                   {day || ""}
                 </button>
@@ -106,13 +136,16 @@ const DoctorCard = ({ doctor }) => {
       <div className="content-wrapper">
         <div className="doctor-card">
           <div className="doctor-image">
-            <img src={doctor.image} alt={`${doctor.name}`} />
+            <img src="Assets/Images/Love.jpeg" alt={`${doctor.name}`} />
           </div>
           <div className="doctor-details">
             <h3 className="doctor-name">{doctor.name}</h3>
-            <p className="doctor-speciality">{doctor.speciality}</p>
-            <p className="doctor-experience">{doctor.experience} years of experience</p>
-            <p className="doctor-location">{doctor.location}</p>
+            <p className="doctor-speciality">Specialization:{doctor.specialization}</p>
+            <p className="doctor-experience">Experience:{doctor.experience} years of experience</p>
+            <p className="doctor-languages">Languages: {doctor.languages.join(", ")}</p>
+            <p className="doctor-location">Location:{doctor.location}</p>
+            <p></p>
+            <p className="doctor-availability">{doctor.availability}</p>
             <button className="book-appointment-button" onClick={handleBookAppointment}>
               Book Appointment
             </button>
@@ -127,25 +160,35 @@ const DoctorCard = ({ doctor }) => {
               &times;
             </button>
             <div className="popup-content">
-              <input
-                type="email"
-                className="popup-input"
-                placeholder="What is your email?"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              {!showOtpForm ? (
-                <button className="popup-button" onClick={handleSendOtp}>
-                  Send OTP
-                </button>
-              ) : (
-                <>
-                  <input type="text" className="popup-input" placeholder="Enter OTP" />
-                  <button className="popup-button" onClick={handleVerifyOtp}>
-                    Verify OTP
+              <div className="popup-image">
+                <img src="Assets/Images/popupImage.webp" alt="Popup" />
+              </div>
+              <div className="popup-form">
+                <h2>JAYA Hospitals</h2>
+                <input
+                  type="email"
+                  className="popup-input"
+                  placeholder="What is your email?"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+                {!showOtpForm ? (
+                  <button className="popup-button" onClick={handleSendOtp}>
+                    Send Otp
                   </button>
-                </>
-              )}
+                ) : (
+                  <div>
+                    <input
+                      type="text"
+                      className="popup-input"
+                      placeholder="Enter OTP"
+                    />
+                    <button className="popup-button" onClick={handleVerifyOtp}>
+                      Verify OTP
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
@@ -154,30 +197,59 @@ const DoctorCard = ({ doctor }) => {
       {showSchedulePopup && (
         <div className="popup-overlay">
           <div className="popup-container schedule-popup">
-            <button className="popup-close" onClick={() => setShowSchedulePopup(false)}>
+            <button
+              className="popup-close"
+              onClick={() => setShowSchedulePopup(false)}
+            >
               &times;
             </button>
-            <div className="schedule-header">
-              <button className="calendar-icon" onClick={handleCalendarToggle}>
-                <FaCalendarAlt />
-              </button>
-              {showCalendar && renderCalendar()}
-            </div>
-            <div className="schedule-body">
-              <h3>Time Slots for {selectedDate.toDateString()}</h3>
-              <div className="time-slots">
-                {["10:00-10:30", "11:00-11:30", "12:00-12:30"].map((slot) => (
-                  <button key={slot} className={`time-slot ${selectedTimeSlot === slot ? "active" : ""}`} onClick={() => handleTimeSlotClick(slot)}>
-                    {slot}
-                  </button>
-                ))}
-              </div>
-              {selectedTimeSlot && (
-                <button className="confirm-button" onClick={handleConfirmAppointment}>
-                  OK
+            <div className="schedule-content">
+              <div className="schedule-header">
+                <button className="arrow-button" onClick={handlePreviousDates}>
+                  &lt;
                 </button>
+                <div className="dates">
+                  {generateDates(startDate).map((date, index) => (
+                    <button
+                      key={index}
+                      className={`date ${selectedDate?.getTime() === date.getTime() ? "active" : ""}`}
+                      onClick={() => setSelectedDate(date)}
+                    >
+                      {formatDate(date)}
+                    </button>
+                  ))}
+                </div>
+                <button className="arrow-button" onClick={handleNextDates}>
+                  &gt;
+                </button>
+                <button className="calendar-icon" onClick={handleCalendarToggle}>
+                  <FaCalendarAlt /> {/* Calendar Icon */}
+                </button>
+              </div>
+              {/* Show calendar beside the icon when clicked */}
+              {showCalendar && (
+                <div className="calendar-positioned">
+                  {renderCalendar()}
+                </div>
               )}
-              {confirmedMessage && <p className="confirmation-message">{confirmedMessage}</p>}
+              <div className="schedule-body">
+                <h3>MORNING</h3>
+                <div className="time-slots">
+                  <button className="time-slot">11:00-11:30</button>
+                  <button className="time-slot">11:30-12:00</button>
+                </div>
+                <h3>AFTERNOON</h3>
+                <div className="time-slots">
+                  <button className="time-slot">12:30-13:00</button>
+                  <button className="time-slot">13:30-14:00</button>
+                  <button className="time-slot">14:30-15:00</button>
+                  <button className="time-slot">15:30-16:00</button>
+                  <button className="time-slot">16:30-17:00</button>
+                </div>
+                <h3>EVENING</h3>
+                <p>No slots available</p>
+              </div>
+              <button className="continue-button">Continue</button>
             </div>
           </div>
         </div>
