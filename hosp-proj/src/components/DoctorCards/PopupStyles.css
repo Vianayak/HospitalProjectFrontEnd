@@ -306,11 +306,11 @@
 
 .calendar-positioned {
   position: absolute;
-  top: 50%;
-  left: 100%;  /* Position calendar next to the icon */
+  top: 63%;
+  left: 62%;  /* Position calendar next to the icon */
   transform: translateY(-50%);
   z-index: 10;
-  background-color: white;
+  background-color: #8a7e7b;
   border: 1px solid #ddd;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   padding: 10px;
