@@ -306,7 +306,7 @@
 
 .calendar-positioned {
   position: absolute;
-  top: 63%;
+  top: 58%;
   left: 62%;  /* Position calendar next to the icon */
   transform: translateY(-50%);
   z-index: 10;

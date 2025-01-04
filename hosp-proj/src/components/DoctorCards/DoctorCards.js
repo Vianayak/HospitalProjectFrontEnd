@@ -13,6 +13,19 @@ const DoctorCard = ({ doctor }) => {
   const [currentMonth, setCurrentMonth] = useState(new Date()); // Current month for calendar
   const [showCalendar, setShowCalendar] = useState(false); // To control the visibility of the calendar
 
+
+  const handleNextMonth = () => {
+    const nextMonth = new Date(currentMonth);
+    nextMonth.setMonth(currentMonth.getMonth() + 1);
+    setCurrentMonth(nextMonth);
+  };
+    // Handle Previous Month
+    const handlePreviousMonth = () => {
+      const prevMonth = new Date(currentMonth);
+      prevMonth.setMonth(currentMonth.getMonth() - 1);
+      setCurrentMonth(prevMonth);
+    };
+  
   const handleBookAppointment = () => {
     setShowPopup(true);
   };
@@ -109,7 +122,14 @@ const DoctorCard = ({ doctor }) => {
     return (
       <div className="calendar">
         <div className="calendar-header">
-          <span>{currentMonth.toLocaleString("default", { month: "short" })}</span>
+          <button className="arrow-button" onClick={handlePreviousMonth}>
+            &lt; {/* Left arrow */}
+          </button>
+          <span>{currentMonth.toLocaleString("default", { month: "short", year: "numeric" })}</span>
+          <button className="arrow-button" onClick={handleNextMonth}>
+            &gt; {/* Right arrow */}
+          </button>
+     
         </div>
         <div className="calendar-body">
           {weeks.map((week, weekIndex) => (
