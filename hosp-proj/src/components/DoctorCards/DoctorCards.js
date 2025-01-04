@@ -62,7 +62,7 @@ const DoctorCard = ({ doctor }) => {
 
   // Format date to "Day DD MMM"
   const formatDate = (date) => {
-    const options = { weekday: "short", day: "2-digit", month: "short" };
+    const options = { day: "2-digit",weekday: "short",  month: "short" };
     return date.toLocaleDateString("en-US", options);
   };
 
