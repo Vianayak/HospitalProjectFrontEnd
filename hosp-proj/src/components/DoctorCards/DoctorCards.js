@@ -9,6 +9,11 @@ const DoctorCard = ({ doctor }) => {
   const [showSchedulePopup, setShowSchedulePopup] = useState(false);
   const [startDate, setStartDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(null);
+  const [date, setDate] = useState('');
+  
+    const handleDateChange = (event) => {
+      setDate(event.target.value);
+    };
 
   const handleBookAppointment = () => {
     setShowPopup(true);
@@ -155,6 +160,17 @@ const DoctorCard = ({ doctor }) => {
                   &gt;
                 </button>
               </div>
+
+              <div>
+      <label htmlFor="date">Choose a date:</label>
+      <input
+        type="date"
+        id="date"
+        value={date}
+        onChange={handleDateChange}
+      />
+      <p>Selected Date: {date}</p>
+    </div>
               <div className="schedule-body">
                 <h3>MORNING</h3>
                 <div className="time-slots">
