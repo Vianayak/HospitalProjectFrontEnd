@@ -186,16 +186,16 @@
   font-weight: 600;
 }
 
+/* General Time Slots Container */
+/* General Time Slots Container */
 .time-slots {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
   margin-bottom: 20px;
- 
 }
 
-
-
+/* Time Slot Button */
 .time-slot {
   padding: 10px 15px;
   border: 1px solid #5A3ECA;
@@ -204,31 +204,35 @@
   cursor: pointer;
   font-size: 14px;
   text-align: center;
-  color: #333;
   color: #5A3ECA;
   font-weight: 600;
-
+  transition: background 0.3s ease, color 0.3s ease; /* Smooth hover effect */
 }
 
+/* Hover Effect for Time Slot */
 .time-slot:hover {
   background: #5A3ECA;
   color: #fff;
   border: none;
 }
-.time-slot.active{
-  background-color: #5A3ECA; /* Background color for the selected date */
-  color: #fff; /* Text color for the selected date */
-  font-weight: bold; /* Bold text for the selected date */
-  border: none; /* Remove border when selected */
 
-}
-.time-slots.active{
-  background-color: #5A3ECA; /* Background color for the selected date */
-  color: #fff; /* Text color for the selected date */
-  font-weight: bold; /* Bold text for the selected date */
+/* Active (Selected) Time Slot */
+.time-slot.active {
+  background-color: #5A3ECA; /* Background color for the selected time slot */
+  color: #fff; /* Text color for the selected time slot */
+  font-weight: bold; /* Bold text for the selected time slot */
   border: none; /* Remove border when selected */
-
+  pointer-events: none; /* Prevent further click interaction */
 }
+
+/* Prevent hover effect on active (selected) slot */
+.time-slot.active:hover {
+  background-color: #5A3ECA; /* Keep the same active background on hover */
+  color: #fff; /* Keep the same active text color */
+  border: none; /* Ensure the border stays removed */
+  cursor: default; /* Change cursor to default when hovering over active slot */
+}
+
 /* Unavailable Slot */
 .time-slot.unavailable {
   background: #f8d7da;
@@ -236,6 +240,7 @@
   border: 1px solid #f5c6cb;
   cursor: not-allowed;
 }
+
 
 /* Continue Button */
 .continue-button {

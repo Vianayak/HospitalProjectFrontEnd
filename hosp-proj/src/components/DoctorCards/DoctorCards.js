@@ -12,15 +12,17 @@ const DoctorCard = ({ doctor }) => {
   const [date, setDate] = useState('');
   const [selectedTime, setSelectedTime] = useState(null);
   const [appointmentMessage, setAppointmentMessage] = useState('');
+  const [selectedTimeSlot, setSelectedTimeSlot] = useState(null);
 
+  
   const handleDateChange = (event) => {
     const selectedDate = new Date(event.target.value);
     setDate(event.target.value);
     setSelectedDate(selectedDate); // Update selected date when input date changes
   };
 
-  const handleTimeSlotSelect = (time) => {
-    setSelectedTime(time);
+  const handleTimeSlotSelect = (timeSlot) => {
+    setSelectedTimeSlot(timeSlot);
   };
 
   const handleBookAppointment = () => {
@@ -193,22 +195,57 @@ const DoctorCard = ({ doctor }) => {
               </div>
 
               <div className="schedule-body">
-                <h3>MORNING</h3>
-                <div className="time-slots">
-                  <button className="time-slot" onClick={() => handleTimeSlotSelect("11:00-11:30")}>11:00-11:30</button>
-                  <button className="time-slot" onClick={() => handleTimeSlotSelect("11:30-12:00")}>11:30-12:00</button>
-                </div>
-                <h3>AFTERNOON</h3>
-                <div className="time-slots">
-                  <button className="time-slot" onClick={() => handleTimeSlotSelect("12:30-13:00")}>12:30-13:00</button>
-                  <button className="time-slot" onClick={() => handleTimeSlotSelect("13:30-14:00")}>13:30-14:00</button>
-                  <button className="time-slot" onClick={() => handleTimeSlotSelect("14:30-15:00")}>14:30-15:00</button>
-                  <button className="time-slot" onClick={() => handleTimeSlotSelect("15:30-16:00")}>15:30-16:00</button>
-                  <button className="time-slot" onClick={() => handleTimeSlotSelect("16:30-17:00")}>16:30-17:00</button>
-                </div>
-                <h3>EVENING</h3>
-                <p>No slots available</p>
-              </div>
+  <h3>MORNING</h3>
+  <div className="time-slots">
+    <button
+      className={`time-slot ${selectedTimeSlot === "11:00-11:30" ? "active" : ""}`}
+      onClick={() => handleTimeSlotSelect("11:00-11:30")}
+    >
+      11:00-11:30
+    </button>
+    <button
+      className={`time-slot ${selectedTimeSlot === "11:30-12:00" ? "active" : ""}`}
+      onClick={() => handleTimeSlotSelect("11:30-12:00")}
+    >
+      11:30-12:00
+    </button>
+  </div>
+  <h3>AFTERNOON</h3>
+  <div className="time-slots">
+    <button
+      className={`time-slot ${selectedTimeSlot === "12:30-13:00" ? "active" : ""}`}
+      onClick={() => handleTimeSlotSelect("12:30-13:00")}
+    >
+      12:30-13:00
+    </button>
+    <button
+      className={`time-slot ${selectedTimeSlot === "13:30-14:00" ? "active" : ""}`}
+      onClick={() => handleTimeSlotSelect("13:30-14:00")}
+    >
+      13:30-14:00
+    </button>
+    <button
+      className={`time-slot ${selectedTimeSlot === "14:30-15:00" ? "active" : ""}`}
+      onClick={() => handleTimeSlotSelect("14:30-15:00")}
+    >
+      14:30-15:00
+    </button>
+    <button
+      className={`time-slot ${selectedTimeSlot === "15:30-16:00" ? "active" : ""}`}
+      onClick={() => handleTimeSlotSelect("15:30-16:00")}
+    >
+      15:30-16:00
+    </button>
+    <button
+      className={`time-slot ${selectedTimeSlot === "16:30-17:00" ? "active" : ""}`}
+      onClick={() => handleTimeSlotSelect("16:30-17:00")}
+    >
+      16:30-17:00
+    </button>
+  </div>
+  <h3>EVENING</h3>
+  <p>No slots available</p>
+</div>
 
               <button className="continue-button" onClick={handleConfirmAppointment}>
                 Confirm Appointment
