@@ -37,3 +37,56 @@
     transform: rotate(360deg);
   }
 }
+
+/* Content section styling for user-details and appointment-details side by side */
+.content {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  background-color: #f1f1f1; /* Set a background color for both sections */
+}
+
+/* Style for UserDetails and AppointmentDetails components */
+.content > div {
+  width: 48%; /* Adjust width as needed */
+  box-sizing: border-box;
+  background-color: #fff; /* White background for each component */
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #ddd; /* Border for each component */
+}
+
+/* Adding a dividing line between the two components */
+.content > div + div {
+  margin-left: 4%; /* Space between components */
+}
+
+/* Optional margin between components */
+.content > div:last-child {
+  margin-left: 20px; /* Adds some space between the right-side component */
+}
+
+/* Optional, if you want the sections to have the same height */
+.content > div {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-between;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+  .content {
+    flex-direction: column; /* Stack components vertically */
+    align-items: center;
+  }
+
+  .content > div {
+    width: 100%; /* Full width for components on small screens */
+    margin-bottom: 20px; /* Adds space between components */
+  }
+
+  .content > div:last-child {
+    margin-bottom: 0; /* Remove bottom margin for last component */
+  }
+}

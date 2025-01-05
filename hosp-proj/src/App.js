@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from './components/Navbar/Navbar';
@@ -11,35 +10,41 @@ import SpecialtiesCarousel from './components/SpecialtiesCarousel/SpecialtiesCar
 import Footer from './components/Footer/Footer';
 import FloatingButtons from './components/FloatingButtons/FloatingButtons';
 import DoctorList from './components/DoctorCards/DoctorList';
+import UserAppointment from './components/Appointment/UserAppointment';
 
 function App() {
   return (
     <Router>
-    <div className="App">
-      <Navbar />
-      <Routes>
+      <div className="App">
+        <Navbar />
+        <Routes>
           {/* Default Landing Page */}
           <Route 
             path="/" 
             element={
               <>
-      <HeroSection/>
-      <ServiceSection/>
-      <DoctorGrid/>
-      <SpecialtiesCarousel/>
-      <HospitalSection/>
-      <FloatingButtons/>
-      
-      </>
+                <HeroSection/>
+                <ServiceSection/>
+                <DoctorGrid/>
+                <SpecialtiesCarousel/>
+                <HospitalSection/>
+                <FloatingButtons/>
+              </>
             } 
           />
           
           {/* Route for Doctor Cards Page */}
           <Route path="/doctor-cards" element={<DoctorList />} />
+
+          {/* Route for User Appointment (combined details) */}
+          <Route 
+            path="/user-appointment"
+            element={<UserAppointment />}
+          />
         </Routes>
         <Footer/>
       </div>
-      </Router>
+    </Router>
   );
 }
 
