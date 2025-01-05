@@ -12,9 +12,9 @@
 .doctor-card {
   display: flex;
   flex-direction: row; /* Align items horizontally */
-  width: 600px; /* Increase the width of the card */
+  width: 550px; /* Increase the width of the card */
   height: 300px; /* Adjust the height of the card */
-  border: 1px solid #ddd;
+  border: 1px solid #5A3ECA;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden;
@@ -29,7 +29,7 @@
 
 /* Rectangular image aligned to the left */
 .doctor-card img {
-  width: 150px; /* Width of the rectangular image */
+  width: 250px; /* Width of the rectangular image */
   height: 100%; /* Stretch image to card height */
   object-fit: cover; /* Ensures the image covers the available space */
   margin-right: 15px; /* Space between the image and the text */
@@ -37,7 +37,7 @@
 
 /* Doctor details */
 .doctor-details {
-  padding: 15px;
+  padding: 10px;
   display: flex;
   flex-direction: column; /* Align text vertically */
   justify-content: center; /* Center the text vertically */
@@ -61,7 +61,7 @@
 .book-appointment-button {
   margin-top: 10px;
   padding: 10px 15px;
-  background-color: #007bff;
+  background-color: #5A3ECA;
   color: white;
   border: none;
   border-radius: 5px;
@@ -70,7 +70,7 @@
 }
 
 .book-appointment-button:hover {
-  background-color: #0056b3;
+  background-color: #5A3ECA;
 }
 
 

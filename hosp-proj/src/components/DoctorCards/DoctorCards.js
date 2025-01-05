@@ -1,17 +1,29 @@
 import React, { useState } from "react";
 import "./DoctorCards.css";
 import "./PopupStyles.css";
-import { FaCalendarAlt } from 'react-icons/fa'; // Import calendar icon
 
 const DoctorCard = ({ doctor }) => {
   const [showPopup, setShowPopup] = useState(false);
   const [email, setEmail] = useState("");
   const [showOtpForm, setShowOtpForm] = useState(false);
   const [showSchedulePopup, setShowSchedulePopup] = useState(false);
-  const [startDate, setStartDate] = useState(new Date()); // Start date for the schedule popup
-  const [selectedDate, setSelectedDate] = useState(null); // Selected date
-  const [currentMonth, setCurrentMonth] = useState(new Date()); // Current month for calendar
-  const [showCalendar, setShowCalendar] = useState(false); // To control the visibility of the calendar
+  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [date, setDate] = useState('');
+  const [selectedTime, setSelectedTime] = useState(null);
+  const [appointmentMessage, setAppointmentMessage] = useState('');
+  const [selectedTimeSlot, setSelectedTimeSlot] = useState(null);
+
+  
+  const handleDateChange = (event) => {
+    const selectedDate = new Date(event.target.value);
+    setDate(event.target.value);
+    setSelectedDate(selectedDate); // Update selected date when input date changes
+  };
+
+  const handleTimeSlotSelect = (timeSlot) => {
+    setSelectedTimeSlot(timeSlot);
+  };
 
   const handleBookAppointment = () => {
     setShowPopup(true);
@@ -32,10 +44,6 @@ const DoctorCard = ({ doctor }) => {
     setShowSchedulePopup(true);
   };
 
-  const handleCalendarToggle = () => {
-    setShowCalendar((prev) => !prev); // Toggle calendar visibility
-  };
-
   // Generate 5 consecutive dates starting from `startDate`
   const generateDates = (start) => {
     const dates = [];
@@ -49,86 +57,35 @@ const DoctorCard = ({ doctor }) => {
 
   // Format date to "Day DD MMM"
   const formatDate = (date) => {
-    const options = { weekday: "short", day: "2-digit", month: "short" };
+    const options = { day: "2-digit", weekday: "short", month: "short" };
     return date.toLocaleDateString("en-US", options);
   };
 
-  // Handle Next Dates
   const handleNextDates = () => {
     const nextStartDate = new Date(startDate);
     nextStartDate.setDate(startDate.getDate() + 5);
     setStartDate(nextStartDate);
-    
-    // Update current month to the next month when moving forward
-    const nextMonth = new Date(currentMonth);
-    nextMonth.setMonth(currentMonth.getMonth() + 1);
-    setCurrentMonth(nextMonth);
   };
 
-  // Handle Previous Dates
   const handlePreviousDates = () => {
     const previousStartDate = new Date(startDate);
     previousStartDate.setDate(startDate.getDate() - 5);
 
-    // Ensure we don't navigate to dates before today
     const today = new Date();
-    today.setHours(0, 0, 0, 0); // Remove time component for accurate comparison
+    today.setHours(0, 0, 0, 0);
     if (previousStartDate >= today) {
       setStartDate(previousStartDate);
-      
-      // Update current month to the previous month when moving backward
-      const previousMonth = new Date(currentMonth);
-      previousMonth.setMonth(currentMonth.getMonth() - 1);
-      setCurrentMonth(previousMonth);
     }
   };
 
-  // Function to render the calendar for the current month
-  const renderCalendar = () => {
-    const firstDay = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), 1);
-    const lastDay = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 0);
-    const daysInMonth = lastDay.getDate();
-    
-    const weeks = [];
-    let currentWeek = [];
-    
-    // Fill the first week with empty days
-    for (let i = 0; i < firstDay.getDay(); i++) {
-      currentWeek.push(null); // Empty space for days before the first of the month
+  const handleConfirmAppointment = () => {
+    if (selectedDate && selectedTime) {
+      setAppointmentMessage(
+        `Your appointment has been booked for ${formatDate(new Date(selectedDate))} at ${selectedTime}.`
+      );
+    } else {
+      setAppointmentMessage("Please select both a date and a time slot.");
     }
-
-    // Add days of the current month
-    for (let day = 1; day <= daysInMonth; day++) {
-      currentWeek.push(day);
-      if (currentWeek.length === 7 || day === daysInMonth) {
-        weeks.push(currentWeek);
-        currentWeek = [];
-      }
-    }
-
-    return (
-      <div className="calendar">
-        <div className="calendar-header">
-          <span>{currentMonth.toLocaleString("default", { month: "short" })}</span>
-        </div>
-        <div className="calendar-body">
-          {weeks.map((week, weekIndex) => (
-            <div key={weekIndex} className="calendar-week">
-              {week.map((day, dayIndex) => (
-                <button
-                  key={dayIndex}
-                  className={`calendar-day ${day ? "" : "empty"} ${day && day < new Date().getDate() ? "disabled" : ""}`}
-                  disabled={day && day < new Date().getDate()}
-                  onClick={() => setSelectedDate(new Date(currentMonth.getFullYear(), currentMonth.getMonth(), day))}
-                >
-                  {day || ""}
-                </button>
-              ))}
-            </div>
-          ))}
-        </div>
-      </div>
-    );
   };
 
   return (
@@ -140,11 +97,10 @@ const DoctorCard = ({ doctor }) => {
           </div>
           <div className="doctor-details">
             <h3 className="doctor-name">{doctor.name}</h3>
-            <p className="doctor-speciality">Specialization:{doctor.specialization}</p>
-            <p className="doctor-experience">Experience:{doctor.experience} years of experience</p>
+            <p className="doctor-speciality">Specialization: {doctor.specialization}</p>
+            <p className="doctor-experience">Experience: {doctor.experience} years of experience</p>
             <p className="doctor-languages">Languages: {doctor.languages.join(", ")}</p>
-            <p className="doctor-location">Location:{doctor.location}</p>
-            <p></p>
+            <p className="doctor-location">Location: {doctor.location}</p>
             <p className="doctor-availability">{doctor.availability}</p>
             <button className="book-appointment-button" onClick={handleBookAppointment}>
               Book Appointment
@@ -213,7 +169,10 @@ const DoctorCard = ({ doctor }) => {
                     <button
                       key={index}
                       className={`date ${selectedDate?.getTime() === date.getTime() ? "active" : ""}`}
-                      onClick={() => setSelectedDate(date)}
+                      onClick={() => {
+                        setSelectedDate(date);
+                        setDate(date.toISOString().split("T")[0]); // Set the date in input field format
+                      }}
                     >
                       {formatDate(date)}
                     </button>
@@ -222,34 +181,77 @@ const DoctorCard = ({ doctor }) => {
                 <button className="arrow-button" onClick={handleNextDates}>
                   &gt;
                 </button>
-                <button className="calendar-icon" onClick={handleCalendarToggle}>
-                  <FaCalendarAlt /> {/* Calendar Icon */}
-                </button>
               </div>
-              {/* Show calendar beside the icon when clicked */}
-              {showCalendar && (
-                <div className="calendar-positioned">
-                  {renderCalendar()}
-                </div>
-              )}
+
+              <div>
+                <label htmlFor="date">Choose a date : </label>
+                <input
+                  type="date"
+                  id="date"
+                  value={date}
+                  onChange={handleDateChange}
+                />
+                <p className="selected-date">Selected Date: {date}</p>
+              </div>
+
               <div className="schedule-body">
-                <h3>MORNING</h3>
-                <div className="time-slots">
-                  <button className="time-slot">11:00-11:30</button>
-                  <button className="time-slot">11:30-12:00</button>
-                </div>
-                <h3>AFTERNOON</h3>
-                <div className="time-slots">
-                  <button className="time-slot">12:30-13:00</button>
-                  <button className="time-slot">13:30-14:00</button>
-                  <button className="time-slot">14:30-15:00</button>
-                  <button className="time-slot">15:30-16:00</button>
-                  <button className="time-slot">16:30-17:00</button>
-                </div>
-                <h3>EVENING</h3>
-                <p>No slots available</p>
-              </div>
-              <button className="continue-button">Continue</button>
+  <h3>MORNING</h3>
+  <div className="time-slots">
+    <button
+      className={`time-slot ${selectedTimeSlot === "11:00-11:30" ? "active" : ""}`}
+      onClick={() => handleTimeSlotSelect("11:00-11:30")}
+    >
+      11:00-11:30
+    </button>
+    <button
+      className={`time-slot ${selectedTimeSlot === "11:30-12:00" ? "active" : ""}`}
+      onClick={() => handleTimeSlotSelect("11:30-12:00")}
+    >
+      11:30-12:00
+    </button>
+  </div>
+  <h3>AFTERNOON</h3>
+  <div className="time-slots">
+    <button
+      className={`time-slot ${selectedTimeSlot === "12:30-13:00" ? "active" : ""}`}
+      onClick={() => handleTimeSlotSelect("12:30-13:00")}
+    >
+      12:30-13:00
+    </button>
+    <button
+      className={`time-slot ${selectedTimeSlot === "13:30-14:00" ? "active" : ""}`}
+      onClick={() => handleTimeSlotSelect("13:30-14:00")}
+    >
+      13:30-14:00
+    </button>
+    <button
+      className={`time-slot ${selectedTimeSlot === "14:30-15:00" ? "active" : ""}`}
+      onClick={() => handleTimeSlotSelect("14:30-15:00")}
+    >
+      14:30-15:00
+    </button>
+    <button
+      className={`time-slot ${selectedTimeSlot === "15:30-16:00" ? "active" : ""}`}
+      onClick={() => handleTimeSlotSelect("15:30-16:00")}
+    >
+      15:30-16:00
+    </button>
+    <button
+      className={`time-slot ${selectedTimeSlot === "16:30-17:00" ? "active" : ""}`}
+      onClick={() => handleTimeSlotSelect("16:30-17:00")}
+    >
+      16:30-17:00
+    </button>
+  </div>
+  <h3>EVENING</h3>
+  <p>No slots available</p>
+</div>
+
+              <button className="continue-button" onClick={handleConfirmAppointment}>
+                Confirm Appointment
+              </button>
+
+              {appointmentMessage && <p className="appointment-message">{appointmentMessage}</p>}
             </div>
           </div>
         </div>

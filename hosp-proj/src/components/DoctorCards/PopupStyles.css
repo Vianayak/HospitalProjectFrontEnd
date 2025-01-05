@@ -17,7 +17,7 @@
     background-color: #fff;
     display: flex;
     width: 700px;
-    height: 400px;
+    height: 500px;
     border-radius: 8px;
     overflow: hidden;
     position: relative;
@@ -153,17 +153,20 @@
 .dates {
   display: flex;
   gap: 10px;
+ 
 }
 
 .date {
   padding: 10px 15px;
-  border: 1px solid #ddd;
+  border: 1px solid #5A3ECA;
   border-radius: 5px;
   background: #f9f9f9;
   font-size: 14px;
   cursor: pointer;
   text-align: center;
-  color: #333;
+  color: #5A3ECA;
+  font-weight: 600;
+
 }
 
 /* CSS for the selected date */
@@ -183,6 +186,8 @@
   font-weight: 600;
 }
 
+/* General Time Slots Container */
+/* General Time Slots Container */
 .time-slots {
   display: flex;
   gap: 10px;
@@ -190,21 +195,42 @@
   margin-bottom: 20px;
 }
 
+/* Time Slot Button */
 .time-slot {
   padding: 10px 15px;
-  border: 1px solid #ddd;
+  border: 1px solid #5A3ECA;
   border-radius: 5px;
   background: #f9f9f9;
   cursor: pointer;
   font-size: 14px;
   text-align: center;
-  color: #333;
+  color: #5A3ECA;
+  font-weight: 600;
+  transition: background 0.3s ease, color 0.3s ease; /* Smooth hover effect */
 }
 
+/* Hover Effect for Time Slot */
 .time-slot:hover {
   background: #5A3ECA;
   color: #fff;
   border: none;
+}
+
+/* Active (Selected) Time Slot */
+.time-slot.active {
+  background-color: #5A3ECA; /* Background color for the selected time slot */
+  color: #fff; /* Text color for the selected time slot */
+  font-weight: bold; /* Bold text for the selected time slot */
+  border: none; /* Remove border when selected */
+  pointer-events: none; /* Prevent further click interaction */
+}
+
+/* Prevent hover effect on active (selected) slot */
+.time-slot.active:hover {
+  background-color: #5A3ECA; /* Keep the same active background on hover */
+  color: #fff; /* Keep the same active text color */
+  border: none; /* Ensure the border stays removed */
+  cursor: default; /* Change cursor to default when hovering over active slot */
 }
 
 /* Unavailable Slot */
@@ -214,6 +240,7 @@
   border: 1px solid #f5c6cb;
   cursor: not-allowed;
 }
+
 
 /* Continue Button */
 .continue-button {
@@ -231,13 +258,7 @@
   background: #5A3ECA;
 }
 
-/* Remove hover effect for the selected date */
-.date.active {
-  background-color: #5A3ECA; /* Background color for the selected date */
-  color: #fff; /* Text color for the selected date */
-  font-weight: bold; /* Bold text for the selected date */
-  border: none; /* Remove border when selected */
-}
+
 
 /* Modify hover state for unselected dates */
 .date:hover {
@@ -246,91 +267,7 @@
   border: none;
 }
 
-
-/* Calendar */
-.calendar {
-  margin-top: 20px;
-  text-align: center;
-}
-
-.calendar-header {
-  font-size: 1.2rem;
-  margin-bottom: 10px;
-}
-
-.calendar-body {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.calendar-week {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 5px;
-}
-
-.calendar-day {
-  width: 30px;
-  height: 30px;
-  margin: 2px;
-  background-color: #f0f0f0;
-  border: 1px solid #ddd;
-  border-radius: 50%;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.calendar-day.empty {
-  background-color: transparent;
-  border: none;
-}
-
-.calendar-day:hover {
-  background-color: #5A3ECA;
-  color: #fff;
-}
-
-.calendar-day.disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-}
-
-.calendar-day.active {
-  background-color: #5A3ECA;
-  color: #fff;
-}
-
-
-.calendar-positioned {
-  position: absolute;
-  top: 50%;
-  left: 100%;  /* Position calendar next to the icon */
-  transform: translateY(-50%);
-  z-index: 10;
-  background-color: white;
-  border: 1px solid #ddd;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  padding: 10px;
-  border-radius: 5px;
-}
-
-.calendar-icon {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 20px;
-  margin-left: 10px; 
-}
-
-.calendar-day:hover {
-  background-color: #f0f0f0;
-}
-
-.calendar-day.disabled {
-  background-color: #f5f5f5;
-  color: #bbb;
-  pointer-events: none;
+.selected-date{
+color :  #5A3ECA;
+font-weight: 600;
 }

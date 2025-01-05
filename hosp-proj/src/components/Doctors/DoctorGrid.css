@@ -7,7 +7,7 @@
   
   .doctor-cards {
     background-color: #fff;
-    border: 1px solid #ddd;
+    border: 1px solid #5A3ECA;;
     border-radius: 8px;
     padding: 15px;
     text-align: center;
@@ -33,7 +33,7 @@
   }
   
   .doctor-buttons button {
-    background-color: #5A3ECA;;
+    background-color: #5A3ECA;
     color: #fff;
     border: none;
     padding: 10px 15px;
@@ -44,7 +44,7 @@
   }
   
   .doctor-buttons button:hover {
-    background-color: #504cb2;
+    background-color: #5A3ECA;
   }
   
   @media (max-width: 768px) {
