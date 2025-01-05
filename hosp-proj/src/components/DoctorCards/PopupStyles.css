@@ -17,7 +17,7 @@
     background-color: #fff;
     display: flex;
     width: 700px;
-    height: 450px;
+    height: 500px;
     border-radius: 8px;
     overflow: hidden;
     position: relative;
@@ -158,13 +158,14 @@
 
 .date {
   padding: 10px 15px;
-  border: 1px solid #ddd;
+  border: 1px solid #5A3ECA;
   border-radius: 5px;
   background: #f9f9f9;
   font-size: 14px;
   cursor: pointer;
   text-align: center;
   color: #5A3ECA;
+  font-weight: 600;
 
 }
 
@@ -190,17 +191,23 @@
   gap: 10px;
   flex-wrap: wrap;
   margin-bottom: 20px;
+ 
 }
+
+
 
 .time-slot {
   padding: 10px 15px;
-  border: 1px solid #ddd;
+  border: 1px solid #5A3ECA;
   border-radius: 5px;
   background: #f9f9f9;
   cursor: pointer;
   font-size: 14px;
   text-align: center;
   color: #333;
+  color: #5A3ECA;
+  font-weight: 600;
+
 }
 
 .time-slot:hover {
@@ -208,7 +215,20 @@
   color: #fff;
   border: none;
 }
+.time-slot.active{
+  background-color: #5A3ECA; /* Background color for the selected date */
+  color: #fff; /* Text color for the selected date */
+  font-weight: bold; /* Bold text for the selected date */
+  border: none; /* Remove border when selected */
 
+}
+.time-slots.active{
+  background-color: #5A3ECA; /* Background color for the selected date */
+  color: #fff; /* Text color for the selected date */
+  font-weight: bold; /* Bold text for the selected date */
+  border: none; /* Remove border when selected */
+
+}
 /* Unavailable Slot */
 .time-slot.unavailable {
   background: #f8d7da;
@@ -233,17 +253,16 @@
   background: #5A3ECA;
 }
 
-/* Remove hover effect for the selected date */
-.date.active {
-  background-color: #5A3ECA; /* Background color for the selected date */
-  color: #fff; /* Text color for the selected date */
-  font-weight: bold; /* Bold text for the selected date */
-  border: none; /* Remove border when selected */
-}
+
 
 /* Modify hover state for unselected dates */
 .date:hover {
   background: #5A3ECA; /* A different background color on hover for unselected dates */
   color: #fff;
   border: none;
+}
+
+.selected-date{
+color :  #5A3ECA;
+font-weight: 600;
 }

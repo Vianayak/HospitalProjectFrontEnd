@@ -10,10 +10,18 @@ const DoctorCard = ({ doctor }) => {
   const [startDate, setStartDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(null);
   const [date, setDate] = useState('');
-  
-    const handleDateChange = (event) => {
-      setDate(event.target.value);
-    };
+  const [selectedTime, setSelectedTime] = useState(null);
+  const [appointmentMessage, setAppointmentMessage] = useState('');
+
+  const handleDateChange = (event) => {
+    const selectedDate = new Date(event.target.value);
+    setDate(event.target.value);
+    setSelectedDate(selectedDate); // Update selected date when input date changes
+  };
+
+  const handleTimeSlotSelect = (time) => {
+    setSelectedTime(time);
+  };
 
   const handleBookAppointment = () => {
     setShowPopup(true);
@@ -68,6 +76,16 @@ const DoctorCard = ({ doctor }) => {
     }
   };
 
+  const handleConfirmAppointment = () => {
+    if (selectedDate && selectedTime) {
+      setAppointmentMessage(
+        `Your appointment has been booked for ${formatDate(new Date(selectedDate))} at ${selectedTime}.`
+      );
+    } else {
+      setAppointmentMessage("Please select both a date and a time slot.");
+    }
+  };
+
   return (
     <>
       <div className="content-wrapper">
@@ -81,7 +99,6 @@ const DoctorCard = ({ doctor }) => {
             <p className="doctor-experience">Experience: {doctor.experience} years of experience</p>
             <p className="doctor-languages">Languages: {doctor.languages.join(", ")}</p>
             <p className="doctor-location">Location: {doctor.location}</p>
-            <p></p>
             <p className="doctor-availability">{doctor.availability}</p>
             <button className="book-appointment-button" onClick={handleBookAppointment}>
               Book Appointment
@@ -150,7 +167,10 @@ const DoctorCard = ({ doctor }) => {
                     <button
                       key={index}
                       className={`date ${selectedDate?.getTime() === date.getTime() ? "active" : ""}`}
-                      onClick={() => setSelectedDate(date)}
+                      onClick={() => {
+                        setSelectedDate(date);
+                        setDate(date.toISOString().split("T")[0]); // Set the date in input field format
+                      }}
                     >
                       {formatDate(date)}
                     </button>
@@ -162,33 +182,39 @@ const DoctorCard = ({ doctor }) => {
               </div>
 
               <div>
-      <label htmlFor="date">Choose a date:</label>
-      <input
-        type="date"
-        id="date"
-        value={date}
-        onChange={handleDateChange}
-      />
-      <p>Selected Date: {date}</p>
-    </div>
+                <label htmlFor="date">Choose a date:</label>
+                <input
+                  type="date"
+                  id="date"
+                  value={date}
+                  onChange={handleDateChange}
+                />
+                <p className="selected-date">Selected Date: {date}</p>
+              </div>
+
               <div className="schedule-body">
                 <h3>MORNING</h3>
                 <div className="time-slots">
-                  <button className="time-slot">11:00-11:30</button>
-                  <button className="time-slot">11:30-12:00</button>
+                  <button className="time-slot" onClick={() => handleTimeSlotSelect("11:00-11:30")}>11:00-11:30</button>
+                  <button className="time-slot" onClick={() => handleTimeSlotSelect("11:30-12:00")}>11:30-12:00</button>
                 </div>
                 <h3>AFTERNOON</h3>
                 <div className="time-slots">
-                  <button className="time-slot">12:30-13:00</button>
-                  <button className="time-slot">13:30-14:00</button>
-                  <button className="time-slot">14:30-15:00</button>
-                  <button className="time-slot">15:30-16:00</button>
-                  <button className="time-slot">16:30-17:00</button>
+                  <button className="time-slot" onClick={() => handleTimeSlotSelect("12:30-13:00")}>12:30-13:00</button>
+                  <button className="time-slot" onClick={() => handleTimeSlotSelect("13:30-14:00")}>13:30-14:00</button>
+                  <button className="time-slot" onClick={() => handleTimeSlotSelect("14:30-15:00")}>14:30-15:00</button>
+                  <button className="time-slot" onClick={() => handleTimeSlotSelect("15:30-16:00")}>15:30-16:00</button>
+                  <button className="time-slot" onClick={() => handleTimeSlotSelect("16:30-17:00")}>16:30-17:00</button>
                 </div>
                 <h3>EVENING</h3>
                 <p>No slots available</p>
               </div>
-              <button className="continue-button">Continue</button>
+
+              <button className="continue-button" onClick={handleConfirmAppointment}>
+                Confirm Appointment
+              </button>
+
+              {appointmentMessage && <p className="appointment-message">{appointmentMessage}</p>}
             </div>
           </div>
         </div>
