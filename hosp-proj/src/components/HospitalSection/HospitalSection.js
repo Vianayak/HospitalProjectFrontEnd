@@ -25,7 +25,7 @@ const HospitalsSection = () => {
         {hospitals.map((hospital) => (  
           <div key={hospital.id} className="hospital-card">  
             <div className="hospital-icon">{hospital.icon}</div>  
-            <h3>{hospital.name}</h3>  
+            <h5>{hospital.name}</h5>  
           </div>  
         ))}  
       </div>  
