@@ -183,16 +183,18 @@ const DoctorCard = ({ doctor }) => {
                 </button>
               </div>
 
-              <div>
-                <label htmlFor="date">Choose a date : </label>
-                <input
-                  type="date"
-                  id="date"
-                  value={date}
-                  onChange={handleDateChange}
-                />
-                <p className="selected-date">Selected Date: {date}</p>
-              </div>
+              <div className="date-picker-container">
+  <label htmlFor="date">Choose a date:</label>
+  <input
+    type="date"
+    id="date"
+    value={date}
+    onChange={handleDateChange}
+    className="date-input"
+  />
+  
+</div>
+<p className="selected-date">Selected Date: {date}</p>
 
               <div className="schedule-body">
   <h3>MORNING</h3>
