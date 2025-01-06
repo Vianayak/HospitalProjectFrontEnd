@@ -79,9 +79,9 @@ const DoctorCard = ({ doctor }) => {
   };
 
   const handleConfirmAppointment = () => {
-    if (selectedDate && selectedTime) {
+    if (selectedDate && selectedTimeSlot) {
       setAppointmentMessage(
-        `Your appointment has been booked for ${formatDate(new Date(selectedDate))} at ${selectedTime}.`
+        `Your appointment has been booked for ${formatDate(new Date(selectedDate))} at ${selectedTimeSlot}.`
       );
     } else {
       setAppointmentMessage("Please select both a date and a time slot.");
