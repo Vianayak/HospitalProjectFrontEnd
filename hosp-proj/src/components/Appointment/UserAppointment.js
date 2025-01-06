@@ -3,7 +3,6 @@ import "./UserAppointment.css";
 import axios from "axios";
 
 const UserAppointment = () => {
-  // Dynamically load Razorpay script
   useEffect(() => {
     const loadRazorpayScript = async () => {
       const script = document.createElement("script");
@@ -18,32 +17,28 @@ const UserAppointment = () => {
 
   const handlePayment = async () => {
     try {
-      // Step 1: Create order via backend
       const { data } = await axios.post("http://localhost:8081/api/book-appointment/initiate", {
-        amount: 500, // INR in paise (500 INR = 50000 paise)
+        amount: 500,
         currency: "INR",
-        firstName:"vinfghjk",
-	      lastName:"bano",
-        mobile:902637398,
-	      email:"vina@gmail.com",
-	      dob:"21/08/2024",
-	      gender:"male",
+        firstName: "vinfghjk",
+        lastName: "bano",
+        mobile: 902637398,
+        email: "vina@gmail.com",
+        dob: "21/08/2024",
+        gender: "male",
       });
-  
-      // Ensure the amount is in paise (multiplying INR by 100 if necessary)
+
       const amountInPaise = data.amount * 100;
-  
-      // Step 2: Open Razorpay Checkout
+
       const options = {
-        key: "rzp_test_2ThA8oBdItjHWx", // Replace with your Razorpay key
-        amount: amountInPaise, // Amount in paise
+        key: "rzp_test_2ThA8oBdItjHWx",
+        amount: amountInPaise,
         currency: data.currency,
         name: "Jaya Hospitals",
         description: "Test Transaction",
-        image: "Assets/images/HeaderLogo.png", // Replace with correct logo path
-        order_id: data.razorpayOrderId, // Order ID from backend
+        image: "Assets/images/HeaderLogo.png",
+        order_id: data.razorpayOrderId,
         handler: (response) => {
-          // Step 3: Handle payment success
           console.log("Payment successful!", response);
           alert(`Payment successful! Payment ID: ${response.razorpay_payment_id}`);
         },
@@ -53,15 +48,15 @@ const UserAppointment = () => {
           contact: "8919967393",
         },
         theme: {
-          color: "#3399cc", // Customize the button color
+          color: "#3399cc",
         },
       };
-  
+
       if (!window.Razorpay) {
         console.error("Razorpay SDK is not loaded.");
         return;
       }
-  
+
       const razorpay = new window.Razorpay(options);
       razorpay.open();
     } catch (error) {
@@ -69,7 +64,6 @@ const UserAppointment = () => {
       alert("Something went wrong. Please try again.");
     }
   };
-  
 
   return (
     <div className="content-wrapper">
@@ -81,15 +75,15 @@ const UserAppointment = () => {
           <form className="details-form">
             <div className="form-group">
               <label>First Name</label>
-              <input type="text" value="Vinayak" />
+              <input type="text" placeholder="Enter Your Fist Name" />
             </div>
             <div className="form-group">
               <label>Last Name</label>
-              <input type="text" value="Banoth" />
+              <input type="text" placeholder="Enter Your Last Name" />
             </div>
             <div className="form-group">
               <label>Phone</label>
-              <input type="text" value="8919967393" />
+              <input type="text" placeholder="0000000000" />
             </div>
             <div className="form-group">
               <label>Email</label>
@@ -97,7 +91,7 @@ const UserAppointment = () => {
             </div>
             <div className="form-group">
               <label>DOB</label>
-              <input type="date" value="1996-06-21" />
+              <input type="date" placeholder="1996-06-21" />
             </div>
             <div className="form-group">
               <label>Gender</label>
