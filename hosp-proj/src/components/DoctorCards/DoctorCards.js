@@ -10,7 +10,6 @@ const DoctorCard = ({ doctor }) => {
   const [startDate, setStartDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(null);
   const [date, setDate] = useState('');
-  const [selectedTime, setSelectedTime] = useState(null);
   const [appointmentMessage, setAppointmentMessage] = useState('');
   const [selectedTimeSlot, setSelectedTimeSlot] = useState(null);
 
@@ -44,16 +43,7 @@ const DoctorCard = ({ doctor }) => {
     setShowSchedulePopup(true);
   };
 
-  // Generate 5 consecutive dates starting from `startDate`
-  const generateDates = (start) => {
-    const dates = [];
-    for (let i = 0; i < 5; i++) {
-      const date = new Date(start);
-      date.setDate(start.getDate() + i);
-      dates.push(date);
-    }
-    return dates;
-  };
+ 
 
   // Format date to "Day DD MMM"
   const formatDate = (date) => {
@@ -61,22 +51,7 @@ const DoctorCard = ({ doctor }) => {
     return date.toLocaleDateString("en-US", options);
   };
 
-  const handleNextDates = () => {
-    const nextStartDate = new Date(startDate);
-    nextStartDate.setDate(startDate.getDate() + 5);
-    setStartDate(nextStartDate);
-  };
-
-  const handlePreviousDates = () => {
-    const previousStartDate = new Date(startDate);
-    previousStartDate.setDate(startDate.getDate() - 5);
-
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    if (previousStartDate >= today) {
-      setStartDate(previousStartDate);
-    }
-  };
+  
 
   const handleConfirmAppointment = () => {
     if (selectedDate && selectedTimeSlot) {
@@ -161,28 +136,11 @@ const DoctorCard = ({ doctor }) => {
             </button>
             <div className="schedule-content">
               <div className="schedule-header">
-                <button className="arrow-button" onClick={handlePreviousDates}>
-                  &lt;
-                </button>
-                <div className="dates">
-                  {generateDates(startDate).map((date, index) => (
-                    <button
-                      key={index}
-                      className={`date ${selectedDate?.getTime() === date.getTime() ? "active" : ""}`}
-                      onClick={() => {
-                        setSelectedDate(date);
-                        setDate(date.toISOString().split("T")[0]); // Set the date in input field format
-                      }}
-                    >
-                      {formatDate(date)}
-                    </button>
-                  ))}
-                </div>
-                <button className="arrow-button" onClick={handleNextDates}>
-                  &gt;
-                </button>
+                
+              
+               
               </div>
-
+<h3>Schedule Your Appointment Timing</h3>
               <div className="date-picker-container">
   <label htmlFor="date">Choose a date:</label>
   <input
@@ -194,7 +152,6 @@ const DoctorCard = ({ doctor }) => {
   />
   
 </div>
-<p className="selected-date">Selected Date: {date}</p>
 
               <div className="schedule-body">
   <h3>MORNING</h3>
