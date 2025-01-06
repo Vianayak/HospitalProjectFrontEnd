@@ -1,158 +1,191 @@
 /* Main Wrapper */
 .content-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    background-color: #f8f9fa;
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+  background-color: #f8f9fa;
+  min-height: 100vh;
+ 
+}
+
+/* Content Section */
+.content {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  background: #ffffff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px #5A3ECA;
+  width: 100%;
   
-  /* Content Section */
+}
+
+/* User Details Section */
+.user-details {
+  flex: 1;
+  padding: 30px;
+  background: #1c1c1c; /* Dark background for contrast */
+  color: #ffffff; /* White text for readability */
+  border-right: 1px solid #ddd;
+  box-shadow: 0 4px 10px #5A3ECA;
+}
+
+.user-details h2 {
+  font-size: 24px;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.user-details .uhid-note {
+  font-size: 14px;
+  margin-bottom: 20px;
+  color: #000;
+}
+
+.details-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  align-items: center; /* Align label and input vertically in the center */
+  gap: 10px; /* Add some space between label and input */
+}
+
+.form-group label {
+  font-weight: bold;
+  margin: 0; /* Remove margin to minimize space */
+  color: #000000; /* Darken label color to black */
+  width: 150px; /* Fixed width for label */
+}
+
+.form-group input {
+  padding: 8px 12px; /* Reduce padding to minimize input size */
+  font-size: 14px; /* Adjust font size */
+  border: 1px solid #5A3ECA;
+  border-radius: 4px;
+  width: 280px; /* Reduced width for smaller input */
+  color: #5A3ECA;
+  background: #fff;
+}
+
+/* Optional: Input focus style */
+.form-group input:focus {
+  border-color: #5A3ECA;
+  outline: none;
+}
+
+.form-group input:read-only {
+  background: #e9ecef;
+}
+
+/* Radio button styling */
+.radio-group {
+  display: flex;
+  justify-content: space-evenly; /* Ensures equal spacing */
+  gap: 20px; /* Adjust the gap between the options */
+}
+
+.radio-group label {
+  display: flex;
+  align-items: center; /* Aligns radio button and text vertically */
+  font-weight: normal;
+  color: #5A3ECA;
+  gap: 5px; /* Spacing between the radio button and label text */
+}
+
+
+/* Appointment Details Section */
+.appointment-details {
+  flex: 1;
+  padding: 30px;
+  background: #ffffff;
+  color: #333;
+  box-shadow: 0 4px 10px #5A3ECA;
+}
+
+.appointment-details h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  font-weight: 600;
+  color: #333;
+}
+
+.appointment-info {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 25px;
+}
+
+.appointment-info h4 {
+  font-size: 16px;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.appointment-info p {
+  font-size: 14px;
+  margin: 0;
+  color: #000;
+}
+
+.terms {
+  margin-top: 20px;
+}
+
+.terms input {
+  margin-right: 10px;
+}
+
+.terms a {
+  color: #5A3ECA;;
+  text-decoration: none;
+}
+
+.terms a:hover {
+  text-decoration: underline;
+}
+
+/* Pay Button */
+.confirm-btn {
+  margin-top: 20px;
+  padding: 15px 25px;
+  background-color: #5A3ECA;;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 100%;
+}
+
+.confirm-btn:hover {
+  background-color: #5A3ECA;;
+}
+
+.confirm-btn:disabled {
+  background-color: #b3b3b3;
+  cursor: not-allowed;
+}
+
+/* Responsive Styling */
+@media (max-width: 768px) {
   .content {
-    display: flex;
-    flex-wrap: wrap;
-    max-width: 1200px;
-    background: #ffffff;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    width: 100%;
-  }
-  
-  /* User Details Section */
-  .user-details {
-    flex: 1;
-    padding: 20px;
-    background: #060606; /* Black background for contrast */
-    color: #ffffff; /* White text for readability */
-  }
-  
-  .user-details h2 {
-    font-size: 20px;
-    margin-bottom: 15px;
-  }
-  
-  .user-details .uhid-note {
-    font-size: 14px;
-    margin-bottom: 20px;
-    color: #c1c1c1;
-  }
-  
-  .details-form {
-    display: flex;
     flex-direction: column;
-    gap: 15px;
   }
-  
-  .form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-  }
-  
-  .form-group label {
-    font-weight: bold; /* Bold labels */
-    margin-bottom: 5px; /* Add space below labels */
-    color: #0b0a0a; /* White text for labels on dark backgrounds */
-  }
-  
-  .form-group input {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    width: 100%;
-    font-size: 14px;
-    color: #000; /* Black text inside inputs */
-    background: #fff; /* White background for inputs */
-  }
-  
-  .form-group input:read-only {
-    background: #e9ecef; /* Light gray for read-only inputs */
-  }
-  
-  .radio-group label {
-    margin-right: 15px;
-    font-weight: normal;
-    color: #ffffff; /* Ensure radio button labels are visible */
-  }
-  
-  /* Appointment Details Section */
-  .appointment-details {
-    flex: 1;
-    padding: 20px;
-    background: #ffffff;
-    border-left: 1px solid #ddd;
-  }
-  
-  .appointment-details h2 {
-    margin-bottom: 20px;
-    color: #333; /* Ensure headings are visible */
-  }
-  
+
   .appointment-info {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
+    grid-template-columns: 1fr;
   }
-  
-  .appointment-info h4 {
-    font-size: 16px;
-    margin-bottom: 5px;
-    color: #333;
-  }
-  
-  .appointment-info p {
-    font-size: 14px;
-    margin: 0;
-    color: #555;
-  }
-  
-  .terms {
-    margin-top: 20px;
-  }
-  
-  .terms input {
-    margin-right: 10px;
-  }
-  
-  .terms a {
-    color: #007bff;
-    text-decoration: none;
-  }
-  
-  .terms a:hover {
-    text-decoration: underline;
-  }
-  
-  .confirm-btn {
-    margin-top: 20px;
-    padding: 12px 20px;
-    background-color: #007bff;
-    color: white;
-    font-weight: bold;
+
+  .user-details,
+  .appointment-details {
+    margin-bottom: 30px;
     border: none;
-    border-radius: 5px;
-    cursor: pointer;
   }
-  
-  .confirm-btn:hover {
-    background-color: #0056b3;
-  }
-  
-  /* Responsive Styling */
-  @media (max-width: 768px) {
-    .content {
-      flex-direction: column;
-    }
-  
-    .appointment-info {
-      grid-template-columns: 1fr;
-    }
-  
-    .user-details,
-    .appointment-details {
-      border: none;
-      margin-bottom: 20px;
-    }
-  }
-  
+}
