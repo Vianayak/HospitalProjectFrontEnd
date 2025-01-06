@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import "./DoctorCards.css";
 import "./PopupStyles.css";
 
@@ -7,17 +8,13 @@ const DoctorCard = ({ doctor }) => {
   const [email, setEmail] = useState("");
   const [showOtpForm, setShowOtpForm] = useState(false);
   const [showSchedulePopup, setShowSchedulePopup] = useState(false);
-  const [startDate, setStartDate] = useState(new Date());
-  const [selectedDate, setSelectedDate] = useState(null);
-  const [date, setDate] = useState('');
-  const [appointmentMessage, setAppointmentMessage] = useState('');
+  const [date, setDate] = useState("");
   const [selectedTimeSlot, setSelectedTimeSlot] = useState(null);
 
-  
+  const navigate = useNavigate(); // Initialize useNavigate
+
   const handleDateChange = (event) => {
-    const selectedDate = new Date(event.target.value);
     setDate(event.target.value);
-    setSelectedDate(selectedDate); // Update selected date when input date changes
   };
 
   const handleTimeSlotSelect = (timeSlot) => {
@@ -43,23 +40,14 @@ const DoctorCard = ({ doctor }) => {
     setShowSchedulePopup(true);
   };
 
- 
-
-  // Format date to "Day DD MMM"
-  const formatDate = (date) => {
-    const options = { day: "2-digit", weekday: "short", month: "short" };
-    return date.toLocaleDateString("en-US", options);
-  };
-
-  
-
   const handleConfirmAppointment = () => {
-    if (selectedDate && selectedTimeSlot) {
-      setAppointmentMessage(
-        `Your appointment has been booked for ${formatDate(new Date(selectedDate))} at ${selectedTimeSlot}.`
-      );
+    if (date && selectedTimeSlot) {
+      // Redirect to the user-appointment page with query parameters (optional)
+      navigate(`/user-appointment`, {
+        state: { date, timeSlot: selectedTimeSlot },
+      });
     } else {
-      setAppointmentMessage("Please select both a date and a time slot.");
+      alert("Please select both a date and a time slot.");
     }
   };
 
@@ -135,82 +123,54 @@ const DoctorCard = ({ doctor }) => {
               &times;
             </button>
             <div className="schedule-content">
-              <div className="schedule-header">
-                
-              
-               
-              </div>
-<h3>Schedule Your Appointment Timing</h3>
+              <h3>Schedule Your Appointment Timing</h3>
               <div className="date-picker-container">
-  <label htmlFor="date">Choose a date:</label>
-  <input
-    type="date"
-    id="date"
-    value={date}
-    onChange={handleDateChange}
-    className="date-input"
-  />
-  
-</div>
-
+                <label htmlFor="date">Choose a date:</label>
+                <input
+                  type="date"
+                  id="date"
+                  value={date}
+                  onChange={handleDateChange}
+                  className="date-input"
+                />
+              </div>
               <div className="schedule-body">
-  <h3>MORNING</h3>
-  <div className="time-slots">
-    <button
-      className={`time-slot ${selectedTimeSlot === "11:00-11:30" ? "active" : ""}`}
-      onClick={() => handleTimeSlotSelect("11:00-11:30")}
-    >
-      11:00-11:30
-    </button>
-    <button
-      className={`time-slot ${selectedTimeSlot === "11:30-12:00" ? "active" : ""}`}
-      onClick={() => handleTimeSlotSelect("11:30-12:00")}
-    >
-      11:30-12:00
-    </button>
-  </div>
-  <h3>AFTERNOON</h3>
-  <div className="time-slots">
-    <button
-      className={`time-slot ${selectedTimeSlot === "12:30-13:00" ? "active" : ""}`}
-      onClick={() => handleTimeSlotSelect("12:30-13:00")}
-    >
-      12:30-13:00
-    </button>
-    <button
-      className={`time-slot ${selectedTimeSlot === "13:30-14:00" ? "active" : ""}`}
-      onClick={() => handleTimeSlotSelect("13:30-14:00")}
-    >
-      13:30-14:00
-    </button>
-    <button
-      className={`time-slot ${selectedTimeSlot === "14:30-15:00" ? "active" : ""}`}
-      onClick={() => handleTimeSlotSelect("14:30-15:00")}
-    >
-      14:30-15:00
-    </button>
-    <button
-      className={`time-slot ${selectedTimeSlot === "15:30-16:00" ? "active" : ""}`}
-      onClick={() => handleTimeSlotSelect("15:30-16:00")}
-    >
-      15:30-16:00
-    </button>
-    <button
-      className={`time-slot ${selectedTimeSlot === "16:30-17:00" ? "active" : ""}`}
-      onClick={() => handleTimeSlotSelect("16:30-17:00")}
-    >
-      16:30-17:00
-    </button>
-  </div>
-  <h3>EVENING</h3>
-  <p>No slots available</p>
-</div>
-
+                <h3>MORNING</h3>
+                <div className="time-slots">
+                  <button
+                    className={`time-slot ${selectedTimeSlot === "11:00-11:30" ? "active" : ""}`}
+                    onClick={() => handleTimeSlotSelect("11:00-11:30")}
+                  >
+                    11:00-11:30
+                  </button>
+                  <button
+                    className={`time-slot ${selectedTimeSlot === "11:30-12:00" ? "active" : ""}`}
+                    onClick={() => handleTimeSlotSelect("11:30-12:00")}
+                  >
+                    11:30-12:00
+                  </button>
+                </div>
+                <h3>AFTERNOON</h3>
+                <div className="time-slots">
+                  <button
+                    className={`time-slot ${selectedTimeSlot === "12:30-13:00" ? "active" : ""}`}
+                    onClick={() => handleTimeSlotSelect("12:30-13:00")}
+                  >
+                    12:30-13:00
+                  </button>
+                  <button
+                    className={`time-slot ${selectedTimeSlot === "13:30-14:00" ? "active" : ""}`}
+                    onClick={() => handleTimeSlotSelect("13:30-14:00")}
+                  >
+                    13:30-14:00
+                  </button>
+                </div>
+                <h3>EVENING</h3>
+                <p>No slots available</p>
+              </div>
               <button className="continue-button" onClick={handleConfirmAppointment}>
-                Confirm Appointment
+                Continue
               </button>
-
-              {appointmentMessage && <p className="appointment-message">{appointmentMessage}</p>}
             </div>
           </div>
         </div>
