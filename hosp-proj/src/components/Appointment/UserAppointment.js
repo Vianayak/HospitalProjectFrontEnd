@@ -31,7 +31,7 @@ const UserAppointment = () => {
       const amountInPaise = data.amount * 100;
 
       const options = {
-        key: "rzp_test_2ThA8oBdItjHWx",
+        key: "rzp_test_K5qGcFdtNC8hvm",
         amount: amountInPaise,
         currency: data.currency,
         name: "Jaya Hospitals",
@@ -60,7 +60,7 @@ const UserAppointment = () => {
       const razorpay = new window.Razorpay(options);
       razorpay.open();
     } catch (error) {
-      console.error("Error during payment:", error);
+      console.error("Error during payment:sdfghj", error);
       alert("Something went wrong. Please try again.");
     }
   };
