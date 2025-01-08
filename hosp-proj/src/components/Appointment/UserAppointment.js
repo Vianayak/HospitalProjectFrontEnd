@@ -66,12 +66,21 @@ const UserAppointment = () => {
   };
 
   return (
+    
+    <>
+<header className="header">
+        <h1>JAYA HOSPITALS</h1>
+      </header>
+  
     <div className="content-wrapper">
+  
       <div className="content">
         {/* User Details Section */}
+
+        
         <div className="user-details">
           <h2>APJ1.0002836055 (Vinayak Banoth)</h2>
-          <p className="uhid-note">Any change in UHID can be done at the hospital/clinic.</p>
+          <p className="uhid-note">Fill Your Personal Details.</p>
           <form className="details-form">
             <div className="form-group">
               <label>First Name</label>
@@ -83,7 +92,7 @@ const UserAppointment = () => {
             </div>
             <div className="form-group">
               <label>Phone</label>
-              <input type="text" placeholder="0000000000" />
+              <input type="text" placeholder="+91 xxxxxxxxxx" />
             </div>
             <div className="form-group">
               <label>Email</label>
@@ -94,16 +103,15 @@ const UserAppointment = () => {
               <input type="date" placeholder="1996-06-21" />
             </div>
             <div className="form-group">
-              <label>Gender</label>
-              <div className="radio-group">
-                <label>
-                  <input type="radio" name="gender" value="Male" /> Male
-                </label>
-                <label>
-                  <input type="radio" name="gender" value="Female" /> Female
-                </label>
-              </div>
-            </div>
+  <label>Gender</label>
+  <select>
+    <option value="" disabled selected>Select Gender</option>
+    <option value="Male">Male</option>
+    <option value="Female">Female</option>
+    <option value="Other">Other</option>
+  </select>
+</div>
+
           </form>
         </div>
 
@@ -140,7 +148,7 @@ const UserAppointment = () => {
         </div>
       </div>
     </div>
-  );
+ </> );
 };
 
 export default UserAppointment;

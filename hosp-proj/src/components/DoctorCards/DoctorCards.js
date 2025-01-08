@@ -53,7 +53,7 @@ const DoctorCard = ({ doctor }) => {
 
   return (
     <>
-      <div className="content-wrapper">
+      <div className="content-wrapper1">
         <div className="doctor-card">
           <div className="doctor-image">
             <img src="Assets/Images/Love.jpeg" alt={`${doctor.name}`} />
@@ -125,17 +125,18 @@ const DoctorCard = ({ doctor }) => {
             <div className="schedule-content">
               <h3>Schedule Your Appointment Timing</h3>
               <div className="date-picker-container">
-                <label htmlFor="date">Choose a date:</label>
-                <input
-                  type="date"
-                  id="date"
-                  value={date}
-                  onChange={handleDateChange}
-                  className="date-input"
-                />
-              </div>
+  <label htmlFor="date">Choose a date:</label>
+  <input
+    type="date"
+    id="date"
+    value={date}
+    onChange={handleDateChange}
+    className="date-input"
+  />
+</div>
+
               <div className="schedule-body">
-                <h3>MORNING</h3>
+                <h3 class="align-left">MORNING</h3>
                 <div className="time-slots">
                   <button
                     className={`time-slot ${selectedTimeSlot === "11:00-11:30" ? "active" : ""}`}
@@ -150,7 +151,7 @@ const DoctorCard = ({ doctor }) => {
                     11:30-12:00
                   </button>
                 </div>
-                <h3>AFTERNOON</h3>
+                <h3 class="align-left"> AFTERNOON</h3>
                 <div className="time-slots">
                   <button
                     className={`time-slot ${selectedTimeSlot === "12:30-13:00" ? "active" : ""}`}
@@ -165,7 +166,7 @@ const DoctorCard = ({ doctor }) => {
                     13:30-14:00
                   </button>
                 </div>
-                <h3>EVENING</h3>
+                <h3 class="align-left">EVENING</h3>
                 <p>No slots available</p>
               </div>
               <button className="continue-button" onClick={handleConfirmAppointment}>

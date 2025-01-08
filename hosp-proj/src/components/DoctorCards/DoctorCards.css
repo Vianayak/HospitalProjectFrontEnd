@@ -2,10 +2,11 @@
 .doctor-list {
   display: grid;
   grid-template-columns: repeat(2, 1fr); /* Two cards per row */
-  gap: 20px; /* Spacing between cards */
+  /* Spacing between cards */
   padding: 20px;
   margin: 0 auto; /* Center the grid on the page */
   max-width: 1200px; /* Limit the maximum width */
+
 }
 
 /* For each doctor card */
@@ -74,10 +75,17 @@
 }
 
 
-.content-wrapper {
+.content-wrapper1 {
   margin-top: 100px; /* Set this to the height of your navbar */
 }
 
 .doctor-availability{
   color:red;
 }
+
+.align-left {
+  text-align: left; /* Ensures text is aligned to the left */
+ 
+}
+
+

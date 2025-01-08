@@ -5,9 +5,11 @@
   align-items: center;
   padding: 30px;
   background-color: #f8f9fa;
-  min-height: 100vh;
- 
+  min-height: 70vh;
+ margin-top: 0%;
+
 }
+
 
 /* Content Section */
 .content {
@@ -188,4 +190,67 @@
     margin-bottom: 30px;
     border: none;
   }
+}
+
+/* Header */
+.header {
+  background-color: #5A3ECA;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  font-size: 24px;
+  font-weight: bold;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  margin-top: 100px;
+  margin-bottom: 0%;
+  position: sticky;
+}
+/* Gender Dropdown Styling */
+.form-group select {
+  padding: 8px 12px; /* Add padding for better spacing */
+  font-size: 14px; /* Font size for better readability */
+  border: 1px solid #5A3ECA; /* Border color matching theme */
+  border-radius: 4px; /* Rounded corners */
+  width: 280px; /* Fixed width for uniformity */
+  color: #5A3ECA; /* Text color matching theme */
+  background: #fff; /* White background for clarity */
+  appearance: none; /* Remove default browser styling */
+  cursor: pointer; /* Pointer cursor for interactivity */
+}
+
+/* Dropdown Focus State */
+.form-group select:focus {
+  border-color: #5A3ECA; /* Highlight border on focus */
+  outline: none; /* Remove default outline */
+}
+
+/* Dropdown Arrow Styling (optional) */
+.form-group select::-ms-expand {
+  display: none; /* Remove default arrow for IE/Edge */
+}
+
+/* Pay Button */
+.confirm-btn {
+  margin-top: 20px;
+  padding: 15px 25px; /* Adjust padding for balanced size */
+  background-color: #5A3ECA; /* Button background color */
+  color: white; /* Text color */
+  font-weight: bold; /* Bold text for emphasis */
+  border: none; /* Remove border */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor for interactivity */
+  font-size: 16px; /* Font size for better readability */
+  width: 100%; /* Full-width button */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+}
+
+/* Button Hover Effect */
+.confirm-btn:hover {
+  background-color: #4a32b3; /* Darker shade for hover */
+}
+
+/* Button Disabled State */
+.confirm-btn:disabled {
+  background-color: #b3b3b3; /* Gray color for disabled state */
+  cursor: not-allowed; /* Change cursor to indicate non-interactivity */
 }

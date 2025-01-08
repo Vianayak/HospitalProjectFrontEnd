@@ -166,7 +166,6 @@
   text-align: center;
   color: #5A3ECA;
   font-weight: 600;
-
 }
 
 /* CSS for the selected date */
@@ -192,7 +191,7 @@
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 }
 
 /* Time Slot Button */
@@ -251,6 +250,8 @@
   border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
+  margin-left: 200px;
+  margin-top: 20px;
   text-align: center;
 }
 
@@ -274,14 +275,14 @@ font-weight: 600;
 /* Styling for the container */
 .date-picker-container {
   font-family: Arial, sans-serif;
-  padding:  0px;
   background-color: #f9f9f9;
   border-radius: 8px;
   max-width: 400px;
   margin: auto;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   display: flex;
-  align-items: center; /* Aligns items vertically in the middle */
+  margin-left: 0px;
+ 
 }
 
 /* Label styling */
@@ -290,6 +291,7 @@ font-weight: 600;
   font-weight: bold;
   color: #5A3ECA;
   margin-right: 10px; /* Space between label and input */
+  margin-top: 5px;
 }
 
 /* Input field styling */
