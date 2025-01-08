@@ -41,18 +41,11 @@ const DoctorCard = ({ doctor }) => {
   };
 
   const handleConfirmAppointment = () => {
-<<<<<<< HEAD
-    if (selectedDate && selectedTimeSlot) {
-      setAppointmentMessage(
-        `Your appointment has been booked for ${formatDate(new Date(selectedDate))} at ${selectedTimeSlot}.`
-      );
-=======
     if (date && selectedTimeSlot) {
       // Redirect to the user-appointment page with query parameters (optional)
       navigate(`/user-appointment`, {
         state: { date, timeSlot: selectedTimeSlot },
       });
->>>>>>> e244d230846edf68d8e5d5f05ed217c4f2d2bdd3
     } else {
       alert("Please select both a date and a time slot.");
     }
