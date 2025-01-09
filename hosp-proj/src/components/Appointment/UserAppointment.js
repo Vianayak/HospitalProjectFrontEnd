@@ -16,25 +16,69 @@ const UserAppointment = () => {
     gender: "",
   });
 
-  const handlePayToProceed = () => {
-    if (isFormValid && isTermsChecked) {
-      // Example action: Send data to server
-      axios
-        .post("/api/appointment", {
-          formData,
-          appointmentDetails: { date, timeSlot, doctorDetails },
-        })
-        .then((response) => {
-          alert("Appointment confirmed!");
-          console.log(response.data); // Log response for debugging
-          // Optionally, redirect to a success page
-        })
-        .catch((error) => {
-          console.error("Error confirming appointment:", error);
-          alert("Failed to confirm the appointment. Please try again.");
-        });
+  const handlePayToProceed = async () => {
+    try {
+      const { data } = await axios.post("http://localhost:8081/api/book-appointment/initiate", {
+        amount: 500,
+        currency: "INR",
+        firstName: "namasthe",
+        lastName: "Telangana",
+        mobile: 8919967393,
+        email: email || "hero@gmail.com", // Use the passed email
+        dob: "21/08/2025",
+        gender: "male",
+      });
+
+      const amountInPaise = data.amount * 100;
+
+      const options = {
+        key: "rzp_test_K5qGcFdtNC8hvm",
+        amount: amountInPaise,
+        currency: data.currency,
+        name: "Jaya Hospitals",
+        description: "Test Transaction",
+        image: "Assets/images/HeaderLogo.png",
+        order_id: data.razorpayOrderId,
+        handler: (response) => {
+          console.log("Payment successful!", response);
+          axios.post("http://localhost:8081/api/book-appointment/verify-payment", {
+            razorpay_payment_id: response.razorpay_payment_id,
+            razorpay_order_id: response.razorpay_order_id,
+            razorpay_signature: response.razorpay_signature,
+          })
+            .then(() => {
+              alert("Payment verified successfully!");
+            })
+            .catch((error) => {
+              console.error("Error verifying payment:", error);
+              alert("Payment verification failed.");
+            });
+
+          alert(`Payment successful! Payment ID: ${response.razorpay_payment_id}`);
+        },
+        prefill: {
+          name: doctorDetails?.name || "Praveen kumar", // Use passed doctor details
+          email: email || "parvez@gmail.com", // Use passed email
+          contact: "8919967393",
+        },
+        theme: {
+          color: "#3399cc",
+        },
+      };
+
+      if (!window.Razorpay) {
+        console.error("Razorpay SDK is not loaded.");
+        return;
+      }
+
+      const razorpay = new window.Razorpay(options);
+      razorpay.open();
+    } catch (error) {
+      console.error("Error during payment:", error);
+      alert("Something went wrong. Please try again.");
     }
   };
+
 
   const [formErrors, setFormErrors] = useState({});
   const [isFormValid, setIsFormValid] = useState(false);
