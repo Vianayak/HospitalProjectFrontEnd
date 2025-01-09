@@ -26,6 +26,11 @@ const specialties = [
 
 const SpecialtiesCarousel = () => {
   return (
+
+    <>
+  <header>
+    <h1>Specialitics</h1>
+  </header>
     <div className="carousel-container">
       <div className="carousel-track">
         {specialties.map((specialty, index) => (
@@ -43,7 +48,8 @@ const SpecialtiesCarousel = () => {
         ))}
       </div>
     </div>
+    </>
   );
-};
 
+};
 export default SpecialtiesCarousel;

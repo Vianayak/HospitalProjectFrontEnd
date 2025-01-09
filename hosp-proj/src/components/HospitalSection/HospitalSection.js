@@ -15,7 +15,7 @@ const hospitals = [
 const HospitalsSection = () => {  
   return (  
     <div className="container">  
-      <h2 className="header-section" >Hospitals in Telangana</h2>  
+      <h1 className="header-section" >Hospitals in Telangana</h1>  
       <p>  
         Apollo Group constitutes the best hospital in India with over 10,000 beds across 73  
         hospitals, 5000+ pharmacies, over 300 clinics, 1100+ diagnostic centres and 200+  

@@ -24,6 +24,10 @@ const DoctorGrid = () => {
   }, []); // Empty dependency array to run only once
 
   return (
+    <>
+    <header>
+    <h1>Available Doctors</h1>
+  </header> 
     <div className="doctor-grid">
       {error && <p className="error-message">Error: {error}</p>}
       {doctors.length === 0 && !error ? (
@@ -47,6 +51,7 @@ const DoctorGrid = () => {
         ))
       )}
     </div>
+    </>
   );
 };
 
