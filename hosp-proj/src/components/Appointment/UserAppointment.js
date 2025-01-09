@@ -20,11 +20,11 @@ const UserAppointment = () => {
       const { data } = await axios.post("http://localhost:8081/api/book-appointment/initiate", {
         amount: 500,
         currency: "INR",
-        firstName: "vinfghjk",
-        lastName: "bano",
-        mobile: 902637398,
-        email: "vina@gmail.com",
-        dob: "21/08/2024",
+        firstName: "namasthe",
+        lastName: "Telangana",
+        mobile: 8919967393,
+        email: "hero@gmail.com",
+        dob: "21/08/2025",
         gender: "male",
       });
 
@@ -40,6 +40,19 @@ const UserAppointment = () => {
         order_id: data.razorpayOrderId,
         handler: (response) => {
           console.log("Payment successful!", response);
+          axios.post("http://localhost:8081/api/book-appointment/verify-payment", {
+            razorpay_payment_id: response.razorpay_payment_id,
+            razorpay_order_id: response.razorpay_order_id,
+            razorpay_signature: response.razorpay_signature,
+          })
+            .then(() => {
+              alert("Payment verified successfully!");
+            })
+            .catch((error) => {
+              console.error("Error verifying payment:", error);
+              alert("Payment verification failed.");
+            });
+
           alert(`Payment successful! Payment ID: ${response.razorpay_payment_id}`);
         },
         prefill: {
@@ -60,95 +73,89 @@ const UserAppointment = () => {
       const razorpay = new window.Razorpay(options);
       razorpay.open();
     } catch (error) {
-      console.error("Error during payment:sdfghj", error);
+      console.error("Error during payment:", error);
       alert("Something went wrong. Please try again.");
     }
   };
 
   return (
-    
     <>
-<header className="header">
+      <header className="header">
         <h1>JAYA HOSPITALS</h1>
       </header>
-  
-    <div className="content-wrapper">
-  
-      <div className="content">
-        {/* User Details Section */}
 
-        
-        <div className="user-details">
-          <h2>APJ1.0002836055 (Vinayak Banoth)</h2>
-          <p className="uhid-note">Fill Your Personal Details.</p>
-          <form className="details-form">
-            <div className="form-group">
-              <label>First Name</label>
-              <input type="text" placeholder="Enter Your Fist Name" />
-            </div>
-            <div className="form-group">
-              <label>Last Name</label>
-              <input type="text" placeholder="Enter Your Last Name" />
-            </div>
-            <div className="form-group">
-              <label>Phone</label>
-              <input type="text" placeholder="+91 xxxxxxxxxx" />
-            </div>
-            <div className="form-group">
-              <label>Email</label>
-              <input type="email" placeholder="Enter your email" />
-            </div>
-            <div className="form-group">
-              <label>DOB</label>
-              <input type="date" placeholder="1996-06-21" />
-            </div>
-            <div className="form-group">
-  <label>Gender</label>
-  <select>
-    <option value="" disabled selected>Select Gender</option>
-    <option value="Male">Male</option>
-    <option value="Female">Female</option>
-    <option value="Other">Other</option>
-  </select>
-</div>
-
-          </form>
-        </div>
-
-        {/* Appointment Details Section */}
-        <div className="appointment-details">
-          <h2>Appointment Details</h2>
-          <div className="appointment-info">
-            <div>
-              <h4>Appointment Date</h4>
-              <p>21, Jan 2025</p>
-            </div>
-            <div>
-              <h4>Appointment Time</h4>
-              <p>11:00 - 11:30 AM</p>
-            </div>
-            <div>
-              <h4>Doctor</h4>
-              <p>Dr. Madhuri Khilari</p>
-            </div>
-            <div>
-              <h4>Location</h4>
-              <p>Apollo Health City, Jubilee Hills</p>
-            </div>
+      <div className="content-wrapper">
+        <div className="content">
+          <div className="user-details">
+            <h2>APJ1.0002836055 (Vinayak Banoth)</h2>
+            <p className="uhid-note">Fill Your Personal Details.</p>
+            <form className="details-form">
+              <div className="form-group">
+                <label>First Name</label>
+                <input type="text" placeholder="Enter Your Fist Name" />
+              </div>
+              <div className="form-group">
+                <label>Last Name</label>
+                <input type="text" placeholder="Enter Your Last Name" />
+              </div>
+              <div className="form-group">
+                <label>Phone</label>
+                <input type="text" placeholder="+91 xxxxxxxxxx" />
+              </div>
+              <div className="form-group">
+                <label>Email</label>
+                <input type="email" placeholder="Enter your email" />
+              </div>
+              <div className="form-group">
+                <label>DOB</label>
+                <input type="date" placeholder="1996-06-21" />
+              </div>
+              <div className="form-group">
+                <label>Gender</label>
+                <select>
+                  <option value="" disabled selected>Select Gender</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+            </form>
           </div>
-          <div className="terms">
-            <input type="checkbox" id="terms" />
-            <label htmlFor="terms">
-              I Agree <a href="#">To The Terms & Conditions</a>.
-            </label>
+
+          <div className="appointment-details">
+            <h2>Appointment Details</h2>
+            <div className="appointment-info">
+              <div>
+                <h4>Appointment Date</h4>
+                <p>21, Jan 2025</p>
+              </div>
+              <div>
+                <h4>Appointment Time</h4>
+                <p>11:00 - 11:30 AM</p>
+              </div>
+              <div>
+                <h4>Doctor</h4>
+                <p>Dr. Madhuri Khilari</p>
+              </div>
+              <div>
+                <h4>Location</h4>
+                <p>Apollo Health City, Jubilee Hills</p>
+              </div>
+            </div>
+            <div className="terms">
+              <input type="checkbox" id="terms" />
+              <label htmlFor="terms">
+                I Agree <a href="#">To The Terms & Conditions</a>.
+              </label>
+            </div>
+            <button className="confirm-btn" onClick={handlePayment}>
+              Pay to Proceed
+            </button>
           </div>
-          <button className="confirm-btn" onClick={handlePayment}>
-            Pay to Proceed
-          </button>
         </div>
       </div>
-    </div>
- </> );
+    </>
+  );
 };
 
 export default UserAppointment;
