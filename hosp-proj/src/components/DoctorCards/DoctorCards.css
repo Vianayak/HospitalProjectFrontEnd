@@ -100,4 +100,13 @@
   text-decoration: underline;
 }
 
+.time-slot.blocked {
+  background-color: #b0b0b0;
+  color: white;
+  cursor: not-allowed;
+  pointer-events: none;
+}
 
+.time-slot.blocked:hover {
+  background-color: #b0b0b0;
+}

@@ -12,17 +12,39 @@ const DoctorCard = ({ doctor }) => {
   const [showSchedulePopup, setShowSchedulePopup] = useState(false);
   const [date, setDate] = useState("");
   const [selectedTimeSlot, setSelectedTimeSlot] = useState(null);
-  const [countdown, setCountdown] = useState(10);  // Countdown timer state
-  const [canResendOtp, setCanResendOtp] = useState(false);  // State for enabling resend
+  const [blockedSlots, setBlockedSlots] = useState([]); // State to store blocked slots
+  const [countdown, setCountdown] = useState(10);
+  const [canResendOtp, setCanResendOtp] = useState(false);
 
   const navigate = useNavigate();
+
+  // Fetch the doctor's schedule
+  useEffect(() => {
+    const fetchDoctorSchedule = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8081/api/doctors/doctor-schedule?regNum=${doctor.regestrationNum}`);
+        setBlockedSlots(response.data); // Set the blocked slots data
+      } catch (error) {
+        console.error("Error fetching doctor schedule:", error);
+      }
+    };
+
+    fetchDoctorSchedule();
+  }, [doctor.regestrationNum]);
 
   const handleDateChange = (event) => {
     setDate(event.target.value);
   };
 
   const handleTimeSlotSelect = (timeSlot) => {
+    if (isSlotBlocked(timeSlot)) {
+      return; // Prevent selecting a blocked slot
+    }
     setSelectedTimeSlot(timeSlot);
+  };
+
+  const isSlotBlocked = (slotTime) => {
+    return blockedSlots.some((item) => item.date === date && item.time === slotTime);
   };
 
   const handleBookAppointment = () => {
@@ -36,7 +58,7 @@ const DoctorCard = ({ doctor }) => {
   };
 
   const handleSendOtp = async () => {
-    console.log("Sending OTP to email:", email);  // Debugging log
+    console.log("Sending OTP to email:", email);
 
     if (!email) {
       alert("Please enter a valid email address.");
@@ -56,7 +78,7 @@ const DoctorCard = ({ doctor }) => {
       const data = await response.text();
       console.log("OTP sent response:", data);
       setShowOtpForm(true);
-      startCountdown();  // Start countdown after OTP is sent
+      startCountdown();
     } catch (error) {
       console.error("Error sending OTP:", error);
       alert(`An error occurred: ${error.message}`);
@@ -65,13 +87,13 @@ const DoctorCard = ({ doctor }) => {
 
   const startCountdown = () => {
     setCountdown(10);
-    setCanResendOtp(false);  // Disable resend OTP initially
+    setCanResendOtp(false);
 
     const interval = setInterval(() => {
       setCountdown((prev) => {
         if (prev === 1) {
           clearInterval(interval);
-          setCanResendOtp(true);  // Enable resend OTP when countdown finishes
+          setCanResendOtp(true); // Enable resend OTP when countdown finishes
         }
         return prev - 1;
       });
@@ -110,9 +132,9 @@ const DoctorCard = ({ doctor }) => {
   };
 
   const handleResendOtp = () => {
-    setCountdown(10); // Reset the countdown
-    setCanResendOtp(false); // Disable resend link until countdown finishes
-    handleSendOtp(); // Resend OTP by calling the send OTP function
+    setCountdown(10);
+    setCanResendOtp(false);
+    handleSendOtp();
   };
 
   return (
@@ -215,14 +237,16 @@ const DoctorCard = ({ doctor }) => {
                 <h3 className="align-left">MORNING</h3>
                 <div className="time-slots">
                   <button
-                    className={`time-slot ${selectedTimeSlot === "11:00-11:30" ? "active" : ""}`}
+                    className={`time-slot ${selectedTimeSlot === "11:00-11:30" ? "active" : ""} ${isSlotBlocked("11:00-11:30") ? "blocked" : ""}`}
                     onClick={() => handleTimeSlotSelect("11:00-11:30")}
+                    disabled={isSlotBlocked("11:00-11:30")}
                   >
                     11:00-11:30
                   </button>
                   <button
-                    className={`time-slot ${selectedTimeSlot === "11:30-12:00" ? "active" : ""}`}
+                    className={`time-slot ${selectedTimeSlot === "11:30-12:00" ? "active" : ""} ${isSlotBlocked("11:30-12:00") ? "blocked" : ""}`}
                     onClick={() => handleTimeSlotSelect("11:30-12:00")}
+                    disabled={isSlotBlocked("11:30-12:00")}
                   >
                     11:30-12:00
                   </button>
@@ -230,24 +254,41 @@ const DoctorCard = ({ doctor }) => {
                 <h3 className="align-left">AFTERNOON</h3>
                 <div className="time-slots">
                   <button
-                    className={`time-slot ${selectedTimeSlot === "12:30-13:00" ? "active" : ""}`}
+                    className={`time-slot ${selectedTimeSlot === "12:30-13:00" ? "active" : ""} ${isSlotBlocked("12:30-13:00") ? "blocked" : ""}`}
                     onClick={() => handleTimeSlotSelect("12:30-13:00")}
+                    disabled={isSlotBlocked("12:30-13:00")}
                   >
                     12:30-13:00
                   </button>
                   <button
-                    className={`time-slot ${selectedTimeSlot === "13:30-14:00" ? "active" : ""}`}
+                    className={`time-slot ${selectedTimeSlot === "13:30-14:00" ? "active" : ""} ${isSlotBlocked("13:30-14:00") ? "blocked" : ""}`}
                     onClick={() => handleTimeSlotSelect("13:30-14:00")}
+                    disabled={isSlotBlocked("13:30-14:00")}
                   >
                     13:30-14:00
                   </button>
                 </div>
                 <h3 className="align-left">EVENING</h3>
-                <p>No slots available</p>
+                <div className="time-slots">
+                  <button
+                    className={`time-slot ${selectedTimeSlot === "15:30-15:30" ? "active" : ""} ${isSlotBlocked("15:30-15:30") ? "blocked" : ""}`}
+                    onClick={() => handleTimeSlotSelect("15:30-15:30")}
+                    disabled={isSlotBlocked("15:30-15:30")}
+                  >
+                    15:30-15:30
+                  </button>
+                  <button
+                    className={`time-slot ${selectedTimeSlot === "15:30-16:00" ? "active" : ""} ${isSlotBlocked("15:30-16:00") ? "blocked" : ""}`}
+                    onClick={() => handleTimeSlotSelect("15:30-16:00")}
+                    disabled={isSlotBlocked("15:30-16:00")}
+                  >
+                    15:30-16:00
+                  </button>
+                </div>
+                <button className="continue-button" onClick={handleConfirmAppointment}>
+                  Continue
+                </button>
               </div>
-              <button className="continue-button" onClick={handleConfirmAppointment}>
-                Continue
-              </button>
             </div>
           </div>
         </div>

@@ -126,8 +126,30 @@
   padding: 20px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Stronger shadow for elevation */
   position: relative;
-  overflow: hidden;
+  overflow: auto; /* Allow scrolling if content overflows */
+  max-height: 80vh; /* Limit height of the popup */
 }
+
+.schedule-body {
+  overflow-y: auto; /* Enable scrolling if content exceeds the container height */
+  max-height: calc(80vh - 60px); /* Calculate remaining height for content, leaving space for the button */
+}
+
+.schedule-button {
+  width: 100%;
+  padding: 10px;
+  background-color: #5A3ECA;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.schedule-button:hover {
+  background-color: #4A2A91;
+}
+
 
 /* Header Section */
 .schedule-header {
