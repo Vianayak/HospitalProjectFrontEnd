@@ -254,3 +254,84 @@
   background-color: #b3b3b3; /* Gray color for disabled state */
   cursor: not-allowed; /* Change cursor to indicate non-interactivity */
 }
+/* Error Message Styling */
+.error {
+  color: #e63946; /* Red color for error messages */
+  font-size: 12px; /* Small font size */
+  margin-top: 5px; /* Spacing between input and error message */
+  font-weight: bold; /* Bold for emphasis */
+}
+
+/* Success Message Styling (optional) */
+.success {
+  color: #4caf50; /* Green color for success messages */
+  font-size: 12px;
+  margin-top: 5px;
+  font-weight: bold;
+}
+
+/* Input Field Validation States */
+input:invalid {
+  border-color: #e63946; /* Red border for invalid input */
+  background-color: #fff5f5; /* Light red background for invalid input */
+}
+
+input:valid {
+  border-color: #4caf50; /* Green border for valid input */
+  background-color: #f0fff4; /* Light green background for valid input */
+}
+
+/* Focus State for Inputs */
+input:focus:invalid {
+  border-color: #e63946; /* Red border on focus if invalid */
+  outline: none;
+  box-shadow: 0 0 5px rgba(230, 57, 70, 0.5); /* Red glow */
+}
+
+input:focus:valid {
+  border-color: #4caf50; /* Green border on focus if valid */
+  outline: none;
+  box-shadow: 0 0 5px rgba(76, 175, 80, 0.5); /* Green glow */
+}
+
+/* Validation Message for Select Dropdown */
+.form-group select:invalid {
+  border-color: #e63946; /* Red border for invalid select */
+  background-color: #fff5f5; /* Light red background */
+}
+
+.form-group select:valid {
+  border-color: #4caf50; /* Green border for valid select */
+  background-color: #f0fff4; /* Light green background */
+}
+.placeholder {
+  font-size: 12px;
+  color: #5a3eca;
+  margin-top: 5px;
+}
+
+.error {
+  font-size: 12px;
+  color: red;
+  margin-top: 5px;
+}
+
+.error-input {
+  border-color: red !important;
+}
+input,
+select,
+textarea {
+  border: 1px solid #ccc; /* Default border */
+  padding: 8px;
+  border-radius: 4px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: #5a3eca; /* Highlight color on focus */
+  box-shadow: 0 0 5px rgba(90, 62, 202, 0.3); /* Optional shadow */
+  outline: none;
+}
