@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
+import axios from 'axios'; // Import axios
 import "./DoctorCards.css";
 import "./PopupStyles.css";
 
 const DoctorCard = ({ doctor }) => {
   const [showPopup, setShowPopup] = useState(false);
   const [email, setEmail] = useState("");
+  const [otp, setOtp] = useState("");  // Added state for OTP
   const [showOtpForm, setShowOtpForm] = useState(false);
   const [showSchedulePopup, setShowSchedulePopup] = useState(false);
   const [date, setDate] = useState("");
@@ -31,18 +33,56 @@ const DoctorCard = ({ doctor }) => {
     setShowOtpForm(false);
   };
 
-  const handleSendOtp = () => {
-    setShowOtpForm(true);
+  const handleSendOtp = async () => {
+    console.log("Sending OTP to email:", email);  // Debugging log
+  
+    if (!email) {
+      alert("Please enter a valid email address.");
+      return;
+    }
+  
+    try {
+      const response = await fetch(`http://localhost:8081/api/otp/sendOtp?email=${encodeURIComponent(email)}`, {
+        method: "POST",
+      });
+  
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(errorText || "Failed to send OTP.");
+      }
+  
+      const data = await response.text();
+      console.log("OTP sent response:", data);
+      setShowOtpForm(true);
+    } catch (error) {
+      console.error("Error sending OTP:", error);
+      alert(`An error occurred: ${error.message}`);
+    }
   };
 
-  const handleVerifyOtp = () => {
-    setShowPopup(false);
-    setShowSchedulePopup(true);
+  const handleVerifyOtp = async () => {
+    if (!otp) {
+      alert("Please enter the OTP.");
+      return;
+    }
+
+    try {
+      const response = await axios.post('http://localhost:8081/api/otp/verifyOtp', null, {
+        params: {
+          email: email,
+          otp: otp, // OTP entered by the user
+        }
+      });
+      alert(response.data); // Success message from backend
+      setShowPopup(false);
+      setShowSchedulePopup(true);
+    } catch (error) {
+      alert(error.response?.data || "Error verifying OTP");
+    }
   };
 
   const handleConfirmAppointment = () => {
     if (date && selectedTimeSlot) {
-      // Redirect to the user-appointment page with query parameters (optional)
       navigate(`/user-appointment`, {
         state: { date, timeSlot: selectedTimeSlot },
       });
@@ -101,6 +141,8 @@ const DoctorCard = ({ doctor }) => {
                       type="text"
                       className="popup-input"
                       placeholder="Enter OTP"
+                      value={otp}
+                      onChange={(e) => setOtp(e.target.value)} // Update OTP state
                     />
                     <button className="popup-button" onClick={handleVerifyOtp}>
                       Verify OTP
@@ -125,18 +167,18 @@ const DoctorCard = ({ doctor }) => {
             <div className="schedule-content">
               <h3>Schedule Your Appointment Timing</h3>
               <div className="date-picker-container">
-  <label htmlFor="date">Choose a date:</label>
-  <input
-    type="date"
-    id="date"
-    value={date}
-    onChange={handleDateChange}
-    className="date-input"
-  />
-</div>
+                <label htmlFor="date">Choose a date:</label>
+                <input
+                  type="date"
+                  id="date"
+                  value={date}
+                  onChange={handleDateChange}
+                  className="date-input"
+                />
+              </div>
 
               <div className="schedule-body">
-                <h3 class="align-left">MORNING</h3>
+                <h3 className="align-left">MORNING</h3>
                 <div className="time-slots">
                   <button
                     className={`time-slot ${selectedTimeSlot === "11:00-11:30" ? "active" : ""}`}
@@ -151,7 +193,7 @@ const DoctorCard = ({ doctor }) => {
                     11:30-12:00
                   </button>
                 </div>
-                <h3 class="align-left"> AFTERNOON</h3>
+                <h3 className="align-left">AFTERNOON</h3>
                 <div className="time-slots">
                   <button
                     className={`time-slot ${selectedTimeSlot === "12:30-13:00" ? "active" : ""}`}
@@ -166,7 +208,7 @@ const DoctorCard = ({ doctor }) => {
                     13:30-14:00
                   </button>
                 </div>
-                <h3 class="align-left">EVENING</h3>
+                <h3 className="align-left">EVENING</h3>
                 <p>No slots available</p>
               </div>
               <button className="continue-button" onClick={handleConfirmAppointment}>
