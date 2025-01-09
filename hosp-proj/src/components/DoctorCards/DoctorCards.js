@@ -23,7 +23,12 @@ const DoctorCard = ({ doctor }) => {
     const fetchDoctorSchedule = async () => {
       try {
         const response = await axios.get(`http://localhost:8081/api/doctors/doctor-schedule?regNum=${doctor.regestrationNum}`);
-        setBlockedSlots(response.data); // Set the blocked slots data
+        // Ensure response is an array before setting
+        if (Array.isArray(response.data)) {
+          setBlockedSlots(response.data); // Set the blocked slots data
+        } else {
+          console.warn("Expected an array, but got", response.data);
+        }
       } catch (error) {
         console.error("Error fetching doctor schedule:", error);
       }
@@ -44,7 +49,11 @@ const DoctorCard = ({ doctor }) => {
   };
 
   const isSlotBlocked = (slotTime) => {
-    return blockedSlots.some((item) => item.date === date && item.time === slotTime);
+    // Ensure blockedSlots is an array before checking
+    if (Array.isArray(blockedSlots)) {
+      return blockedSlots.some((item) => item.date === date && item.time === slotTime);
+    }
+    return false;
   };
 
   const handleBookAppointment = () => {
@@ -123,8 +132,13 @@ const DoctorCard = ({ doctor }) => {
 
   const handleConfirmAppointment = () => {
     if (date && selectedTimeSlot) {
-      navigate(`/user-appointment`, {
-        state: { date, timeSlot: selectedTimeSlot },
+      navigate("/user-appointment", {
+        state: {
+          date,
+          timeSlot: selectedTimeSlot,
+          email, // Pass email from DoctorCard
+          doctorDetails: doctor, // Pass doctor details (name, location, etc.)
+        },
       });
     } else {
       alert("Please select both a date and a time slot.");

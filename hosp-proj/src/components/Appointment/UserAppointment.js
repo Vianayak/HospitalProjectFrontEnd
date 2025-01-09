@@ -1,8 +1,12 @@
 import React, { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import "./UserAppointment.css";
 import axios from "axios";
 
 const UserAppointment = () => {
+  const location = useLocation();
+  const { date, timeSlot, email, doctorDetails } = location.state || {}; // Retrieve passed data
+
   useEffect(() => {
     const loadRazorpayScript = async () => {
       const script = document.createElement("script");
@@ -23,7 +27,7 @@ const UserAppointment = () => {
         firstName: "namasthe",
         lastName: "Telangana",
         mobile: 8919967393,
-        email: "hero@gmail.com",
+        email: email || "hero@gmail.com", // Use the passed email
         dob: "21/08/2025",
         gender: "male",
       });
@@ -56,8 +60,8 @@ const UserAppointment = () => {
           alert(`Payment successful! Payment ID: ${response.razorpay_payment_id}`);
         },
         prefill: {
-          name: "Praveen kumar",
-          email: "parvez@gmail.com",
+          name: doctorDetails?.name || "Praveen kumar", // Use passed doctor details
+          email: email || "parvez@gmail.com", // Use passed email
           contact: "8919967393",
         },
         theme: {
@@ -104,7 +108,7 @@ const UserAppointment = () => {
               </div>
               <div className="form-group">
                 <label>Email</label>
-                <input type="email" placeholder="Enter your email" />
+                <input type="email" value={email || ""} placeholder="Enter your email" />
               </div>
               <div className="form-group">
                 <label>DOB</label>
@@ -127,19 +131,19 @@ const UserAppointment = () => {
             <div className="appointment-info">
               <div>
                 <h4>Appointment Date</h4>
-                <p>21, Jan 2025</p>
+                <p>{date}</p> {/* Display the passed date */}
               </div>
               <div>
                 <h4>Appointment Time</h4>
-                <p>11:00 - 11:30 AM</p>
+                <p>{timeSlot}</p> {/* Display the passed time slot */}
               </div>
               <div>
                 <h4>Doctor</h4>
-                <p>Dr. Madhuri Khilari</p>
+                <p>{doctorDetails?.name}</p> {/* Display the doctor's name */}
               </div>
               <div>
                 <h4>Location</h4>
-                <p>Apollo Health City, Jubilee Hills</p>
+                <p>{doctorDetails?.location}</p> {/* Display the doctor's location */}
               </div>
             </div>
             <div className="terms">
