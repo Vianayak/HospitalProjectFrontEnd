@@ -29,7 +29,7 @@ const SpecialtiesCarousel = () => {
 
     <>
   <header>
-    <h1>Specialitics</h1>
+    <h1>Specialties</h1>
   </header>
     <div className="carousel-container">
       <div className="carousel-track">
