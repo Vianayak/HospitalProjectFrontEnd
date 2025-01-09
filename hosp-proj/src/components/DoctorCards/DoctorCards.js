@@ -1,19 +1,21 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
-import axios from 'axios'; // Import axios
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from 'axios';
 import "./DoctorCards.css";
 import "./PopupStyles.css";
 
 const DoctorCard = ({ doctor }) => {
   const [showPopup, setShowPopup] = useState(false);
   const [email, setEmail] = useState("");
-  const [otp, setOtp] = useState("");  // Added state for OTP
+  const [otp, setOtp] = useState("");
   const [showOtpForm, setShowOtpForm] = useState(false);
   const [showSchedulePopup, setShowSchedulePopup] = useState(false);
   const [date, setDate] = useState("");
   const [selectedTimeSlot, setSelectedTimeSlot] = useState(null);
+  const [countdown, setCountdown] = useState(10);  // Countdown timer state
+  const [canResendOtp, setCanResendOtp] = useState(false);  // State for enabling resend
 
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
 
   const handleDateChange = (event) => {
     setDate(event.target.value);
@@ -35,29 +37,45 @@ const DoctorCard = ({ doctor }) => {
 
   const handleSendOtp = async () => {
     console.log("Sending OTP to email:", email);  // Debugging log
-  
+
     if (!email) {
       alert("Please enter a valid email address.");
       return;
     }
-  
+
     try {
       const response = await fetch(`http://localhost:8081/api/otp/sendOtp?email=${encodeURIComponent(email)}`, {
         method: "POST",
       });
-  
+
       if (!response.ok) {
         const errorText = await response.text();
         throw new Error(errorText || "Failed to send OTP.");
       }
-  
+
       const data = await response.text();
       console.log("OTP sent response:", data);
       setShowOtpForm(true);
+      startCountdown();  // Start countdown after OTP is sent
     } catch (error) {
       console.error("Error sending OTP:", error);
       alert(`An error occurred: ${error.message}`);
     }
+  };
+
+  const startCountdown = () => {
+    setCountdown(10);
+    setCanResendOtp(false);  // Disable resend OTP initially
+
+    const interval = setInterval(() => {
+      setCountdown((prev) => {
+        if (prev === 1) {
+          clearInterval(interval);
+          setCanResendOtp(true);  // Enable resend OTP when countdown finishes
+        }
+        return prev - 1;
+      });
+    }, 1000);
   };
 
   const handleVerifyOtp = async () => {
@@ -70,10 +88,10 @@ const DoctorCard = ({ doctor }) => {
       const response = await axios.post('http://localhost:8081/api/otp/verifyOtp', null, {
         params: {
           email: email,
-          otp: otp, // OTP entered by the user
+          otp: otp,
         }
       });
-      alert(response.data); // Success message from backend
+      alert(response.data);
       setShowPopup(false);
       setShowSchedulePopup(true);
     } catch (error) {
@@ -89,6 +107,12 @@ const DoctorCard = ({ doctor }) => {
     } else {
       alert("Please select both a date and a time slot.");
     }
+  };
+
+  const handleResendOtp = () => {
+    setCountdown(10); // Reset the countdown
+    setCanResendOtp(false); // Disable resend link until countdown finishes
+    handleSendOtp(); // Resend OTP by calling the send OTP function
   };
 
   return (
@@ -142,8 +166,18 @@ const DoctorCard = ({ doctor }) => {
                       className="popup-input"
                       placeholder="Enter OTP"
                       value={otp}
-                      onChange={(e) => setOtp(e.target.value)} // Update OTP state
+                      onChange={(e) => setOtp(e.target.value)}
                     />
+                    <div className="countdown-timer">{countdown > 0 ? `Resend in ${countdown}s` : ""}</div>
+                    {canResendOtp && (
+                      <a
+                        href="#"
+                        className="resend-link"
+                        onClick={handleResendOtp}
+                      >
+                        Resend OTP
+                      </a>
+                    )}
                     <button className="popup-button" onClick={handleVerifyOtp}>
                       Verify OTP
                     </button>

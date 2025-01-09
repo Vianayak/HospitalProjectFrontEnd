@@ -89,3 +89,15 @@
 }
 
 
+.resend-link {
+  color: #f2841d;
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.resend-link:hover {
+  text-decoration: underline;
+}
+
+
