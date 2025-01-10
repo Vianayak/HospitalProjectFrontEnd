@@ -125,3 +125,10 @@
 .resend-link:hover {
   text-decoration: underline; /* Underline on hover */
 }
+
+.header-logo {
+  width: 50px; /* Adjust the width of the image */
+  height: 50px; /* Set height to maintain consistency */
+margin-bottom: 10px;
+ 
+}

@@ -21,7 +21,7 @@ function MyNavbar() {
             <Navbar bg="white" variant="light" expand="lg" className="sticky-navbar">
                 <Navbar.Brand>
                     {/* Use Link to redirect to the main page */}
-                    <Link to="/" className="navbar-logo-link">
+                    <Link to="/jayahospitals" className="navbar-logo-link">
                         <img
                             src="/Assets/Images/NewLogo.jpeg"
                             alt="Jaya Hospitals Logo"

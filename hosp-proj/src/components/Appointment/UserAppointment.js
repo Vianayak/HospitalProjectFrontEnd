@@ -122,9 +122,17 @@ const UserAppointment = () => {
 
   return (
     <>
-      <header className="header">
-        <h1>JAYA HOSPITALS</h1>
-      </header>
+    <header className="header">
+  <h1>
+    <img
+      src="Assets/Images/slogo.jpg" // Replace with the correct path to your image
+      alt="Jaya Hospitals Logo"
+      className="header-logo"
+    />
+    JAYA HOSPITALS
+  </h1>
+</header>
+
 
       <div className="content-wrapper">
         <div className="content">

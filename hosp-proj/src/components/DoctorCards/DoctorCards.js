@@ -12,20 +12,20 @@ const DoctorCard = ({ doctor }) => {
   const [showSchedulePopup, setShowSchedulePopup] = useState(false);
   const [date, setDate] = useState("");
   const [selectedTimeSlot, setSelectedTimeSlot] = useState(null);
-  const [blockedSlots, setBlockedSlots] = useState([]); // State to store blocked slots
-  const [countdown, setCountdown] = useState(10);
+  const [blockedSlots, setBlockedSlots] = useState([]);
+  const [countdown, setCountdown] = useState(0); // Initially no timer
   const [canResendOtp, setCanResendOtp] = useState(false);
 
   const navigate = useNavigate();
 
-  // Fetch the doctor's schedule
   useEffect(() => {
     const fetchDoctorSchedule = async () => {
       try {
-        const response = await axios.get(`http://localhost:8081/api/doctors/doctor-schedule?regNum=${doctor.regestrationNum}`);
-        // Ensure response is an array before setting
+        const response = await axios.get(
+          `http://localhost:8081/api/doctors/doctor-schedule?regNum=${doctor.regestrationNum}`
+        );
         if (Array.isArray(response.data)) {
-          setBlockedSlots(response.data); // Set the blocked slots data
+          setBlockedSlots(response.data);
         } else {
           console.warn("Expected an array, but got", response.data);
         }
@@ -43,13 +43,12 @@ const DoctorCard = ({ doctor }) => {
 
   const handleTimeSlotSelect = (timeSlot) => {
     if (isSlotBlocked(timeSlot)) {
-      return; // Prevent selecting a blocked slot
+      return;
     }
     setSelectedTimeSlot(timeSlot);
   };
 
   const isSlotBlocked = (slotTime) => {
-    // Ensure blockedSlots is an array before checking
     if (Array.isArray(blockedSlots)) {
       return blockedSlots.some((item) => item.date === date && item.time === slotTime);
     }
@@ -71,46 +70,62 @@ const DoctorCard = ({ doctor }) => {
       alert("Please enter a valid email address.");
       return;
     }
-  
+
     try {
-      const response = await fetch(`http://localhost:8081/api/otp/sendOtp?email=${encodeURIComponent(email)}`, {
-        method: "POST",
-      });
-  
+      const response = await fetch(
+        `http://localhost:8081/api/otp/sendOtp?email=${encodeURIComponent(email)}`,
+        {
+          method: "POST",
+        }
+      );
+
       if (!response.ok) {
         const errorText = await response.text();
         throw new Error(errorText || "Failed to send OTP.");
       }
-  
+
       setShowOtpForm(true);
-      setCountdown(30); // Set countdown to 10 seconds
-      setCanResendOtp(false); // Disable resend button during countdown
-      startCountdown();
+      setCanResendOtp(true); // Allow the user to resend OTP immediately after the first send
     } catch (error) {
       console.error("Error sending OTP:", error);
       alert(`An error occurred: ${error.message}`);
     }
   };
-  
+
   const startCountdown = () => {
+    setCountdown(30); // Start countdown at 10 seconds
     const interval = setInterval(() => {
       setCountdown((prev) => {
         if (prev === 1) {
-          clearInterval(interval); // Stop countdown
+          clearInterval(interval);
           setCanResendOtp(true); // Enable resend button
         }
         return prev - 1;
       });
-    }, 1000);
+    }, 3000);
   };
-  
-  const handleResendOtp = () => {
-    handleSendOtp(); // Resend the OTP
-    setCountdown(10); // Reset countdown to 10 seconds
-    setCanResendOtp(false); // Disable resend button again
-    startCountdown(); // Start the timer
+
+  const handleResendOtp = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:8081/api/otp/sendOtp?email=${encodeURIComponent(email)}`,
+        {
+          method: "POST",
+        }
+      );
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(errorText || "Failed to resend OTP.");
+      }
+
+      setCanResendOtp(false); // Disable resend button during countdown
+      startCountdown(); // Start the countdown timer
+    } catch (error) {
+      console.error("Error resending OTP:", error);
+      alert(`An error occurred: ${error.message}`);
+    }
   };
-  
 
   const handleVerifyOtp = async () => {
     if (!otp) {
@@ -119,11 +134,11 @@ const DoctorCard = ({ doctor }) => {
     }
 
     try {
-      const response = await axios.post('http://localhost:8081/api/otp/verifyOtp', null, {
+      const response = await axios.post("http://localhost:8081/api/otp/verifyOtp", null, {
         params: {
           email: email,
           otp: otp,
-        }
+        },
       });
       alert(response.data);
       setShowPopup(false);
@@ -139,8 +154,8 @@ const DoctorCard = ({ doctor }) => {
         state: {
           date,
           timeSlot: selectedTimeSlot,
-          email, // Pass email from DoctorCard
-          doctorDetails: doctor, // Pass doctor details (name, location, etc.)
+          email,
+          doctorDetails: doctor,
         },
       });
     } else {
@@ -170,64 +185,74 @@ const DoctorCard = ({ doctor }) => {
       </div>
 
       {showPopup && (
-  <div className="popup-overlay">
-    <div className="popup-container">
-      <button className="popup-close" onClick={handleClosePopup}>
-        &times;
-      </button>
-      <div className="popup-content">
-        <div className="popup-image">
-          <img src="Assets/Images/popupImage.webp" alt="Popup" />
-        </div>
-        <div className="popup-form">
-          <h2>JAYA Hospitals</h2>
-          <input
-            type="email"
-            className="popup-input"
-            placeholder="What is your email?"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          {!showOtpForm ? (
-            <button className="popup-button" onClick={handleSendOtp}>
-              Send Otp
+        <div className="popup-overlay">
+          <div className="popup-container">
+            <button className="popup-close" onClick={handleClosePopup}>
+              &times;
             </button>
-          ) : (
-            <div>
-              <input
-                type="text"
-                className="popup-input"
-                placeholder="Enter OTP"
-                value={otp}
-                onChange={(e) => setOtp(e.target.value)}
-              />
-              {countdown > 0 && (
-                <div className="countdown-timer">{`Resend in ${countdown}s`}</div>
-              )}
-              {canResendOtp && (
-                <div className="resend-otp-container">
-                  <a
-                    href="#"
-                    className="resend-link"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handleResendOtp();
-                    }}
-                  >
-                    Resend OTP
-                  </a>
-                </div>
-              )}
-              <button className="popup-button" onClick={handleVerifyOtp}>
-                Verify OTP
-              </button>
+            <div className="popup-content">
+              <div className="popup-image">
+                <img src="Assets/Images/popupImage.webp" alt="Popup" />
+              </div>
+              <div className="popup-form">
+              <header className="header">
+  <h4>
+    <img
+      src="Assets/Images/slogo.jpg" // Replace with the correct path to your image
+      alt="Jaya Hospitals Logo"
+      className="header-logo"
+    />
+    JAYA HOSPITALS
+  </h4>
+</header>
+
+                <input
+                  type="email"
+                  className="popup-input"
+                  placeholder="What is your email?"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+                {!showOtpForm ? (
+                  <button className="popup-button" onClick={handleSendOtp}>
+                    Send Otp
+                  </button>
+                ) : (
+                  <div>
+                    <input
+                      type="text"
+                      className="popup-input"
+                      placeholder="Enter OTP"
+                      value={otp}
+                      onChange={(e) => setOtp(e.target.value)}
+                    />
+                    {countdown > 0 && (
+                      <div className="countdown-timer">{`Resend in ${countdown}s`}</div>
+                    )}
+                    {canResendOtp && (
+                      <div className="resend-otp-container">
+                        <a
+                          href="#"
+                          className="resend-link"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            handleResendOtp();
+                          }}
+                        >
+                          Resend OTP
+                        </a>
+                      </div>
+                    )}
+                    <button className="popup-button" onClick={handleVerifyOtp}>
+                      Verify OTP
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
-          )}
+          </div>
         </div>
-      </div>
-    </div>
-  </div>
-)}
+      )}
 
 
       {showSchedulePopup && (

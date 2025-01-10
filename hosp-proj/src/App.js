@@ -23,7 +23,7 @@ function App() {
         <Routes>
           {/* Default Landing Page */}
           <Route
-            path="/"
+            path="/jayahospitals"
             element={
               <>
                 <HeroSection />

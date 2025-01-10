@@ -205,6 +205,13 @@
   margin-bottom: 0%;
   position: sticky;
 }
+
+.header-logo {
+  width: 70px; /* Adjust the width of the image */
+  height: 60px; /* Set height to maintain consistency */
+ margin-right: 10px;
+ 
+}
 /* Gender Dropdown Styling */
 .form-group select {
   padding: 8px 12px; /* Add padding for better spacing */

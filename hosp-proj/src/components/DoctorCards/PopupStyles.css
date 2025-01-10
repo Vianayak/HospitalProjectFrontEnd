@@ -132,7 +132,7 @@
 
 .schedule-body {
   overflow-y: auto; /* Enable scrolling if content exceeds the container height */
-  max-height: calc(80vh - 60px); /* Calculate remaining height for content, leaving space for the button */
+  max-height: calc(100vh - 60px); /* Calculate remaining height for content, leaving space for the button */
 }
 
 .schedule-button {
@@ -273,8 +273,9 @@
   cursor: pointer;
   font-size: 16px;
   margin-left: 200px;
-  margin-top: 20px;
+  margin-top: 0px;
   text-align: center;
+  
 }
 
 .continue-button:hover {
