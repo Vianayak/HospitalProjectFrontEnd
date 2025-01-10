@@ -1,10 +1,11 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "./UserAppointment.css";
 import axios from "axios";
 
 const UserAppointment = () => {
   const location = useLocation();
+  const navigate = useNavigate(); // Add useNavigate hook
   const { date, timeSlot, email, doctorDetails } = location.state || {}; // Retrieve passed data
 
   const [formData, setFormData] = useState({
@@ -39,22 +40,23 @@ const UserAppointment = () => {
         description: "Test Transaction",
         image: "Assets/images/HeaderLogo.png",
         order_id: data.razorpayOrderId,
-        handler: (response) => {
-          console.log("Payment successful!", response);
-          axios.post("http://localhost:8081/api/book-appointment/verify-payment", {
-            razorpay_payment_id: response.razorpay_payment_id,
-            razorpay_order_id: response.razorpay_order_id,
-            razorpay_signature: response.razorpay_signature,
-          })
-            .then(() => {
-              alert("Payment verified successfully!");
-            })
-            .catch((error) => {
-              console.error("Error verifying payment:", error);
-              alert("Payment verification failed.");
+        handler: async (response) => {
+          try {
+            // Verify the payment
+            await axios.post("http://localhost:8081/api/book-appointment/verify-payment", {
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_signature: response.razorpay_signature,
             });
 
-          alert(`Payment successful! Payment ID: ${response.razorpay_payment_id}`);
+            alert("Payment verified successfully!");
+
+            // Redirect to /jayahospitals
+            navigate("/jayahospitals");
+          } catch (error) {
+            console.error("Error verifying payment:", error);
+            alert("Payment verification failed.");
+          }
         },
         prefill: {
           name: doctorDetails?.name || "Praveen kumar", // Use passed doctor details
