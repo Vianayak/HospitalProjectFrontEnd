@@ -110,3 +110,18 @@
 .time-slot.blocked:hover {
   background-color: #b0b0b0;
 }
+.resend-otp-container {
+  margin-top: 10px; /* Adds space between the OTP input and the resend link */
+  text-align: center; /* Centers the link */
+}
+
+.resend-link {
+  color: white; /* Link color */
+  text-decoration: none; /* Removes underline */
+  font-size: 14px; /* Adjust font size */
+  cursor: pointer;
+}
+
+.resend-link:hover {
+  text-decoration: underline; /* Underline on hover */
+}

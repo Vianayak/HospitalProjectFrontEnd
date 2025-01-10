@@ -67,47 +67,50 @@ const DoctorCard = ({ doctor }) => {
   };
 
   const handleSendOtp = async () => {
-    console.log("Sending OTP to email:", email);
-
     if (!email) {
       alert("Please enter a valid email address.");
       return;
     }
-
+  
     try {
       const response = await fetch(`http://localhost:8081/api/otp/sendOtp?email=${encodeURIComponent(email)}`, {
         method: "POST",
       });
-
+  
       if (!response.ok) {
         const errorText = await response.text();
         throw new Error(errorText || "Failed to send OTP.");
       }
-
-      const data = await response.text();
-      console.log("OTP sent response:", data);
+  
       setShowOtpForm(true);
+      setCountdown(30); // Set countdown to 10 seconds
+      setCanResendOtp(false); // Disable resend button during countdown
       startCountdown();
     } catch (error) {
       console.error("Error sending OTP:", error);
       alert(`An error occurred: ${error.message}`);
     }
   };
-
+  
   const startCountdown = () => {
-    setCountdown(10);
-    setCanResendOtp(false);
-
     const interval = setInterval(() => {
       setCountdown((prev) => {
         if (prev === 1) {
-          clearInterval(interval);
-          setCanResendOtp(true); // Enable resend OTP when countdown finishes
+          clearInterval(interval); // Stop countdown
+          setCanResendOtp(true); // Enable resend button
         }
         return prev - 1;
       });
     }, 1000);
   };
+  
+  const handleResendOtp = () => {
+    handleSendOtp(); // Resend the OTP
+    setCountdown(10); // Reset countdown to 10 seconds
+    setCanResendOtp(false); // Disable resend button again
+    startCountdown(); // Start the timer
+  };
+  
 
   const handleVerifyOtp = async () => {
     if (!otp) {
@@ -145,12 +148,6 @@ const DoctorCard = ({ doctor }) => {
     }
   };
 
-  const handleResendOtp = () => {
-    setCountdown(10);
-    setCanResendOtp(false);
-    handleSendOtp();
-  };
-
   return (
     <>
       <div className="content-wrapper1">
@@ -173,57 +170,65 @@ const DoctorCard = ({ doctor }) => {
       </div>
 
       {showPopup && (
-        <div className="popup-overlay">
-          <div className="popup-container">
-            <button className="popup-close" onClick={handleClosePopup}>
-              &times;
-            </button>
-            <div className="popup-content">
-              <div className="popup-image">
-                <img src="Assets/Images/popupImage.webp" alt="Popup" />
-              </div>
-              <div className="popup-form">
-                <h2>JAYA Hospitals</h2>
-                <input
-                  type="email"
-                  className="popup-input"
-                  placeholder="What is your email?"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-                {!showOtpForm ? (
-                  <button className="popup-button" onClick={handleSendOtp}>
-                    Send Otp
-                  </button>
-                ) : (
-                  <div>
-                    <input
-                      type="text"
-                      className="popup-input"
-                      placeholder="Enter OTP"
-                      value={otp}
-                      onChange={(e) => setOtp(e.target.value)}
-                    />
-                    <div className="countdown-timer">{countdown > 0 ? `Resend in ${countdown}s` : ""}</div>
-                    {canResendOtp && (
-                      <a
-                        href="#"
-                        className="resend-link"
-                        onClick={handleResendOtp}
-                      >
-                        Resend OTP
-                      </a>
-                    )}
-                    <button className="popup-button" onClick={handleVerifyOtp}>
-                      Verify OTP
-                    </button>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
+  <div className="popup-overlay">
+    <div className="popup-container">
+      <button className="popup-close" onClick={handleClosePopup}>
+        &times;
+      </button>
+      <div className="popup-content">
+        <div className="popup-image">
+          <img src="Assets/Images/popupImage.webp" alt="Popup" />
         </div>
-      )}
+        <div className="popup-form">
+          <h2>JAYA Hospitals</h2>
+          <input
+            type="email"
+            className="popup-input"
+            placeholder="What is your email?"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          {!showOtpForm ? (
+            <button className="popup-button" onClick={handleSendOtp}>
+              Send Otp
+            </button>
+          ) : (
+            <div>
+              <input
+                type="text"
+                className="popup-input"
+                placeholder="Enter OTP"
+                value={otp}
+                onChange={(e) => setOtp(e.target.value)}
+              />
+              {countdown > 0 && (
+                <div className="countdown-timer">{`Resend in ${countdown}s`}</div>
+              )}
+              {canResendOtp && (
+                <div className="resend-otp-container">
+                  <a
+                    href="#"
+                    className="resend-link"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleResendOtp();
+                    }}
+                  >
+                    Resend OTP
+                  </a>
+                </div>
+              )}
+              <button className="popup-button" onClick={handleVerifyOtp}>
+                Verify OTP
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  </div>
+)}
+
 
       {showSchedulePopup && (
         <div className="popup-overlay">
