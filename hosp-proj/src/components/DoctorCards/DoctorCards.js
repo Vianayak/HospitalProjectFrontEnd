@@ -150,12 +150,14 @@ const DoctorCard = ({ doctor }) => {
 
   const handleConfirmAppointment = () => {
     if (date && selectedTimeSlot) {
+      const timeOfDay = getTimeOfDay(selectedTimeSlot); // Determine time of day
       navigate("/user-appointment", {
         state: {
           date,
           timeSlot: selectedTimeSlot,
           email,
           doctorDetails: doctor,
+          timeOfDay,
         },
       });
     } else {
@@ -163,6 +165,21 @@ const DoctorCard = ({ doctor }) => {
     }
   };
 
+  const getTimeOfDay = (timeSlot) => {
+    const morningSlots = ["11:00-11:30", "11:30-12:00"];
+    const afternoonSlots = ["12:30-13:00", "13:30-14:00"];
+    const eveningSlots = ["15:00-15:30", "15:30-16:00"];
+    if (morningSlots.includes(timeSlot)) {
+      return "  MORNING";
+    } else if (afternoonSlots.includes(timeSlot)) {
+      return "AFTERNOON";
+    } else if (eveningSlots.includes(timeSlot)) {
+      return "EVENING";
+    } else {
+      return "unknown"; // Fallback case
+    }
+    
+  };
   return (
     <>
       <div className="content-wrapper1">
@@ -315,11 +332,11 @@ const DoctorCard = ({ doctor }) => {
                 <h3 className="align-left">EVENING</h3>
                 <div className="time-slots">
                   <button
-                    className={`time-slot ${selectedTimeSlot === "15:30-15:30" ? "active" : ""} ${isSlotBlocked("15:30-15:30") ? "blocked" : ""}`}
-                    onClick={() => handleTimeSlotSelect("15:30-15:30")}
-                    disabled={isSlotBlocked("15:30-15:30")}
+                    className={`time-slot ${selectedTimeSlot === "15:00-15:30" ? "active" : ""} ${isSlotBlocked("15:00-15:30") ? "blocked" : ""}`}
+                    onClick={() => handleTimeSlotSelect("15:00-15:30")}
+                    disabled={isSlotBlocked("15:00-15:30")}
                   >
-                    15:30-15:30
+                    15:00-15:30
                   </button>
                   <button
                     className={`time-slot ${selectedTimeSlot === "15:30-16:00" ? "active" : ""} ${isSlotBlocked("15:30-16:00") ? "blocked" : ""}`}

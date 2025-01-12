@@ -6,7 +6,7 @@ import axios from "axios";
 const UserAppointment = () => {
   const location = useLocation();
   const navigate = useNavigate(); // Add useNavigate hook
-  const { date, timeSlot, email, doctorDetails } = location.state || {}; // Retrieve passed data
+  const { date, timeSlot, email, doctorDetails,timeOfDay } = location.state || {}; // Retrieve passed data
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -20,17 +20,23 @@ const UserAppointment = () => {
   const handlePayToProceed = async () => {
     try {
       const { data } = await axios.post("http://localhost:8081/api/book-appointment/initiate", {
-        amount: 500,
-        currency: "INR",
-        firstName: "namasthe",
-        lastName: "Telangana",
-        mobile: 8919967393,
-        email: email || "hero@gmail.com", // Use the passed email
-        dob: "21/08/2025",
-        gender: "male",
+        amount: 500, 
+        currency: "INR", 
+        firstName: formData.firstName, 
+        lastName: formData.lastName, 
+        mobile: formData.phone, 
+        email: formData.email, 
+        dob: formData.dob, 
+        gender: formData.gender,
+        doctorRegNum: doctorDetails.regestrationNum,
+        scheduledDate: date,
+        scheduledTime: timeSlot,
+        slot: timeOfDay,
       });
 
       const amountInPaise = data.amount * 100;
+
+      console.log("Received Data:", data);
 
       const options = {
         key: "rzp_test_K5qGcFdtNC8hvm",
@@ -40,23 +46,28 @@ const UserAppointment = () => {
         description: "Test Transaction",
         image: "Assets/images/HeaderLogo.png",
         order_id: data.razorpayOrderId,
-        handler: async (response) => {
-          try {
-            // Verify the payment
-            await axios.post("http://localhost:8081/api/book-appointment/verify-payment", {
-              razorpay_payment_id: response.razorpay_payment_id,
-              razorpay_order_id: response.razorpay_order_id,
-              razorpay_signature: response.razorpay_signature,
-            });
-
+        handler: function (response) {
+          const { razorpay_payment_id, razorpay_order_id, razorpay_signature } = response;
+      
+          // Make sure these values are logged correctly
+          console.log("Payment ID:", razorpay_payment_id);
+          console.log("Order ID:", razorpay_order_id);
+          console.log("Signature:", razorpay_signature);
+      
+          // Send the data to the backend for verification
+          axios.post("http://localhost:8081/api/book-appointment/verify-payment", {
+            razorpay_payment_id,
+            razorpay_order_id,
+            razorpay_signature,
+          })
+          .then(() => {
             alert("Payment verified successfully!");
-
-            // Redirect to /jayahospitals
             navigate("/jayahospitals");
-          } catch (error) {
+          })
+          .catch((error) => {
             console.error("Error verifying payment:", error);
             alert("Payment verification failed.");
-          }
+          });
         },
         prefill: {
           name: doctorDetails?.name || "Praveen kumar", // Use passed doctor details
