@@ -5,13 +5,17 @@ const HeroSection = () => {
   return (
     <div id="carouselExampleControls" className="carousel slide custom-carousel" data-bs-ride="carousel">
       <div className="carousel-inner">
-        <div className="carousel-item active">
-          <img className="d-block w-100" src="/Assets/Images/CarouselImage1.jpg" alt="First slide" />
+        
+        <div className="carousel-item">
+          <img className="d-block w-100" src="/Assets/Images/Image2.jpg" alt="first slide" />
+        </div>
+        
+        <div className="carousel-item">
+          <img className="d-block w-100" src="/Assets/Images/coro1.png" alt="Second slide" />
         </div>
         <div className="carousel-item">
-          <img className="d-block w-100" src="/Assets/Images/Image2.jpg" alt="Second slide" />
+          <img className="d-block w-100" src="/Assets/Images/Image5.jpg" alt="Third slide" />
         </div>
-       
       </div>
       <button
         className="carousel-control-prev"
