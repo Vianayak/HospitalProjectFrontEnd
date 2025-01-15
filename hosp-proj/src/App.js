@@ -11,6 +11,7 @@ import Footer from "./components/Footer/Footer";
 import FloatingButtons from "./components/FloatingButtons/FloatingButtons";
 import DoctorList from "./components/DoctorCards/DoctorList";
 import UserAppointment from "./components/Appointment/UserAppointment";
+import LoginForm from "./components/Login/LoginForm";
 
 function App() {
   return (
@@ -42,13 +43,23 @@ function App() {
 
           {/* User Appointment Page */}
           <Route path="/user-appointment" element={<UserAppointment />} />
+
+          <Route path="/login" element={<Overlay className="login-overlay"><LoginForm /></Overlay>} />
         </Routes>
 
         {/* Footer */}
         <Footer />
       </div>
     </Router>
+    
   );
 }
+const Overlay = ({ children, className = "" }) => (
+  <div className={`overlay ${className}`}>
+    <div className="popup">
+      {children}
+    </div>
+  </div>
+);
 
 export default App;
