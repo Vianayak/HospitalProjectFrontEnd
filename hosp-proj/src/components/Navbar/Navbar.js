@@ -33,7 +33,7 @@ function MyNavbar() {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="ml-auto" id="exe">
                         <Nav.Link as={Link} to="/">About Us</Nav.Link>
-                        <Nav.Link as={Link} to="/features">Our Doctors</Nav.Link>
+                        <Nav.Link as={Link} to="/doctor-cards">Our Doctors</Nav.Link>
                         <NavDropdown
                             title={
                                 <span
