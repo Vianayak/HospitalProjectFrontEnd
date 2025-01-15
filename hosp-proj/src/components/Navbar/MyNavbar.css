@@ -80,18 +80,40 @@
   justify-content: center;
 }
 
-.login-button button {
+.login-container {
+  position: relative;
+  display: inline-block;
+}
+
+.login-text {
+  color: #5A3ECA;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: opacity 0.3s ease;
+  margin-right: 10px;
+}
+
+.login-button {
+  display: none; /* Initially hide the button */
   background-color: #5A3ECA;
   color: #fff;
   border: none;
-  padding: 15px 25px;
-  margin: 10px;
+  padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.login-button button:hover {
-  background-color: #4A32A3; /* A slightly darker shade for hover */
-  transform: scale(1.05); /* Optional: Adds a scaling effect */
+.login-container:hover .login-text {
+  display: none; /* Hide the text on hover */
+}
+
+.login-container:hover .login-button {
+  display: inline-block; /* Show the button on hover */
+  transform: scale(1); /* Optional scaling effect */
+}
+
+.login-button:hover {
+  background-color: #4A32A3; /* Darker shade for hover */
 }
