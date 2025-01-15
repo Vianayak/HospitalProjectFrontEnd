@@ -80,7 +80,7 @@
   justify-content: center;
 }
 
-.login-container {
+.login-container1 {
   position: relative;
   display: inline-block;
 }
@@ -105,11 +105,11 @@
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.login-container:hover .login-text {
+.login-container1:hover .login-text {
   display: none; /* Hide the text on hover */
 }
 
-.login-container:hover .login-button {
+.login-container1:hover .login-button {
   display: inline-block; /* Show the button on hover */
   transform: scale(1); /* Optional scaling effect */
 }

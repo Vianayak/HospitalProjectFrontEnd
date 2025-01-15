@@ -95,9 +95,11 @@ function MyNavbar() {
                     <SearchBar />
                 </div>
 
-                <div className="login-container">
+                <div className="login-container1">
   <span className="login-text">Log In</span>
-  <button className="login-button">Log In</button>
+  <Link to="/login">
+            <button className="login-button">Log In</button>
+          </Link>
 </div>
 
             </Navbar>

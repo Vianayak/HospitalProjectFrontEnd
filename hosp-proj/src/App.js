@@ -24,6 +24,7 @@ function App() {
         <Routes>
           {/* Default Landing Page */}
           <Route path="/" element={<Navigate to="/jayahospitals" replace />} />
+          <Route path="/login" element={<LoginForm />} />
           <Route
             path="/jayahospitals"
             element={
