@@ -138,7 +138,7 @@ const UserAppointment = () => {
     <header className="header">
   <h1>
     <img
-      src="Assets/Images/slogo.jpg" // Replace with the correct path to your image
+      src="Assets/Images/whitelogos.png" // Replace with the correct path to your image
       alt="Jaya Hospitals Logo"
       className="header-logo"
     />

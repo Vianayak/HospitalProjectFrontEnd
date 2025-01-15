@@ -215,7 +215,7 @@ const DoctorCard = ({ doctor }) => {
               <header className="header">
   <h4>
     <img
-      src="Assets/Images/slogo.jpg" // Replace with the correct path to your image
+      src="Assets/Images/whitelogos.png" // Replace with the correct path to your image
       alt="Jaya Hospitals Logo"
       className="header-logo"
     />
