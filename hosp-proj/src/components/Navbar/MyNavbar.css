@@ -80,3 +80,18 @@
   justify-content: center;
 }
 
+.login-button button {
+  background-color: #5A3ECA;
+  color: #fff;
+  border: none;
+  padding: 15px 25px;
+  margin: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.login-button button:hover {
+  background-color: #4A32A3; /* A slightly darker shade for hover */
+  transform: scale(1.05); /* Optional: Adds a scaling effect */
+}

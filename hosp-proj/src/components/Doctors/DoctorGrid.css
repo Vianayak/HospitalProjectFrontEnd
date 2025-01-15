@@ -44,7 +44,8 @@
   }
   
   .doctor-buttons button:hover {
-    background-color: #5A3ECA;
+    background-color: #4A32A3; /* A slightly darker shade for hover */
+  transform: scale(1.05);
   }
   
   @media (max-width: 768px) {
