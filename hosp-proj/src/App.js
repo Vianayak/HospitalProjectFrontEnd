@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import "./App.css";
 import HeroSection from "./components/HeroSection/HeroSection";
@@ -22,6 +22,7 @@ function App() {
         {/* Routes */}
         <Routes>
           {/* Default Landing Page */}
+          <Route path="/" element={<Navigate to="/jayahospitals" replace />} />
           <Route
             path="/jayahospitals"
             element={
