@@ -13,6 +13,7 @@ import DoctorList from "./components/DoctorCards/DoctorList";
 import UserAppointment from "./components/Appointment/UserAppointment";
 import LoginForm from "./components/Login/LoginForm";
 import SignIn from "./components/SignIn/SignIn";
+import HealthNewsImages from "./components/health/HealthNewsImages";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
                 <SpecialtiesCarousel />
                 <HospitalSection />
                 <FloatingButtons />
+                <HealthNewsImages />
               </>
             }
           />

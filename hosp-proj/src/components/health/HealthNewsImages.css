@@ -1,0 +1,57 @@
+/* HealthNewsImages.css */
+
+.news-container {
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+  }
+  
+  .news-item {
+    width: calc(50% - 10px);
+    margin: 5px;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover effect */
+  }
+  
+  .news-item:hover {
+    transform: scale(1.05); /* Slightly enlarge the item */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Add a subtle shadow for hover effect */
+  }
+  
+  .news-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+  
+  .news-item .carousel-title {
+    font-size: 14px;
+    margin-top: 10px;
+  }
+  
+  .news-item .carousel-link {
+    text-decoration: none;
+    color: #007bff;
+  }
+  
+  .next-arrow, .prev-arrow {
+    background: none;
+    border: none;
+    font-size: 30px;
+    cursor: pointer;
+    color: #007bff;
+  }
+  
+  .next-arrow {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+  }
+  
+  .prev-arrow {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+  }
+  
