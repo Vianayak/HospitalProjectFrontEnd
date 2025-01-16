@@ -14,6 +14,7 @@ function HealthNewsImages() {
                 const response = await axios.get('https://newsdata.io/api/1/latest', {
                     params: {
                         apikey: 'pub_65520b93e12fab4823eb6b7ec2b5f7a29e8e4',
+                        q:'health',
                         category: 'health',
                         country: 'in',
                         language: 'en',
