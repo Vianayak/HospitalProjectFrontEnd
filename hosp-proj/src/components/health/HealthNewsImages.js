@@ -4,7 +4,9 @@ import './HealthNewsImages.css'; // Import the CSS file
 
 function HealthNewsImages() {
     const [articles, setArticles] = useState([]);
-    const [currentIndex, setCurrentIndex] = useState(0); // Track the current set of articles to show
+    const [currentIndex, setCurrentIndex] = useState(0);
+
+    const defaultImage = 'https://via.placeholder.com/300x150?text=No+Image+Available'; // Default placeholder image
 
     useEffect(() => {
         const fetchNewsImages = async () => {
@@ -14,10 +16,9 @@ function HealthNewsImages() {
                         apikey: 'pub_65520b93e12fab4823eb6b7ec2b5f7a29e8e4',
                         category: 'health',
                         country: 'in',
-                        language: 'en', // For India-specific news
-                    }
+                        language: 'en',
+                    },
                 });
-                // Filter out articles that do not have an image
                 const filteredArticles = response.data.results.filter(article => article.image_url);
                 setArticles(filteredArticles);
             } catch (error) {
@@ -28,22 +29,19 @@ function HealthNewsImages() {
         fetchNewsImages();
     }, []);
 
-    // Function to handle clicking on the next small arrow
     const handleNextClick = () => {
-        if (currentIndex + 2 < articles.length) {
-            setCurrentIndex(currentIndex + 2); // Show the next 2 articles
+        if (currentIndex + 3 < articles.length) {
+            setCurrentIndex(currentIndex + 3);
         }
     };
 
-    // Function to handle clicking on the previous small arrow
     const handlePreviousClick = () => {
-        if (currentIndex - 2 >= 0) {
-            setCurrentIndex(currentIndex - 2); // Show the previous 2 articles
+        if (currentIndex - 3 >= 0) {
+            setCurrentIndex(currentIndex - 3);
         }
     };
 
-    // Get the current set of 2 articles
-    const currentArticles = articles.slice(currentIndex, currentIndex + 2);
+    const currentArticles = articles.slice(currentIndex, currentIndex + 3);
 
     return (
         <div>
@@ -52,44 +50,37 @@ function HealthNewsImages() {
                 {currentArticles.length > 0 ? (
                     currentArticles.map((article, index) => (
                         <div key={index} className="news-item">
-                            {/* Show the image */}
-                            <img 
-                                src={article.image_url} 
-                                alt={`Health News ${index + 1}`} 
+                            <img
+                                src={article.image_url}
+                                alt={`Health News ${index + 1}`}
+                                onError={(e) => {
+                                    e.target.onerror = null; // Prevent infinite loop in case the default image fails
+                                    e.target.src = defaultImage;
+                                }}
                             />
-                            {/* Show the title and link */}
                             <p className="carousel-title">{article.title}</p>
-                            <a 
-                                href={article.link} 
-                                target="_blank" 
-                                rel="noopener noreferrer" 
+                            <a
+                                href={article.link}
+                                target="_blank"
+                                rel="noopener noreferrer"
                                 className="carousel-link"
                             >
                                 Read More
                             </a>
-                            
-                            {/* Show the small right arrow only on the second item */}
-                            {index === 1 && (
-                                <button 
-                                    onClick={handleNextClick} 
-                                    className="next-arrow"
-                                >
-                                    &#8594; {/* Right arrow symbol */}
-                                </button>
-                            )}
                         </div>
                     ))
                 ) : (
                     <p>No health news available with images.</p>
                 )}
-                
-                {/* Previous Arrow (show before the first item if there are previous articles) */}
+
                 {currentIndex > 0 && (
-                    <button 
-                        onClick={handlePreviousClick} 
-                        className="prev-arrow"
-                    >
-                        &#8592; {/* Left arrow symbol */}
+                    <button onClick={handlePreviousClick} className="prev-arrow">
+                        &#8592;
+                    </button>
+                )}
+                {currentIndex + 3 < articles.length && (
+                    <button onClick={handleNextClick} className="next-arrow">
+                        &#8594;
                     </button>
                 )}
             </div>

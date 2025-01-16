@@ -1,57 +1,64 @@
-/* HealthNewsImages.css */
-
 .news-container {
-    display: flex;
-    flex-wrap: wrap;
-    position: relative;
-  }
-  
-  .news-item {
-    width: calc(50% - 10px);
-    margin: 5px;
-    position: relative;
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover effect */
-  }
-  
-  .news-item:hover {
-    transform: scale(1.05); /* Slightly enlarge the item */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Add a subtle shadow for hover effect */
-  }
-  
-  .news-item img {
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
-  }
-  
-  .news-item .carousel-title {
-    font-size: 14px;
-    margin-top: 10px;
-  }
-  
-  .news-item .carousel-link {
-    text-decoration: none;
-    color: #007bff;
-  }
-  
-  .next-arrow, .prev-arrow {
-    background: none;
-    border: none;
-    font-size: 30px;
-    cursor: pointer;
-    color: #007bff;
-  }
-  
-  .next-arrow {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-  }
-  
-  .prev-arrow {
-    position: absolute;
-    top: 50%;
-    left: 10px;
-    transform: translateY(-50%);
-  }
-  
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* Center the articles in the container */
+  gap: 65px; /* Reduce the gap between articles */
+  padding: 0 20px; /* Add space to the left and right */
+  margin-bottom: 80px;
+  position: relative; /* Make it relative to position arrows correctly */
+}
+
+.news-item {
+  flex: 1 1 calc(25% - 20px); /* Adjust width for 4 items per row with spacing */
+  max-width: 280px; /* Optional: Limit the maximum width of each item */
+  margin: 0; /* Remove extra margin (gap handles spacing) */
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.news-item:hover {
+  transform: scale(1.05); /* Slightly enlarge the item */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Add a subtle shadow for hover effect */
+}
+
+.news-item img {
+  width: 100%; /* Ensures the image fills the container width */
+  height: 200px; /* Set a fixed height for all images */
+  object-fit: cover; /* Crops the image to maintain aspect ratio */
+  border-radius: 8px;
+}
+
+.news-item .carousel-title {
+  font-size: 14px;
+  margin-top: 10px;
+  color: #333; /* Improve text contrast */
+  text-align: center; /* Center-align the title text */
+}
+
+.news-item .carousel-link {
+  text-decoration: none;
+  color: #ff5722;
+  display: block;
+  text-align: center; /* Center-align the link */
+}
+
+.next-arrow,
+.prev-arrow {
+  background: none;
+  border: none;
+  font-size: 30px;
+  cursor: pointer;
+  color: #5A3ECA;
+  position: absolute;
+  top: 50%; /* Vertically center the arrows */
+  transform: translateY(-50%);
+  z-index: 10; /* Ensure arrows are on top of other elements */
+}
+
+.next-arrow {
+  right: 100px; /* Position arrow outside the container */
+}
+
+.prev-arrow {
+  left: 200px; /* Position arrow outside the container */
+}
