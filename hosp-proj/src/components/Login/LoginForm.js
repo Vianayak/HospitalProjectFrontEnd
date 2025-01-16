@@ -79,7 +79,12 @@ function LoginForm() {
           <button type="submit" className="login-button">
             Login
           </button>
-          <a href="#" className="forgot-password">
+          <a href="/forgot" className="forgot-password"
+           onClick={(e) => {
+            e.preventDefault();
+            navigate("/forgot");
+          }}
+          >
             Forgot Password?
           </a>
           <a

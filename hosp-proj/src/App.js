@@ -14,6 +14,7 @@ import UserAppointment from "./components/Appointment/UserAppointment";
 import LoginForm from "./components/Login/LoginForm";
 import SignIn from "./components/SignIn/SignIn";
 import HealthNewsImages from "./components/health/HealthNewsImages";
+import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
 
 function App() {
   return (
@@ -49,6 +50,7 @@ function App() {
           <Route path="/user-appointment" element={<UserAppointment />} />
           <Route path="/SignIn" element={<Overlay className="login-overlay"><SignIn /></Overlay>} />
           <Route path="/login" element={<Overlay className="login-overlay"><LoginForm /></Overlay>} />
+          <Route path="/forgot" element={<Overlay className="login-overlay"><ForgotPassword /></Overlay>} />
         </Routes>
 
         {/* Footer */}
