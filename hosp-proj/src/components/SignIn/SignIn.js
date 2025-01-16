@@ -9,6 +9,7 @@ const SignIn = () => {
     firstName: "",
     lastName: "",
     mobileNumber: "",
+    profileImage: null, // Image file state
   });
 
   const [formErrors, setFormErrors] = useState({});
@@ -33,14 +34,29 @@ const SignIn = () => {
     if (!formData.mobileNumber || !/^\d{10}$/.test(formData.mobileNumber)) {
       errors.mobileNumber = "Valid mobile number is required.";
     }
+    if (formData.profileImage) {
+      if (!/\.(jpg|jpeg|png)$/i.test(formData.profileImage.name)) {
+        errors.profileImage = "Only JPG, JPEG, and PNG images are allowed.";
+      }
+      if (formData.profileImage.size > 2 * 1024 * 1024) { // 2MB
+        errors.profileImage = "Image size must be less than 2MB.";
+      }
+    }
 
     setFormErrors(errors);
-    setIsFormValid(Object.keys(errors).length === 0);
+    setIsFormValid(Object.keys(errors).length === 0 && formData.profileImage);
   };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
+  };
+
+  const handleImageUpload = (e) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      profileImage: e.target.files[0],
+    }));
   };
 
   const handleInputFocus = (e) => {
@@ -63,15 +79,17 @@ const SignIn = () => {
   return (
     <div className="signin-container">
       <div className="signin-header">
-      <div className="login-header">
+        <div className="login-header">
           <img src="/Assets/Images/whitelogos.png" alt="Logo" className="logo" />
           <span>JAYA HOSPITALS</span>
-         
         </div>
         <h2>Sign In</h2>
+        <div className="close-icon" onClick={() => navigate("/login")}>
+          <i className="fas fa-times"></i>
+        </div>
       </div>
       <form className="signin-form" onSubmit={handleFormSubmit}>
-      <div className="form-group">
+        <div className="form-group">
           <label>First Name</label>
           <input
             type="text"
@@ -118,6 +136,7 @@ const SignIn = () => {
             <span className="error">{formErrors.email}</span>
           )}
         </div>
+
         <div className="form-group">
           <label>Mobile Number</label>
           <input
@@ -133,6 +152,7 @@ const SignIn = () => {
             <span className="error">{formErrors.mobileNumber}</span>
           )}
         </div>
+
         <div className="form-group">
           <label>Role</label>
           <select
@@ -153,14 +173,22 @@ const SignIn = () => {
           )}
         </div>
 
-       
-
-      
+        <div className="form-group">
+          <label>Upload Profile Image</label>
+          <input
+            type="file"
+            name="profileImage"
+            onChange={handleImageUpload}
+          />
+          {touchedFields.profileImage && formErrors.profileImage && (
+            <span className="error">{formErrors.profileImage}</span>
+          )}
+        </div>
 
         <button
           type="submit"
           className="signin-button"
-          disabled={!isFormValid} // Disable the button if the form is invalid
+          disabled={!isFormValid} // Disable the button if the form is invalid or no image is uploaded
         >
           Sign In
         </button>
@@ -169,4 +197,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default SignIn; 

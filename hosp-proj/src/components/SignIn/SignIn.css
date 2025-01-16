@@ -4,7 +4,7 @@
     padding: 20px 40px;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 400px;
+    max-width: 500px;
     text-align: center;
     color: white;
   }
@@ -80,4 +80,23 @@
     background-color: #ccc;
     cursor: not-allowed;
   }
+ 
+  
+  .close-icon {
+    position: absolute;
+    top: 70px;
+    right: 535px;
+    cursor: pointer;
+  }
+  
+  .close-icon i {
+    font-size: 20px;
+  }
+  
+  .logo {
+    height: 40px;
+  }
+  
+ 
+  
   
