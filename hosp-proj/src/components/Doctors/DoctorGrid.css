@@ -15,11 +15,12 @@
   }
   
   .doctor-cards .doctor-image img {
-    border-radius: 50%;
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    margin-bottom: 10px;
+    width: 150px;        /* Width for passport-style image */
+    height: 200px;       /* Height for passport-style image */
+    object-fit: cover;   /* Ensures the image fits into the container without stretching */
+    border: 1px solid #ccc; /* Optional: adds a border around the image */
+    background-color: #f0f0f0; /* Optional: adds a background color */
+    border-radius: 0;
   }
   
   .doctor-cards h3 {
@@ -103,10 +104,14 @@
 }
 
 .doctor-image img {
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
+  width: 150px;        /* Width for passport-style image */
+  height: 200px;       /* Height for passport-style image */
+  object-fit: cover;   /* Ensures the image fits into the container without stretching */
+  border: 1px solid #ccc; /* Optional: adds a border around the image */
+  background-color: #f0f0f0; /* Optional: adds a background color */
+  border-radius: 0;
 }
+
 
 .doctor-info {
   max-width: 600px;

@@ -8,7 +8,6 @@ const DoctorGrid = () => {
   const [selectedDoctor, setSelectedDoctor] = useState(null); // To store selected doctor's details
   const [isModalOpen, setIsModalOpen] = useState(false); // To manage the modal state
 
-
   // Fetching the doctors list from API
   useEffect(() => {
     const fetchDoctors = async () => {
@@ -51,7 +50,8 @@ const DoctorGrid = () => {
           doctors.map((doctor) => (
             <div key={doctor.id} className="doctor-cards">
               <div className="doctor-image">
-                <img src="Assets/Images/Love.jpeg" alt={doctor.name} />
+                {/* Dynamically set image source from the backend */}
+                <img src={`http://localhost:8081/${doctor.imagePath}`} alt={doctor.name} />
               </div>
               <h3>{doctor.name}</h3>
               <p>Specialization: {doctor.specialization}</p>
@@ -73,7 +73,8 @@ const DoctorGrid = () => {
             <h2>Doctor Details</h2>
             <div className="doctor-detail">
               <div className="doctor-image">
-                <img src="Assets/Images/Love.jpeg" alt={selectedDoctor.name} />
+                {/* Dynamically set image source from the backend */}
+                <img src={`http://localhost:8081/${selectedDoctor.imagePath}`} alt={selectedDoctor.name} />
               </div>
               <div className="doctor-info">
                 <h3>{selectedDoctor.name}</h3>
@@ -89,5 +90,6 @@ const DoctorGrid = () => {
     </>
   );
 };
+
 
 export default DoctorGrid;
