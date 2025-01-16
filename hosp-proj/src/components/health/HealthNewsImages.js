@@ -73,16 +73,17 @@ function HealthNewsImages() {
                     <p>No health news available with images.</p>
                 )}
 
-                {currentIndex > 0 && (
-                    <button onClick={handlePreviousClick} className="prev-arrow">
-                        &#8592;
-                    </button>
-                )}
-                {currentIndex + 3 < articles.length && (
-                    <button onClick={handleNextClick} className="next-arrow">
-                        &#8594;
-                    </button>
-                )}
+{currentIndex > 0 && (
+    <button onClick={handlePreviousClick} className="prev-arrow">
+        <i className="fas fa-chevron-left"></i> {/* Font Awesome left arrow */}
+    </button>
+)}
+{currentIndex + 3 < articles.length && (
+    <button onClick={handleNextClick} className="next-arrow">
+        <i className="fas fa-chevron-right"></i> {/* Font Awesome right arrow */}
+    </button>
+)}
+
             </div>
         </div>
     );
