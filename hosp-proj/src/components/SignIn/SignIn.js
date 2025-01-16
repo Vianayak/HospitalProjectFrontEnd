@@ -71,43 +71,7 @@ const SignIn = () => {
         <h2>Sign In</h2>
       </div>
       <form className="signin-form" onSubmit={handleFormSubmit}>
-        <div className="form-group">
-          <label>Email</label>
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleInputChange}
-            onFocus={handleInputFocus}
-            className={formErrors.email && touchedFields.email ? "error-input" : ""}
-            placeholder="Enter your email"
-          />
-          {touchedFields.email && formErrors.email && (
-            <span className="error">{formErrors.email}</span>
-          )}
-        </div>
-
-        <div className="form-group">
-          <label>Role</label>
-          <select
-            name="role"
-            value={formData.role}
-            onChange={handleInputChange}
-            onFocus={handleInputFocus}
-            className={formErrors.role && touchedFields.role ? "error-input" : ""}
-          >
-            <option value="" disabled>
-              Select Role
-            </option>
-            <option value="doctor">Doctor</option>
-            <option value="patient">Patient</option>
-          </select>
-          {touchedFields.role && formErrors.role && (
-            <span className="error">{formErrors.role}</span>
-          )}
-        </div>
-
-        <div className="form-group">
+      <div className="form-group">
           <label>First Name</label>
           <input
             type="text"
@@ -140,6 +104,21 @@ const SignIn = () => {
         </div>
 
         <div className="form-group">
+          <label>Email</label>
+          <input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleInputChange}
+            onFocus={handleInputFocus}
+            className={formErrors.email && touchedFields.email ? "error-input" : ""}
+            placeholder="Enter your email"
+          />
+          {touchedFields.email && formErrors.email && (
+            <span className="error">{formErrors.email}</span>
+          )}
+        </div>
+        <div className="form-group">
           <label>Mobile Number</label>
           <input
             type="text"
@@ -154,6 +133,29 @@ const SignIn = () => {
             <span className="error">{formErrors.mobileNumber}</span>
           )}
         </div>
+        <div className="form-group">
+          <label>Role</label>
+          <select
+            name="role"
+            value={formData.role}
+            onChange={handleInputChange}
+            onFocus={handleInputFocus}
+            className={formErrors.role && touchedFields.role ? "error-input" : ""}
+          >
+            <option value="" disabled>
+              Select Role
+            </option>
+            <option value="doctor">Doctor</option>
+            <option value="patient">Patient</option>
+          </select>
+          {touchedFields.role && formErrors.role && (
+            <span className="error">{formErrors.role}</span>
+          )}
+        </div>
+
+       
+
+      
 
         <button
           type="submit"

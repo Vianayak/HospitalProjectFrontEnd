@@ -18,14 +18,15 @@
     flex-direction: column;
   }
   
-  .form-group {
-    margin-bottom: 15px;
-    text-align: left;
-  }
-  
+ 
   .form-group label {
     display: block;
     margin-bottom: 5px;
+  }
+  .form-group {
+    margin-bottom: 25px; /* Increase spacing to accommodate error message */
+    text-align: left;
+    position: relative; /* To ensure the error message is aligned with the input */
   }
   
   .form-group input,
@@ -36,7 +37,23 @@
     border-radius: 4px;
     background-color: #f4f4f4;
     color: #333;
+    margin-bottom: 5px; /* Space between input and error message */
   }
+  
+  .form-group input::placeholder {
+    color: #aaa; /* Adjust placeholder color for better visibility */
+  }
+  
+  .error {
+    color: red;
+    font-size: 12px;
+    margin-top: -5px; /* Pull closer to the input field */
+    display: block; /* Ensures the error message appears below the input */
+    position: absolute; /* Positioning relative to form-group */
+    bottom: -18px; /* Moves error message directly below input */
+    left: 110px; /* Aligns error message with input's left edge */
+  }
+  
   
   .form-group select {
     background-color: #fff;
@@ -46,10 +63,7 @@
     border: 2px solid red;
   }
   
-  .error {
-    color: red;
-    font-size: 12px;
-  }
+  
   
   .signin-button {
     width: 100%;
