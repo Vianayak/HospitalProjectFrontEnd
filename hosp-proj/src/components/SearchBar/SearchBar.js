@@ -1,80 +1,72 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import axios from "axios";
 import "./SearchBar.css";
 
 const SearchBar = () => {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
+  const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+  const searchRef = useRef(null);
 
-  const data = {
-    doctors: [
-      { name: "Dr. Saujanya Myneni", specialization: "Obstetrics and Gynecology", location: "LB Nagar" },
-      { name: "Dr. Reena Lankala", specialization: " Pediatrician", location: "LB Nagar" },
-      { name: "Dr. Koteswaramma Ganta", specialization: "Obstetrics and Gynecology", location: "LB Nagar" },
-      { name: "Dr. Dr. Satyanarayana Kavali", specialization: "Pediatrician", location: "LB Nagar" },
-      { name: "Dr. Saroja Banothu", specialization: "Obstetrics and Gynecology", location: "LB Nagar" },
-      { name: "Dr. Suresh Kumar Panda", specialization: "Pediatric Intensive Care", location: "LB Nagar" },
-      { name: "Dr. Anitha Reddy", specialization: "Dermatology", location: "LB Nagar" },
-      { name: "Dr. Vijay Kumar", specialization: "Orthopedics", location: "LB Nagar" },
-      { name: "Dr. Lavanya Sharma", specialization: "Psychiatry", location: "LB Nagar" },
-    
-    ],
-    specialties: [
-      { name: "Pediatric Neurology" },
-      { name: "Pediatric Gastroenterology & Liver Disease" },
-      { name: "General Pediatrics" },
-      { name: "Pediatric Hematology & Oncology & BMT" },
-      { name: "Pediatric Cardiology & Cardiac Surgery" }
-  
-    ],
-    blogs: [
-      { title: "Importance of Regular Pediatric Checkups", category: "Pediatrics" },
-      { title: "Tips for a Healthy Pregnancy", category: "Obstetrics" },
-    ],
-  };
-
-  const handleSearch = (e) => {
-    const searchQuery = e.target.value.toLowerCase();
-    setQuery(searchQuery);
-
-    if (!searchQuery) {
+  useEffect(() => {
+    if (query.trim()) {
+      axios
+        .get(`http://localhost:8081/api/doctors/doctors-list`, {
+          params: { query },
+        })
+        .then((response) => {
+          setResults(response.data);
+          setIsDropdownVisible(true); // Show dropdown when results are available
+        })
+        .catch((error) => {
+          console.error("Error fetching search results:", error);
+        });
+    } else {
       setResults([]);
-      return;
+      setIsDropdownVisible(false); // Hide dropdown when query is empty
     }
+  }, [query]);
 
-    const filteredResults = [
-      ...data.doctors.filter((item) => item.name.toLowerCase().includes(searchQuery)),
-      ...data.specialties.filter((item) => item.name.toLowerCase().includes(searchQuery)),
-      ...data.blogs.filter((item) => item.title.toLowerCase().includes(searchQuery)),
-    ];
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (searchRef.current && !searchRef.current.contains(event.target)) {
+        setIsDropdownVisible(false); // Close dropdown if clicked outside
+      }
+    };
 
-    setResults(filteredResults);
-  };
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, []);
 
   return (
-    <div className="search-bar-container">
+    <div className="search-bar-container" ref={searchRef}>
       <div className="search-input-wrapper">
         <input
           type="text"
           className="navbar-search-input"
-          placeholder="Search Doctor's, Speciality, Blog"
+          placeholder="Search Doctors by Name or Specialization"
           value={query}
-          onChange={handleSearch}
+          onChange={(e) => setQuery(e.target.value)}
         />
         <span className="search-icon">
           <i className="fas fa-search"></i>
         </span>
       </div>
-      {query && (
+      {isDropdownVisible && (
         <div className="search-results-dropdown">
           {results.length > 0 ? (
-            results.map((result, index) => (
-              <div key={index} className="result-card">
-                {result.name && <h6>{result.name}</h6>}
-                {result.specialization && <p>{result.specialization}</p>}
-                {result.location && <p>Location: {result.location}</p>}
-                {result.title && <h6>{result.title}</h6>}
-                {result.category && <p>Category: {result.category}</p>}
-              </div>
+            results.map((result) => (
+              <button
+                key={result.id}
+                className="result-card-button"
+                onClick={() => alert(`You clicked on ${result.name}`)}
+              >
+                <h6>{result.name}</h6>
+                <p>{result.specialization}</p>
+                <p>Location: {result.location}</p>
+              </button>
             ))
           ) : (
             <p>No results found for "{query}"</p>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+
 import "./DoctorGrid.css";
 
 const DoctorGrid = () => {
@@ -7,7 +7,7 @@ const DoctorGrid = () => {
   const [error, setError] = useState(null);
   const [selectedDoctor, setSelectedDoctor] = useState(null); // To store selected doctor's details
   const [isModalOpen, setIsModalOpen] = useState(false); // To manage the modal state
-  const navigate = useNavigate();
+
 
   // Fetching the doctors list from API
   useEffect(() => {
