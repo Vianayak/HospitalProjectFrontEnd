@@ -131,9 +131,7 @@ const DoctorCard = ({ doctor }) => {
             <h3 className="doctor-name">{doctor.name}</h3>
             <p className="doctor-speciality">Specialization: {doctor.specialization}</p>
             <p className="doctor-experience">Experience: {doctor.experience} years</p>
-            <p className="doctor-languages">Languages: {doctor.languages.join(", ")}</p>
             <p className="doctor-location">Location: {doctor.location}</p>
-            <p className="doctor-availability">Availability: {doctor.availability}</p>
             <button className="book-appointment-button" onClick={handleBookAppointment}>
               Book Appointment
             </button>

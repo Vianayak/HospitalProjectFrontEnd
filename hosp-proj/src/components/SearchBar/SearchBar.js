@@ -107,7 +107,6 @@ const SearchBar = () => {
               <div className="doctor-info">
                 <h3>{selectedDoctor.name}</h3>
                 <p>Specialization: {selectedDoctor.specialization}</p>
-                <p>Languages: {selectedDoctor.languages.join(", ")}</p>
                 <p>Location: {selectedDoctor.location}</p>
                 <p>Registration Number: {selectedDoctor.regestrationNum}</p>
               </div>
