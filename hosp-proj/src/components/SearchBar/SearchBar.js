@@ -69,20 +69,28 @@ const SearchBar = () => {
       {query && (
         <div className="search-results-dropdown">
           {results.length > 0 ? (
-            results.map((doctor) => (
-              <div
-                key={doctor.id}
-                className="result-card"
-                onClick={() => handleResultClick(doctor)} // On click, open modal with doctor details
-              >
-                <h6>{doctor.name}</h6>
-                <p>{doctor.specialization}</p>
-                <p>{doctor.location}</p>
-              </div>
-            ))
-          ) : (
-            <p>No results found for "{query}"</p>
-          )}
+  results.map((doctor) => (
+    <div
+      key={doctor.id}
+      className="result-card"
+      onClick={() => handleResultClick(doctor)}
+    >
+      <img
+        src={`http://localhost:8081/${doctor.imagePath}`}
+        alt={doctor.name}
+        className="doctor-image"
+      />
+      <div className="doctor-details">
+        <h6>{doctor.name.trim()}</h6>
+        <p>{doctor.specialization}</p>
+        <p>{doctor.location}</p>
+      </div>
+    </div>
+  ))
+) : (
+  <p>No results found for "{query}"</p>
+)}
+
         </div>
       )}
 
@@ -102,10 +110,6 @@ const SearchBar = () => {
                 <p>Languages: {selectedDoctor.languages.join(", ")}</p>
                 <p>Location: {selectedDoctor.location}</p>
                 <p>Registration Number: {selectedDoctor.regestrationNum}</p>
-                <div className="doctor-buttons">
-                  <button>Online Consult</button>
-                  <button>Hospital Visit</button>
-                </div>
               </div>
             </div>
           </div>

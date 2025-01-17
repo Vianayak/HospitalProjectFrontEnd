@@ -1,60 +1,88 @@
 /* Search Bar Container */
 .search-bar-container {
-    position: relative;
-    width: 300px;
-  }
-  
-  /* Input Wrapper with Icon */
-  .search-input-wrapper {
-    display: flex;
-    align-items: center;
-    position: relative;
-  }
-  
-  /* Search Input */
-  .navbar-search-input {
-    width: 100%;
-    padding: 8px 40px 8px 10px; /* Extra padding for icon */
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 14px;
-  }
-  
-  /* Search Icon */
-  .search-icon {
-    position: absolute;
-    right: 10px;
-    color: #aaa;
-    font-size: 16px;
-    cursor: pointer;
-  }
-  
-  /* Dropdown Container */
-  .search-results-dropdown {
-    position: absolute;
-    top: 50px;
-    left: 0;
-    width: 100%;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    padding: 10px;
-    z-index: 1000;
-    max-height: 300px;
-    overflow-y: auto;
-  }
-  
-  /* Result Card */
-  .result-card {
-    padding: 10px;
-    border-bottom: 1px solid #eee;
-    font-size: 14px;
-  }
-  
-  /* Font Awesome Link (Add to index.html or public files) */
-  /* <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" /> */
-  /* Modal background */
+  position: relative;
+  width: 300px;
+}
+
+/* Input Wrapper with Icon */
+.search-input-wrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+/* Search Input */
+.navbar-search-input {
+  width: 100%;
+  padding: 8px 40px 8px 10px; /* Extra padding for icon */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+/* Search Icon */
+.search-icon {
+  position: absolute;
+  right: 10px;
+  color: #aaa;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* Dropdown Container */
+.search-results-dropdown {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  z-index: 1000;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+/* Result Card with Flexbox for Image and Text */
+.result-card {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* Doctor Image in the Result Card */
+.result-card .doctor-image {
+  width: 50px; /* Set to desired size */
+  height: 50px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+/* Doctor Details in the Result Card */
+.result-card .doctor-details {
+  flex-grow: 1; /* Make the text container take up the remaining space */
+}
+
+/* Heading and Paragraph for the Result Card */
+.result-card h6 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.result-card p {
+  margin: 0;
+  font-size: 14px;
+  color: #666;
+}
+
+/* Modal background */
 .modal {
   position: fixed;
   top: 0;
@@ -76,6 +104,7 @@
   max-width: 800px;
   width: 100%;
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+  position: relative;
 }
 
 /* Close button */
@@ -88,7 +117,7 @@
   cursor: pointer;
 }
 
-/* Adjust doctor detail styles */
+/* Adjust doctor detail styles in Modal */
 .doctor-detail {
   display: flex;
   align-items: center;
@@ -98,6 +127,7 @@
 .doctor-image img {
   width: 200px;
   height: 200px;
+  object-fit: cover;
   border-radius: 50%;
 }
 
