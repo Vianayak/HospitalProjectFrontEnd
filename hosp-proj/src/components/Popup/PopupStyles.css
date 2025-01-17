@@ -338,3 +338,20 @@ font-weight: 600;
 .date-input:hover {
   border-color: #5A3ECA;
 }
+
+.resend-otp-container {
+  margin-top: 10px; /* Adds space between the OTP input and the resend link */
+  text-align: center; /* Centers the link */
+}
+
+
+.resend-link {
+  color: #f22424;
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.resend-link:hover {
+  text-decoration: underline;
+}
