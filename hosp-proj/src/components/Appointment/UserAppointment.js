@@ -153,22 +153,23 @@ const UserAppointment = () => {
             <h2>APJ1.0002836055 (Vinayak Banoth)</h2>
             <p className="uhid-note">Fill Your Personal Details.</p>
             <form className="details-form">
-              <div className="form-group">
-                <label>First Name</label>
-                <input
-                  type="text"
-                  name="firstName"
-                  placeholder="Enter Your First Name"
-                  value={formData.firstName}
-                  onChange={handleInputChange}
-                  onFocus={handleInputFocus} // Track focus
-                  className={formErrors.firstName && touchedFields.firstName ? "error-input" : ""}
-                />
-                {touchedFields.firstName && formErrors.firstName && (
-                  <span className="error">{formErrors.firstName}</span>
-                )}
-              </div>
-              <div className="form-group">
+            <div className="form-group2">
+  <label>First Name</label>
+  <input
+    type="text"
+    name="firstName"
+    placeholder="Enter Your First Name"
+    value={formData.firstName}
+    onChange={handleInputChange}
+    onFocus={handleInputFocus} // Track focus
+    className={formErrors.firstName && touchedFields.firstName ? "error-input" : ""}
+  />
+  <span className="error">
+    {touchedFields.firstName && formErrors.firstName ? formErrors.firstName : ""}
+  </span>
+</div>
+
+              <div className="form-group2">
                 <label>Last Name</label>
                 <input
                   type="text"
@@ -179,11 +180,12 @@ const UserAppointment = () => {
                   onFocus={handleInputFocus} // Track focus
                   className={formErrors.lastName && touchedFields.lastName ? "error-input" : ""}
                 />
-                {touchedFields.lastName && formErrors.lastName && (
-                  <span className="error">{formErrors.lastName}</span>
-                )}
+                <span className="error">
+                {touchedFields.lastName && formErrors.lastName ?
+                  formErrors.lastName : ""}</span>
+                
               </div>
-              <div className="form-group">
+              <div className="form-group2">
                 <label>Phone</label>
                 <input
                   type="text"
@@ -198,11 +200,11 @@ const UserAppointment = () => {
                   <span className="error">{formErrors.phone}</span>
                 )}
               </div>
-              <div className="form-group">
+              <div className="form-group2">
                 <label>Email</label>
                 <input type="email" name="email" value={formData.email} readOnly />
               </div>
-              <div className="form-group">
+              <div className="form-group2">
                 <label>DOB</label>
                 <input
                   type="date"
@@ -216,7 +218,7 @@ const UserAppointment = () => {
                   <span className="error">{formErrors.dob}</span>
                 )}
               </div>
-              <div className="form-group">
+              <div className="form-group2">
                 <label>Gender</label>
                 <select
                   name="gender"

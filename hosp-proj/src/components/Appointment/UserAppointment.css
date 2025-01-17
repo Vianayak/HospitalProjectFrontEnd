@@ -52,20 +52,21 @@
   gap: 20px;
 }
 
-.form-group {
+.form-group2 {
   display: flex;
   align-items: center; /* Align label and input vertically in the center */
   gap: 10px; /* Add some space between label and input */
 }
 
-.form-group label {
+.form-group2 label {
   font-weight: bold;
   margin: 0; /* Remove margin to minimize space */
   color: #000000; /* Darken label color to black */
   width: 150px; /* Fixed width for label */
+
 }
 
-.form-group input {
+.form-group2 input {
   padding: 8px 12px; /* Reduce padding to minimize input size */
   font-size: 14px; /* Adjust font size */
   border: 1px solid #5A3ECA;
@@ -76,12 +77,12 @@
 }
 
 /* Optional: Input focus style */
-.form-group input:focus {
+.form-group2 input:focus {
   border-color: #5A3ECA;
   outline: none;
 }
 
-.form-group input:read-only {
+.form-group2 input:read-only {
   background: #e9ecef;
 }
 
@@ -213,7 +214,7 @@
  
 }
 /* Gender Dropdown Styling */
-.form-group select {
+.form-group2 select {
   padding: 8px 12px; /* Add padding for better spacing */
   font-size: 14px; /* Font size for better readability */
   border: 1px solid #5A3ECA; /* Border color matching theme */
@@ -226,13 +227,13 @@
 }
 
 /* Dropdown Focus State */
-.form-group select:focus {
+.form-group2 select:focus {
   border-color: #5A3ECA; /* Highlight border on focus */
   outline: none; /* Remove default outline */
 }
 
 /* Dropdown Arrow Styling (optional) */
-.form-group select::-ms-expand {
+.form-group2 select::-ms-expand {
   display: none; /* Remove default arrow for IE/Edge */
 }
 
@@ -267,6 +268,7 @@
   font-size: 12px; /* Small font size */
   margin-top: 5px; /* Spacing between input and error message */
   font-weight: bold; /* Bold for emphasis */
+  display: block;
 }
 
 /* Success Message Styling (optional) */
@@ -302,12 +304,12 @@ input:focus:valid {
 }
 
 /* Validation Message for Select Dropdown */
-.form-group select:invalid {
+.form-group2 select:invalid {
   border-color: #e63946; /* Red border for invalid select */
   background-color: #fff5f5; /* Light red background */
 }
 
-.form-group select:valid {
+.form-group2 select:valid {
   border-color: #4caf50; /* Green border for valid select */
   background-color: #f0fff4; /* Light green background */
 }
