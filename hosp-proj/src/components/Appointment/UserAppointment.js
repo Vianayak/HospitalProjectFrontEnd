@@ -133,6 +133,15 @@ const UserAppointment = () => {
     validateForm();
   }, [formData, validateForm]);
 
+
+  const getMaxDate = () => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+
   return (
     <>
     <header className="header">
@@ -205,19 +214,20 @@ const UserAppointment = () => {
                 <input type="email" name="email" value={formData.email} readOnly />
               </div>
               <div className="form-group2">
-                <label>DOB</label>
-                <input
-                  type="date"
-                  name="dob"
-                  value={formData.dob}
-                  onChange={handleInputChange}
-                  onFocus={handleInputFocus} // Track focus
-                  className={formErrors.dob && touchedFields.dob ? "error-input" : ""}
-                />
-                {touchedFields.dob && formErrors.dob && (
-                  <span className="error">{formErrors.dob}</span>
-                )}
-              </div>
+  <label>DOB</label>
+  <input
+    type="date"
+    name="dob"
+    value={formData.dob}
+    onChange={handleInputChange}
+    onFocus={handleInputFocus} // Track focus
+    max={getMaxDate()} // Set max date to today
+    className={formErrors.dob && touchedFields.dob ? "error-input" : ""}
+  />
+  {touchedFields.dob && formErrors.dob && (
+    <span className="error">{formErrors.dob}</span>
+  )}
+</div>
               <div className="form-group2">
                 <label>Gender</label>
                 <select
