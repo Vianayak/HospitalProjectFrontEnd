@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./ForgotPassword.css";
-import axios from 'axios';
+import axios from "axios";
 
 const ForgotPassword = () => {
   const [formData, setFormData] = useState({
@@ -10,17 +10,14 @@ const ForgotPassword = () => {
     password: "",
     confirmPassword: "",
   });
-  const [email, setEmail] = useState("");
-  const [otp, setOtp] = useState("");
   const [showOtpForm, setShowOtpForm] = useState(false);
   const [showPasswordForm, setShowPasswordForm] = useState(false);
   const [formErrors, setFormErrors] = useState({});
   const [isFormValid, setIsFormValid] = useState(false);
-  const [touchedFields, setTouchedFields] = useState({});
-  const [countdown, setCountdown] = useState(0); // Initially no timer
+  const [countdown, setCountdown] = useState(0);
   const [canResendOtp, setCanResendOtp] = useState(false);
 
-  const navigate = useNavigate(); // Initialize navigate
+  const navigate = useNavigate();
 
   const validateForm = () => {
     const errors = {};
@@ -51,14 +48,16 @@ const ForgotPassword = () => {
   };
 
   const handleSendOtp = async () => {
-    if (!email) {
+    if (!formData.email) {
       alert("Please enter a valid email address.");
       return;
     }
 
     try {
       const response = await fetch(
-        `http://localhost:8081/api/otp/sendOtp?email=${encodeURIComponent(email)}`,
+        `http://localhost:8081/api/otp/sendOtp?email=${encodeURIComponent(
+          formData.email
+        )}`,
         {
           method: "POST",
         }
@@ -70,7 +69,8 @@ const ForgotPassword = () => {
       }
 
       setShowOtpForm(true);
-      setCanResendOtp(true); // Allow the user to resend OTP immediately after the first send
+      setCanResendOtp(true);
+      startCountdown();
     } catch (error) {
       console.error("Error sending OTP:", error);
       alert(`An error occurred: ${error.message}`);
@@ -78,12 +78,12 @@ const ForgotPassword = () => {
   };
 
   const startCountdown = () => {
-    setCountdown(30); // Start countdown at 30 seconds
+    setCountdown(30);
     const interval = setInterval(() => {
       setCountdown((prev) => {
         if (prev === 1) {
           clearInterval(interval);
-          setCanResendOtp(true); // Enable resend button
+          setCanResendOtp(true);
         }
         return prev - 1;
       });
@@ -93,7 +93,9 @@ const ForgotPassword = () => {
   const handleResendOtp = async () => {
     try {
       const response = await fetch(
-        `http://localhost:8081/api/otp/sendOtp?email=${encodeURIComponent(email)}`,
+        `http://localhost:8081/api/otp/sendOtp?email=${encodeURIComponent(
+          formData.email
+        )}`,
         {
           method: "POST",
         }
@@ -104,8 +106,8 @@ const ForgotPassword = () => {
         throw new Error(errorText || "Failed to resend OTP.");
       }
 
-      setCanResendOtp(false); // Disable resend button during countdown
-      startCountdown(); // Start the countdown timer
+      setCanResendOtp(false);
+      startCountdown();
     } catch (error) {
       console.error("Error resending OTP:", error);
       alert(`An error occurred: ${error.message}`);
@@ -113,7 +115,7 @@ const ForgotPassword = () => {
   };
 
   const handleVerifyOtp = async () => {
-    if (!otp) {
+    if (!formData.otp) {
       alert("Please enter the OTP.");
       return;
     }
@@ -121,29 +123,23 @@ const ForgotPassword = () => {
     try {
       const response = await axios.post("http://localhost:8081/api/otp/verifyOtp", null, {
         params: {
-          email: email,
-          otp: otp,
+          email: formData.email,
+          otp: formData.otp,
         },
       });
       alert(response.data);
-      setShowOtpForm(false); // Hide OTP input after verification
-      setEmail(""); // Clear email field
-      setShowPasswordForm(true); // Show password fields after OTP verification
+      setShowOtpForm(false);
+      setShowPasswordForm(true);
     } catch (error) {
       alert(error.response?.data || "Error verifying OTP");
     }
-  };
-
-  const handleInputFocus = (e) => {
-    const { name } = e.target;
-    setTouchedFields((prevTouched) => ({ ...prevTouched, [name]: true }));
   };
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
     if (isFormValid) {
       alert("Password reset successful!");
-      navigate("/login"); // Navigate to the login page
+      navigate("/login");
     }
   };
 
@@ -157,96 +153,110 @@ const ForgotPassword = () => {
         <h2>Forgot Password</h2>
       </div>
       <form className="forgot-password-form" onSubmit={handleFormSubmit}>
-        <div className="form-group">
-          <label>Email</label>
-          <input
-            type="email"
-            className="popup-input"
-            placeholder="What is your email?"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          {!showOtpForm ? (
-            <button className="popup-button" onClick={handleSendOtp}>
-              Send Otp
-            </button>
-          ) : (
-            <div>
+  {!showOtpForm && !showPasswordForm && (
+    <div className="form-group">
+      <div className="label-input-container">
+      <label>Email</label>
+      <input
+        type="email"
+        name="email"
+        className="popup-input"
+        placeholder="What is your email?"
+        value={formData.email}
+        onChange={handleInputChange}
+      />
+      </div>
+      <div>
+        <button
+          type="button"
+          className="popup-button"
+          onClick={handleSendOtp}
+        >
+          Send OTP
+        </button>
+      </div>
+    </div>
+  )}
+
+
+
+        {showOtpForm && !showPasswordForm && (
+          <div>
+            <div className="form-group">
+            <div className="label-input-container">
+              <label>Email</label>
+              <input
+                type="email"
+                name="email"
+                className="popup-input"
+                value={formData.email}
+                disabled
+              />
+              </div>
+            </div>
+            <div className="form-group">
+            <div className="label-input-container">
+              <label>OTP</label>
               <input
                 type="text"
+                name="otp"
                 className="popup-input"
                 placeholder="Enter OTP"
-                value={otp}
-                onChange={(e) => setOtp(e.target.value)}
+                value={formData.otp}
+                onChange={handleInputChange}
               />
+              </div>
               {countdown > 0 && (
                 <div className="countdown-timer">{`Resend in ${countdown}s`}</div>
               )}
-              {canResendOtp && (
-                <div className="resend-otp-container">
-                  <a
-                    href="#"
-                    className="resend-link"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handleResendOtp();
-                    }}
-                  >
-                    Resend OTP
-                  </a>
-                </div>
-              )}
-              <button className="popup-button" onClick={handleVerifyOtp}>
+              
+              <button
+                type="button"
+                className="popup-button"
+                onClick={handleVerifyOtp}
+              >
                 Verify OTP
               </button>
-            </div>
-          )}
-        </div>
-
-        {showPasswordForm && (
-          <div>
-            <div className="form-group">
-              <label>Password</label>
-              <input
-                type="password"
-                name="password"
-                value={formData.password}
-                onChange={handleInputChange}
-                onFocus={handleInputFocus}
-                className={formErrors.password && touchedFields.password ? "error-input" : ""}
-                placeholder="Enter new password"
-              />
-              {touchedFields.password && formErrors.password && (
-                <span className="error">{formErrors.password}</span>
-              )}
-            </div>
-
-            <div className="form-group">
-              <label>Confirm Password</label>
-              <input
-                type="password"
-                name="confirmPassword"
-                value={formData.confirmPassword}
-                onChange={handleInputChange}
-                onFocus={handleInputFocus}
-                className={formErrors.confirmPassword && touchedFields.confirmPassword ? "error-input" : ""}
-                placeholder="Confirm new password"
-              />
-              {touchedFields.confirmPassword && formErrors.confirmPassword && (
-                <span className="error">{formErrors.confirmPassword}</span>
-              )}
             </div>
           </div>
         )}
 
         {showPasswordForm && (
-          <button
-            type="submit"
-            className="forgot-password-button"
-            disabled={!isFormValid}
-          >
-            Reset Password
-          </button>
+          <div>
+            <div className="form-group">
+            <div className="label-input-container">
+              <label>Password</label>
+              <input
+                type="password"
+                name="password"
+                className="popup-input"
+                placeholder="Enter new password"
+                value={formData.password}
+                onChange={handleInputChange}
+              />
+              </div>
+            </div>
+            <div className="form-group">
+            <div className="label-input-container">
+              <label>Confirm Password</label>
+              <input
+                type="password"
+                name="confirmPassword"
+                className="popup-input"
+                placeholder="Confirm new password"
+                value={formData.confirmPassword}
+                onChange={handleInputChange}
+              />
+              </div>
+            </div>
+            <button
+              type="submit"
+              className="forgot-password-button"
+              disabled={!isFormValid}
+            >
+              Reset Password
+            </button>
+          </div>
         )}
       </form>
     </div>
