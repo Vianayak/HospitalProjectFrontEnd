@@ -123,7 +123,7 @@ const SignIn = () => {
         </div>
       </div>
       <form className="signin-form" onSubmit={handleFormSubmit}>
-        <div className="form-group">
+        <div className="form-group1">
           <label>First Name</label>
           <input
             type="text"
@@ -139,7 +139,7 @@ const SignIn = () => {
           )}
         </div>
 
-        <div className="form-group">
+        <div className="form-group1">
           <label>Last Name</label>
           <input
             type="text"
@@ -155,7 +155,7 @@ const SignIn = () => {
           )}
         </div>
 
-        <div className="form-group">
+        <div className="form-group1">
           <label>Email</label>
           <input
             type="email"
@@ -171,7 +171,7 @@ const SignIn = () => {
           )}
         </div>
 
-        <div className="form-group">
+        <div className="form-group1">
           <label>Mobile Number</label>
           <input
             type="text"
@@ -187,7 +187,7 @@ const SignIn = () => {
           )}
         </div>
 
-        <div className="form-group">
+        <div className="form-group1">
           <label>Role</label>
           <select
             name="role"
@@ -207,7 +207,7 @@ const SignIn = () => {
           )}
         </div>
 
-        <div className="form-group">
+        <div className="form-group1">
           <label>Upload Profile Image</label>
           <input
             type="file"

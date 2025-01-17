@@ -7,6 +7,7 @@
     max-width: 500px;
     text-align: center;
     color: white;
+  
   }
   
   .signin-header h2 {
@@ -19,49 +20,56 @@
   }
   
  
-  .form-group label {
-    display: block;
-    margin-bottom: 5px;
-  }
-  .form-group {
-    margin-bottom: 25px; /* Increase spacing to accommodate error message */
-    text-align: left;
+  .form-group1 {
+    display: flex;
+    align-items: center; /* Vertically align label and input */
+    margin-bottom: 25px; /* Adjust spacing as necessary */
     position: relative; /* To ensure the error message is aligned with the input */
   }
   
-  .form-group input,
-  .form-group select {
-    width: 100%;
-    padding: 10px;
-    border: none;
-    border-radius: 4px;
-    background-color: #f4f4f4;
-    color: #333;
-    margin-bottom: 5px; /* Space between input and error message */
+  .form-group1 label {
+    margin-right: 15px; /* Add space between label and input */
+    font-size: 16px;
+    font-weight: bold;
+    color: #333; /* Adjust label color */
+    flex-shrink: 0; /* Prevent the label from shrinking */
+    flex-basis: 120px;
+    text-align: right;
   }
   
-  .form-group input::placeholder {
-    color: #aaa; /* Adjust placeholder color for better visibility */
+  .form-group1 input,
+  .form-group1 select {
+      width: 100%;
+      padding: 10px;
+      text-indent: 10px; /* Add consistent spacing for placeholder and input text */
+      border: none;
+      border-radius: 4px;
+      background-color: #f4f4f4;
+      color: #333;
   }
+  
+  .form-group1 input::placeholder {
+      color: #aaa; /* Adjust placeholder clor */
+      font-style: normal; /* Keep it consistent */
+      text-indent: 10px; /* Ensure placeholder starts at the same position */
+  }
+  
+
   
   .error {
     color: red;
     font-size: 12px;
     margin-top: -5px; /* Pull closer to the input field */
-    display: block; /* Ensures the error message appears below the input */
     position: absolute; /* Positioning relative to form-group */
     bottom: -18px; /* Moves error message directly below input */
     left: 110px; /* Aligns error message with input's left edge */
   }
   
-  
-  .form-group select {
-    background-color: #fff;
-  }
-  
   .error-input {
     border: 2px solid red;
   }
+  
+  
   
   
   
