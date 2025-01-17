@@ -171,9 +171,9 @@ const UserAppointment = () => {
     value={formData.firstName}
     onChange={handleInputChange}
     onFocus={handleInputFocus} // Track focus
-    className={formErrors.firstName && touchedFields.firstName ? "error-input" : ""}
+    className={formErrors.firstName && touchedFields.firstName ? "error1-input" : ""}
   />
-  <span className="error">
+  <span className="error1">
     {touchedFields.firstName && formErrors.firstName ? formErrors.firstName : ""}
   </span>
 </div>
@@ -187,9 +187,9 @@ const UserAppointment = () => {
                   value={formData.lastName}
                   onChange={handleInputChange}
                   onFocus={handleInputFocus} // Track focus
-                  className={formErrors.lastName && touchedFields.lastName ? "error-input" : ""}
+                  className={formErrors.lastName && touchedFields.lastName ? "error1-input" : ""}
                 />
-                <span className="error">
+                <span className="error1">
                 {touchedFields.lastName && formErrors.lastName ?
                   formErrors.lastName : ""}</span>
                 
@@ -203,10 +203,10 @@ const UserAppointment = () => {
                   value={formData.phone}
                   onChange={handleInputChange}
                   onFocus={handleInputFocus} // Track focus
-                  className={formErrors.phone && touchedFields.phone ? "error-input" : ""}
+                  className={formErrors.phone && touchedFields.phone ? "error1-input" : ""}
                 />
                 {touchedFields.phone && formErrors.phone && (
-                  <span className="error">{formErrors.phone}</span>
+                  <span className="error1">{formErrors.phone}</span>
                 )}
               </div>
               <div className="form-group2">
@@ -222,10 +222,10 @@ const UserAppointment = () => {
     onChange={handleInputChange}
     onFocus={handleInputFocus} // Track focus
     max={getMaxDate()} // Set max date to today
-    className={formErrors.dob && touchedFields.dob ? "error-input" : ""}
+    className={formErrors.dob && touchedFields.dob ? "error1-input" : ""}
   />
   {touchedFields.dob && formErrors.dob && (
-    <span className="error">{formErrors.dob}</span>
+    <span className="error1">{formErrors.dob}</span>
   )}
 </div>
               <div className="form-group2">
@@ -235,7 +235,7 @@ const UserAppointment = () => {
                   value={formData.gender}
                   onChange={handleInputChange}
                   onFocus={handleInputFocus} // Track focus
-                  className={formErrors.gender && touchedFields.gender ? "error-input" : ""}
+                  className={formErrors.gender && touchedFields.gender ? "error1-input" : ""}
                 >
                   <option value="" disabled>
                     Select Gender
@@ -245,7 +245,7 @@ const UserAppointment = () => {
                   <option value="Other">Other</option>
                 </select>
                 {touchedFields.gender && formErrors.gender && (
-                  <span className="error">{formErrors.gender}</span>
+                  <span className="error1">{formErrors.gender}</span>
                 )}
               </div>
             </form>
