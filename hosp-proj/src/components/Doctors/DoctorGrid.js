@@ -10,7 +10,7 @@ const DoctorGrid = () => {
   const [error, setError] = useState(null);
   const [selectedDoctor, setSelectedDoctor] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [doctordetails,setDoctorDetails] = useState(null);
+  const [doctordetails, setDoctorDetails] = useState(null);
 
   const [showPopup, setShowPopup] = useState(false);
   const [email, setEmail] = useState('');
@@ -38,10 +38,12 @@ const DoctorGrid = () => {
       console.error("Error sending OTP:", error);
     }
   };
+
   const handleResendOtp = async () => {
     if (!canResendOtp) return; // Do not send OTP if the button is disabled
     await handleSendOtp();
   };
+
   const handleVerifyOtp = async () => {
     if (!otp) return;
     try {
@@ -54,21 +56,23 @@ const DoctorGrid = () => {
       console.error("OTP verification failed:", error);
     }
   };
+
   const handleClosePopup = () => { setShowPopup(false); };
 
   const [showSchedulePopup, setShowSchedulePopup] = useState(false);
   const [date, setDate] = useState(new Date());
   const [selectedTimeSlot, setSelectedTimeSlot] = useState(null);
 
-  const handleConfirmAppointment = () => { if (date && selectedTimeSlot) {
-    const timeOfDay = getTimeOfDay(selectedTimeSlot);
-    navigate("/user-appointment", {
-      state: { date, timeSlot: selectedTimeSlot, email, doctorDetails: doctordetails, timeOfDay }
-    });
-  } else {
-    alert("Please select a date and time slot.");
-  } };
-
+  const handleConfirmAppointment = () => { 
+    if (date && selectedTimeSlot) {
+      const timeOfDay = getTimeOfDay(selectedTimeSlot);
+      navigate("/user-appointment", {
+        state: { date, timeSlot: selectedTimeSlot, email, doctorDetails: doctordetails, timeOfDay }
+      });
+    } else {
+      alert("Please select a date and time slot.");
+    }
+  };
 
   const getTimeOfDay = (timeSlot) => {
     const morningSlots = ["11:00-11:30", "11:30-12:00"];
@@ -147,6 +151,9 @@ const DoctorGrid = () => {
     return blockedSlots.some(item => item.date === date && item.time === slotTime);
   };
 
+  // Only show first 6 doctors in the grid
+  const visibleDoctors = doctors.slice(0, 6);
+
   return (
     <>
       <header>
@@ -157,7 +164,7 @@ const DoctorGrid = () => {
         {doctors.length === 0 && !error ? (
           <p>Loading...</p>
         ) : (
-          doctors.map((doctor) => (
+          visibleDoctors.map((doctor) => (
             <div key={doctor.id} className="doctor-cards">
               <div className="doctor-image">
                 {/* Dynamically set image source from the backend */}
@@ -168,12 +175,9 @@ const DoctorGrid = () => {
               <p>Location: {doctor.location}</p>
               <div className="doctor-buttons">
                 <button onClick={() => handleViewDetails(doctor)}>View Details</button>
-                <button onClick={() => handleBookAppointment(doctor)}>
-              Book Appointment
-            </button>
+                <button onClick={() => handleBookAppointment(doctor)}>Book Appointment</button>
               </div>
             </div>
-            
           ))
         )}
       </div>
@@ -232,6 +236,5 @@ const DoctorGrid = () => {
     </>
   );
 };
-
 
 export default DoctorGrid;
