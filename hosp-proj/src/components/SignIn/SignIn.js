@@ -5,6 +5,8 @@ import "./SignIn.css";
 const SignIn = () => {
   const [formData, setFormData] = useState({
     email: "",
+    specialization:"",
+    location: "",
     role: "",
     firstName: "",
     lastName: "",
@@ -22,6 +24,9 @@ const SignIn = () => {
     if (!formData.email || !/\S+@\S+\.\S+/.test(formData.email)) {
       errors.email = "Valid email is required.";
     }
+    if (!formData.location) {
+      errors.location = "Location is required.";
+    }
     if (!formData.role) {
       errors.role = "Role is required.";
     }
@@ -34,18 +39,28 @@ const SignIn = () => {
     if (!formData.mobileNumber || !/^\d{10}$/.test(formData.mobileNumber)) {
       errors.mobileNumber = "Valid mobile number is required.";
     }
-    if (formData.profileImage) {
-      if (!/\.(jpg|jpeg|png)$/i.test(formData.profileImage.name)) {
-        errors.profileImage = "Only JPG, JPEG, and PNG images are allowed.";
+  
+    // Additional validations for the "doctor" role
+    if (formData.role === "doctor") {
+      if (!formData.specialization) {
+        errors.specialization = "Specialization is required.";
       }
-      if (formData.profileImage.size > 2 * 1024 * 1024) { // 2MB
-        errors.profileImage = "Image size must be less than 2MB.";
+      if (formData.profileImage) {
+        if (!/\.(jpg|jpeg|png)$/i.test(formData.profileImage.name)) {
+          errors.profileImage = "Only JPG, JPEG, and PNG images are allowed.";
+        }
+        if (formData.profileImage.size > 2 * 1024 * 1024) { // 2MB
+          errors.profileImage = "Image size must be less than 2MB.";
+        }
+      } else {
+        errors.profileImage = "Profile image is required.";
       }
     }
-
+  
     setFormErrors(errors);
-    setIsFormValid(Object.keys(errors).length === 0 && formData.profileImage);
+    setIsFormValid(Object.keys(errors).length === 0);
   };
+  
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -75,6 +90,8 @@ const SignIn = () => {
         formDataToSend.append("user", JSON.stringify({
           email: formData.email,
           role: formData.role,
+          location: formData.location,
+          specialization:formData.specialization,
           firstName: formData.firstName,
           lastName: formData.lastName,
           mobileNumber: formData.mobileNumber,
@@ -186,7 +203,62 @@ const SignIn = () => {
             <span className="error">{formErrors.mobileNumber}</span>
           )}
         </div>
+        <div className="form-group1">
+          <label>Location</label>
+          <select
+            name="location"
+            value={formData.location}
+            onChange={handleInputChange}
+            onFocus={handleInputFocus}
+            className={formErrors.location && touchedFields.location ? "error-input" : ""}
+          >
+            <option value="" disabled>
+              Select Location
+            </option>
+       
+  <option value="andhra-pradesh">Andhra Pradesh</option>
+  <option value="arunachal-pradesh">Arunachal Pradesh</option>
+  <option value="assam">Assam</option>
+  <option value="bihar">Bihar</option>
+  <option value="chhattisgarh">Chhattisgarh</option>
+  <option value="goa">Goa</option>
+  <option value="gujarat">Gujarat</option>
+  <option value="haryana">Haryana</option>
+  <option value="himachal-pradesh">Himachal Pradesh</option>
+  <option value="jharkhand">Jharkhand</option>
+  <option value="karnataka">Karnataka</option>
+  <option value="kerala">Kerala</option>
+  <option value="madhya-pradesh">Madhya Pradesh</option>
+  <option value="maharashtra">Maharashtra</option>
+  <option value="manipur">Manipur</option>
+  <option value="meghalaya">Meghalaya</option>
+  <option value="mizoram">Mizoram</option>
+  <option value="nagaland">Nagaland</option>
+  <option value="odisha">Odisha</option>
+  <option value="punjab">Punjab</option>
+  <option value="rajasthan">Rajasthan</option>
+  <option value="sikkim">Sikkim</option>
+  <option value="tamil-nadu">Tamil Nadu</option>
+  <option value="telangana">Telangana</option>
+  <option value="tripura">Tripura</option>
+  <option value="uttar-pradesh">Uttar Pradesh</option>
+  <option value="uttarakhand">Uttarakhand</option>
+  <option value="west-bengal">West Bengal</option>
+  <option value="andaman-nicobar">Andaman and Nicobar Islands</option>
+  <option value="chandigarh">Chandigarh</option>
+  <option value="dadra-nagar-haveli">Dadra and Nagar Haveli and Daman and Diu</option>
+  <option value="delhi">Delhi</option>
+  <option value="jammu-kashmir">Jammu and Kashmir</option>
+  <option value="ladakh">Ladakh</option>
+  <option value="lakshadweep">Lakshadweep</option>
+  <option value="puducherry">Puducherry</option>
 
+
+          </select>
+          {touchedFields.location && formErrors.location && (
+            <span className="error">{formErrors.location}</span>
+          )}
+        </div>
         <div className="form-group1">
           <label>Role</label>
           <select
@@ -207,25 +279,46 @@ const SignIn = () => {
           )}
         </div>
 
-        <div className="form-group1">
-          <label>Upload Profile Image</label>
-          <input
-            type="file"
-            name="profileImage"
-            onChange={handleImageUpload}
-          />
-          {touchedFields.profileImage && formErrors.profileImage && (
-            <span className="error">{formErrors.profileImage}</span>
-          )}
-        </div>
+     {/* Conditionally render fields if role is Doctor */}
+{formData.role === "doctor" && (
+  <>
+    <div className="form-group1">
+      <label>Upload Profile Image</label>
+      <input
+        type="file"
+        name="profileImage"
+        onChange={handleImageUpload}
+      />
+      {touchedFields.profileImage && formErrors.profileImage && (
+        <span className="error">{formErrors.profileImage}</span>
+      )}
+    </div>
+    <div className="form-group1">
+      <label>Specialization</label>
+      <input
+        type="text"
+        name="specialization"
+        value={formData.specialization}
+        onChange={handleInputChange}
+        onFocus={handleInputFocus}
+        className={formErrors.specialization && touchedFields.specialization ? "error-input" : ""}
+        placeholder="Enter your specialization"
+      />
+      {touchedFields.specialization && formErrors.specialization && (
+        <span className="error">{formErrors.specialization}</span>
+      )}
+    </div>
+  </>
+)}
 
-        <button
-          type="submit"
-          className="signin-button"
-          disabled={!isFormValid} // Disable the button if the form is invalid or no image is uploaded
-        >
-          Sign In
-        </button>
+<button
+  type="submit"
+  className="signin-button"
+  disabled={!isFormValid} // Use only isFormValid
+>
+  Sign In
+</button>
+
       </form>
     </div>
   );
