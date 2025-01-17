@@ -97,7 +97,7 @@ const SearchBar = () => {
       {/* Modal for Doctor Details */}
       {isModalOpen && selectedDoctor && (
         <div className="modal">
-          <div className="modal-content">
+          <div className="modal-content1">
             <span className="close" onClick={closeModal}>×</span>
             <h2>Doctor Details</h2>
             <div className="doctor-detail">
