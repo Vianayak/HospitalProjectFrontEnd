@@ -167,14 +167,16 @@ const ForgotPassword = () => {
       />
       </div>
       <div>
-        <button
-          type="button"
-          className="popup-button"
-          onClick={handleSendOtp}
-        >
-          Send OTP
-        </button>
-      </div>
+  <button
+    type="button"
+    className="popup-button"
+    onClick={handleSendOtp}
+    style={{ marginLeft: '90px' }} // Adjust the value as needed
+  >
+    Send OTP
+  </button>
+</div>
+
     </div>
   )}
 
