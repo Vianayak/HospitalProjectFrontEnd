@@ -64,13 +64,47 @@ const SignIn = () => {
     setTouchedFields((prevTouched) => ({ ...prevTouched, [name]: true }));
   };
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
     if (isFormValid) {
-      alert("Form submitted successfully!");
-      navigate("/login"); // Navigate to the login page
+      try {
+        // Create a FormData object (use a different variable name to avoid conflict with state)
+        const formDataToSend = new FormData();
+        
+        // Append user data fields (converted to a JSON string)
+        formDataToSend.append("user", JSON.stringify({
+          email: formData.email,
+          role: formData.role,
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          mobileNumber: formData.mobileNumber,
+        }));
+        
+        // Append the profile image if it exists
+        if (formData.profileImage) {
+          formDataToSend.append("image", formData.profileImage);
+        }
+        
+        // Send the POST request with FormData
+        const response = await fetch("http://localhost:8082/api/user/register", {
+          method: "POST",
+          body: formDataToSend,  // Include the form data (user details and image)
+        });
+        
+        if (response.ok) {
+          alert("User registered successfully!");
+          navigate("/login"); // Navigate to login page on successful registration
+        } else {
+          const errorData = await response.text();
+          alert("Error registering user: " + errorData);
+        }
+      } catch (error) {
+        alert("Error: " + error.message);
+      }
     }
   };
+  
+  
 
   useEffect(() => {
     validateForm();

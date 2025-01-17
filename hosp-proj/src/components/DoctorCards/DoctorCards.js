@@ -185,7 +185,7 @@ const DoctorCard = ({ doctor }) => {
       <div className="content-wrapper1">
         <div className="doctor-card">
           <div className="doctor-image">
-            <img src="Assets/Images/Love.jpeg" alt={`${doctor.name}`} />
+          <img src={`http://localhost:8081/${doctor.imagePath}`} alt={doctor.name} />
           </div>
           <div className="doctor-details">
             <h3 className="doctor-name">{doctor.name}</h3>

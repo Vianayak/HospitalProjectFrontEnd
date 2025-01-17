@@ -94,7 +94,7 @@ const SearchBar = () => {
             <h2>Doctor Details</h2>
             <div className="doctor-detail">
               <div className="doctor-image">
-                <img src="Assets/Images/Love.jpeg" alt={selectedDoctor.name} />
+              <img src={`http://localhost:8081/${selectedDoctor.imagePath}`} alt={selectedDoctor.name} />
               </div>
               <div className="doctor-info">
                 <h3>{selectedDoctor.name}</h3>
