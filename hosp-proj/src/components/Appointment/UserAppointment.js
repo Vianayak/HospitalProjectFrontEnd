@@ -61,12 +61,12 @@ const UserAppointment = () => {
             razorpay_signature,
           })
           .then(() => {
-            alert("Payment verified successfully!");
+            
             navigate("/jayahospitals");
           })
           .catch((error) => {
             console.error("Error verifying payment:", error);
-            alert("Payment verification failed.");
+            
           });
         },
         prefill: {
@@ -88,7 +88,7 @@ const UserAppointment = () => {
       razorpay.open();
     } catch (error) {
       console.error("Error during payment:", error);
-      alert("Something went wrong. Please try again.");
+      
     }
   };
 

@@ -67,7 +67,7 @@ const DoctorCard = ({ doctor }) => {
 
   const handleSendOtp = async () => {
     if (!email) {
-      alert("Please enter a valid email address.");
+      
       return;
     }
 
@@ -88,7 +88,7 @@ const DoctorCard = ({ doctor }) => {
       setCanResendOtp(true); // Allow the user to resend OTP immediately after the first send
     } catch (error) {
       console.error("Error sending OTP:", error);
-      alert(`An error occurred: ${error.message}`);
+      
     }
   };
 
@@ -123,13 +123,13 @@ const DoctorCard = ({ doctor }) => {
       startCountdown(); // Start the countdown timer
     } catch (error) {
       console.error("Error resending OTP:", error);
-      alert(`An error occurred: ${error.message}`);
+      
     }
   };
 
   const handleVerifyOtp = async () => {
     if (!otp) {
-      alert("Please enter the OTP.");
+      
       return;
     }
 
@@ -140,11 +140,11 @@ const DoctorCard = ({ doctor }) => {
           otp: otp,
         },
       });
-      alert(response.data);
+      
       setShowPopup(false);
       setShowSchedulePopup(true);
     } catch (error) {
-      alert(error.response?.data || "Error verifying OTP");
+      
     }
   };
 
@@ -161,7 +161,7 @@ const DoctorCard = ({ doctor }) => {
         },
       });
     } else {
-      alert("Please select both a date and a time slot.");
+     
     }
   };
 
