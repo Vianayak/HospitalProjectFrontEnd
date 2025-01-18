@@ -12,7 +12,7 @@ import FloatingButtons from "./components/FloatingButtons/FloatingButtons";
 import DoctorList from "./components/DoctorCards/DoctorList";
 import UserAppointment from "./components/Appointment/UserAppointment";
 import LoginForm from "./components/Login/LoginForm";
-import SignIn from "./components/SignIn/SignIn";
+import SignUp from "./components/SignUp/SignUp";
 import HealthNewsImages from "./components/health/HealthNewsImages";
 import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
 
@@ -60,7 +60,7 @@ function App() {
 
           {/* User Appointment Page */}
           <Route path="/user-appointment" element={<UserAppointment />} />
-          <Route path="/SignIn" element={<Overlay className="login-overlay"><SignIn /></Overlay>} />
+          <Route path="/SignUp" element={<Overlay className="login-overlay"><SignUp /></Overlay>} />
           <Route path="/login" element={<Overlay className="login-overlay"><LoginForm /></Overlay>} />
           <Route path="/forgot" element={<Overlay className="login-overlay"><ForgotPassword /></Overlay>} />
         </Routes>

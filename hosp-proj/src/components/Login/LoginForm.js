@@ -87,16 +87,16 @@ function LoginForm() {
           >
             Forgot Password?
           </a>
-          <a
-            href="/SignIn"
-            className="SignIn"
-            onClick={(e) => {
-              e.preventDefault();
-              navigate("/SignIn");
-            }}
-          >
-            Sign In
-          </a>
+        <a
+          href="/SignUp"
+          className="SignUp"
+          onClick={(e) => {
+            e.preventDefault();
+            navigate("/SignUp"); // Navigate to Sign Up page
+          }}
+        >
+          Sign Up
+        </a>
         </form>
       </div>
     </div>

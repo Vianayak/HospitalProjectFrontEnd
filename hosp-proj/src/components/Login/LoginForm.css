@@ -95,10 +95,13 @@
   cursor: pointer;
 }
 
-.SignIn{
-  display: block;
-  margin-top: 10px;
-  color: white;
-  text-decoration: underline;
-  cursor: pointer;
+
+
+.SignUp {
+  margin-left: 5px; /* Adds space between the text and the link */
+  text-decoration: underline; /* Optional: underline the link */
+  color: white; /* Optional: Set link color */
+  cursor: pointer; /* Makes the cursor a pointer on hover */
 }
+
+

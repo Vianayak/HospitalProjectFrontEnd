@@ -105,6 +105,41 @@
     height: 40px;
   }
   
- 
+
+  .back-icon1 {
+    position: absolute; /* Adjust positioning as needed */
+    cursor: pointer;
+    font-size: 20px; /* Adjust size as needed */
+    color: white; /* Adjust color as needed */
+  }
+  .pagination-arrows {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
   
+  button[type="button"] {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    color: #333;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  .prev:hover{
+     background-color: #4e69e0;
+     color: white;
+  }
+
+  .next:hover{
+    background-color: #4e69e0;
+    color: white;
+ }
+  
+  
+  button[type="button"]:disabled {
+    background-color: #ddd;
+    cursor: not-allowed;
+  }
   
