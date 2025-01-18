@@ -79,6 +79,7 @@ const ForgotPassword = () => {
 
   const startCountdown = () => {
     setCountdown(30);
+    setCanResendOtp(false);
     const interval = setInterval(() => {
       setCountdown((prev) => {
         if (prev === 1) {
@@ -209,9 +210,15 @@ const ForgotPassword = () => {
               />
               </div>
               {countdown > 0 && (
-                <div className="countdown-timer">{`Resend in ${countdown}s`}</div>
+                <div className="countdown-timer">{`Didnt recieve OTP?Resend in ${countdown}s`}</div>
               )}
-              
+              {canResendOtp && (
+      <div className="resend-link">
+        <a href="#" onClick={handleResendOtp}>
+          Resend OTP
+        </a>
+      </div>
+    )}
               <button
                 type="button"
                 className="popup-button"
@@ -219,6 +226,7 @@ const ForgotPassword = () => {
               >
                 Verify OTP
               </button>
+              
             </div>
           </div>
         )}
