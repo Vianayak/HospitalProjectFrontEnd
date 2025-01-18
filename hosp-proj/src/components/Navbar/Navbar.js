@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './MyNavbar.css';
 import SearchBar from '../SearchBar/SearchBar';
 
-function MyNavbar() {
+function MyNavbar({ scrollToHealthNews }) {
     const [showDropdown, setShowDropdown] = useState('');
 
     const handleMouseEnter = (dropdown) => {
@@ -15,7 +15,7 @@ function MyNavbar() {
     const handleMouseLeave = () => {
         setShowDropdown('');
     };
-
+  
     return (
         <header>
             <Navbar bg="white" variant="light" expand="lg" className="sticky-navbar">
@@ -68,10 +68,12 @@ function MyNavbar() {
                             onMouseLeave={handleMouseLeave}
                         >
                             <NavDropdown.Item as={Link} to="/blog">Blog</NavDropdown.Item>
-                            <NavDropdown.Item as={Link} to="/news">News</NavDropdown.Item>
+                            <NavDropdown.Item onClick={scrollToHealthNews}>
+                    News
+                </NavDropdown.Item>
                         </NavDropdown>
                         <NavDropdown
-                            title={
+                            title={ 
                                 <span
                                     className={`dropdown-title ${
                                         showDropdown === 'hospitals' ? 'active' : ''

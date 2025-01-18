@@ -6,6 +6,7 @@
   padding: 0 20px; /* Add space to the left and right */
   margin-bottom: 80px;
   position: relative; /* Make it relative to position arrows correctly */
+  margin-top: 50px;
 }
 
 .news-item {
@@ -61,4 +62,8 @@
 
 .prev-arrow {
   left: 200px; /* Position arrow outside the container */
+}
+
+h2{
+  margin-top: 50px;
 }

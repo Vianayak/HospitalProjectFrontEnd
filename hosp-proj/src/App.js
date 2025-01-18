@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import "./App.css";
@@ -17,15 +17,27 @@ import HealthNewsImages from "./components/health/HealthNewsImages";
 import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
 
 function App() {
+  const healthNewsRef = useRef(null);
+
+  const scrollToHealthNews = () => {
+      if (healthNewsRef.current) {
+          healthNewsRef.current.scrollIntoView({ behavior: 'smooth' });
+      }
+  };
+
   return (
     <Router>
       <div className="App">
         {/* Navigation Bar */}
-        <Navbar />
+        <Navbar scrollToHealthNews={scrollToHealthNews} />
 
         {/* Routes */}
         <Routes>
           {/* Default Landing Page */}
+          <Route
+                    path="/healthnewsimages"
+                    element={<HealthNewsImages ref={healthNewsRef} />}
+                />
           <Route path="/" element={<Navigate to="/jayahospitals" replace />} />
           <Route path="/login" element={<LoginForm />} />
           <Route
@@ -38,7 +50,7 @@ function App() {
                 <SpecialtiesCarousel />
                 <HospitalSection />
                 <FloatingButtons />
-                <HealthNewsImages />
+                <HealthNewsImages healthNewsRef={healthNewsRef} />
               </>
             }
           />
