@@ -80,7 +80,12 @@
   color: white;
   cursor: pointer;
   font-size: 16px;
+  display: block; /* Ensure the button is displayed */
+  position: relative; /* Ensure proper stacking within its parent */
+  z-index: 2; /* Ensure it stays above the background and other elements */
 }
+
+
 
 .forgot-password {
   display: block;
