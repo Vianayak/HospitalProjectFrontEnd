@@ -6,6 +6,7 @@ const SignIn = () => {
   const [formData, setFormData] = useState({
     email: "",
     specialization:"",
+    experience:"",
     location: "",
     role: "",
     firstName: "",
@@ -30,6 +31,7 @@ const SignIn = () => {
     if (!formData.role) {
       errors.role = "Role is required.";
     }
+
     if (!formData.firstName) {
       errors.firstName = "First name is required.";
     }
@@ -51,6 +53,9 @@ const SignIn = () => {
         }
         if (formData.profileImage.size > 2 * 1024 * 1024) { // 2MB
           errors.profileImage = "Image size must be less than 2MB.";
+        }
+        if (formData.experience) { 
+          errors.experience = "Experience is required.";
         }
       } else {
         errors.profileImage = "Profile image is required.";
@@ -95,6 +100,7 @@ const SignIn = () => {
           firstName: formData.firstName,
           lastName: formData.lastName,
           mobileNumber: formData.mobileNumber,
+          experience: formData.experience
         }));
         
         // Append the profile image if it exists
@@ -134,7 +140,7 @@ const SignIn = () => {
           <img src="/Assets/Images/whitelogos.png" alt="Logo" className="logo" />
           <span>JAYA HOSPITALS</span>
         </div>
-        <h2>Sign In</h2>
+        <h2 className="signin">Sign In</h2>
         <div className="close-icon" onClick={() => navigate("/login")}>
           <i className="fas fa-times"></i>
         </div>
@@ -293,6 +299,22 @@ const SignIn = () => {
         <span className="error">{formErrors.profileImage}</span>
       )}
     </div>
+
+    <div className="form-group1">
+          <label>Experience</label>
+          <input
+            type="text"
+            name="experience"
+            value={formData.experience}
+            onChange={handleInputChange}
+            onFocus={handleInputFocus}
+            className={formErrors.experience && touchedFields.experience ? "error-input" : ""}
+            placeholder="Enter your Experience"
+          />
+          {touchedFields.experience && formErrors.experience && (
+            <span className="error">{formErrors.experience}</span>
+          )}
+        </div>
     <div className="form-group1">
       <label>Specialization</label>
       <input
