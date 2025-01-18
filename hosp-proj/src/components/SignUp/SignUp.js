@@ -19,6 +19,8 @@ const SignIn = () => {
   const [formErrors, setFormErrors] = useState({});
   const [isFormValid, setIsFormValid] = useState(false);
   const [touchedFields, setTouchedFields] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+
   const navigate = useNavigate();
 
   const validateForm = () => {
@@ -93,6 +95,7 @@ const SignIn = () => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     if (isFormValid) {
+      setIsLoading(true);
       try {
         // Create a FormData object (use a different variable name to avoid conflict with state)
         const formDataToSend = new FormData();
@@ -121,13 +124,16 @@ const SignIn = () => {
         });
         
         if (response.ok) {
+          setIsLoading(false);
           alert("User registered successfully!");
           navigate("/login"); // Navigate to login page on successful registration
         } else {
           const errorData = await response.text();
+          setIsLoading(false);
           alert("Error registering user: " + errorData);
         }
       } catch (error) {
+        setIsLoading(false);
         alert("Error: " + error.message);
       }
     }
@@ -145,7 +151,9 @@ const SignIn = () => {
   return (
     <div className="signin-container">
       <div className="back-icon1" onClick={() => navigate("/login")}>
-        <i className="fas fa-arrow-left"></i> {/* Left-facing arrow icon */}
+      {currentStep === 1 && (
+    <i className="fas fa-arrow-left"></i>  // Only show left arrow on Step 1
+  )}
       </div>
       <div className="signin-header">
         <div className="login-header">
@@ -378,14 +386,14 @@ const SignIn = () => {
 
 
         {currentStep === 2 && formData.role === "patient" && (
-          <button type="submit" className="signin-button" disabled={!isFormValid}>
-            Sign Up
-          </button>
-        )}
+    <button type="submit" className="signin-button" disabled={!isFormValid}>
+      {isLoading ? "Submitting..." : "Submit"}
+    </button>
+)}
 
         {currentStep === 3 && formData.role === "doctor" && (
           <button type="submit" className="signin-button" disabled={!isFormValid}>
-            Sign Up
+           {isLoading ? "Submitting..." : "Submit"}
           </button>
         )}
       </form>
