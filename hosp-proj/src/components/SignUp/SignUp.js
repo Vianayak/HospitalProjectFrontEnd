@@ -379,13 +379,13 @@ const SignIn = () => {
 
         {currentStep === 2 && formData.role === "patient" && (
           <button type="submit" className="signin-button" disabled={!isFormValid}>
-            Sign In
+            Sign Up
           </button>
         )}
 
         {currentStep === 3 && formData.role === "doctor" && (
           <button type="submit" className="signin-button" disabled={!isFormValid}>
-            Sign In
+            Sign Up
           </button>
         )}
       </form>
