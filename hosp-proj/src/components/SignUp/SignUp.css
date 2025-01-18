@@ -1,13 +1,13 @@
 .signin-container {
     background: linear-gradient(135deg, #6e8efb, #a777e3);
     border-radius: 8px;
-    padding: 20px 40px;
+    padding: 10px 20px;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 500px;
     text-align: center;
     color: white;
-  
+
   }
   
   .signin-header h2 {
@@ -29,7 +29,7 @@
   
   .form-group1 label {
     margin-right: 15px; /* Add space between label and input */
-    font-size: 16px;
+    font-size: 15px;
     font-weight: bold;
     color: #333; /* Adjust label color */
     flex-shrink: 0; /* Prevent the label from shrinking */
@@ -40,7 +40,7 @@
   .form-group1 input,
   .form-group1 select {
       width: 100%;
-      padding: 10px;
+      padding: 5px;
       text-indent: 10px; /* Add consistent spacing for placeholder and input text */
       border: none;
       border-radius: 4px;
@@ -70,7 +70,9 @@
   }
   
   
-  
+  .signin {
+    margin: 2px;
+  }
   
   
   .signin-button {
