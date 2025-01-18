@@ -1,4 +1,6 @@
 import React, { useState , useEffect } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import "./SignUp.css";
 
@@ -124,17 +126,24 @@ const SignIn = () => {
         });
         
         if (response.ok) {
-          setIsLoading(false);
-          alert("User registered successfully!");
-          navigate("/login"); // Navigate to login page on successful registration
+          setIsLoading(true);
+        
+          // Show the toast with an onClose callback
+          toast.success("User registered successfully!", {
+            onClose: () => {
+              // Navigate to the login page after the toast closes
+              setIsLoading(false);
+              navigate("/login");
+            },
+          });
         } else {
           const errorData = await response.text();
           setIsLoading(false);
-          alert("Error registering user: " + errorData);
+          toast.error("Error registering user: " + errorData);
         }
       } catch (error) {
         setIsLoading(false);
-        alert("Error: " + error.message);
+        toast.error("Error: " + error.message);
       }
     }
   };
@@ -150,6 +159,13 @@ const SignIn = () => {
 
   return (
     <div className="signin-container">
+  {/* Blurred background */}
+      {isLoading && <div className="blurred-background"></div>}
+      <div className="loader-wrapper">
+    <div className={`loader ${isLoading ? 'show' : ''}`}>
+      <div></div>
+    </div>
+  </div>
       <div className="back-icon1" onClick={() => navigate("/login")}>
       {currentStep === 1 && (
     <i className="fas fa-arrow-left"></i>  // Only show left arrow on Step 1
@@ -389,6 +405,7 @@ const SignIn = () => {
     <button type="submit" className="signin-button" disabled={!isFormValid}>
       {isLoading ? "Submitting..." : "Submit"}
     </button>
+
 )}
 
         {currentStep === 3 && formData.role === "doctor" && (
@@ -397,6 +414,7 @@ const SignIn = () => {
           </button>
         )}
       </form>
+      <ToastContainer />
     </div>
   );
 };
