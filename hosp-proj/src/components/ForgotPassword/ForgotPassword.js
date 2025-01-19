@@ -211,7 +211,19 @@ const ForgotPassword = () => {
       <div></div>
     </div>
   </div>
-      <div className="back-icon1" onClick={() => navigate("/login")}>
+  <div
+        className="back-icon1"
+        onClick={() => {
+          if (showPasswordForm) {
+            setShowPasswordForm(false);
+            setShowOtpForm(true);
+          } else if (showOtpForm) {
+            setShowOtpForm(false);
+          } else {
+            navigate("/login");
+          }
+        }}
+      >
         <i className="fas fa-arrow-left"></i>
       </div>
       <div className="forgot-password-header">
