@@ -1,12 +1,21 @@
 import React, { useEffect, useState, useCallback } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./UserAppointment.css";
 import axios from "axios";
+
+const Loader = () => (
+  <div className="loader-overlay">
+    <div className="loader"></div>
+  </div>
+);
 
 const UserAppointment = () => {
   const location = useLocation();
   const navigate = useNavigate(); // Add useNavigate hook
   const { date, timeSlot, email, doctorDetails,timeOfDay } = location.state || {}; // Retrieve passed data
+  const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -18,6 +27,7 @@ const UserAppointment = () => {
   });
 
   const handlePayToProceed = async () => {
+    setLoading(true);
     try {
       const { data } = await axios.post("http://localhost:8081/api/book-appointment/initiate", {
         amount: 500, 
@@ -61,8 +71,14 @@ const UserAppointment = () => {
             razorpay_signature,
           })
           .then(() => {
+            toast.success("Appointment Successfully Booked!",{
+            onClose: () => {
+              // Navigate to the login page after the toast closes
+              setLoading(false);
+              navigate("/jayahospitals");
+            },
+          });
             
-            navigate("/jayahospitals");
           })
           .catch((error) => {
             console.error("Error verifying payment:", error);
@@ -157,6 +173,12 @@ const UserAppointment = () => {
 
 
       <div className="content-wrapper">
+      {loading && <div className="blurred-background"></div>}
+      <div className="loader-wrapper">
+    <div className={`loader ${loading ? 'show' : ''}`}>
+      <div></div>
+    </div>
+  </div>
         <div className="content">
           <div className="user-details">
             <h2>APJ1.0002836055 (Vinayak Banoth)</h2>
@@ -303,6 +325,7 @@ const UserAppointment = () => {
   </button>
           </div>
         </div>
+        <ToastContainer />
       </div>
     </>
   );
