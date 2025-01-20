@@ -10,22 +10,25 @@ const DashboardHeader = () => {
         <div className="stat-box">
           <FaUserAlt className="stat-icon" />
           <div>
-            <h3 className="stat-number">2000+</h3>
-            <p className="stat-label">Total Patient</p>
+            <h3>Total Patient</h3>
+            <h4 className="stat-number">2000+</h4>
+            <p className="stat-label"> Today</p>
           </div>
         </div>
         <div className="stat-box">
           <FaCalendarAlt className="stat-icon" />
           <div>
-            <h3 className="stat-number">068</h3>
-            <p className="stat-label">Today Patient</p>
+          <h3>Today Patient</h3>
+            <h4 className="stat-number">068</h4>
+            <p className="stat-label"> Today</p>
           </div>
         </div>
         <div className="stat-box">
           <FaClock className="stat-icon" />
           <div>
-            <h3 className="stat-number">085</h3>
-            <p className="stat-label">Today Appointments</p>
+          <h3>Today's Appointments</h3>
+            <h4 className="stat-number">085</h4>
+            <p className="stat-label"> Today</p>
           </div>
         </div>
       </div>

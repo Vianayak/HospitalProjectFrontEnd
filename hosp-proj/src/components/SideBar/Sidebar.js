@@ -44,7 +44,9 @@ const Sidebar = () => {
       <div className="dashboard-content">
         <DashboardHeader />
         <Dashboard/>
+        
         <HealthcarePortal/>
+
       </div>
     </div>
   );

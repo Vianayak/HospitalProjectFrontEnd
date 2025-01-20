@@ -20,22 +20,36 @@
     align-items: center;
   }
   
-  .stat-box {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    background-color: #ffffff;
-    padding: 10px 15px;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    flex: 1;
-    margin: 0 10px;
-  }
+  .stat-box {  
+    display: flex;  
+    align-items: center;  
+    gap: 10px;  
+    background-color: #b3a6e8;  
+    padding: 10px 15px;  
+    border-radius: 8px;  
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);  
+    flex: 1;  
+    margin: 0 10px;  
+
+    /* Set fixed size */  
+    width: 200px;  /* Adjust this value as needed */  
+    height: 145px; /* Adjust this value as needed */  
+}
   
   .stat-icon {
     font-size: 30px;
-    color: #007bff;
+    color: #5A3ECA;
+    background-color: #f0f8ff; /* Optional: Set the circle's background color */
+    border-radius: 50%; /* Makes the background a circle */
+    padding: 15px; /* Adds space around the icon inside the circle */
+    display: inline-flex; /* Centers the icon within the circle */
+    align-items: center; /* Vertical centering */
+    justify-content: center; /* Horizontal centering */
+    border: 3px solid #5A3ECA; /* Optional: Add a border around the circle */
+    width: 60px; /* Adjust circle width */
+    height: 60px; /* Adjust circle height */
   }
+  
   
   .stat-number {
     font-size: 20px;
@@ -57,7 +71,7 @@
   
   .action-icon {
     font-size: 24px;
-    color: #007bff;
+    color: #5A3ECA;
     cursor: pointer;
   }
   
