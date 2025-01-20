@@ -71,7 +71,7 @@ const ForgotPassword = () => {
     setLoading(true);
     try {
       const response = await fetch(
-        `http://localhost:8081/api/otp/sendOtp?email=${encodeURIComponent(formData.email)}`,
+        `http://localhost:8082/api/user/forgot-otp?email=${encodeURIComponent(formData.email)}`,
         { method: "POST" }
       );
 
@@ -116,7 +116,7 @@ const ForgotPassword = () => {
     setLoading(true);
     try {
       const response = await fetch(
-        `http://localhost:8081/api/otp/sendOtp?email=${encodeURIComponent(formData.email)}`,
+        `http://localhost:8082/api/user/forgot-otp?email=${encodeURIComponent(formData.email)}`,
         { method: "POST" }
       );
 
