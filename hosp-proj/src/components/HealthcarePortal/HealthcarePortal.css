@@ -1,0 +1,125 @@
+.healthcare-portal {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+  }
+  
+  .patients-feedback, .appointments-section, .calendar-widget {
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    width: 300px;
+    margin-right: 80px;
+  }
+  
+  .patients-feedback h3, .appointments-section h3, .calendar-widget h3 {
+    margin-bottom: 20px;
+  }
+  
+  .feedback-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .feedback-row span {
+    flex: 1;
+  }
+  
+  .progress-bar {
+    height: 8px;
+    border-radius: 5px;
+    background: lightgray;
+    flex: 2;
+  }
+  
+  .progress-bar.excellent {
+    background: blue;
+    width: 90%;
+  }
+  
+  .progress-bar.great {
+    background: green;
+    width: 70%;
+  }
+  
+  .progress-bar.good {
+    background: orange;
+    width: 50%;
+  }
+  
+  .progress-bar.average {
+    background: teal;
+    width: 30%;
+  }
+  
+  .appointment-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .appointment-card img {
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+  .patient-name {
+    font-weight: bold;
+  }
+  
+  .patient-issue {
+    font-size: 12px;
+    color: gray;
+  }
+  
+  .appointment-actions button {
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    margin-right: 5px;
+  }
+  
+  .accept-btn {
+    color: green;
+  }
+  
+  .reject-btn {
+    color: red;
+  }
+  
+  .chat-btn {
+    color: blue;
+  }
+  
+  .calendar-widget .calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .calendar-widget .current-month {
+    font-weight: bold;
+  }
+  
+  .calendar-widget .weekdays-row, .calendar-widget .days-grid {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  
+  .days-grid .day {
+    width: 14%;
+    text-align: center;
+    padding: 5px;
+  }
+  
+  .days-grid .day.selected {
+    background: blue;
+    color: white;
+    border-radius: 50%;
+  }
+  

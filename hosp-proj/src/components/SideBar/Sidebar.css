@@ -1,0 +1,73 @@
+/* Layout container */
+.layout {
+    display: flex; /* Ensures sidebar and dashboard content are side by side */
+    height: 100vh; /* Full viewport height */
+  }
+  
+  /* Sidebar styles */
+  .sidebar {
+    width: 250px;
+    background-color: #f8f9fa;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    margin-top: 100px;
+  }
+  
+  .profile-section {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .profile-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+  }
+  
+  .profile-section h3 {
+    font-size: 18px;
+    margin: 0;
+    color: #333;
+  }
+  
+  .profile-section p {
+    font-size: 14px;
+    color: #777;
+  }
+  
+  .menu {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .menu li {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    font-size: 16px;
+    color: #555;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+  }
+  
+  .menu li:hover {
+    background-color: #e7f3ff;
+    color: #007bff;
+  }
+  
+  .icon {
+    margin-right: 10px;
+    font-size: 20px;
+  }
+  
+  /* Dashboard content styles */
+  .dashboard-content {
+    flex: 1; /* Takes up the remaining space */
+    background-color: #ffffff;
+    padding: 20px;
+    overflow-y: auto; /* Allows scrolling if content exceeds viewport */
+    margin-top: 40px;
+  }
+  

@@ -15,6 +15,8 @@ import LoginForm from "./components/Login/LoginForm";
 import SignUp from "./components/SignUp/SignUp";
 import HealthNewsImages from "./components/health/HealthNewsImages";
 import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
+import Sidebar from './components/SideBar/Sidebar';
+
 
 function App() {
   const healthNewsRef = useRef(null);
@@ -54,10 +56,9 @@ function App() {
               </>
             }
           />
-
+<Route path="/sidebar" element={<Sidebar />} />
           {/* Doctor Cards Page */}
           <Route path="/doctor-cards" element={<DoctorList />} />
-
           {/* User Appointment Page */}
           <Route path="/user-appointment" element={<UserAppointment />} />
           <Route path="/SignUp" element={<Overlay className="login-overlay"><SignUp /></Overlay>} />
