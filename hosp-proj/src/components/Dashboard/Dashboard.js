@@ -18,7 +18,40 @@ const Dashboard = () => {
       },
     ],
   };
-
+  const patients = [
+    {
+      id: 1,
+      name: "M.J. Mical",
+      diagnosis: "Health Checkup",
+      status: "On Going",
+      time: null, // No time for ongoing status
+      image: "/Assets/Images/love.jpeg",
+    },
+    {
+      id: 2,
+      name: "Sanath Deo",
+      diagnosis: "Health Checkup",
+      status: "12:30 PM",
+      time: "12:30 PM",
+      image: "/Assets/Images/love.jpeg",
+    },
+    {
+      id: 3,
+      name: "Loeara Phanj",
+      diagnosis: "Report",
+      status: "01:00 PM",
+      time: "01:00 PM",
+      image: "/Assets/Images/love.jpeg",
+    },
+    {
+      id: 4,
+      name: "Komola Haris",
+      diagnosis: "Common Cold",
+      status: "01:30 PM",
+      time: "01:30 PM",
+      image: "/Assets/Images/love.jpeg",
+    },
+  ];
   // Options for the donut chart
   const chartOptions = {
     responsive: true,
@@ -66,43 +99,34 @@ const Dashboard = () => {
 
       {/* Today Appointment Section */}
       <div className="today-appointment">
-        <h5>Today Appointment</h5>
-        <ul className="appointment-list">
-          <li>
-            <img src="/Assets/Images/love.jpeg" alt="Patient" />
-            <div>
-              <h4>M.J. Mical</h4>
-              <p>Health Checkup</p>
-            </div>
-            <span className="status ongoing">On Going</span>
-          </li>
-          <li>
-            <img src="/Assets/Images/love.jpeg" alt="Patient" />
-            <div>
-              <h4>Sanath Deo</h4>
-              <p>Health Checkup</p>
-            </div>
-            <span className="time">12:30 PM</span>
-          </li>
-          <li>
-            <img src="/Assets/Images/love.jpeg" alt="Patient" />
-            <div>
-              <h4>Loeara Phanj</h4>
-              <p>Report</p>
-            </div>
-            <span className="time">01:00 PM</span>
-          </li>
-          <li>
-            <img src="/Assets/Images/love.jpeg" alt="Patient" />
-            <div>
-              <h4>Komola Haris</h4>
-              <p>Common Cold</p>
-            </div>
-            <span className="time">01:30 PM</span>
-          </li>
-        </ul>
-        <p className="see-all">See All</p>
+      <h5>Today Appointment</h5>
+
+      {/* Table-like header */}
+      <div className="appointment-header">
+        <span className="header-patient">Patient</span>
+        <span className="header-diagnosis">Name/Diagnosis</span>
+        <span className="header-time">Time</span>
       </div>
+
+      <ul className="appointment-list">
+        {patients.map((patient) => (
+          <li key={patient.id}>
+            <img src={patient.image} alt={`${patient.name}`} />
+            <div>
+              <h4>{patient.name}</h4>
+              <p>{patient.diagnosis}</p>
+            </div>
+            <span
+              className={patient.status === "On Going" ? "status ongoing" : "time"}
+            >
+              {patient.status}
+            </span>
+          </li>
+        ))}
+      </ul>
+      <p className="see-all">See All</p>
+    </div>
+
 
       {/* Next Patient Details Section */}
       <div className="next-patient-details">
