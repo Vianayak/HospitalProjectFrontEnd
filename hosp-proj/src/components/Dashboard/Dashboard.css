@@ -1,61 +1,65 @@
 .dashboard-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 20px;
-    padding: 20px;
-    background-color: #f8f9fa;
-  }
-  
-  /* Patients Summary Section */
-  .patients-summary {
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  }
-  
-  .chart-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  
-  .donut-chart {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    background-color: #e7e7e7; /* Placeholder */
-  }
-  
-  .legend {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .legend li {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  
-  .legend-color {
-    width: 15px;
-    height: 15px;
-    border-radius: 50%;
-  }
-  
-  .new-patients {
-    background-color: #007bff;
-  }
-  
-  .old-patients {
-    background-color: #ffc107;
-  }
-  
-  .total-patients {
-    background-color: #28a745;
-  }
-  
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
+  padding: 20px;
+  background-color: #f8f9fa;
+}
+
+/* Patients Summary Section */
+.patients-summary {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.chart-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.donut-chart {
+  width: 250px; /* Increased width */
+  height: 180px; /* Increased height */
+  border-radius: 50%;
+  background-color: #e7e7e7; /* Placeholder */
+  margin-left: 50px;
+}
+
+.legend {
+  list-style: none;
+  padding: 0;
+  margin-left: 30px; /* Added margin for better spacing */
+  margin-top: 70px;
+}
+
+.legend li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.legend-color {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+}
+
+.new-patients {
+  background-color: #007bff;
+}
+
+.old-patients {
+  background-color: #ffc107;
+}
+
+.total-patients {
+  background-color: #28a745;
+}
+
   /* Today Appointment Section */
   .today-appointment {
     background-color: #ffffff;
