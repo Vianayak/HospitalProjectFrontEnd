@@ -1,8 +1,58 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaUserAlt, FaCalendarAlt, FaClock } from 'react-icons/fa';
 import './DashboardHeader.css';
 
 const DashboardHeader = () => {
+  const [stats, setStats] = useState({
+    totalAppointments: 0,
+    todayPatients: 0,
+    todaysAppointments: 0,
+  });
+
+  // Function to get today's date in YYYY-MM-DD format
+  const getTodayDate = () => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+    const day = String(today.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`; // Returning the date as a string
+  };
+
+  // Function to get the doctor's registration number dynamically (assuming it's stored in localStorage)
+  const getDoctorRegNum = () => {
+    // You can fetch the doctor registration number from context, Redux, or localStorage
+    // Example: Fetching from localStorage
+    const doctorData = JSON.parse(localStorage.getItem('doctorData')); // Replace with your actual method
+    return doctorData ? doctorData.regNum : null; // Ensure you handle if doctor data is not found
+  };
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      const todayDate = getTodayDate(); // Get today's date dynamically
+      const doctorRegNum = getDoctorRegNum(); // Fetch doctor's registration number dynamically
+
+      if (!doctorRegNum) {
+        console.error('Doctor registration number is not available!');
+        return;
+      }
+
+      try {
+        // Replace this URL with your actual API endpoint
+        const response = await fetch(`http://localhost:8081/api/book-appointment/stats?date=${todayDate}&doctorRegNum=${doctorRegNum}`);
+        const data = await response.json();
+        setStats({
+          totalAppointments: data.totalTreatedPatientsByDoctor,
+          todayPatients: data.acceptedAppointments, // Ensure your API sends this field
+          todaysAppointments: data.totalAppointments, // Adjust the field as per API
+        });
+      } catch (error) {
+        console.error('Error fetching stats:', error);
+      }
+    };
+
+    fetchStats();
+  }, []);
+
   return (
     <div className="header-container">
       <h2 className="header-title">Dashboard</h2>
@@ -10,29 +60,28 @@ const DashboardHeader = () => {
         <div className="stat-box">
           <FaUserAlt className="stat-icon" />
           <div>
-            <h3>Total Patient</h3>
-            <h4 className="stat-number">2000+</h4>
+            <h3>Total Patients</h3>
+            <h4 className="stat-number">{stats.totalAppointments}</h4>
             <p className="stat-label"> Today</p>
           </div>
         </div>
         <div className="stat-box">
           <FaCalendarAlt className="stat-icon" />
           <div>
-          <h3>Today Patient</h3>
-            <h4 className="stat-number">068</h4>
+            <h3>Today's Patients</h3>
+            <h4 className="stat-number">{stats.todayPatients}</h4>
             <p className="stat-label"> Today</p>
           </div>
         </div>
         <div className="stat-box">
           <FaClock className="stat-icon" />
           <div>
-          <h3>Today's Appointments</h3>
-            <h4 className="stat-number">085</h4>
+            <h3>Today's Appointments</h3>
+            <h4 className="stat-number">{stats.todaysAppointments}</h4>
             <p className="stat-label"> Today</p>
           </div>
         </div>
       </div>
-    
     </div>
   );
 };
