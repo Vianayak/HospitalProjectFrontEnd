@@ -1,10 +1,39 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './Sidebar.css'; // CSS file for styling
 import DashboardHeader from '../DashboardHeader/DashboardHeader';
 import Dashboard from '../Dashboard/Dashboard';
 import HealthcarePortal from '../HealthcarePortal/HealthcarePortal';
 
 const Sidebar = () => {
+
+  const [data, setData] = useState(null);
+  const fetchProtectedData = async () => {
+    const token = localStorage.getItem("authToken");
+    console.log(token);
+
+    try {
+      const response = await fetch("http://localhost:8082/api/user/protected-endpoint", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (response.ok) {
+        const fetchedData = await response.json();
+        setData(fetchedData);
+      } else {
+        console.error("Unauthorized or other error");
+      }
+    } catch (error) {
+      console.error("Error fetching protected data:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchProtectedData();
+  }, []);
+  
   return (
     <div className="layout">
       <div className="sidebar">
@@ -46,7 +75,14 @@ const Sidebar = () => {
         <Dashboard/>
         
         <HealthcarePortal/>
-
+        {data ? (
+          <div>
+            <h3>Protected Data:</h3>
+            <pre>{JSON.stringify(data, null, 2)}</pre>
+          </div>
+        ) : (
+          <p>Loading data...</p>
+        )}
       </div>
     </div>
   );
