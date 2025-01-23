@@ -22,8 +22,8 @@ const DashboardHeader = () => {
   const getDoctorRegNum = () => {
     // You can fetch the doctor registration number from context, Redux, or localStorage
     // Example: Fetching from localStorage
-    const doctorData = JSON.parse(localStorage.getItem('doctorData')); // Replace with your actual method
-    return doctorData ? doctorData.regNum : null; // Ensure you handle if doctor data is not found
+    const doctorData = JSON.parse(localStorage.getItem('doctorDetails')); // Replace with your actual method
+    return doctorData ? doctorData.regestrationNum : null; // Ensure you handle if doctor data is not found
   };
 
   useEffect(() => {
