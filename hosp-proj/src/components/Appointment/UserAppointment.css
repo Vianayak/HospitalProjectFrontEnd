@@ -314,40 +314,31 @@ input:focus:valid {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
-.dropdown1 {
-  position: relative;
-}
-
-.dropdown-menu1 {
-  list-style: none;
-  margin: 5px 0 0;
-  padding: 0;
+  
+.suggestions-dropdown {
+  list-style-type: none;
+  margin: 0; /* No extra space around the dropdown */
+  margin-left: 150px;
+  padding: 0; /* Remove padding inside the dropdown */
+  border: 1px solid #ccc;
+  max-height: 150px;
+  overflow-y: auto;
+  background: #fff;
   position: absolute;
-  background-color: #501dae;
-  border: 1px solid #cd1d1d;
-  border-radius: 5px;
-  width: 200px;
-  z-index: 9999; /* Ensure it appears above other elements */
-  top: 100%; /* Position it below the toggle button */
-  left: 0;
+  z-index: 1000;
+  width: 50%; /* Adjust width to reduce space (20px total reduction) */
+  top: 100%;
+  left: 10px; /* Add space on the left */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  color: #5a3eca;
 }
 
-.dropdown1 {
-  overflow: visible; /* Ensure the dropdown is not clipped */
+.suggestion-item {
+  padding: 8px;
+  cursor: pointer;
 }
 
-/* Ensure dropdown doesn't go out of the viewport */
-.dropdown1 {  
-  overflow: visible; /* Ensure the dropdown is not clipped */  
-}  
-
-.dropdown-menu1 {  
-  max-height: 200px; /* Limit height */  
-  overflow-y: auto; /* Allow scrolling for overflowing items */  
-  transform: translateY(0); /* Adjust if needed */  
-}.dropdown-menu1 {  
-  position: absolute;  
-  z-index: 9999; /* Ensure it's above other elements */  
-  top: 100%; /* Ensure it's positioned correctly below the parent */  
-  left: 0; /* Align it with the left of the toggle */  
+.suggestion-item:hover {
+  background: rgba(255, 255, 255, 0.5);
+  color: #5a3eca;
 }
