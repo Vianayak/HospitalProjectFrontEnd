@@ -314,30 +314,4 @@ input:focus:valid {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
-
-
-.suggestions-dropdown {
-  list-style-type: none;
-  margin: 0; /* No extra space around the dropdown */
-  padding: 0; /* Remove padding inside the dropdown */
-  border: 1px solid #ccc;
-  max-height: 150px;
-  overflow-y: auto;
-  background: #fff;
-  position: absolute;
-  z-index: 1000;
-  width: calc(100% - 20px); /* Adjust width to reduce space (20px total reduction) */
-  top: 100%;
-  left: 10px; /* Add space on the left */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.suggestion-item {
-  padding: 8px;
-  cursor: pointer;
-}
-
-.suggestion-item:hover {
-  background: #3498db;
-  color: #fff;
-}
+  

@@ -24,7 +24,6 @@ const UserAppointment = () => {
     email: email || "",
     dob: "",
     gender: "",
-    issue: "",
   });
 
   const handlePayToProceed = async () => {
@@ -109,7 +108,7 @@ const UserAppointment = () => {
     }
   };
 
-  const [issueSuggestions, setIssueSuggestions] = useState([]);
+
   const [formErrors, setFormErrors] = useState({});
   const [isFormValid, setIsFormValid] = useState(false);
   const [touchedFields, setTouchedFields] = useState({});
@@ -124,7 +123,6 @@ const UserAppointment = () => {
     }
     if (!formData.dob) errors.dob = "Date of Birth is required.";
     if (!formData.gender) errors.gender = "Gender is required.";
-    if (!formData.issue) errors.issue = "Please select or enter an issue.";
 
     setFormErrors(errors);
     setIsFormValid(Object.keys(errors).length === 0);
@@ -136,30 +134,6 @@ const UserAppointment = () => {
 
     // Validate field and update errors
     validateForm();
-  };
-
-  const handleIssueChange = async (e) => {
-    const value = e.target.value;
-    setFormData({ ...formData, issue: value });
-  
-    if (value.length >= 3) {
-      try {
-        const { data } = await axios.get(`http://localhost:8081/api/issues/search?keyword=${value}`);
-        
-        // Set full objects in state (optional if needed for later use)
-        setIssueSuggestions(data || []); 
-      } catch (error) {
-        console.error("Error fetching issue suggestions:", error);
-      }
-    } else {
-      setIssueSuggestions([]);
-    }
-  };
-  
-
-  const handleIssueSelect = (issue) => {
-    setFormData({ ...formData, issue }); // Set selected issue
-    setIssueSuggestions([]); // Clear suggestions
   };
 
   const handleInputFocus = (e) => {
@@ -296,37 +270,6 @@ const UserAppointment = () => {
                   <span className="error1">{formErrors.gender}</span>
                 )}
               </div>
-              <div className="form-group2" style={{ position: "relative" }}>
-              <label>Issue</label>
-              <input
-                type="text"
-                name="issue"
-                placeholder="Enter your issue"
-                value={formData.issue}
-                onChange={handleIssueChange}
-                className={formErrors.issue && touchedFields.issue ? "error1-input" : ""}
-              />
-              {touchedFields.issue && formErrors.issue && (
-                <span className="error1">{formErrors.issue}</span>
-              )}
-
-              {/* Suggestions Dropdown */}
-              {/* Suggestions Dropdown */}
-{issueSuggestions.length > 0 && (
-  <ul className="suggestions-dropdown">
-    {issueSuggestions.map((suggestion, index) => (
-      <li
-        key={index}
-        onClick={() => handleIssueSelect(suggestion.issueName)} // Pass issueName when selecting
-        className="suggestion-item"
-      >
-        {suggestion.issueName} {/* Display issueName */}
-      </li>
-    ))}
-  </ul>
-)}
-
-            </div>
             </form>
           </div>
 
