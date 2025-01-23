@@ -107,7 +107,40 @@ const UserAppointment = () => {
       
     }
   };
-
+  
+    const issues = [
+      "Fever",
+      "Cough",
+      "Cold",
+      "Headache",
+      "Diabetes",
+      "Hypertension",
+      "Asthma",
+      "Chest Pain",
+      "Skin Rash",
+      "Stomach Ache",
+    ];
+  
+    const [selectedIssues, setSelectedIssues] = useState([]);
+    const [showDropdown, setShowDropdown] = useState(false);
+  
+    // Toggle dropdown visibility
+    const handleDropdownToggle = () => {
+      setShowDropdown((prev) => !prev);
+    };
+  
+    // Add issue to selected list
+    const handleIssueSelect = (issue) => {
+      if (selectedIssues.length < 3 && !selectedIssues.includes(issue)) {
+        setSelectedIssues([...selectedIssues, issue]);
+      }
+    };
+  
+    // Remove issue from selected list
+    const handleRemoveIssue = (issue) => {
+      setSelectedIssues(selectedIssues.filter((item) => item !== issue));
+    };
+  
 
   const [formErrors, setFormErrors] = useState({});
   const [isFormValid, setIsFormValid] = useState(false);
@@ -270,6 +303,60 @@ const UserAppointment = () => {
                   <span className="error1">{formErrors.gender}</span>
                 )}
               </div>
+
+              <div className="form-group2">
+  <label>Issue (Select up to 3)</label>
+  <div className="selected-issues">
+    {selectedIssues.map((issue, index) => (
+      <span key={index} className="selected-issue">
+        {issue}
+        <button
+          type="button"
+          className="remove-issue"
+          onClick={() => handleRemoveIssue(issue)}
+        >
+          ×
+        </button>
+      </span>
+    ))}
+  </div>
+
+  {selectedIssues.length < 3 && (
+    <div className="dropdown1">
+      <button
+        type="button"
+        className="dropdown1-toggle"
+        onClick={handleDropdownToggle}
+      >
+        {showDropdown ? "Close Dropdown" : "Select Issues"}
+      </button>
+
+      {showDropdown && (
+        <ul className="dropdown-menu1">
+          {/* Placeholder option */}
+          <li className="disabled" style={{ fontWeight: "bold" }}>
+            Select up to 3 issues
+          </li>
+          {issues.map((issue, index) => (
+            <li
+              key={index}
+              onClick={() => handleIssueSelect(issue)}
+              className={selectedIssues.includes(issue) ? "disabled" : ""}
+            >
+              {issue}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  )}
+</div>
+
+
+
+
+
+
             </form>
           </div>
 
