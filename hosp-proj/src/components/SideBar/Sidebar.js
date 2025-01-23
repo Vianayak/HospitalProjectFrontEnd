@@ -1,88 +1,61 @@
 import React, { useState, useEffect } from 'react';
-import './Sidebar.css'; // CSS file for styling
+import './Sidebar.css';
 import DashboardHeader from '../DashboardHeader/DashboardHeader';
 import Dashboard from '../Dashboard/Dashboard';
 import HealthcarePortal from '../HealthcarePortal/HealthcarePortal';
 
 const Sidebar = () => {
-
-  const [data, setData] = useState(null);
-  const fetchProtectedData = async () => {
-    const token = localStorage.getItem("authToken");
-    console.log(token);
-
-    try {
-      const response = await fetch("http://localhost:8082/api/user/protected-endpoint", {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      if (response.ok) {
-        const fetchedData = await response.json();
-        setData(fetchedData);
-      } else {
-        console.error("Unauthorized or other error");
-      }
-    } catch (error) {
-      console.error("Error fetching protected data:", error);
-    }
-  };
+  const [doctorDetails, setDoctorDetails] = useState(null);
 
   useEffect(() => {
-    fetchProtectedData();
+    const storedDoctorDetails = localStorage.getItem("doctorDetails");
+    if (storedDoctorDetails) {
+      setDoctorDetails(JSON.parse(storedDoctorDetails));
+    }
   }, []);
-  
+
+  const handleLogout = () => {
+    localStorage.removeItem("authToken");
+    localStorage.removeItem("doctorDetails");
+    window.location.href = "/login";
+  };
+
+  const handleChangePassword = () => {
+    window.location.href = "/change-password";
+  };
+
   return (
     <div className="layout">
       <div className="sidebar">
         <div className="profile-section">
-          <img
-            src="/Assets/Images/love.jpeg" // Replace with actual image URL
-            alt="Profile"
-            className="profile-image"
-          />
-          <h3>Dr. Marttin Deo</h3>
-          <p>MBBS, FCPS - MD (Medicine), MCPS</p>
+          {doctorDetails ? (
+            <>
+              <img
+                src={`http://localhost:8081/${doctorDetails.imagePath}`} // Ensure the backend serves this path correctly
+                alt="Profile"
+                className="profile-image"
+              />
+              <h3>Dr. {doctorDetails.name}</h3>
+              <p>{doctorDetails.specialization}</p>
+              <p>{doctorDetails.location}</p>
+            </>
+          ) : (
+            <p>Loading profile...</p>
+          )}
         </div>
         <ul className="menu">
-          <li>
-            <i className="icon">&#x1F5D2;</i> Dashboard
-          </li>
-          <li>
-            <i className="icon">&#x1F4DD;</i> Appointment
-          </li>
-          <li>
-            <i className="icon">&#x1F4D1;</i> Appointment Page
-          </li>
-          <li>
-            <i className="icon">&#x1F4B8;</i> Payment
-          </li>
-          <li>
-            <i className="icon">&#x1F464;</i> Profile
-          </li>
-          <li>
-            <i className="icon">&#9881;</i> Settings
-          </li>
-          <li>
+          <li onClick={handleLogout}>
             <i className="icon">&#x274C;</i> Logout
+          </li>
+          <li onClick={handleChangePassword}>
+            <i className="icon">&#x1F512;</i> Change Password
           </li>
         </ul>
       </div>
       <div className="dashboard-content">
         <DashboardHeader />
-        <Dashboard/>
-        
-        <HealthcarePortal/>
-        {data ? (
-          <div>
-            <h3>Protected Data:</h3>
-            <pre>{JSON.stringify(data, null, 2)}</pre>
-          </div>
-        ) : (
-          <p>Loading data...</p>
-        )}
+        <Dashboard />
+        <HealthcarePortal />
       </div>
     </div>
   );

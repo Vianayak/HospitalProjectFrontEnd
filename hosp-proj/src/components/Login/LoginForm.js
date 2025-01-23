@@ -43,11 +43,16 @@ function LoginForm() {
       });
   
       if (response.ok) {
-        const token = await response.text(); // Assuming the backend sends the token as a plain string
-        localStorage.setItem("authToken", token); // Store the token
-        alert("Login successful!");
-        setFormData({ username: "", password: "", rememberMe: false }); // Reset form
-        navigate("/sidebar"); // Redirect to the dashboard
+        const responseData = await response.json();
+            const token = responseData.token;
+            localStorage.setItem("authToken", token); // Save token
+
+            if (responseData.doctorDetails) {
+                localStorage.setItem("doctorDetails", JSON.stringify(responseData.doctorDetails)); // Save doctor details
+            }
+
+            alert("Login successful!");
+            navigate("/sidebar"); // Redirect to the dashboard
       } else {
         alert("Invalid credentials");
       }
