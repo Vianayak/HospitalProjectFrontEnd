@@ -305,7 +305,7 @@ const UserAppointment = () => {
               </div>
 
               <div className="form-group2">
-  <label>Issue (Select up to 3)</label>
+  <label>Issue </label>
   <div className="selected-issues">
     {selectedIssues.map((issue, index) => (
       <span key={index} className="selected-issue">
