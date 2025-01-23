@@ -314,40 +314,52 @@ input:focus:valid {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
-.dropdown1 {
-  position: relative;
-}
 
-.dropdown-menu1 {
+.suggestion-dropdown {
   list-style: none;
-  margin: 5px 0 0;
+  margin: 0;
   padding: 0;
+  max-height: 150px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: white;
   position: absolute;
-  background-color: #501dae;
-  border: 1px solid #cd1d1d;
-  border-radius: 5px;
-  width: 200px;
-  z-index: 9999; /* Ensure it appears above other elements */
-  top: 100%; /* Position it below the toggle button */
-  left: 0;
+  z-index: 1000;
+  width: 100%;
 }
 
-.dropdown1 {
-  overflow: visible; /* Ensure the dropdown is not clipped */
+.suggestion-dropdown li {
+  padding: 8px;
+  cursor: pointer;
 }
 
-/* Ensure dropdown doesn't go out of the viewport */
-.dropdown1 {  
-  overflow: visible; /* Ensure the dropdown is not clipped */  
-}  
+.suggestion-dropdown li:hover {
+  background-color: #f0f0f0;
+}
 
-.dropdown-menu1 {  
-  max-height: 200px; /* Limit height */  
-  overflow-y: auto; /* Allow scrolling for overflowing items */  
-  transform: translateY(0); /* Adjust if needed */  
-}.dropdown-menu1 {  
-  position: absolute;  
-  z-index: 9999; /* Ensure it's above other elements */  
-  top: 100%; /* Ensure it's positioned correctly below the parent */  
-  left: 0; /* Align it with the left of the toggle */  
+.selected-issues {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.issue-tag {
+  display: flex;
+  align-items: center;
+  background-color: #007bff;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 14px;
+}
+
+.remove-issue-btn {
+  margin-left: 8px;
+  background: none;
+  border: none;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
 }

@@ -24,6 +24,7 @@ const UserAppointment = () => {
     email: email || "",
     dob: "",
     gender: "",
+    issues: [],
   });
 
   const handlePayToProceed = async () => {
@@ -42,6 +43,7 @@ const UserAppointment = () => {
         scheduledDate: date,
         scheduledTime: timeSlot,
         slot: timeOfDay,
+        issueIds: formData.issues.map((issue) => issue.id),
       });
 
       const amountInPaise = data.amount * 100;
@@ -107,41 +109,9 @@ const UserAppointment = () => {
       
     }
   };
-  
-    const issues = [
-      "Fever",
-      "Cough",
-      "Cold",
-      "Headache",
-      "Diabetes",
-      "Hypertension",
-      "Asthma",
-      "Chest Pain",
-      "Skin Rash",
-      "Stomach Ache",
-    ];
-  
-    const [selectedIssues, setSelectedIssues] = useState([]);
-    const [showDropdown, setShowDropdown] = useState(false);
-  
-    // Toggle dropdown visibility
-    const handleDropdownToggle = () => {
-      setShowDropdown((prev) => !prev);
-    };
-  
-    // Add issue to selected list
-    const handleIssueSelect = (issue) => {
-      if (selectedIssues.length < 3 && !selectedIssues.includes(issue)) {
-        setSelectedIssues([...selectedIssues, issue]);
-      }
-    };
-  
-    // Remove issue from selected list
-    const handleRemoveIssue = (issue) => {
-      setSelectedIssues(selectedIssues.filter((item) => item !== issue));
-    };
-  
 
+
+  const [issueSuggestions, setIssueSuggestions] = useState([]);
   const [formErrors, setFormErrors] = useState({});
   const [isFormValid, setIsFormValid] = useState(false);
   const [touchedFields, setTouchedFields] = useState({});
@@ -156,6 +126,7 @@ const UserAppointment = () => {
     }
     if (!formData.dob) errors.dob = "Date of Birth is required.";
     if (!formData.gender) errors.gender = "Gender is required.";
+    if (!formData.issue) errors.issue = "Please select or enter an issue.";
 
     setFormErrors(errors);
     setIsFormValid(Object.keys(errors).length === 0);
@@ -168,6 +139,60 @@ const UserAppointment = () => {
     // Validate field and update errors
     validateForm();
   };
+
+  const handleIssueChange = async (e) => {
+    const value = e.target.value;
+    setFormData({ ...formData, issue: value }); // Temporarily store input value for suggestions
+  
+    // Fetch suggestions if the input length is at least 3 characters
+    if (value.length >= 3) {
+      try {
+        const { data } = await axios.get(`http://localhost:8081/api/issues/search?keyword=${value}`);
+        setIssueSuggestions(data || []);
+      } catch (error) {
+        console.error("Error fetching issue suggestions:", error);
+      }
+    } else {
+      setIssueSuggestions([]); // Clear suggestions if input is less than 3 characters
+    }
+  };
+  
+  const handleIssueSelect = (id, issueName) => {
+    setFormData((prevFormData) => {
+      const { issues } = prevFormData;
+  
+      // Check if the issue is already selected
+      const isAlreadySelected = issues.some((issue) => issue.id === id);
+      if (isAlreadySelected) {
+        toast.info("Issue already selected.");
+        return prevFormData;
+      }
+  
+      // Prevent adding more than three issues
+      if (issues.length >= 3) {
+        toast.error("You can select a maximum of 3 issues.");
+        return prevFormData;
+      }
+  
+      return {
+        ...prevFormData,
+        issues: [...issues, { id, name: issueName }], // Add the new issue
+        issue: "", // Clear input field
+      };
+    });
+    setIssueSuggestions([]); // Close the dropdown
+  };
+  
+
+  
+  const handleIssueRemove = (id) => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      issues: prevFormData.issues.filter((issue) => issue.id !== id), // Remove the issue
+    }));
+  };
+  
+  
 
   const handleInputFocus = (e) => {
     const { name } = e.target;
@@ -303,55 +328,53 @@ const UserAppointment = () => {
                   <span className="error1">{formErrors.gender}</span>
                 )}
               </div>
-
               <div className="form-group2">
-  <label>Issue </label>
-  <div className="selected-issues">
-    {selectedIssues.map((issue, index) => (
-      <span key={index} className="selected-issue">
-        {issue}
-        <button
-          type="button"
-          className="remove-issue"
-          onClick={() => handleRemoveIssue(issue)}
+  <label>Issue</label>
+  <input
+    type="text"
+    name="issue"
+    placeholder="Enter your issue"
+    value={formData.issue || ""} // Input value is temporary, only for suggestions
+    onChange={handleIssueChange} // Handle user input
+    onFocus={handleInputFocus} // Track focus
+    className={formErrors.issue && touchedFields.issue ? "error1-input" : ""}
+  />
+  {touchedFields.issue && formErrors.issue && (
+    <span className="error1">{formErrors.issue}</span>
+  )}
+
+  {/* Issue suggestions dropdown */}
+  {issueSuggestions.length > 0 && (
+    <ul className="suggestion-dropdown">
+      {issueSuggestions.map((suggestion) => (
+        <li
+          key={suggestion.id}
+          onClick={() => handleIssueSelect(suggestion.id, suggestion.name)}
         >
-          ×
-        </button>
-      </span>
-    ))}
-  </div>
+          {suggestion.name}
+        </li>
+      ))}
+    </ul>
+  )}
 
-  {selectedIssues.length < 3 && (
-    <div className="dropdown1">
-      <button
-        type="button"
-        className="dropdown1-toggle"
-        onClick={handleDropdownToggle}
-      >
-        {showDropdown ? "Close Dropdown" : "Select Issues"}
-      </button>
-
-      {showDropdown && (
-        <ul className="dropdown-menu1">
-          {/* Placeholder option */}
-          <li className="disabled" style={{ fontWeight: "bold" }}>
-            Select up to 3 issues
-          </li>
-          {issues.map((issue, index) => (
-            <li
-              key={index}
-              onClick={() => handleIssueSelect(issue)}
-              className={selectedIssues.includes(issue) ? "disabled" : ""}
-            >
-              {issue}
-            </li>
-          ))}
-        </ul>
-      )}
+  {/* Display selected issues */}
+  {formData.issues.length > 0 && (
+    <div className="selected-issues">
+      {formData.issues.map((issue) => (
+        <div key={issue.id} className="issue-tag">
+          {issue.name}
+          <button
+            type="button"
+            onClick={() => handleIssueRemove(issue.id)} // Remove issue
+            className="remove-issue-btn"
+          >
+            ✕
+          </button>
+        </div>
+      ))}
     </div>
   )}
 </div>
-
 
 
 
