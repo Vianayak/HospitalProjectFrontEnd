@@ -5,9 +5,61 @@ class HealthcarePortal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentDate: new Date(),
+      appointments: [], // Holds appointment data
+      currentDate: new Date(), // Current month/year
+      selectedDate: new Date(), // Selected date
+      doctorDetails: null, // Holds doctor details from localStorage
     };
   }
+
+  componentDidMount() {
+    // Load doctor details from localStorage
+    const storedDoctorDetails = localStorage.getItem("doctorDetails");
+    if (storedDoctorDetails) {
+      this.setState({ doctorDetails: JSON.parse(storedDoctorDetails) }, () => {
+        // Fetch appointments for the current date
+        this.fetchAppointments(this.state.selectedDate);
+      });
+    }
+  }
+
+  fetchAppointments = async (date) => {
+    const { doctorDetails } = this.state;
+    if (!doctorDetails) {
+      console.error("Doctor details are not available.");
+      return;
+    }
+
+    const formattedDate = date.toISOString().split('T')[0]; // Format date as YYYY-MM-DD
+    const doctorRegNum = doctorDetails.regestrationNum; // Assuming "registrationNum" is the correct key
+
+    console.log(formattedDate);
+
+    console.log(doctorRegNum);
+
+    const apiUrl = `http://localhost:8081/api/book-appointment/appointments-with-issues?date=${formattedDate}&doctorRegNum=${doctorRegNum}`;
+
+    try {
+      const response = await fetch(apiUrl);
+      if (!response.ok) {
+        throw new Error(`Error: ${response.statusText}`);
+      }
+      const data = await response.json();
+      this.setState({ appointments: data });
+    } catch (error) {
+      console.error('Error fetching appointment data:', error);
+    }
+  };
+
+  handleDateClick = (day) => {
+    const { currentDate } = this.state;
+    // Create a new date with explicit time set to 12:00 to avoid time zone issues
+    const selectedDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), day, 12, 0, 0);
+    this.setState({ selectedDate }, () => {
+      this.fetchAppointments(selectedDate);
+    });
+  };
+  
 
   handleNextMonth = () => {
     const { currentDate } = this.state;
@@ -21,8 +73,34 @@ class HealthcarePortal extends Component {
     this.setState({ currentDate: prevMonth });
   };
 
+  renderAppointments = () => {
+    const { appointments } = this.state;
+  
+    if (!appointments.length) {
+      return <p>No appointment requests available for the selected date.</p>;
+    }
+  
+    return appointments.map((appointment, index) => (
+      <div key={index} className="appointment-card">
+        <div>
+          <span className="patient-name">
+            {appointment.firstName} {appointment.lastName}
+          </span>
+          <div className="patient-issue">
+            {appointment.issues.join(', ')}
+          </div>
+        </div>
+        <div className="appointment-actions">
+          <button className="accept-btn">✔</button>
+          <button className="reject-btn">✘</button>
+        </div>
+      </div>
+    ));
+  };
+  
+
   renderCalendarDates = () => {
-    const { currentDate } = this.state;
+    const { currentDate, selectedDate } = this.state;
     const year = currentDate.getFullYear();
     const month = currentDate.getMonth();
 
@@ -31,7 +109,16 @@ class HealthcarePortal extends Component {
 
     const dates = [];
     for (let i = 1; i <= lastDayOfMonth.getDate(); i++) {
-      dates.push(i);
+      const isSelected = selectedDate.getDate() === i && selectedDate.getMonth() === month;
+      dates.push(
+        <span
+          key={i}
+          className={`day ${isSelected ? 'selected' : ''}`}
+          onClick={() => this.handleDateClick(i)}
+        >
+          {i}
+        </span>
+      );
     }
 
     return dates;
@@ -41,59 +128,13 @@ class HealthcarePortal extends Component {
     const { currentDate } = this.state;
     const monthName = currentDate.toLocaleString('default', { month: 'long' });
     const year = currentDate.getFullYear();
-    const dates = this.renderCalendarDates();
 
     return (
       <div className="healthcare-portal">
-        {/* Patients Feedback Section */}
-        <div className="patients-feedback">
-          <h3>Patients Feedback</h3>
-          <div className="feedback-row">
-            <span>Excellent</span>
-            <div className="progress-bar excellent"></div>
-          </div>
-          <div className="feedback-row">
-            <span>Great</span>
-            <div className="progress-bar great"></div>
-          </div>
-          <div className="feedback-row">
-            <span>Good</span>
-            <div className="progress-bar good"></div>
-          </div>
-          <div className="feedback-row">
-            <span>Average</span>
-            <div className="progress-bar average"></div>
-          </div>
-        </div>
-
         {/* Appointment Section */}
         <div className="appointments-section">
           <h3>Appointment Requests</h3>
-          <div className="appointment-card">
-            <img src="/Assets/Images/love.jpeg" alt="Maria" />
-            <div>
-              <span className="patient-name">Maria Sarafat</span>
-              <span className="patient-issue">Cold</span>
-            </div>
-            <div className="appointment-actions">
-              <button className="accept-btn">✔</button>
-              <button className="reject-btn">✘</button>
-              <button className="chat-btn">💬</button>
-            </div>
-          </div>
-          <div className="appointment-card">
-            <img src="/Assets/Images/love.jpeg" alt="John" />
-            <div>
-              <span className="patient-name">Jhon Deo</span>
-              <span className="patient-issue">Over switting</span>
-            </div>
-            <div className="appointment-actions">
-              <button className="accept-btn">✔</button>
-              <button className="reject-btn">✘</button>
-              <button className="chat-btn">💬</button>
-            </div>
-          </div>
-          <a href="#see-all">See All</a>
+          {this.renderAppointments()}
         </div>
 
         {/* Calendar Section */}
@@ -109,9 +150,7 @@ class HealthcarePortal extends Component {
             <span>Th</span><span>Fr</span><span>Sa</span>
           </div>
           <div className="days-grid">
-            {dates.map((date, index) => (
-              <span key={index} className="day">{date}</span>
-            ))}
+            {this.renderCalendarDates()}
           </div>
         </div>
       </div>
