@@ -27,12 +27,36 @@ function LoginForm() {
   };
 
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Login logic goes here
-    alert("Login successful!");
-    setFormData({ username: "", password: "", rememberMe: false }); // Reset form
+  
+    try {
+      const response = await fetch("http://localhost:8082/api/user/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: formData.username,
+          password: formData.password,
+        }),
+      });
+  
+      if (response.ok) {
+        const token = await response.text(); // Assuming the backend sends the token as a plain string
+        localStorage.setItem("authToken", token); // Store the token
+        alert("Login successful!");
+        setFormData({ username: "", password: "", rememberMe: false }); // Reset form
+        navigate("/sidebar"); // Redirect to the dashboard
+      } else {
+        alert("Invalid credentials");
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      alert("Login failed. Please try again.");
+    }
   };
+  
 
   return (
     <div className="overlay">

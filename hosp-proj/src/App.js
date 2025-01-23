@@ -16,7 +16,7 @@ import SignUp from "./components/SignUp/SignUp";
 import HealthNewsImages from "./components/health/HealthNewsImages";
 import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
 import Sidebar from "./components/SideBar/Sidebar";
-
+import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 function App() {
   const healthNewsRef = useRef(null);
 
@@ -67,7 +67,14 @@ const AppContent = ({ scrollToHealthNews, healthNewsRef }) => {
             </>
           }
         />
-        <Route path="/sidebar" element={<Sidebar />} />
+        <Route
+  path="/sidebar"
+  element={
+    <ProtectedRoute>
+      <Sidebar />
+    </ProtectedRoute>
+  }
+/>
         {/* Doctor Cards Page */}
         <Route path="/doctor-cards" element={<DoctorList />} />
         {/* User Appointment Page */}
