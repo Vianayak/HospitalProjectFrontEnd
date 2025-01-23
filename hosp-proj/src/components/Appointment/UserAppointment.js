@@ -24,6 +24,7 @@ const UserAppointment = () => {
     email: email || "",
     dob: "",
     gender: "",
+    issue:"",
     issues: [],
   });
 
@@ -110,7 +111,6 @@ const UserAppointment = () => {
     }
   };
 
-
   const [issueSuggestions, setIssueSuggestions] = useState([]);
   const [formErrors, setFormErrors] = useState({});
   const [isFormValid, setIsFormValid] = useState(false);
@@ -183,6 +183,7 @@ const UserAppointment = () => {
     setIssueSuggestions([]); // Close the dropdown
   };
   
+  
 
   
   const handleIssueRemove = (id) => {
@@ -191,6 +192,7 @@ const UserAppointment = () => {
       issues: prevFormData.issues.filter((issue) => issue.id !== id), // Remove the issue
     }));
   };
+  
   
   
 
@@ -375,6 +377,7 @@ const UserAppointment = () => {
     </div>
   )}
 </div>
+
 
 
 
