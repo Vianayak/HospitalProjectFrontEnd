@@ -1,5 +1,5 @@
-import React, { useRef } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import React, { useRef } from "react";
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import "./App.css";
 import HeroSection from "./components/HeroSection/HeroSection";
@@ -15,69 +15,86 @@ import LoginForm from "./components/Login/LoginForm";
 import SignUp from "./components/SignUp/SignUp";
 import HealthNewsImages from "./components/health/HealthNewsImages";
 import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
-import Sidebar from './components/SideBar/Sidebar';
-
+import Sidebar from "./components/SideBar/Sidebar";
 
 function App() {
   const healthNewsRef = useRef(null);
 
   const scrollToHealthNews = () => {
-      if (healthNewsRef.current) {
-          healthNewsRef.current.scrollIntoView({ behavior: 'smooth' });
-      }
+    if (healthNewsRef.current) {
+      healthNewsRef.current.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   return (
     <Router>
-      <div className="App">
-        {/* Navigation Bar */}
-        <Navbar scrollToHealthNews={scrollToHealthNews} />
-
-        {/* Routes */}
-        <Routes>
-          {/* Default Landing Page */}
-          <Route
-                    path="/healthnewsimages"
-                    element={<HealthNewsImages ref={healthNewsRef} />}
-                />
-          <Route path="/" element={<Navigate to="/jayahospitals" replace />} />
-          <Route path="/login" element={<LoginForm />} />
-          <Route
-            path="/jayahospitals"
-            element={
-              <>
-                <HeroSection />
-                <ServiceSection />
-                <DoctorGrid />
-                <SpecialtiesCarousel />
-                <HospitalSection />
-                <FloatingButtons />
-                <HealthNewsImages healthNewsRef={healthNewsRef} />
-              </>
-            }
-          />
-<Route path="/sidebar" element={<Sidebar />} />
-          {/* Doctor Cards Page */}
-          <Route path="/doctor-cards" element={<DoctorList />} />
-          {/* User Appointment Page */}
-          <Route path="/user-appointment" element={<UserAppointment />} />
-          <Route path="/SignUp" element={<Overlay className="login-overlay"><SignUp /></Overlay>} />
-          <Route path="/login" element={<Overlay className="login-overlay"><LoginForm /></Overlay>} />
-          <Route path="/forgot" element={<Overlay className="login-overlay"><ForgotPassword /></Overlay>} />
-        </Routes>
-
-        {/* Footer */}
-        <Footer />
-      </div>
+      <AppContent scrollToHealthNews={scrollToHealthNews} healthNewsRef={healthNewsRef} />
     </Router>
-    
   );
 }
+
+const AppContent = ({ scrollToHealthNews, healthNewsRef }) => {
+  const location = useLocation();
+
+  // Check if the current route is "/sidebar"
+  const isSidebarActive = location.pathname === "/sidebar";
+
+  return (
+    <div className="App">
+      {/* Conditionally render Navbar and Footer */}
+      {!isSidebarActive && <Navbar scrollToHealthNews={scrollToHealthNews} />}
+
+      {/* Routes */}
+      <Routes>
+        {/* Default Landing Page */}
+        <Route
+          path="/healthnewsimages"
+          element={<HealthNewsImages ref={healthNewsRef} />}
+        />
+        <Route path="/" element={<Navigate to="/jayahospitals" replace />} />
+        <Route path="/login" element={<LoginForm />} />
+        <Route
+          path="/jayahospitals"
+          element={
+            <>
+              <HeroSection />
+              <ServiceSection />
+              <DoctorGrid />
+              <SpecialtiesCarousel />
+              <HospitalSection />
+              <FloatingButtons />
+              <HealthNewsImages healthNewsRef={healthNewsRef} />
+            </>
+          }
+        />
+        <Route path="/sidebar" element={<Sidebar />} />
+        {/* Doctor Cards Page */}
+        <Route path="/doctor-cards" element={<DoctorList />} />
+        {/* User Appointment Page */}
+        <Route path="/user-appointment" element={<UserAppointment />} />
+        <Route
+          path="/SignUp"
+          element={<Overlay className="login-overlay"><SignUp /></Overlay>}
+        />
+        <Route
+          path="/login"
+          element={<Overlay className="login-overlay"><LoginForm /></Overlay>}
+        />
+        <Route
+          path="/forgot"
+          element={<Overlay className="login-overlay"><ForgotPassword /></Overlay>}
+        />
+      </Routes>
+
+      {/* Conditionally render Footer */}
+      {!isSidebarActive && <Footer />}
+    </div>
+  );
+};
+
 const Overlay = ({ children, className = "" }) => (
   <div className={`overlay ${className}`}>
-    <div className="popup">
-      {children}
-    </div>
+    <div className="popup">{children}</div>
   </div>
 );
 
