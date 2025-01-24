@@ -48,17 +48,15 @@
   border-radius: 50%;
 }
 
-.new-patients {
+.old-patients {
   background-color: #007bff;
 }
 
-.old-patients {
+.new-patients {
   background-color: #ffc107;
 }
 
-.total-patients {
-  background-color: #28a745;
-}
+
 
   /* Today Appointment Section */
   .today-appointment {
