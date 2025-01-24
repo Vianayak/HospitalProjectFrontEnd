@@ -142,20 +142,21 @@ const UserAppointment = () => {
 
   const handleIssueChange = async (e) => {
     const value = e.target.value;
-    setFormData({ ...formData, issue: value }); // Temporarily store input value for suggestions
+    setFormData({ ...formData, issue: value });
   
-    // Fetch suggestions if the input length is at least 3 characters
     if (value.length >= 3) {
       try {
         const { data } = await axios.get(`http://localhost:8081/api/issues/search?keyword=${value}`);
         setIssueSuggestions(data || []);
+        console.log("Fetched Suggestions:", data); // Debugging line
       } catch (error) {
         console.error("Error fetching issue suggestions:", error);
       }
     } else {
-      setIssueSuggestions([]); // Clear suggestions if input is less than 3 characters
+      setIssueSuggestions([]);
     }
   };
+  
   
   const handleIssueSelect = (id, issueName) => {
     setFormData((prevFormData) => {
@@ -345,19 +346,20 @@ const UserAppointment = () => {
     <span className="error1">{formErrors.issue}</span>
   )}
 
-  {/* Issue suggestions dropdown */}
-  {issueSuggestions.length > 0 && (
-    <ul className="suggestion-dropdown">
-      {issueSuggestions.map((suggestion) => (
-        <li
-          key={suggestion.id}
-          onClick={() => handleIssueSelect(suggestion.id, suggestion.name)}
-        >
-          {suggestion.name}
-        </li>
-      ))}
-    </ul>
-  )}
+{/* Issue suggestions dropdown */}
+{issueSuggestions.length > 0 && (
+  <ul className="suggestion-dropdown">
+    {issueSuggestions.map((suggestion) => (
+      <li
+        key={suggestion.id}
+        onClick={() => handleIssueSelect(suggestion.id, suggestion.name)}
+      >
+        {suggestion.name}
+      </li>
+    ))}
+  </ul>
+)}
+
 
   {/* Display selected issues */}
   {formData.issues.length > 0 && (

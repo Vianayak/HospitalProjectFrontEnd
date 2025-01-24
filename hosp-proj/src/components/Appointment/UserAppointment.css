@@ -319,23 +319,27 @@ input:focus:valid {
   list-style: none;
   margin: 0;
   padding: 0;
+  margin-left: 170px;
+  margin-top: 80px;
   max-height: 150px;
   overflow-y: auto;
   border: 1px solid #ccc;
   border-radius: 4px;
-  background-color: white;
+  background-color: #b81212;
   position: absolute;
   z-index: 1000;
-  width: 100%;
+  width: 20%;
 }
 
 .suggestion-dropdown li {
-  padding: 8px;
+  padding: 18px;
   cursor: pointer;
+  background-color: #b81212;
+  color: white;
 }
 
 .suggestion-dropdown li:hover {
-  background-color: #f0f0f0;
+  background-color: #9b1010;
 }
 
 .selected-issues {
