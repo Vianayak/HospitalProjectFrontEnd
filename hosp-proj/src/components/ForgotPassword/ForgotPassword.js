@@ -172,20 +172,26 @@ const ForgotPassword = () => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
   
-    // Validate the form synchronously before submitting
-    const isValid=validateForm(); // Ensure validation happens before submission
-  
-    // Immediately check if the form is valid
+    // Validate the form
+    const isValid = validateForm();
     if (!isValid) {
       Object.values(formErrors).forEach((error) => {
         toast.error(error);
       });
-      return; // Prevent submission if the form is not valid
+      return;
     }
   
     setLoading(true);
+  
     try {
-      // Your password reset logic here...
+      const response = await axios.post("http://localhost:8082/api/user/reset-password", null, {
+        params: {
+          email: formData.email,
+          newPassword: formData.password,
+          confirmPassword: formData.confirmPassword,
+        },
+      });
+  
       toast.success("Password Reset Successfully", {
         onClose: () => {
           setLoading(false);
@@ -194,9 +200,10 @@ const ForgotPassword = () => {
       });
     } catch (error) {
       setLoading(false);
-      toast.error("Error resetting password:", error);
+      toast.error(error.response?.data || "Error resetting password.");
     }
   };
+  
   
 
   useEffect(() => {
