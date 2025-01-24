@@ -30,7 +30,7 @@ class HealthcarePortal extends Component {
     }
 
     const formattedDate = date.toISOString().split('T')[0]; // Format date as YYYY-MM-DD
-    const doctorRegNum = doctorDetails.registrationNum; // Assuming "registrationNum" is the correct key
+    const doctorRegNum = doctorDetails.regestrationNum; // Assuming "registrationNum" is the correct key
 
     const apiUrl = `http://localhost:8081/api/book-appointment/appointments-with-issues?date=${formattedDate}&doctorRegNum=${doctorRegNum}`;
 
