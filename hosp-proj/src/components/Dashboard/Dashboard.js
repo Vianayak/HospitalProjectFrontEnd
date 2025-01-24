@@ -83,7 +83,7 @@ const Dashboard = () => {
       },
       tooltip: {
         callbacks: {
-          label: (tooltipItem) => `${tooltipItem.label}: $${tooltipItem.raw}`,
+          label: (tooltipItem) => `${tooltipItem.label}: ${tooltipItem.raw}`,
         },
       },
     },
