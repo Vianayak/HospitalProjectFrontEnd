@@ -66,6 +66,32 @@ class HealthcarePortal extends Component {
     this.setState({ currentDate: prevMonth });
   };
 
+  handleStatusUpdate = async (appointmentId, status) => {
+    // Append status as a query parameter
+    const apiUrl = `http://localhost:8081/api/book-appointment/${appointmentId}/?status=${status}`;
+  
+    try {
+      const response = await fetch(apiUrl, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json", // Headers can remain as they are
+        },
+      });
+  
+      if (!response.ok) {
+        throw new Error(`Error: ${response.statusText}`);
+      }
+  
+      // Fetch updated appointments after status change
+      this.fetchAppointments(this.state.selectedDate);
+      alert("Status updated successfully!");
+    } catch (error) {
+      console.error("Error updating status:", error);
+    }
+  };
+  
+  
+
   renderAppointments = () => {
     const { appointments } = this.state;
 
@@ -84,8 +110,18 @@ class HealthcarePortal extends Component {
           </div>
         </div>
         <div className="appointment-actions">
-          <button className="accept-btn">✔</button>
-          <button className="reject-btn">✘</button>
+        <button
+    className="accept-btn"
+    onClick={() => this.handleStatusUpdate(appointment.appointmentId, "ACCEPTED")}
+  >
+    ✔
+  </button>
+  <button
+    className="reject-btn"
+    onClick={() => this.handleStatusUpdate(appointment.appointmentId, "REJECTED")}
+  >
+    ✘
+  </button>
         </div>
       </div>
     ));
