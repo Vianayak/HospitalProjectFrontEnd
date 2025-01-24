@@ -154,7 +154,7 @@ class HealthcarePortal extends Component {
           </div>
         </div>
 
-        <div className="other"></div>
+    
       </div>
     );
   }
