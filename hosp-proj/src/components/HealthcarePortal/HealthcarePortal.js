@@ -17,7 +17,6 @@ class HealthcarePortal extends Component {
     const storedDoctorDetails = localStorage.getItem("doctorDetails");
     if (storedDoctorDetails) {
       this.setState({ doctorDetails: JSON.parse(storedDoctorDetails) }, () => {
-        // Fetch appointments for the current date
         this.fetchAppointments(this.state.selectedDate);
       });
     }
@@ -31,11 +30,7 @@ class HealthcarePortal extends Component {
     }
 
     const formattedDate = date.toISOString().split('T')[0]; // Format date as YYYY-MM-DD
-    const doctorRegNum = doctorDetails.regestrationNum; // Assuming "registrationNum" is the correct key
-
-    console.log(formattedDate);
-
-    console.log(doctorRegNum);
+    const doctorRegNum = doctorDetails.registrationNum; // Assuming "registrationNum" is the correct key
 
     const apiUrl = `http://localhost:8081/api/book-appointment/appointments-with-issues?date=${formattedDate}&doctorRegNum=${doctorRegNum}`;
 
@@ -53,13 +48,11 @@ class HealthcarePortal extends Component {
 
   handleDateClick = (day) => {
     const { currentDate } = this.state;
-    // Create a new date with explicit time set to 12:00 to avoid time zone issues
     const selectedDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), day, 12, 0, 0);
     this.setState({ selectedDate }, () => {
       this.fetchAppointments(selectedDate);
     });
   };
-  
 
   handleNextMonth = () => {
     const { currentDate } = this.state;
@@ -75,11 +68,11 @@ class HealthcarePortal extends Component {
 
   renderAppointments = () => {
     const { appointments } = this.state;
-  
+
     if (!appointments.length) {
       return <p>No appointment requests available for the selected date.</p>;
     }
-  
+
     return appointments.map((appointment, index) => (
       <div key={index} className="appointment-card">
         <div>
@@ -97,7 +90,6 @@ class HealthcarePortal extends Component {
       </div>
     ));
   };
-  
 
   renderCalendarDates = () => {
     const { currentDate, selectedDate } = this.state;
@@ -107,7 +99,15 @@ class HealthcarePortal extends Component {
     const firstDayOfMonth = new Date(year, month, 1);
     const lastDayOfMonth = new Date(year, month + 1, 0);
 
+    const startDayOfWeek = firstDayOfMonth.getDay(); // Day of the week (0 = Sunday, 6 = Saturday)
+
     const dates = [];
+    // Add empty placeholders for days before the first day of the month
+    for (let i = 0; i < startDayOfWeek; i++) {
+      dates.push(<span key={`empty-${i}`} className="day empty"></span>);
+    }
+
+    // Add actual dates of the month
     for (let i = 1; i <= lastDayOfMonth.getDate(); i++) {
       const isSelected = selectedDate.getDate() === i && selectedDate.getMonth() === month;
       dates.push(
@@ -154,9 +154,7 @@ class HealthcarePortal extends Component {
           </div>
         </div>
 
-        <div className="other">
-          
-        </div>
+        <div className="other"></div>
       </div>
     );
   }
