@@ -153,6 +153,10 @@ class HealthcarePortal extends Component {
             {this.renderCalendarDates()}
           </div>
         </div>
+
+        <div className="other">
+          
+        </div>
       </div>
     );
   }
