@@ -48,7 +48,7 @@ const Dashboard = () => {
     try {
       const formattedDate = date.toISOString().split("T")[0];
       const doctorRegNum = doctorDetails.regestrationNum;
-      const apiUrl = `http://localhost:8081/api/book-appointment/earnings?date=2025-02-05&doctorRegNum=${doctorRegNum}`;
+      const apiUrl = `http://localhost:8081/api/book-appointment/earnings?date=${formattedDate}&doctorRegNum=${doctorRegNum}`;
 
       const response = await fetch(apiUrl);
       if (response.ok) {
