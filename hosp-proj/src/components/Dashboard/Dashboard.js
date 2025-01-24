@@ -6,7 +6,7 @@ import './Dashboard.css';
 // Register Chart.js components
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const Dashboard = () => {
+const Dashboard = ({ selectedDate }) => {
   const [appointments, setAppointments] = useState([]);
   const [totalEarnings, setTotalEarnings] = useState(0);
   const [todayEarnings, setTodayEarnings] = useState(0);
@@ -14,9 +14,9 @@ const Dashboard = () => {
   const doctorDetails = JSON.parse(localStorage.getItem("doctorDetails"));
 
   useEffect(() => {
-    if (doctorDetails) {
+    if (doctorDetails && selectedDate) {
       const today = new Date();
-      fetchAppointments(today)
+      fetchAppointments(selectedDate)
         .then((appointmentsData) => {
           setAppointments(appointmentsData);
         })
@@ -25,9 +25,9 @@ const Dashboard = () => {
   }, [doctorDetails]);
 
   useEffect(() => {
-    if (doctorDetails) {
+    if (doctorDetails && selectedDate) {
       const today = new Date();
-      fetchEarnings(today);
+      fetchEarnings(selectedDate);
     }
   }, [doctorDetails]);
 
