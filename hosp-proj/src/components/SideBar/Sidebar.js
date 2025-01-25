@@ -6,6 +6,7 @@ import HealthcarePortal from '../HealthcarePortal/HealthcarePortal';
 
 const Sidebar = () => {
   const [doctorDetails, setDoctorDetails] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(new Date());
 
   useEffect(() => {
     const storedDoctorDetails = localStorage.getItem("doctorDetails");
@@ -53,9 +54,10 @@ const Sidebar = () => {
         </ul>
       </div>
       <div className="dashboard-content">
-        <DashboardHeader />
-        <Dashboard />
-        <HealthcarePortal />
+      <DashboardHeader selectedDate={selectedDate} />
+        <Dashboard selectedDate={selectedDate} />
+        <HealthcarePortal selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
+        
       </div>
     </div>
   );

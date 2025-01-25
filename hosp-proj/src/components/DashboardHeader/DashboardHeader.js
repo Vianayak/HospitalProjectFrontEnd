@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FaUserAlt, FaCalendarAlt, FaClock } from 'react-icons/fa';
 import './DashboardHeader.css';
 
-const DashboardHeader = () => {
+const DashboardHeader = (props) => {
   const [stats, setStats] = useState({
     totalAppointments: 0,
     todayPatients: 0,
@@ -28,7 +28,7 @@ const DashboardHeader = () => {
 
   useEffect(() => {
     const fetchStats = async () => {
-      const todayDate = getTodayDate(); // Get today's date dynamically
+      const selectedDate = props.selectedDate.toISOString().split('T')[0];  // Get today's date dynamically
       const doctorRegNum = getDoctorRegNum(); // Fetch doctor's registration number dynamically
 
       if (!doctorRegNum) {
@@ -38,7 +38,7 @@ const DashboardHeader = () => {
 
       try {
         // Replace this URL with your actual API endpoint
-        const response = await fetch(`http://localhost:8081/api/book-appointment/stats?date=${todayDate}&doctorRegNum=${doctorRegNum}`);
+        const response = await fetch(`http://localhost:8081/api/book-appointment/stats?date=${selectedDate}&doctorRegNum=${doctorRegNum}`);
         const data = await response.json();
         setStats({
           totalAppointments: data.totalTreatedPatientsByDoctor,
@@ -51,7 +51,7 @@ const DashboardHeader = () => {
     };
 
     fetchStats();
-  }, []);
+  }, [props.selectedDate]);
 
   return (
     <div className="header-container">

@@ -52,6 +52,7 @@ class HealthcarePortal extends Component {
     this.setState({ selectedDate }, () => {
       this.fetchAppointments(selectedDate);
     });
+    this.props.setSelectedDate(selectedDate);
   };
 
   handleNextMonth = () => {

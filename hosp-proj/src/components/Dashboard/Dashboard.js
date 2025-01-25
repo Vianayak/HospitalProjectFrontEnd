@@ -6,15 +6,17 @@ import './Dashboard.css';
 // Register Chart.js components
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const Dashboard = () => {
+const Dashboard = ({ selectedDate }) => {
   const [appointments, setAppointments] = useState([]);
+  const [totalEarnings, setTotalEarnings] = useState(0);
+  const [todayEarnings, setTodayEarnings] = useState(0);
 
   const doctorDetails = JSON.parse(localStorage.getItem("doctorDetails"));
 
   useEffect(() => {
-    if (doctorDetails) {
+    if (doctorDetails && selectedDate) {
       const today = new Date();
-      fetchAppointments(today)
+      fetchAppointments(selectedDate)
         .then((appointmentsData) => {
           setAppointments(appointmentsData);
         })
@@ -22,10 +24,17 @@ const Dashboard = () => {
     }
   }, [doctorDetails]);
 
+  useEffect(() => {
+    if (doctorDetails && selectedDate) {
+      const today = new Date();
+      fetchEarnings(selectedDate);
+    }
+  }, [doctorDetails]);
+
   const fetchAppointments = async (date) => {
     const formattedDate = date.toISOString().split('T')[0];
     const doctorRegNum = doctorDetails.regestrationNum;
-    const apiUrl = `http://localhost:8081/api/book-appointment/appointments-with-issues-accepted?date=2025-02-05&doctorRegNum=${doctorRegNum}`;
+    const apiUrl = `http://localhost:8081/api/book-appointment/appointments-with-issues-accepted?date=${formattedDate}&doctorRegNum=${doctorRegNum}`;
 
     const response = await fetch(apiUrl);
     if (response.ok) {
@@ -35,14 +44,39 @@ const Dashboard = () => {
     throw new Error("Failed to fetch appointments");
   };
 
+  const fetchEarnings = async (date) => {
+    try {
+      const formattedDate = date.toISOString().split("T")[0];
+      const doctorRegNum = doctorDetails.regestrationNum;
+      const apiUrl = `http://localhost:8081/api/book-appointment/earnings?date=${formattedDate}&doctorRegNum=${doctorRegNum}`;
+
+      const response = await fetch(apiUrl);
+      if (response.ok) {
+        const data = await response.json();
+        setTotalEarnings(data.totalEarnings || 0);
+        setTodayEarnings(data.todayEarnings || 0);
+      } else {
+        throw new Error("Failed to fetch earnings");
+      }
+    } catch (error) {
+      console.error("Error fetching earnings:", error);
+    }
+  };
+
   // Data for the donut chart
   const chartData = {
-    labels: ["New Patients", "Old Patients", "Total Patients"],
+    labels: ["Today's Earnings", "Total Earnings"],
     datasets: [
       {
+<<<<<<< HEAD
         data: [40, 60, 100], // Example data
         backgroundColor: ["#c4b5fd", "#fde047", "#5A3ECA"],
         hoverBackgroundColor: ["#a78bfa", "#facc15", "#1d4ed8"],
+=======
+        data: [todayEarnings, totalEarnings],
+        backgroundColor: ["#fde047", "#2563eb"],
+        hoverBackgroundColor: ["#facc15", "#1d4ed8"],
+>>>>>>> 3b04b84a6613dd6337e38ca1e085c5f2457f535a
       },
     ],
   };
@@ -55,7 +89,7 @@ const Dashboard = () => {
       },
       tooltip: {
         callbacks: {
-          label: (tooltipItem) => `${tooltipItem.label}: ${tooltipItem.raw}%`,
+          label: (tooltipItem) => `${tooltipItem.label}: ${tooltipItem.raw}`,
         },
       },
     },
@@ -66,22 +100,20 @@ const Dashboard = () => {
     <div className="dashboard-container">
       {/* Patients Summary Section */}
       <div className="patients-summary">
-        <h5>Patients Summary December 2021</h5>
+        <h5>Earnings Summary</h5>
         <div className="chart-container">
           <div className="donut-chart">
             <Doughnut data={chartData} options={chartOptions} />
           </div>
+          
         </div>
         <div>
           <ul className="legend">
             <li>
-              <span className="legend-color new-patients"></span> New Patients
+              <span className="legend-color new-patients"></span> Today's Earnings
             </li>
             <li>
-              <span className="legend-color old-patients"></span> Old Patients
-            </li>
-            <li>
-              <span className="legend-color total-patients"></span> Total Patients
+              <span className="legend-color old-patients"></span> Total Earnings
             </li>
           </ul>
         </div>
@@ -113,36 +145,6 @@ const Dashboard = () => {
         <p className="see-all">See All</p>
       </div>
 
-      {/* Next Patient Details Section */}
-      <div className="next-patient-details">
-        <h3>Next Patient Details</h3>
-        <div className="patient-info">
-          <img src="/Assets/Images/love.jpeg" alt="Patient" />
-          <div>
-            <h4>Sanath Deo</h4>
-            <p>Health Checkup</p>
-          </div>
-        </div>
-        <ul className="details-list">
-          <li><strong>D.O.B:</strong> 15 January 1989</li>
-          <li><strong>Sex:</strong> Male</li>
-          <li><strong>Weight:</strong> 59 Kg</li>
-          <li><strong>Last Appointment:</strong> 15 Dec - 2021</li>
-          <li><strong>Height:</strong> 172 cm</li>
-          <li><strong>Reg. Date:</strong> 10 Dec 2021</li>
-        </ul>
-        <div className="tags">
-          <span className="tag asthma">Asthma</span>
-          <span className="tag hypertension">Hypertension</span>
-          <span className="tag fever">Fever</span>
-        </div>
-        <div className="actions">
-          <button className="action-btn">📞 Call</button>
-          <button className="action-btn">📄 Document</button>
-          <button className="action-btn">💬 Chat</button>
-        </div>
-        <p className="last-prescriptions">Last Prescriptions</p>
-      </div>
     </div>
   );
 };
