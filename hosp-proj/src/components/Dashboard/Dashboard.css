@@ -48,12 +48,15 @@
   border-radius: 50%;
 }
 
-
 .old-patients {
   background-color: #007bff;
 }
 
 .new-patients {
+  background-color: #5A3ECA;
+}
+
+.old-patients {
   background-color: #ffc107;
 }
 
