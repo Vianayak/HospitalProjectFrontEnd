@@ -68,6 +68,8 @@ const Dashboard = ({ selectedDate }) => {
     labels: ["Today's Earnings", "Total Earnings"],
     datasets: [
       {
+
+
         data: [todayEarnings, totalEarnings],
         backgroundColor: ["#fde047", "#2563eb"],
         hoverBackgroundColor: ["#facc15", "#1d4ed8"],

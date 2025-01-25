@@ -7,11 +7,13 @@ import HealthcarePortal from '../HealthcarePortal/HealthcarePortal';
 const Sidebar = () => {
   const [doctorDetails, setDoctorDetails] = useState(null);
   const [selectedDate, setSelectedDate] = useState(new Date());
+
   const [showPasswordForm, setShowPasswordForm] = useState(false);
   const [formData, setFormData] = useState({
     password: "",
     confirmPassword: "",
   });
+
 
   useEffect(() => {
     const storedDoctorDetails = localStorage.getItem("doctorDetails");
