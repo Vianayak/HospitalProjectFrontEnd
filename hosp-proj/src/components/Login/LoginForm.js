@@ -1,23 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./LoginForm.css";
 
 function LoginForm() {
   const navigate = useNavigate();
 
-  // Form state initialized with empty fields
   const [formData, setFormData] = useState({
     username: "",
     password: "",
     rememberMe: false,
   });
 
-  // Reset form when the component mounts
+  const [isLoading, setIsLoading] = useState(false); // Loader state
+
   useEffect(() => {
     setFormData({ username: "", password: "", rememberMe: false });
   }, []);
 
-  // Handle input changes
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData((prevData) => ({
@@ -26,10 +27,10 @@ function LoginForm() {
     }));
   };
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+    setIsLoading(true); // Show loader
+
     try {
       const response = await fetch("http://localhost:8082/api/user/login", {
         method: "POST",
@@ -41,31 +42,41 @@ function LoginForm() {
           password: formData.password,
         }),
       });
-  
+
       if (response.ok) {
         const responseData = await response.json();
-            const token = responseData.token;
-            localStorage.setItem("authToken", token); // Save token
+        const token = responseData.token;
+        localStorage.setItem("authToken", token);
 
-            if (responseData.doctorDetails) {
-                localStorage.setItem("doctorDetails", JSON.stringify(responseData.doctorDetails)); // Save doctor details
-            }
+        if (responseData.doctorDetails) {
+          localStorage.setItem("doctorDetails", JSON.stringify(responseData.doctorDetails));
+        }
 
-            alert("Login successful!");
-            navigate("/sidebar"); // Redirect to the dashboard
+        toast.success("Login successful!",{
+          onClose: () => {
+            navigate("/sidebar");
+          },
+        });
+          
+   
       } else {
-        alert("Invalid credentials");
+        toast.error("Invalid credentials. Please try again.");
       }
     } catch (error) {
       console.error("Login error:", error);
-      alert("Login failed. Please try again.");
+      toast.error("Login failed. Please try again later.");
+    }finally {
+      // Stop loader after toast closes
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 4000); // Match this duration to toast's autoClose duration
     }
   };
-  
 
   return (
     <div className="overlay">
       <div className="login-container">
+        <ToastContainer position="top-center" autoClose={3000} />
         <div className="login-header">
           <img src="/Assets/Images/whitelogos.png" alt="Logo" className="logo" />
           <span>JAYA HOSPITALS</span>
@@ -105,27 +116,29 @@ function LoginForm() {
             />
             <label>Remember me</label>
           </div>
-          <button type="submit" className="login-button">
-            Login
+          <button type="submit" className="login-button" disabled={isLoading}>
+            {isLoading ? "Logging in..." : "Login"}
           </button>
-          <a href="/forgot" className="forgot-password"
-           onClick={(e) => {
-            e.preventDefault();
-            navigate("/forgot");
-          }}
+          <a
+            href="/forgot"
+            className="forgot-password"
+            onClick={(e) => {
+              e.preventDefault();
+              navigate("/forgot");
+            }}
           >
             Forgot Password?
           </a>
-        <a
-          href="/SignUp"
-          className="SignUp"
-          onClick={(e) => {
-            e.preventDefault();
-            navigate("/SignUp"); // Navigate to Sign Up page
-          }}
-        >
-          Sign Up
-        </a>
+          <a
+            href="/SignUp"
+            className="SignUp"
+            onClick={(e) => {
+              e.preventDefault();
+              navigate("/SignUp");
+            }}
+          >
+            Sign Up
+          </a>
         </form>
       </div>
     </div>
