@@ -3,7 +3,7 @@
   grid-template-columns: 1fr 1fr 1fr;
   gap: 20px;
   padding: 20px;
-  background-color: #d8efef;
+ 
 }
 
 /* Patients Summary Section */
@@ -48,8 +48,13 @@
   border-radius: 50%;
 }
 
+<<<<<<< HEAD
+.new-patients {
+  background-color: #5A3ECA;
+=======
 .old-patients {
   background-color: #007bff;
+>>>>>>> 3b04b84a6613dd6337e38ca1e085c5f2457f535a
 }
 
 .new-patients {
@@ -71,7 +76,7 @@
   .today-appointment h5 {
     font-size: 20px;
     font-weight: bold;
-    color: #1e40af;
+
     margin-bottom: 15px;
   }
   
@@ -170,7 +175,7 @@
   
   .see-all {
     font-size: 14px;
-    color: #3b82f6;
+    color: #5A3ECA;
     text-align: center;
     margin-top: 15px;
     cursor: pointer;
@@ -208,14 +213,17 @@
   
   .tags {
     display: flex;
-    gap: 10px;
+    margin-left: 42px;
+
   }
   
   .tag {
-    background-color: #007bff;
+    background-color: #5A3ECA;
     color: #ffffff;
-    padding: 5px 10px;
+    padding: 8px 10px;
     border-radius: 5px;
+   margin-left: 5px;
+    
   }
   
   .actions {
@@ -225,7 +233,7 @@
   }
   
   .action-btn {
-    background-color: #007bff;
+    background-color: #5A3ECA;
     color: #ffffff;
     padding: 5px 10px;
     border: none;

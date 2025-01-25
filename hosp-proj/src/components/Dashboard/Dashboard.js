@@ -68,9 +68,15 @@ const Dashboard = ({ selectedDate }) => {
     labels: ["Today's Earnings", "Total Earnings"],
     datasets: [
       {
+<<<<<<< HEAD
+        data: [40, 60, 100], // Example data
+        backgroundColor: ["#c4b5fd", "#fde047", "#5A3ECA"],
+        hoverBackgroundColor: ["#a78bfa", "#facc15", "#1d4ed8"],
+=======
         data: [todayEarnings, totalEarnings],
         backgroundColor: ["#fde047", "#2563eb"],
         hoverBackgroundColor: ["#facc15", "#1d4ed8"],
+>>>>>>> 3b04b84a6613dd6337e38ca1e085c5f2457f535a
       },
     ],
   };

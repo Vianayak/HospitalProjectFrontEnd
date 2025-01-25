@@ -10,7 +10,7 @@
     background-color: #f8f9fa;
     padding: 20px;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-    margin-top: 100px;
+    margin-top: 40px;
   }
   
   .profile-section {
@@ -67,7 +67,6 @@
     flex: 1; /* Takes up the remaining space */
     background-color: #ffffff;
     padding: 20px;
-    overflow-y: auto; /* Allows scrolling if content exceeds viewport */
-    margin-top: 40px;
+   
   }
   
