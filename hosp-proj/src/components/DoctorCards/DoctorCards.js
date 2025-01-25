@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./DoctorCards.css";
 import OtpPopup from "../Popup/OtpPopup";
 import SchedulePopup from "../Popup/SchedulePopup";
@@ -63,8 +65,10 @@ const DoctorCard = ({ doctor }) => {
       }
       setCanResendOtp(false); // Disable resend button until countdown is finished
       startCountdown();
+      toast.success("OTP sent successfully");
     } catch (error) {
       console.error("Error sending OTP:", error);
+      toast.error("Failed to send OTP.");
     }
   };
 
@@ -94,8 +98,10 @@ const DoctorCard = ({ doctor }) => {
       });
       setShowPopup(false);
       setShowSchedulePopup(true);
+      toast.success("OTP verified successfully!");
     } catch (error) {
       console.error("OTP verification failed:", error);
+      toast.error("OTP verification failed.");
     }
   };
 
@@ -106,7 +112,7 @@ const DoctorCard = ({ doctor }) => {
         state: { date, timeSlot: selectedTimeSlot, email, doctorDetails: doctor, timeOfDay }
       });
     } else {
-      alert("Please select a date and time slot.");
+      toast.error("Please select a date and time slot.");
     }
   };
 
@@ -123,6 +129,7 @@ const DoctorCard = ({ doctor }) => {
   return (
     <>
       <div className="content-wrapper1">
+        <ToastContainer />
         <div className="doctor-card">
           <div className="doctor-image">
             <img src={`http://localhost:8081/${doctor.imagePath}`} alt={doctor.name} />

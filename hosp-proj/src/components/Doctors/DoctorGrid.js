@@ -4,6 +4,8 @@ import OtpPopup from "../Popup/OtpPopup";
 import SchedulePopup from "../Popup/SchedulePopup";
 import "./DoctorGrid.css";
 import axios from 'axios';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const DoctorGrid = () => {
   const [doctors, setDoctors] = useState([]);
@@ -34,8 +36,10 @@ const DoctorGrid = () => {
       }
       setCanResendOtp(false); // Disable resend button until countdown is finished
       startCountdown();
+      toast.success("OTP sent successfully!");
     } catch (error) {
       console.error("Error sending OTP:", error);
+      toast.error("Failed to send OTP.");
     }
   };
 
@@ -52,8 +56,10 @@ const DoctorGrid = () => {
       });
       setShowPopup(false);
       setShowSchedulePopup(true);
+      toast.success("OTP verified successfully!");
     } catch (error) {
       console.error("OTP verification failed:", error);
+      toast.error("OTP verification failed.");
     }
   };
 
@@ -70,7 +76,7 @@ const DoctorGrid = () => {
         state: { date, timeSlot: selectedTimeSlot, email, doctorDetails: doctordetails, timeOfDay }
       });
     } else {
-      alert("Please select a date and time slot.");
+      toast.error("Please select a date and time slot.");
     }
   };
 
@@ -233,6 +239,7 @@ const DoctorGrid = () => {
           setShowSchedulePopup={setShowSchedulePopup}
         />
       )}
+      <ToastContainer />
     </>
   );
 };

@@ -5,6 +5,9 @@ import { faCalendarCheck, faClipboardCheck, faUserMd, faPills, faHospital, faFil
 import { Dialog, DialogActions, DialogContent, DialogTitle, Button, TextField } from "@mui/material";
 import "./ServiceSection.css";
 import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const services = [
   { id: 1, icon: faCalendarCheck, title: "Book Appointment", path: "/doctor-cards" },
@@ -41,9 +44,9 @@ const ServiceSection = () => {
     } catch (error) {
       // Handle errors like incorrect password or failed API call
       if (error.response) {
-        alert(error.response.data); // Show error message from backend
+        toast.error(error.response.data); // Show error message from backend
       } else {
-        alert("An error occurred. Please try again later.");
+        toast.error("An error occurred. Please try again later.");
       }
     }
   };
@@ -97,6 +100,7 @@ const ServiceSection = () => {
           </Button>
         </DialogActions>
       </Dialog>
+      <ToastContainer />
     </div>
   );
 };

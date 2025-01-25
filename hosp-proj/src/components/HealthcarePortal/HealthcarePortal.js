@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import './HealthcarePortal.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 class HealthcarePortal extends Component {
   constructor(props) {
@@ -85,7 +87,7 @@ class HealthcarePortal extends Component {
   
       // Fetch updated appointments after status change
       this.fetchAppointments(this.state.selectedDate);
-      alert("Status updated successfully!");
+      toast.success("Status updated successfully!");
     } catch (error) {
       console.error("Error updating status:", error);
     }
@@ -190,7 +192,7 @@ class HealthcarePortal extends Component {
             {this.renderCalendarDates()}
           </div>
         </div>
-
+<ToastContainer />
     
       </div>
     );

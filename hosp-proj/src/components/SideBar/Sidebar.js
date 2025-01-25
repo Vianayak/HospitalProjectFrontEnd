@@ -3,17 +3,19 @@ import './Sidebar.css';
 import DashboardHeader from '../DashboardHeader/DashboardHeader';
 import Dashboard from '../Dashboard/Dashboard';
 import HealthcarePortal from '../HealthcarePortal/HealthcarePortal';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Sidebar = () => {
   const [doctorDetails, setDoctorDetails] = useState(null);
   const [selectedDate, setSelectedDate] = useState(new Date());
-
   const [showPasswordForm, setShowPasswordForm] = useState(false);
   const [formData, setFormData] = useState({
     password: "",
     confirmPassword: "",
   });
-
+  const [isLoading, setIsLoading] = useState(false); // Add loading state
+  const [buttonDisabled, setButtonDisabled] = useState(false); // Add state to track button disabled state
 
   useEffect(() => {
     const storedDoctorDetails = localStorage.getItem("doctorDetails");
@@ -36,27 +38,27 @@ const Sidebar = () => {
     }));
   };
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     
     // Check if passwords match
     if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match!");
+      toast.error("Passwords do not match!");
       return;
     }
-  
-  
+
     // Validate password strength (8 characters, with uppercase, lowercase, number, special character)
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     if (!passwordRegex.test(formData.password)) {
-      alert("Password must be at least 8 characters long and include uppercase, lowercase, number, and special character.");
+      toast.error("Password must be at least 8 characters long and include uppercase, lowercase, number, and special character.");
       return;
     }
-  
+
     const token = localStorage.getItem("authToken"); // Or wherever you store the JWT token
-    
+
     try {
+      setIsLoading(true); // Disable button
+      setButtonDisabled(true); // Disable the reset password button during processing
       // Call the /protected-endpoint to validate the token first
       const response = await fetch("http://localhost:8082/api/user/protected-endpoint", {
         method: "GET",
@@ -64,7 +66,7 @@ const Sidebar = () => {
           "Authorization": `Bearer ${token}`,
         },
       });
-  
+
       if (response.ok) {
         // Token is valid, proceed to change password
         const changePasswordResponse = await fetch("http://localhost:8082/api/user/change-password", {
@@ -79,25 +81,29 @@ const Sidebar = () => {
             newPassword: formData.password, // Send the new password
           }),
         });
-  
+
         const data = await changePasswordResponse.json();
         if (changePasswordResponse.ok) {
           console.log("Password reset successfully:", data.message);
-        setShowPasswordForm(false); // Close the popup after submission
+          toast.success("Password reset successfully", {
+            onClose: () => {
+              setShowPasswordForm(false);  // Close the popup after toast closes
+              setButtonDisabled(false);    // Re-enable the button after toast closes
+            }
+          });
         } else {
           console.error("Error:", data.message);
-          alert(data.message || "Password change failed.");
+          toast.error(data.message || "Password change failed.");
         }
       } else {
-        alert("Invalid or expired token.");
+        toast.error("Invalid or expired token.");
       }
     } catch (error) {
       console.error("Error:", error);
-      alert("Token validation failed.");
+      toast.error("Token validation failed.");
     }
   };
-  
-  
+
   return (
     <div className="layout">
       <div className="sidebar">
@@ -127,15 +133,13 @@ const Sidebar = () => {
         </ul>
       </div>
       <div className="dashboard-content">
-      <DashboardHeader selectedDate={selectedDate} />
+        <DashboardHeader selectedDate={selectedDate} />
         <Dashboard selectedDate={selectedDate} />
         <HealthcarePortal selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
-        
       </div>
       {showPasswordForm && (
         <div className="popup-overlay">
           <div className="popup-container">
-            {/* <h2>Change Password</h2> */}
             <form onSubmit={handleSubmit}>
               <div className="form-group">
                 <label>Password</label>
@@ -160,8 +164,12 @@ const Sidebar = () => {
                 />
               </div>
               <div className="popup-actions">
-                <button type="submit" className="forgot-password-button">
-                  Reset Password
+                <button 
+                  type="submit" 
+                  className="forgot-password-button" 
+                  disabled={buttonDisabled} // Disable button if loading
+                >
+                  {isLoading ? 'Processing...' : 'Reset Password'}
                 </button>
                 <button
                   type="button"
@@ -175,6 +183,9 @@ const Sidebar = () => {
           </div>
         </div>
       )}
+      {/* Toast Container */}
+      <ToastContainer 
+      />
     </div>
   );
 };
