@@ -184,11 +184,17 @@ const ForgotPassword = () => {
     setLoading(true);
   
     try {
-      const response = await axios.post("http://localhost:8082/api/user/reset-password", null, {
-        params: {
-          email: formData.email,
-          newPassword: formData.password,
-          confirmPassword: formData.confirmPassword,
+      // Prepare the DTO object
+      const dto = {
+        email: formData.email,
+        password: formData.password,
+        newPassword: formData.confirmPassword,
+      };
+  
+      // Send the DTO in the request body
+      const response = await axios.post("http://localhost:8082/api/user/reset-password", dto, {
+        headers: {
+          "Content-Type": "application/json", // Set the header for JSON data
         },
       });
   
@@ -203,6 +209,7 @@ const ForgotPassword = () => {
       toast.error(error.response?.data || "Error resetting password.");
     }
   };
+  
   
   
 
