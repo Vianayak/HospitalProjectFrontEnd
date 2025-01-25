@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useState, useEffect,useRef } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import "./App.css";
@@ -38,6 +38,13 @@ const AppContent = ({ scrollToHealthNews, healthNewsRef }) => {
 
   // Check if the current route is "/sidebar"
   const isSidebarActive = location.pathname === "/sidebar";
+
+  useEffect(() => {
+    if (location.pathname !== "/sidebar") {
+      localStorage.removeItem("authToken");
+      localStorage.removeItem("doctorDetails");
+    }
+  }, [location]);
 
   return (
     <div className="App">
