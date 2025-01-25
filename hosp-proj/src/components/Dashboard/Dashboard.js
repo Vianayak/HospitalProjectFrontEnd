@@ -41,7 +41,7 @@ const Dashboard = () => {
     datasets: [
       {
         data: [40, 60, 100], // Example data
-        backgroundColor: ["#c4b5fd", "#fde047", "#2563eb"],
+        backgroundColor: ["#c4b5fd", "#fde047", "#5A3ECA"],
         hoverBackgroundColor: ["#a78bfa", "#facc15", "#1d4ed8"],
       },
     ],

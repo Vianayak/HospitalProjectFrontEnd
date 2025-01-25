@@ -3,15 +3,17 @@
     flex-direction: column;
     gap: 10px;
     padding: 20px;
+  
     background-color: #f8f9fa;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
-  
+ 
   .header-title {
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 10px;
+    margin-top: 20px;
   }
   
   .stats-container {
@@ -24,7 +26,7 @@
     display: flex;  
     align-items: center;  
     gap: 10px;  
-    background-color: #d8efef;  
+  
     padding: 10px 15px;  
     border-radius: 8px;  
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);  

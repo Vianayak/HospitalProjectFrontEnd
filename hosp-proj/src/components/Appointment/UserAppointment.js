@@ -336,7 +336,11 @@ const UserAppointment = () => {
   <input
     type="text"
     name="issue"
-    placeholder="Enter your issue"
+    placeholder={
+      formData.issues.length > 0
+        ? formData.issues.map((issue) => issue.name).join(", ") // Show selected issues
+        : "Enter your issue"
+    }
     value={formData.issue || ""} // Input value is temporary, only for suggestions
     onChange={handleIssueChange} // Handle user input
     onFocus={handleInputFocus} // Track focus
@@ -346,22 +350,21 @@ const UserAppointment = () => {
     <span className="error1">{formErrors.issue}</span>
   )}
 
-{/* Issue suggestions dropdown */}
-{issueSuggestions.length > 0 && (
-  <ul className="suggestion-dropdown">
-    {issueSuggestions.map((suggestion) => (
-      <li
-        key={suggestion.id}
-        onClick={() => handleIssueSelect(suggestion.id, suggestion.name)}
-      >
-        {suggestion.name}
-      </li>
-    ))}
-  </ul>
-)}
+  {/* Issue suggestions dropdown */}
+  {issueSuggestions.length > 0 && (
+    <ul className="suggestion-dropdown">
+      {issueSuggestions.map((suggestion) => (
+        <li
+          key={suggestion.id}
+          onClick={() => handleIssueSelect(suggestion.id, suggestion.name)}
+        >
+          {suggestion.name}
+        </li>
+      ))}
+    </ul>
+  )}
 
-
-  {/* Display selected issues */}
+  {/* Display selected issues below input */}
   {formData.issues.length > 0 && (
     <div className="selected-issues">
       {formData.issues.map((issue) => (
@@ -379,6 +382,9 @@ const UserAppointment = () => {
     </div>
   )}
 </div>
+
+
+
 
 
 
