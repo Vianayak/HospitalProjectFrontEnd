@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate,Link } from "react-router-dom";
 import "./UserAppointment.css";
 import axios from "axios";
+import { FaHome } from "react-icons/fa";
 
 const Loader = () => (
   <div className="loader-overlay">
@@ -222,7 +223,11 @@ const UserAppointment = () => {
   return (
     <>
     <header className="header">
-  <h1>
+      <Link to="/jayahospitals" className="home-icon-link">
+        <FaHome className="home-icon" />
+      </Link>
+      <div className="header-content">
+      <h1>
     <img
       src="Assets/Images/whitelogos.png" // Replace with the correct path to your image
       alt="Jaya Hospitals Logo"
@@ -230,7 +235,8 @@ const UserAppointment = () => {
     />
     JAYA HOSPITALS
   </h1>
-</header>
+      </div>
+    </header>
 
 
       <div className="content-wrapper">

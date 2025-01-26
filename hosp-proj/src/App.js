@@ -37,19 +37,20 @@ const AppContent = ({ scrollToHealthNews, healthNewsRef }) => {
   const location = useLocation();
 
   // Check if the current route is "/sidebar"
-  const isSidebarActive = location.pathname === "/sidebar";
+  const hideHeaderFooterRoutes = ["/user-appointment", "/sidebar"];
+  const shouldHideHeaderFooter = hideHeaderFooterRoutes.includes(location.pathname);
 
   useEffect(() => {
-    if (location.pathname !== "/sidebar") {
+    if (!shouldHideHeaderFooter) {
       localStorage.removeItem("authToken");
       localStorage.removeItem("doctorDetails");
     }
-  }, [location]);
+  }, [location, shouldHideHeaderFooter]);
 
   return (
     <div className="App">
       {/* Conditionally render Navbar and Footer */}
-      {!isSidebarActive && <Navbar scrollToHealthNews={scrollToHealthNews} />}
+      {!shouldHideHeaderFooter && <Navbar scrollToHealthNews={scrollToHealthNews} />}
 
       {/* Routes */}
       <Routes>
@@ -101,7 +102,7 @@ const AppContent = ({ scrollToHealthNews, healthNewsRef }) => {
       </Routes>
 
       {/* Conditionally render Footer */}
-      {!isSidebarActive && <Footer />}
+      {!shouldHideHeaderFooter && <Footer />}
     </div>
   );
 };
