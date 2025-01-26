@@ -14,9 +14,17 @@ const Sidebar = () => {
     password: "",
     confirmPassword: "",
   });
-  const [isLoading, setIsLoading] = useState(false); // Add loading state
-  const [buttonDisabled, setButtonDisabled] = useState(false); // Add state to track button disabled state
+  const [isLoading, setIsLoading] = useState(false);
+  const [buttonDisabled, setButtonDisabled] = useState(false);
   const [statusUpdated, setStatusUpdated] = useState(false);
+
+  const passwordCriteria = {
+    length: formData.password.length >= 8,
+    uppercase: /[A-Z]/.test(formData.password),
+    lowercase: /[a-z]/.test(formData.password),
+    number: /\d/.test(formData.password),
+    specialChar: /[@$!%*?&]/.test(formData.password),
+  };
 
   useEffect(() => {
     const storedDoctorDetails = localStorage.getItem("doctorDetails");
@@ -41,73 +49,67 @@ const Sidebar = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    // Check if passwords match
+
     if (formData.password !== formData.confirmPassword) {
       toast.error("Passwords do not match!");
       return;
     }
 
-    // Validate password strength (8 characters, with uppercase, lowercase, number, special character)
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-    if (!passwordRegex.test(formData.password)) {
-      toast.error("Password must be at least 8 characters long and include uppercase, lowercase, number, and special character.");
+    if (!Object.values(passwordCriteria).every(Boolean)) {
+      toast.error("Please meet all password criteria.");
       return;
     }
 
-    const token = localStorage.getItem("authToken"); // Or wherever you store the JWT token
+    const token = localStorage.getItem("authToken");
 
     try {
-      setIsLoading(true); // Disable button
-      setButtonDisabled(true); // Disable the reset password button during processing
-      // Call the /protected-endpoint to validate the token first
+      setIsLoading(true);
+      setButtonDisabled(true);
+
       const response = await fetch("http://localhost:8082/api/user/protected-endpoint", {
         method: "GET",
         headers: {
-          "Authorization": `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
       });
 
       if (response.ok) {
-        // Token is valid, proceed to change password
         const changePasswordResponse = await fetch("http://localhost:8082/api/user/change-password", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({
             email: doctorDetails.email,
             password: formData.password,
-            newPassword: formData.password, // Send the new password
+            newPassword: formData.password,
           }),
         });
 
         const data = await changePasswordResponse.json();
         if (changePasswordResponse.ok) {
-          console.log("Password reset successfully:", data.message);
           toast.success("Password reset successfully", {
             onClose: () => {
-              setShowPasswordForm(false);  // Close the popup after toast closes
-              setButtonDisabled(false);    // Re-enable the button after toast closes
-            }
+              setShowPasswordForm(false);
+              setButtonDisabled(false);
+            },
           });
         } else {
-          console.error("Error:", data.message);
           toast.error(data.message || "Password change failed.");
         }
       } else {
         toast.error("Invalid or expired token.");
       }
     } catch (error) {
-      console.error("Error:", error);
       toast.error("Token validation failed.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleStatusUpdate = () => {
-    // Trigger status update
-    setStatusUpdated((prev) => !prev);  // Toggle to force re-render of DashboardHeader
+    setStatusUpdated((prev) => !prev);
   };
 
   return (
@@ -117,7 +119,7 @@ const Sidebar = () => {
           {doctorDetails ? (
             <>
               <img
-                src={`http://localhost:8081/${doctorDetails.imagePath}`} // Ensure the backend serves this path correctly
+                src={`http://localhost:8081/${doctorDetails.imagePath}`}
                 alt="Profile"
                 className="profile-image"
               />
@@ -139,41 +141,57 @@ const Sidebar = () => {
         </ul>
       </div>
       <div className="dashboard-content">
-        <DashboardHeader selectedDate={selectedDate} statusUpdated={statusUpdated}/>
+        <DashboardHeader selectedDate={selectedDate} statusUpdated={statusUpdated} />
         <Dashboard selectedDate={selectedDate} />
-        <HealthcarePortal selectedDate={selectedDate} setSelectedDate={setSelectedDate} onStatusUpdate={handleStatusUpdate}/>
+        <HealthcarePortal
+          selectedDate={selectedDate}
+          setSelectedDate={setSelectedDate}
+          onStatusUpdate={handleStatusUpdate}
+        />
       </div>
       {showPasswordForm && (
         <div className="popup-overlay">
-          <div className="popup-container">
+          <div className="popup-container3">
+            <h2 className="change-password1">Change Password</h2>  
             <form onSubmit={handleSubmit}>
-              <div className="form-group">
-                <label>Password</label>
-                <input
-                  type="password"
-                  name="password"
-                  className="popup-input"
-                  placeholder="Enter new password"
-                  value={formData.password}
-                  onChange={handleInputChange}
-                />
+              <div className="form-group3">
+                <div className="input-row">
+                  <div className="input-container">
+                    <label>Password</label>
+                    <input
+                      type="password"
+                      name="password"
+                      className="popup-input"
+                      placeholder="Enter new password"
+                      value={formData.password}
+                      onChange={handleInputChange}
+                    />
+                  </div>
+                  <div className="input-container">
+                    <label>Confirm Password</label>
+                    <input
+                      type="password"
+                      name="confirmPassword"
+                      className="popup-input"
+                      placeholder="Confirm new password"
+                      value={formData.confirmPassword}
+                      onChange={handleInputChange}
+                    />
+                  </div>
+                </div>
               </div>
-              <div className="form-group">
-                <label>Confirm Password</label>
-                <input
-                  type="password"
-                  name="confirmPassword"
-                  className="popup-input"
-                  placeholder="Confirm new password"
-                  value={formData.confirmPassword}
-                  onChange={handleInputChange}
-                />
-              </div>
+              <ul className="password-criteria">
+                <li style={{ color: passwordCriteria.length ? 'green' : 'red' }}>At least 8 characters</li>
+                <li style={{ color: passwordCriteria.uppercase ? 'green' : 'red' }}>At least one uppercase letter</li>
+                <li style={{ color: passwordCriteria.lowercase ? 'green' : 'red' }}>At least one lowercase letter</li>
+                <li style={{ color: passwordCriteria.number ? 'green' : 'red' }}>At least one number</li>
+                <li style={{ color: passwordCriteria.specialChar ? 'green' : 'red' }}>At least one special character (@$!%*?&)</li>
+              </ul>
               <div className="popup-actions">
-                <button 
-                  type="submit" 
-                  className="forgot-password-button" 
-                  disabled={buttonDisabled} // Disable button if loading
+                <button
+                  type="submit"
+                  className="forgot-password-button center-button"
+                  disabled={buttonDisabled}
                 >
                   {isLoading ? 'Processing...' : 'Reset Password'}
                 </button>
@@ -189,9 +207,7 @@ const Sidebar = () => {
           </div>
         </div>
       )}
-      {/* Toast Container */}
-      <ToastContainer 
-      />
+      <ToastContainer />
     </div>
   );
 };

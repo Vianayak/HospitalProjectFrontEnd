@@ -72,3 +72,49 @@
     padding: 20px;
   }
   
+  .text-align-center {
+    text-align: center;
+  }
+  
+  .form-group3 {
+    display: flex;
+    align-items: center; /* Vertically center-align label and input */
+    margin-bottom: 25px; /* Spacing between form groups */
+    margin-top: 20px; /* Adjust spacing from the top */
+  }
+  
+  .form-group3 label {
+    margin-right: 10px; /* Space between label and input */
+    font-size: 14px; /* Adjust label font size */
+    color: #333; /* Label text color */
+    flex-basis: 30%; /* Fixed width for labels */
+    text-align: right; /* Align label text to the right */
+  }
+  
+  .form-group3 input {
+    flex-grow: 1; /* Input takes the remaining space */
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #f4f4f4;
+    color: #333;
+    width: 60%; /* Adjusted width for better alignment */
+  }
+  
+  .form-group3 input::placeholder {
+    color: #aaa; /* Placeholder text color */
+    
+  }
+  
+  .popup-container3 {
+    background-color: #fff;
+    width: 500px;
+    height: 550px;
+  }
+  
+  .forgot-password-button {
+    width: 60%;
+    margin-left: 60px;
+    margin-right: 100px;
+  }
+  
