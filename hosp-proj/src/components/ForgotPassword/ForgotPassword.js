@@ -317,42 +317,58 @@ const ForgotPassword = () => {
           </div>
         )}
 
-        {showPasswordForm && (
-          <div>
-            <div className="form-group">
-              <div className="label-input-container">
-                <label>Password</label>
-                <input
-                  type="password"
-                  name="password"
-                  className="popup-input"
-                  placeholder="Enter new password"
-                  value={formData.password}
-                  onChange={handleInputChange}
-                />
-              </div>
-            </div>
-            <div className="form-group">
-              <div className="label-input-container">
-                <label>Confirm Password</label>
-                <input
-                  type="password"
-                  name="confirmPassword"
-                  className="popup-input"
-                  placeholder="Confirm new password"
-                  value={formData.confirmPassword}
-                  onChange={handleInputChange}
-                />
-              </div>
-            </div>
-            <button
-              type="submit"
-              className="forgot-password-button"
-            >
-              Reset Password
-            </button>
-          </div>
-        )}
+{showPasswordForm && (
+  <div>
+    <div className="form-group">
+      <div className="label-input-container">
+        <label>Password</label>
+        <input
+          type="password"
+          name="password"
+          className="popup-input"
+          placeholder="Enter new password"
+          value={formData.password}
+          onChange={handleInputChange}
+        />
+      </div>
+    </div>
+    <div className="form-group">
+      <div className="label-input-container">
+        <label>Confirm Password</label>
+        <input
+          type="password"
+          name="confirmPassword"
+          className="popup-input"
+          placeholder="Confirm new password"
+          value={formData.confirmPassword}
+          onChange={handleInputChange}
+        />
+      </div>
+      {/* Password Criteria */}
+      <ul className="password-criteria-list">
+        <li className={formData.password.length >= 8 ? "valid" : "invalid"}>
+          Password must be at least 8 characters long.
+        </li>
+        <li className={/[A-Z]/.test(formData.password) ? "valid" : "invalid"}>
+          Include at least one uppercase letter.
+        </li>
+        <li className={/\d/.test(formData.password) ? "valid" : "invalid"}>
+          Include at least one number.
+        </li>
+        <li className={/[!@#$%^&*(),.?":{}|<>]/.test(formData.password) ? "valid" : "invalid"}>
+          Include at least one special character (e.g., @, #, $, etc.).
+        </li>
+      </ul>
+    </div>
+    <button
+      type="submit"
+      className="forgot-password-button"
+    >
+      Reset Password
+    </button>
+  </div>
+)}
+
       </form>
       <ToastContainer />
     </div>
