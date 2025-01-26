@@ -1,10 +1,11 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useLocation, useNavigate,Link } from "react-router-dom";
+import { useLocation, useNavigate, Link } from "react-router-dom";
 import "./UserAppointment.css";
 import axios from "axios";
 import { FaHome } from "react-icons/fa";
+import MultiSelectDropdown from "../AutoComplete/MultiSelectDropdown";
 
 const Loader = () => (
   <div className="loader-overlay">
@@ -14,8 +15,8 @@ const Loader = () => (
 
 const UserAppointment = () => {
   const location = useLocation();
-  const navigate = useNavigate(); // Add useNavigate hook
-  const { date, timeSlot, email, doctorDetails,timeOfDay } = location.state || {}; // Retrieve passed data
+  const navigate = useNavigate();
+  const { date, timeSlot, email, doctorDetails, timeOfDay } = location.state || {};
   const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
@@ -25,32 +26,77 @@ const UserAppointment = () => {
     email: email || "",
     dob: "",
     gender: "",
-    issue:"",
     issues: [],
   });
+
+  const [issueSuggestions, setIssueSuggestions] = useState([]);
+  const [formErrors, setFormErrors] = useState({});
+  const [isFormValid, setIsFormValid] = useState(false);
+  const [touchedFields, setTouchedFields] = useState({});
+  const [isTermsChecked, setIsTermsChecked] = useState(false);
+
+  const [selectedIssues, setSelectedIssues] = useState([]);
+
+  useEffect(() => {
+    // Fetch the issues list (assuming you have an API for this)
+    axios.get("http://localhost:8081/api/issues/all")
+      .then((response) => {
+        setIssueSuggestions(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching issues:", error);
+      });
+  }, []);
+
+  const validateForm = useCallback(() => {
+    const errors = {};
+    if (!formData.firstName) errors.firstName = "First Name is required.";
+    if (!formData.lastName) errors.lastName = "Last Name is required.";
+    if (!formData.phone || !/^\d{10}$/.test(formData.phone)) errors.phone = "Valid 10-digit phone number is required.";
+    if (!formData.dob) errors.dob = "Date of Birth is required.";
+    if (!formData.gender) errors.gender = "Gender is required.";
+    if (selectedIssues.length === 0) errors.issues = "Please select at least one issue.";
+
+    setFormErrors(errors);
+
+    const isValid = Object.keys(errors).length === 0 && isTermsChecked;
+    setIsFormValid(isValid);
+  }, [formData, selectedIssues, isTermsChecked]);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+    validateForm();
+  };
+
+  
+  
+
+  const handleTermsChange = () => {
+    setIsTermsChecked((prev) => !prev);
+    validateForm();
+  };
 
   const handlePayToProceed = async () => {
     setLoading(true);
     try {
       const { data } = await axios.post("http://localhost:8081/api/book-appointment/initiate", {
-        amount: 500, 
-        currency: "INR", 
-        firstName: formData.firstName, 
-        lastName: formData.lastName, 
-        mobile: formData.phone, 
-        email: formData.email, 
-        dob: formData.dob, 
+        amount: 500,
+        currency: "INR",
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        mobile: formData.phone,
+        email: formData.email,
+        dob: formData.dob,
         gender: formData.gender,
         doctorRegNum: doctorDetails.regestrationNum,
         scheduledDate: date,
         scheduledTime: timeSlot,
         slot: timeOfDay,
-        issueIds: formData.issues.map((issue) => issue.id),
+        issueIds: selectedIssues.map((issue) => issue.id),
       });
 
       const amountInPaise = data.amount * 100;
-
-      console.log("Received Data:", data);
 
       const options = {
         key: "rzp_test_K5qGcFdtNC8hvm",
@@ -62,36 +108,24 @@ const UserAppointment = () => {
         order_id: data.razorpayOrderId,
         handler: function (response) {
           const { razorpay_payment_id, razorpay_order_id, razorpay_signature } = response;
-      
-          // Make sure these values are logged correctly
-          console.log("Payment ID:", razorpay_payment_id);
-          console.log("Order ID:", razorpay_order_id);
-          console.log("Signature:", razorpay_signature);
-      
-          // Send the data to the backend for verification
           axios.post("http://localhost:8081/api/book-appointment/verify-payment", {
             razorpay_payment_id,
             razorpay_order_id,
             razorpay_signature,
-          })
-          .then(() => {
-            toast.success("Appointment Successfully Booked!",{
-            onClose: () => {
-              // Navigate to the login page after the toast closes
-              setLoading(false);
-              navigate("/jayahospitals");
-            },
-          });
-            
-          })
-          .catch((error) => {
+          }).then(() => {
+            toast.success("Appointment Successfully Booked!", {
+              onClose: () => {
+                setLoading(false);
+                navigate("/jayahospitals");
+              },
+            });
+          }).catch((error) => {
             console.error("Error verifying payment:", error);
-            
           });
         },
         prefill: {
-          name: doctorDetails?.name || "Praveen kumar", // Use passed doctor details
-          email: email || "parvez@gmail.com", // Use passed email
+          name: doctorDetails?.name || "Praveen kumar",
+          email: formData.email || "parvez@gmail.com",
           contact: "8919967393",
         },
         theme: {
@@ -108,109 +142,8 @@ const UserAppointment = () => {
       razorpay.open();
     } catch (error) {
       console.error("Error during payment:", error);
-      
     }
   };
-
-  const [issueSuggestions, setIssueSuggestions] = useState([]);
-  const [formErrors, setFormErrors] = useState({});
-  const [isFormValid, setIsFormValid] = useState(false);
-  const [touchedFields, setTouchedFields] = useState({});
-  const [isTermsChecked, setIsTermsChecked] = useState(false); // New state for checkbox
-
-  const validateForm = useCallback(() => {
-    const errors = {};
-    if (!formData.firstName) errors.firstName = "First Name is required.";
-    if (!formData.lastName) errors.lastName = "Last Name is required.";
-    if (!formData.phone || !/^\d{10}$/.test(formData.phone)) {
-      errors.phone = "Valid 10-digit phone number is required.";
-    }
-    if (!formData.dob) errors.dob = "Date of Birth is required.";
-    if (!formData.gender) errors.gender = "Gender is required.";
-    if (!formData.issue) errors.issue = "Please select or enter an issue.";
-
-    setFormErrors(errors);
-    setIsFormValid(Object.keys(errors).length === 0);
-  }, [formData]);
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-
-    // Validate field and update errors
-    validateForm();
-  };
-
-  const handleIssueChange = async (e) => {
-    const value = e.target.value;
-    setFormData({ ...formData, issue: value });
-  
-    if (value.length >= 3) {
-      try {
-        const { data } = await axios.get(`http://localhost:8081/api/issues/search?keyword=${value}`);
-        setIssueSuggestions(data || []);
-        console.log("Fetched Suggestions:", data); // Debugging line
-      } catch (error) {
-        console.error("Error fetching issue suggestions:", error);
-      }
-    } else {
-      setIssueSuggestions([]);
-    }
-  };
-  
-  
-  const handleIssueSelect = (id, issueName) => {
-    setFormData((prevFormData) => {
-      const { issues } = prevFormData;
-  
-      // Check if the issue is already selected
-      const isAlreadySelected = issues.some((issue) => issue.id === id);
-      if (isAlreadySelected) {
-        toast.info("Issue already selected.");
-        return prevFormData;
-      }
-  
-      // Prevent adding more than three issues
-      if (issues.length >= 3) {
-        toast.error("You can select a maximum of 3 issues.");
-        return prevFormData;
-      }
-  
-      return {
-        ...prevFormData,
-        issues: [...issues, { id, name: issueName }], // Add the new issue
-        issue: "", // Clear input field
-      };
-    });
-    setIssueSuggestions([]); // Close the dropdown
-  };
-  
-  
-
-  
-  const handleIssueRemove = (id) => {
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      issues: prevFormData.issues.filter((issue) => issue.id !== id), // Remove the issue
-    }));
-  };
-  
-  
-  
-
-  const handleInputFocus = (e) => {
-    const { name } = e.target;
-    setTouchedFields({ ...touchedFields, [name]: true }); // Mark field as touched when focused
-  };
-
-  const handleTermsChange = () => {
-    setIsTermsChecked((prev) => !prev); // Toggle checkbox state
-  };
-
-  useEffect(() => {
-    validateForm();
-  }, [formData, validateForm]);
-
 
   const getMaxDate = () => {
     const today = new Date();
@@ -220,24 +153,44 @@ const UserAppointment = () => {
     return `${year}-${month}-${day}`;
   };
 
+  useEffect(() => {
+    setTouchedFields((prev) => ({ ...prev, issues: true })); // Mark issues as touched when the form loads
+    validateForm(); // Trigger validation to check for errors on initial render
+  }, [validateForm]);
+  
+  const handleInputFocus = (e) => {
+    const { name } = e.target;
+    setTouchedFields({ ...touchedFields, [name]: true }); // Mark field as touched when focused
+  
+    if (name === 'issues') {  // Specifically for issues field
+      validateForm();
+    }
+  };
+  
+  const handleIssuesChange = (updatedIssues) => {
+    setTouchedFields((prev) => ({ ...prev, issues: true })); // Mark issues as touched
+    setSelectedIssues(updatedIssues);
+    validateForm(); // Trigger validation when the issues change
+  };
+  
+
   return (
     <>
-    <header className="header">
-      <Link to="/jayahospitals" className="home-icon-link">
-        <FaHome className="home-icon" />
-      </Link>
-      <div className="header-content">
-      <h1>
-    <img
-      src="Assets/Images/whitelogos.png" // Replace with the correct path to your image
-      alt="Jaya Hospitals Logo"
-      className="header-logo"
-    />
-    JAYA HOSPITALS
-  </h1>
-      </div>
-    </header>
-
+      <header className="header">
+        <Link to="/jayahospitals" className="home-icon-link">
+          <FaHome className="home-icon" />
+        </Link>
+        <div className="header-content">
+          <h1>
+            <img
+              src="Assets/Images/whitelogos.png"
+              alt="Jaya Hospitals Logo"
+              className="header-logo"
+            />
+            JAYA HOSPITALS
+          </h1>
+        </div>
+      </header>
 
       <div className="content-wrapper">
       {loading && <div className="blurred-background"></div>}
@@ -337,66 +290,28 @@ const UserAppointment = () => {
                   <span className="error1">{formErrors.gender}</span>
                 )}
               </div>
+              
+
               <div className="form-group2">
-  <label>Issue</label>
-  <input
-    type="text"
-    name="issue"
-    placeholder={
-      formData.issues.length > 0
-        ? formData.issues.map((issue) => issue.name).join(", ") // Show selected issues
-        : "Enter your issue"
-    }
-    value={formData.issue || ""} // Input value is temporary, only for suggestions
-    onChange={handleIssueChange} // Handle user input
-    onFocus={handleInputFocus} // Track focus
-    className={formErrors.issue && touchedFields.issue ? "error1-input" : ""}
-  />
-  {touchedFields.issue && formErrors.issue && (
-    <span className="error1">{formErrors.issue}</span>
+                <label>Issues</label>
+                <MultiSelectDropdown
+                  selectedItems={selectedIssues}
+                  onChange={handleIssuesChange}
+                  suggestions={issueSuggestions}
+                />
+                <div>
+                  {selectedIssues.length > 0 ? (
+                    selectedIssues.map((issue) => (
+                      <span key={issue.id}>{issue.issueName}</span>
+                    ))
+                  ) : (
+                    <p>No issues selected</p>
+                  )}
+                </div>
+                {touchedFields.issues && formErrors.issues && (
+    <span className="error1">{formErrors.issues}</span> // Error message for issues
   )}
-
-  {/* Issue suggestions dropdown */}
-  {issueSuggestions.length > 0 && (
-    <ul className="suggestion-dropdown">
-      {issueSuggestions.map((suggestion) => (
-        <li
-          key={suggestion.id}
-          onClick={() => handleIssueSelect(suggestion.id, suggestion.name)}
-        >
-          {suggestion.name}
-        </li>
-      ))}
-    </ul>
-  )}
-
-  {/* Display selected issues below input */}
-  {formData.issues.length > 0 && (
-    <div className="selected-issues">
-      {formData.issues.map((issue) => (
-        <div key={issue.id} className="issue-tag">
-          {issue.name}
-          <button
-            type="button"
-            onClick={() => handleIssueRemove(issue.id)} // Remove issue
-            className="remove-issue-btn"
-          >
-            ✕
-          </button>
-        </div>
-      ))}
-    </div>
-  )}
-</div>
-
-
-
-
-
-
-
-
-
+              </div>
             </form>
           </div>
 
@@ -425,31 +340,17 @@ const UserAppointment = () => {
                 type="checkbox"
                 id="terms"
                 checked={isTermsChecked}
-                onChange={handleTermsChange} // Handle checkbox state change
+                onChange={handleTermsChange}
               />
-              <label htmlFor="terms">
-                <button
-                  type="button"
-                  onClick={() => alert("Redirect to Terms & Conditions page")}
-                  style={{
-                    background: "none",
-                    border: "none",
-                    color: "blue",
-                    textDecoration: "underline",
-                    cursor: "pointer",
-                  }}
-                >
-                  To The Terms & Conditions
-                </button>
-              </label>
+              <label htmlFor="terms">Agree to the Terms & Conditions</label>
             </div>
             <button
-    className="confirm-btn"
-    disabled={!isFormValid || !isTermsChecked}
-    onClick={handlePayToProceed} // Attach click handler
-  >
-    Pay to Proceed
-  </button>
+              className="confirm-btn"
+              disabled={!isFormValid}
+              onClick={handlePayToProceed}
+            >
+              Pay to Proceed
+            </button>
           </div>
         </div>
         <ToastContainer />
