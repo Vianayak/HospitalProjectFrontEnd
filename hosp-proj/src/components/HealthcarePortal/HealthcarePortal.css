@@ -6,11 +6,17 @@
 }
 
 .appointments-section, .calendar-widget, .other {
-  background: #fff;
+  transition: transform 0.3s ease, background-color 0.3s ease; 
   border-radius: 10px;
   padding: 20px;
   width: 450px;
   margin-right: 10px;
+}
+
+
+.appointments-section:hover, .calendar-widget:hover, .other:hover {
+  transform: scale(1.05); /* Slightly enlarge the element */
+  background-color: #f0f0f0; /* Change background color on hover */
 }
 
 .appointments-section h3, .calendar-widget h3 {
