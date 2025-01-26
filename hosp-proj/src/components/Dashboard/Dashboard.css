@@ -8,10 +8,14 @@
 
 /* Patients Summary Section */
 .patients-summary {
-  background-color: #ffffff;
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, background-color 0.3s ease; 
+}
+
+.patients-summary:hover {
+  background-color: #f0f0f0; /* Light gray background on hover */
+  transform: translateY(-5px) scale(1.05); /* Move it up and slightly enlarge it */
 }
 
 .chart-container {
@@ -61,12 +65,15 @@
 
   /* Today Appointment Section */
   .today-appointment {
-    background-color: #f8fafc;
     border-radius: 8px;
     padding: 25px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     max-width: 400px;
-   
+    transition: transform 0.3s ease, background-color 0.3s ease; 
+  }
+
+  .today-appointment:hover {
+    background-color: #f0f0f0; /* Light gray background on hover */
+    transform: translateY(-5px) scale(1.05); /* Move it up and slightly enlarge it */
   }
   
   .today-appointment h5 {
@@ -75,107 +82,43 @@
 
     margin-bottom: 15px;
   }
+
+  
   
   /* Header styling */
   .appointment-header {
     display: flex;
     justify-content: space-between;
-    padding: 10px 0;
-    border-bottom: 1px solid #e5e7eb;
     margin-bottom: 10px;
   }
   
-  .appointment-header span {
-    font-size: 14px;
-    font-weight: bold;
-    color: #6b7280;
-  }
-  
-  .header-patient {
-    width: 50px;
-    text-align: left;
-  }
-  
-  .header-diagnosis {
-    flex: 1;
-    text-align: left;
-    margin-left: 10px;
-  }
-  
+  .header-diagnosis,
   .header-time {
-    width: 60px;
-    text-align: right;
+    font-weight: bold;
   }
   
   .appointment-list {
     list-style: none;
     padding: 0;
-    margin: 0;
   }
   
   .appointment-list li {
     display: flex;
-    align-items: center;
     justify-content: space-between;
     padding: 10px 0;
-    border-bottom: 1px solid #e5e7eb;
-  }
-  
-  .appointment-list li:last-child {
-    border-bottom: none;
-  }
-  
-  .appointment-list img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-right: 10px;
-  }
-  
-  .appointment-list div {
-    flex: 1;
-    margin-left: 10px;
-  }
-  
-  .appointment-list h4 {
-    font-size: 14px;
-    font-weight: bold;
-    color: #1f2937;
-    margin: 0;
-  }
-  
-  .appointment-list p {
-    font-size: 12px;
-    color: #6b7280;
-    margin: 5px 0 0;
-  }
-  
-  .status {
-    padding: 5px 10px;
-    border-radius: 5px;
-    font-size: 12px;
-    font-weight: bold;
-  }
-  
-  .status.ongoing {
-    background-color: #bfdbfe;
-    color: #1e3a8a;
-  }
-  
-  
-  .time {
-    font-size: 12px;
-    color: #6b7280;
   }
   
   .see-all {
-    font-size: 14px;
-    color: #5A3ECA;
-    text-align: center;
-    margin-top: 15px;
     cursor: pointer;
+    text-align: center;
+    color: #007bff;
+    font-weight: bold;
   }
+  
+  .see-all:hover {
+    text-decoration: underline;
+  }
+  
   
   /* Next Patient Details Section */
   .next-patient-details {

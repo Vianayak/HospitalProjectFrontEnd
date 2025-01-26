@@ -117,29 +117,30 @@ const Dashboard = ({ selectedDate }) => {
 
       {/* Today Appointment Section */}
       <div className="today-appointment">
-        <h5>Today Appointment</h5>
-        <div className="appointment-header">
-          <span className="header-diagnosis">Name/Diagnosis</span>
-          <span className="header-time">Time</span>
-        </div>
+  <h5>Today Appointment</h5>
+  <div className="appointment-header">
+    <span className="header-diagnosis">Name/Diagnosis</span>
+    <span className="header-time">Time</span>
+  </div>
 
-        {/* Show loading message if appointments are being fetched */}
-        
-          <ul className="appointment-list">
-            {appointments.map((patient) => (
-              <li key={patient.appointmentId}>
-                <div>
-                  <h4>{patient.firstName} {patient.lastName}</h4>
-                  <p>{patient.issues.join(", ")}</p>
-                </div>
-                <span className={patient.status === "On Going" ? "status ongoing" : "time"}>
-                  {patient.time}
-                </span>
-              </li>
-            ))}
-          </ul>
-        <p className="see-all">See All</p>
-      </div>
+  {/* Show loading message if appointments are being fetched */}
+  <ul className="appointment-list">
+    {appointments.slice(0, 3).map((patient) => (
+      <li key={patient.appointmentId}>
+        <div>
+          <h4>{patient.firstName} {patient.lastName}</h4>
+          <p>{patient.issues.join(", ")}</p>
+        </div>
+        <span className={patient.status === "On Going" ? "status ongoing" : "time"}>
+          {patient.time}
+        </span>
+      </li>
+    ))}
+  </ul>
+
+  {/* Conditionally render the "See All" link if more than 3 appointments */}
+  {appointments.length > 3 && <p className="see-all">See All</p>}
+</div>
 
     </div>
   );
