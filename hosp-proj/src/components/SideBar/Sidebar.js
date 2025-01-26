@@ -16,6 +16,7 @@ const Sidebar = () => {
   });
   const [isLoading, setIsLoading] = useState(false); // Add loading state
   const [buttonDisabled, setButtonDisabled] = useState(false); // Add state to track button disabled state
+  const [statusUpdated, setStatusUpdated] = useState(false);
 
   useEffect(() => {
     const storedDoctorDetails = localStorage.getItem("doctorDetails");
@@ -104,6 +105,11 @@ const Sidebar = () => {
     }
   };
 
+  const handleStatusUpdate = () => {
+    // Trigger status update
+    setStatusUpdated((prev) => !prev);  // Toggle to force re-render of DashboardHeader
+  };
+
   return (
     <div className="layout">
       <div className="sidebar">
@@ -133,9 +139,9 @@ const Sidebar = () => {
         </ul>
       </div>
       <div className="dashboard-content">
-        <DashboardHeader selectedDate={selectedDate} />
+        <DashboardHeader selectedDate={selectedDate} statusUpdated={statusUpdated}/>
         <Dashboard selectedDate={selectedDate} />
-        <HealthcarePortal selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
+        <HealthcarePortal selectedDate={selectedDate} setSelectedDate={setSelectedDate} onStatusUpdate={handleStatusUpdate}/>
       </div>
       {showPasswordForm && (
         <div className="popup-overlay">

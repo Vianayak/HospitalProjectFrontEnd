@@ -51,7 +51,7 @@ const DashboardHeader = (props) => {
     };
 
     fetchStats();
-  }, [props.selectedDate]);
+  }, [props.statusUpdated]);
 
   return (
     <div className="header-container">

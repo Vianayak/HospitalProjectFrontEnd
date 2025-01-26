@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import './HealthcarePortal.css';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 class HealthcarePortal extends Component {
   constructor(props) {
@@ -70,14 +68,15 @@ class HealthcarePortal extends Component {
   };
 
   handleStatusUpdate = async (appointmentId, status) => {
-    // Append status as a query parameter
     const apiUrl = `http://localhost:8081/api/book-appointment/${appointmentId}/?status=${status}`;
+    
+ 
   
     try {
       const response = await fetch(apiUrl, {
         method: "PUT",
         headers: {
-          "Content-Type": "application/json", // Headers can remain as they are
+          "Content-Type": "application/json",
         },
       });
   
@@ -85,13 +84,15 @@ class HealthcarePortal extends Component {
         throw new Error(`Error: ${response.statusText}`);
       }
   
+      this.props.onStatusUpdate();
+      
       // Fetch updated appointments after status change
       this.fetchAppointments(this.state.selectedDate);
-      toast.success("Status updated successfully!");
     } catch (error) {
       console.error("Error updating status:", error);
     }
   };
+  
   
   
 
@@ -192,7 +193,6 @@ class HealthcarePortal extends Component {
             {this.renderCalendarDates()}
           </div>
         </div>
-<ToastContainer />
     
       </div>
     );
