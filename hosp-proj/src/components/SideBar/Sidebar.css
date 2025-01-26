@@ -117,4 +117,15 @@
     margin-left: 60px;
     margin-right: 100px;
   }
+
+  .change-password1 {
+    text-align: center;
+  }
   
+  .input-row{
+    text-align: right;
+  }
+
+  .cancel-button{
+    margin-left: 30%;
+  }
