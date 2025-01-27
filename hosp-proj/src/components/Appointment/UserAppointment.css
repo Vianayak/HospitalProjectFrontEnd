@@ -1,4 +1,22 @@
-/* Main Wrapper */
+/* Header */
+.header1 {
+  background-color: #5a3eca;
+  color: white;
+  padding: 20px;
+  font-size: 24px;
+  font-weight: bold;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  position: fixed;  /* Changed from sticky to fixed */
+  top: 0;
+  left: 0;  /* Added to ensure it's aligned to the left edge */
+  right: 0; /* Added to ensure it's aligned to the right edge */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 1000;  /* Ensure header stays on top of other content */
+}
+
+/* Content Section (adjusting top margin to account for fixed header) */
 .content-wrapper {
   display: flex;
   justify-content: center;
@@ -6,9 +24,10 @@
   padding: 30px;
   background-color: #f8f9fa;
   min-height: 70vh;
-  margin-top: 0;
+  margin-top: 100px;  /* Added margin-top to ensure content doesn't get hidden behind the fixed header */
   position: relative;
 }
+
 
 /* Content Section */
 .content {
@@ -205,20 +224,7 @@
   }
 }
 
-/* Header */
-.header {
-  background-color: #5a3eca;
-  color: white;
-  padding: 20px;
-  font-size: 24px;
-  font-weight: bold;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  position: sticky;
-  top: 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
+
 
 .home-icon-link {
   text-decoration: none;

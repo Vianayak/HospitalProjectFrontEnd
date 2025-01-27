@@ -176,7 +176,7 @@ const UserAppointment = () => {
 
   return (
     <>
-      <header className="header">
+      <header className="header1">
         <Link to="/jayahospitals" className="home-icon-link">
           <FaHome className="home-icon" />
         </Link>

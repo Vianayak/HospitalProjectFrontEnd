@@ -172,14 +172,6 @@ const AppContent = ({ scrollToHealthNews, healthNewsRef }) => {
       </Routes>
 
       {!shouldHideHeaderFooter && <Footer />}
-
-      {/* Example Navigation Buttons */}
-      <button onClick={() => handleNavigation("/doctor-cards")}>
-        Go to Doctor Cards
-      </button>
-      <button onClick={() => handleNavigation("/user-appointment")}>
-        Go to User Appointment
-      </button>
     </div>
   );
 };
