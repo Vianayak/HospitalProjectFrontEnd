@@ -7,10 +7,14 @@ import axios from "axios";
 import { FaHome } from "react-icons/fa";
 import MultiSelectDropdown from "../AutoComplete/MultiSelectDropdown";
 
-const Loader = () => (
-  <div className="loader-overlay">
-    <div className="loader"></div>
-  </div>
+const Loader = ({ loading }) => (
+  <>
+    {loading && (
+      <div className="loader-overlay">
+        <div className="loader"></div>
+      </div>
+    )}
+  </>
 );
 
 const UserAppointment = () => {
@@ -174,8 +178,23 @@ const UserAppointment = () => {
   };
   
 
+  useEffect(() => {
+    if (loading) {
+      document.body.classList.add("loading");
+    } else {
+      document.body.classList.remove("loading");
+    }
+  }, [loading]);
+
   return (
     <>
+    <Loader loading={loading} />
+      <div className="loader-wrapper">
+    <div className={`loader ${loading ? 'show' : ''}`}>
+      <div></div>
+    </div>
+  </div>
+  <div className="content-wrapper">
       <header className="header1">
         <Link to="/jayahospitals" className="home-icon-link">
           <FaHome className="home-icon" />
@@ -192,13 +211,8 @@ const UserAppointment = () => {
         </div>
       </header>
 
-      <div className="content-wrapper">
-      {loading && <div className="blurred-background"></div>}
-      <div className="loader-wrapper">
-    <div className={`loader ${loading ? 'show' : ''}`}>
-      <div></div>
-    </div>
-  </div>
+      
+      
         <div className="content">
           <div className="user-details">
             <h2>APJ1.0002836055 (Vinayak Banoth)</h2>
