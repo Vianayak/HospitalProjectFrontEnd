@@ -110,6 +110,13 @@ const [icon, setIcon] = useState(eyeOff);
       <div className="login-container">
         <ToastContainer position="top-center" autoClose={3000} />
         <div className="login-header">
+        <i
+    className="fas fa-arrow-left back-arrow"
+    onClick={() => {
+      // Navigate to the Jaya Hospitals page
+      navigate("/jayahospitals");
+    }}
+  ></i>
           <img src="/Assets/Images/whitelogos.png" alt="Logo" className="logo" />
           <span>JAYA HOSPITALS</span>
           <h2>LOG IN</h2>
