@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { Doughnut } from 'react-chartjs-2';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-import './Dashboard.css';
+import React, { useEffect, useState } from "react";
+import { Doughnut } from "react-chartjs-2";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import "./Dashboard.css";
 
 // Register Chart.js components
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -10,29 +10,28 @@ const Dashboard = ({ selectedDate }) => {
   const [appointments, setAppointments] = useState([]);
   const [totalEarnings, setTotalEarnings] = useState(0);
   const [todayEarnings, setTodayEarnings] = useState(0);
+  const [showPopup, setShowPopup] = useState(false); // State to manage popup visibility
 
   const doctorDetails = JSON.parse(localStorage.getItem("doctorDetails"));
 
   useEffect(() => {
     if (doctorDetails && selectedDate) {
-      const today = new Date();
       fetchAppointments(selectedDate)
         .then((appointmentsData) => {
           setAppointments(appointmentsData);
         })
-        .catch((error) => console.error("Error fetching appointments:", error))
+        .catch((error) => console.error("Error fetching appointments:", error));
     }
-  }, [doctorDetails]);
+  }, [doctorDetails, selectedDate]);
 
   useEffect(() => {
     if (doctorDetails && selectedDate) {
-      const today = new Date();
       fetchEarnings(selectedDate);
     }
-  }, [doctorDetails]);
+  }, [doctorDetails, selectedDate]);
 
   const fetchAppointments = async (date) => {
-    const formattedDate = date.toISOString().split('T')[0];
+    const formattedDate = date.toISOString().split("T")[0];
     const doctorRegNum = doctorDetails.regestrationNum;
     const apiUrl = `http://localhost:8081/api/book-appointment/appointments-with-issues-accepted?date=${formattedDate}&doctorRegNum=${doctorRegNum}`;
 
@@ -68,8 +67,6 @@ const Dashboard = ({ selectedDate }) => {
     labels: ["Today's Earnings", "Total Earnings"],
     datasets: [
       {
-
-
         data: [todayEarnings, totalEarnings],
         backgroundColor: ["#fde047", "#2563eb"],
         hoverBackgroundColor: ["#facc15", "#1d4ed8"],
@@ -101,7 +98,6 @@ const Dashboard = ({ selectedDate }) => {
           <div className="donut-chart">
             <Doughnut data={chartData} options={chartOptions} />
           </div>
-          
         </div>
         <div>
           <ul className="legend">
@@ -117,30 +113,68 @@ const Dashboard = ({ selectedDate }) => {
 
       {/* Today Appointment Section */}
       <div className="today-appointment">
-  <h5>Today Appointment</h5>
-  <div className="appointment-header">
-    <span className="header-diagnosis">Name/Diagnosis</span>
-    <span className="header-time">Time</span>
-  </div>
-
-  {/* Show loading message if appointments are being fetched */}
-  <ul className="appointment-list">
-    {appointments.slice(0, 3).map((patient) => (
-      <li key={patient.appointmentId}>
-        <div>
-          <h4>{patient.firstName} {patient.lastName}</h4>
-          <p>{patient.issues.join(", ")}</p>
+        <h5>Today Appointment</h5>
+        <div className="appointment-header">
+          <span className="header-diagnosis">Name/Diagnosis</span>
+          <span className="header-time">Time</span>
         </div>
-        <span className={patient.status === "On Going" ? "status ongoing" : "time"}>
-          {patient.time}
-        </span>
-      </li>
-    ))}
-  </ul>
 
-  {/* Conditionally render the "See All" link if more than 3 appointments */}
-  {appointments.length > 3 && <p className="see-all">See All</p>}
-</div>
+        {/* Show loading message if appointments are being fetched */}
+        <ul className="appointment-list">
+          {appointments.slice(0, 3).map((patient) => (
+            <li key={patient.appointmentId}>
+              <div>
+                <h4>
+                  {patient.firstName} {patient.lastName}
+                </h4>
+                <p>{patient.issues.join(", ")}</p>
+              </div>
+              <span
+                className={patient.status === "On Going" ? "status ongoing" : "time"}
+              >
+                {patient.time}
+              </span>
+            </li>
+          ))}
+        </ul>
+
+        {/* Conditionally render the "See All" link if more than 3 appointments */}
+        {appointments.length > 3 && (
+          <p className="see-all" onClick={() => setShowPopup(true)}>
+            See All
+          </p>
+        )}
+      </div>
+
+     {/* Popup for all appointments */}
+{showPopup && (
+  <div className="popup-overlay1" onClick={() => setShowPopup(false)}>
+    <div className="popup-container1" onClick={(e) => e.stopPropagation()}>
+      <h3>All Appointments</h3>
+      <ul className="popup-appointment-list1">
+        {appointments.map((patient) => (
+          <li key={patient.appointmentId}>
+            <div className="appointment-row">
+              <label>Name:</label>
+              <span>{`${patient.firstName} ${patient.lastName}`}</span>
+            </div>
+            <div className="appointment-row">
+              <label>Diagnosis:</label>
+              <span>{patient.issues.join(", ")}</span>
+            </div>
+            <div className="appointment-row">
+              <label>Time:</label>
+              <span>{patient.time}</span>
+            </div>
+          </li>
+        ))}
+      </ul>
+      <button className="close-button1" onClick={() => setShowPopup(false)}>
+        Close
+      </button>
+    </div>
+  </div>
+)}
 
     </div>
   );
