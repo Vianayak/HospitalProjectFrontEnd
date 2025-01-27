@@ -199,3 +199,15 @@
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+.image-note {
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.image-note.valid {
+  display: none; /* Hides the note when valid */
+}
+
+.image-note.invalid {
+  color: red; /* Displays the note in red when invalid */
+}

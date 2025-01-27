@@ -22,6 +22,8 @@ const SignIn = () => {
   const [isFormValid, setIsFormValid] = useState(false);
   const [touchedFields, setTouchedFields] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const [isValidImage, setIsValidImage] = useState(false); // Initially invalid
+
 
   const navigate = useNavigate();
 
@@ -76,12 +78,31 @@ const SignIn = () => {
   };
 
   const handleImageUpload = (e) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      profileImage: e.target.files[0],
-    }));
+    const file = e.target.files[0];
+    if (file) {
+      const isValidSize = file.size <= 2 * 1024 * 1024; // 2MB in bytes
+      const isValidType = file.type.startsWith('image/');
+      
+      if (isValidSize && isValidType) {
+        setIsValidImage(true); // Image meets criteria
+        setFormErrors((prevErrors) => ({
+          ...prevErrors,
+          profileImage: null,
+        }));
+        setFormData((prevData) => ({
+          ...prevData,
+          profileImage: file,
+        }));
+      } else {
+        setIsValidImage(false); // Invalid image
+        setFormErrors((prevErrors) => ({
+          ...prevErrors,
+          profileImage: "Image should be under 2MB and of image type",
+        }));
+      }
+    }
   };
-
+  
   const handleNextStep = () => {
     if (currentStep < 3) {
       setCurrentStep(currentStep + 1);
@@ -337,17 +358,30 @@ const SignIn = () => {
 
         {currentStep === 3 && formData.role === "doctor" && (
           <>
-            <div className="form-group1">
-              <label>Upload Profile Image</label>
-              <input type="file" name="profileImage" onChange={handleImageUpload}
-              onFocus={handleInputFocus}
-              className={formErrors.profileImage && touchedFields.profileImage ? "error-input" : ""}
-              placeholder="upload image"
-            />
-            {touchedFields.profileImage && formErrors.profileImage && (
-          <span className="error">{formErrors.profileImage}</span>
-            )}
-            </div>
+         <div className="form-group1">
+  <label>Upload Profile Image</label>
+  <input
+    type="file"
+    name="profileImage"
+    onChange={handleImageUpload}
+    onFocus={handleInputFocus}
+    className={
+      formErrors.profileImage && touchedFields.profileImage ? "error-input" : ""
+    }
+  />
+  <div
+    className={`image-note ${
+      isValidImage ? "valid" : "invalid"
+    }`}
+    style={{ color: isValidImage ? "green" : "red" }}
+  >
+    {!isValidImage && "Image should be under 2MB and of image type png,jpg,jpeg"}
+  </div>
+  {touchedFields.profileImage && formErrors.profileImage && (
+    <span className="error">{formErrors.profileImage}</span>
+  )}
+</div>
+
 
             <div className="form-group1">
               <label>Specialization</label>
