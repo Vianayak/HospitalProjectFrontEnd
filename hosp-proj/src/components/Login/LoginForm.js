@@ -4,6 +4,10 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./LoginForm.css";
 
+import {Icon} from 'react-icons-kit';
+import {eyeOff} from 'react-icons-kit/feather/eyeOff';
+import {eye} from 'react-icons-kit/feather/eye'
+
 function LoginForm() {
   const navigate = useNavigate();
 
@@ -14,6 +18,10 @@ function LoginForm() {
   });
 
   const [isLoading, setIsLoading] = useState(false); // Loader state
+
+  const [password, setPassword] = useState("");
+const [type, setType] = useState('password');
+const [icon, setIcon] = useState(eyeOff);
 
   useEffect(() => {
     setFormData({ username: "", password: "", rememberMe: false });
@@ -87,6 +95,16 @@ function LoginForm() {
   };
   
 
+  const handleToggle = () => {
+    if (type==='password'){
+       setIcon(eye);
+       setType('text')
+    } else {
+       setIcon(eyeOff)
+       setType('password')
+    }
+ }
+
   return (
     <div className="overlay">
       <div className="login-container">
@@ -114,12 +132,15 @@ function LoginForm() {
               <i className="fa fa-lock"></i> Password
             </label>
             <input
-              type="password"
+              type={type}
               name="password"
               value={formData.password}
               onChange={handleInputChange}
               required
             />
+            <span className="flex justify-around items-center password-icon" onClick={handleToggle}>
+                  <Icon class="absolute mr-10" icon={icon} size={25}/>
+              </span>
           </div>
           <div className="remember-me">
             <input

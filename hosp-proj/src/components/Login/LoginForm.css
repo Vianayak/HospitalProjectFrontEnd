@@ -130,3 +130,14 @@
     transform: rotate(360deg);
   }
 }
+
+
+
+.password-icon {
+  position: absolute;
+  right: 10px; /* Position the icon at the right end of the input */
+  top: 70%;
+  transform: translateY(-50%); /* Vertically center the icon */
+  cursor: pointer;
+  color: black;
+}
