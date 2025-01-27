@@ -1,5 +1,5 @@
-import React, { useState, useEffect,useRef } from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from "react-router-dom";
+import React, { useRef, useEffect, useState } from "react";
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation, useNavigate } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import "./App.css";
 import HeroSection from "./components/HeroSection/HeroSection";
@@ -17,9 +17,15 @@ import HealthNewsImages from "./components/health/HealthNewsImages";
 import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
 import Sidebar from "./components/SideBar/Sidebar";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
+
+const Overlay = ({ children, className = "" }) => (
+  <div className={`overlay ${className}`}>
+    <div className="popup">{children}</div>
+  </div>
+);
+
 function App() {
   const healthNewsRef = useRef(null);
-
   const scrollToHealthNews = () => {
     if (healthNewsRef.current) {
       healthNewsRef.current.scrollIntoView({ behavior: "smooth" });
@@ -35,8 +41,11 @@ function App() {
 
 const AppContent = ({ scrollToHealthNews, healthNewsRef }) => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const [isAllowed, setIsAllowed] = useState(false);
 
-  // Check if the current route is "/sidebar"
+  const defaultRoute = "/jayahospitals";
+
   const hideHeaderFooterRoutes = ["/user-appointment", "/sidebar"];
   const shouldHideHeaderFooter = hideHeaderFooterRoutes.includes(location.pathname);
 
@@ -47,20 +56,33 @@ const AppContent = ({ scrollToHealthNews, healthNewsRef }) => {
     }
   }, [location, shouldHideHeaderFooter]);
 
+  useEffect(() => {
+    // Check for valid navigation flag in sessionStorage
+    const validNavigation = sessionStorage.getItem("validNavigation");
+
+    if (location.pathname === defaultRoute) {
+      setIsAllowed(true); // Always allow the default route
+    } else if (validNavigation) {
+      setIsAllowed(true); // Allow if valid navigation flag exists
+      sessionStorage.removeItem("validNavigation"); // Remove flag after validation
+    } else {
+      setIsAllowed(false); // Block direct access
+      navigate(defaultRoute, { replace: true }); // Redirect to default route
+    }
+  }, [location, navigate]);
+
+  // Function to handle navigation through the app
+  const handleNavigation = (path) => {
+    sessionStorage.setItem("validNavigation", "true"); // Set valid navigation flag
+    navigate(path);
+  };
+
   return (
     <div className="App">
       {/* Conditionally render Navbar and Footer */}
       {!shouldHideHeaderFooter && <Navbar scrollToHealthNews={scrollToHealthNews} />}
 
-      {/* Routes */}
       <Routes>
-        {/* Default Landing Page */}
-        <Route
-          path="/healthnewsimages"
-          element={<HealthNewsImages ref={healthNewsRef} />}
-        />
-        <Route path="/" element={<Navigate to="/jayahospitals" replace />} />
-        <Route path="/login" element={<LoginForm />} />
         <Route
           path="/jayahospitals"
           element={
@@ -75,42 +97,91 @@ const AppContent = ({ scrollToHealthNews, healthNewsRef }) => {
             </>
           }
         />
+        <Route path="/" element={<Navigate to="/jayahospitals" replace />} />
+
+        {/* Routes with Navigation Guard */}
         <Route
-  path="/sidebar"
-  element={
-    <ProtectedRoute>
-      <Sidebar />
-    </ProtectedRoute>
-  }
-/>
-        {/* Doctor Cards Page */}
-        <Route path="/doctor-cards" element={<DoctorList />} />
-        {/* User Appointment Page */}
-        <Route path="/user-appointment" element={<UserAppointment />} />
+          path="/doctor-cards"
+          element={
+            isAllowed ? (
+              <DoctorList />
+            ) : (
+              <Navigate to={defaultRoute} replace />
+            )
+          }
+        />
         <Route
-          path="/SignUp"
-          element={<Overlay className="login-overlay"><SignUp /></Overlay>}
+          path="/user-appointment"
+          element={
+            isAllowed ? (
+              <UserAppointment />
+            ) : (
+              <Navigate to={defaultRoute} replace />
+            )
+          }
         />
         <Route
           path="/login"
-          element={<Overlay className="login-overlay"><LoginForm /></Overlay>}
+          element={
+            isAllowed ? (
+              <LoginForm />
+            ) : (
+              <Navigate to={defaultRoute} replace />
+            )
+          }
+        />
+        <Route
+          path="/signup"
+          element={
+            isAllowed ? (
+              <Overlay className="login-overlay">
+                <SignUp />
+              </Overlay>
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }
         />
         <Route
           path="/forgot"
-          element={<Overlay className="login-overlay"><ForgotPassword /></Overlay>}
+          element={
+            isAllowed ? (
+              <Overlay className="login-overlay">
+                <ForgotPassword />
+              </Overlay>
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }
         />
+        <Route
+          path="/sidebar"
+          element={
+            isAllowed ? (
+              <ProtectedRoute>
+                <Sidebar />
+              </ProtectedRoute>
+            ) : (
+              <Navigate to={defaultRoute} replace />
+            )
+          }
+        />
+
+        {/* Catch-All Route */}
+        <Route path="*" element={<Navigate to={defaultRoute} replace />} />
       </Routes>
 
-      {/* Conditionally render Footer */}
       {!shouldHideHeaderFooter && <Footer />}
+
+      {/* Example Navigation Buttons */}
+      <button onClick={() => handleNavigation("/doctor-cards")}>
+        Go to Doctor Cards
+      </button>
+      <button onClick={() => handleNavigation("/user-appointment")}>
+        Go to User Appointment
+      </button>
     </div>
   );
 };
-
-const Overlay = ({ children, className = "" }) => (
-  <div className={`overlay ${className}`}>
-    <div className="popup">{children}</div>
-  </div>
-);
 
 export default App;

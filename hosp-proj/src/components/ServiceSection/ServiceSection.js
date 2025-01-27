@@ -27,6 +27,9 @@ const ServiceSection = () => {
     if (path === "/consult") {
       setIsDialogOpen(true); // Open Dialog when "Consult Online" is clicked
     } else {
+      if (path === "/doctor-cards") {
+        sessionStorage.setItem("validNavigation", "true"); // Set valid navigation flag for doctor-cards
+      }
       navigate(path); // Navigate to the specified path for other services
     }
   };

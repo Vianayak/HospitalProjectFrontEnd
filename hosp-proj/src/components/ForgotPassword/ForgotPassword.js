@@ -201,6 +201,9 @@ const ForgotPassword = () => {
       toast.success("Password Reset Successfully", {
         onClose: () => {
           setLoading(false);
+          sessionStorage.setItem("validNavigation", "true");
+
+          // Navigate to user appointment page
           navigate("/login");
         },
       });
@@ -216,6 +219,8 @@ const ForgotPassword = () => {
   useEffect(() => {
     validateForm();
   }, [formData]);
+
+  
 
   return (
     <div className={`forgot-password-container ${loading ? "blurred" : ""}`}>
@@ -234,6 +239,9 @@ const ForgotPassword = () => {
           } else if (showOtpForm) {
             setShowOtpForm(false);
           } else {
+            sessionStorage.setItem("validNavigation", "true");
+
+            // Navigate to user appointment page
             navigate("/login");
           }
         }}

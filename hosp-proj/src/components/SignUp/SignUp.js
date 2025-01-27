@@ -133,6 +133,9 @@ const SignIn = () => {
             onClose: () => {
               // Navigate to the login page after the toast closes
               setIsLoading(false);
+              sessionStorage.setItem("validNavigation", "true");
+
+              // Navigate to user appointment page
               navigate("/login");
             },
           });
@@ -166,7 +169,11 @@ const SignIn = () => {
       <div></div>
     </div>
   </div>
-      <div className="back-icon1" onClick={() => navigate("/login")}>
+      <div className="back-icon1" onClick={() =>{ 
+         sessionStorage.setItem("validNavigation", "true");
+
+// Navigate to user appointment page
+         navigate("/login");}}>
       {currentStep === 1 && (
     <i className="fas fa-arrow-left"></i>  // Only show left arrow on Step 1
   )}

@@ -30,7 +30,7 @@ function LoginForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true); // Show loader
-
+  
     try {
       const response = await fetch("http://localhost:8082/api/user/login", {
         method: "POST",
@@ -42,36 +42,50 @@ function LoginForm() {
           password: formData.password,
         }),
       });
-
+  
       if (response.ok) {
         const responseData = await response.json();
         const token = responseData.token;
         localStorage.setItem("authToken", token);
-
+  
         if (responseData.doctorDetails) {
           localStorage.setItem("doctorDetails", JSON.stringify(responseData.doctorDetails));
         }
-
-        toast.success("Login successful!",{
+  
+        // Set valid navigation flag before navigating
+        sessionStorage.setItem("validNavigation", "true");
+  
+        toast.success("Login successful!", {
           onClose: () => {
-            navigate("/sidebar");
+            navigate("/sidebar"); // Navigate to sidebar after successful login
           },
         });
-          
-   
       } else {
         toast.error("Invalid credentials. Please try again.");
       }
     } catch (error) {
       console.error("Login error:", error);
       toast.error("Login failed. Please try again later.");
-    }finally {
+    } finally {
       // Stop loader after toast closes
       setTimeout(() => {
         setIsLoading(false);
       }, 4000); // Match this duration to toast's autoClose duration
     }
   };
+
+  const handleForgotPassword = (e) => {
+    e.preventDefault();
+    sessionStorage.setItem("validNavigation", "true"); // Set valid navigation flag
+    navigate("/forgot"); // Navigate to forgot password page
+  };
+
+  const handleSignUp = (e) => {
+    e.preventDefault();
+    sessionStorage.setItem("validNavigation", "true"); // Set valid navigation flag
+    navigate("/SignUp"); // Navigate to sign-up page
+  };
+  
 
   return (
     <div className="overlay">
@@ -122,20 +136,14 @@ function LoginForm() {
           <a
             href="/forgot"
             className="forgot-password"
-            onClick={(e) => {
-              e.preventDefault();
-              navigate("/forgot");
-            }}
+            onClick={handleForgotPassword}
           >
             Forgot Password?
           </a>
           <a
             href="/SignUp"
             className="SignUp"
-            onClick={(e) => {
-              e.preventDefault();
-              navigate("/SignUp");
-            }}
+            onClick={handleSignUp}
           >
             Sign Up
           </a>

@@ -72,6 +72,10 @@ const DoctorGrid = () => {
   const handleConfirmAppointment = () => { 
     if (date && selectedTimeSlot) {
       const timeOfDay = getTimeOfDay(selectedTimeSlot);
+      
+      // Set valid navigation flag before navigating
+      sessionStorage.setItem("validNavigation", "true");
+      
       navigate("/user-appointment", {
         state: { date, timeSlot: selectedTimeSlot, email, doctorDetails: doctordetails, timeOfDay }
       });
@@ -79,6 +83,7 @@ const DoctorGrid = () => {
       toast.error("Please select a date and time slot.");
     }
   };
+  
 
   const getTimeOfDay = (timeSlot) => {
     const morningSlots = ["11:00-11:30", "11:30-12:00"];
