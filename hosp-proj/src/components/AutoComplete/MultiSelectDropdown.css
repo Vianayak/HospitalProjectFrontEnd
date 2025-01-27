@@ -1,0 +1,82 @@
+/* MultiSelectDropdown.css */
+
+.dropdown-container {
+    position: relative;
+    width: 100%;
+  }
+  
+  /* Adjust width for the input box */
+  .input-box {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 4px;
+    gap: 4px;
+    position: relative;
+    width: 70%;
+    max-width: 400px; /* Adjust width */
+    min-width: 250px;
+    margin-left: 40px; /* Moves the box 20px to the right */
+    border-color: #4caf50;
+  box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+  }
+  
+  
+  
+  .input-box input {
+    flex-grow: 1;
+    border: none;
+    outline: none;
+    padding: 8px;
+    min-width: 100px;
+  }
+  
+  .tag {
+    background-color: #e0e0e0;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    padding: 4px 8px;
+    font-size: 12px;
+  }
+  
+  .tag .remove-btn {
+    background: none;
+    border: none;
+    font-size: 14px;
+    margin-left: 4px;
+    cursor: pointer;
+  }
+  
+  .dropdown-list {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    border: 1px solid #ccc;
+    border-color: #5a3eca;
+  box-shadow: 0 0 5px rgba(90, 62, 202, 0.3);
+  outline: none;
+    max-height: 200px;
+    overflow-y: auto;
+    width: 70%;
+    border-radius: 4px;
+    margin-left: 40px;
+    color: #5a3eca;
+    background-color: white;
+  }
+  
+  .dropdown-item {
+    padding: 8px 8px 8px 6px; /* Reduce left padding */
+    cursor: pointer;
+    margin-right: 20px;
+  }
+  
+
+  .dropdown-list:hover{
+    color: black;
+    background-color: #ccc;
+  }
+  
