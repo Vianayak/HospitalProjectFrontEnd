@@ -107,11 +107,3 @@
   display: inline-block; /* Show the button on hover */
   transform: scale(1); /* Optional scaling effect */
 }
-
-.login-button1:hover {
-  background-color: #5A3ECA; /* Darker shade for hover */
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  border-radius: 10px;
- 
-
-}
