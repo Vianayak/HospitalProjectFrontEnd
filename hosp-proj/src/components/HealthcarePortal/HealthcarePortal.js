@@ -9,6 +9,7 @@ class HealthcarePortal extends Component {
       currentDate: new Date(), // Current month/year
       selectedDate: new Date(), // Selected date
       doctorDetails: null, // Holds doctor details from localStorage
+      showModal: false, // Controls visibility of the modal
     };
   }
 
@@ -69,9 +70,7 @@ class HealthcarePortal extends Component {
 
   handleStatusUpdate = async (appointmentId, status) => {
     const apiUrl = `http://localhost:8081/api/book-appointment/${appointmentId}/?status=${status}`;
-    
- 
-  
+
     try {
       const response = await fetch(apiUrl, {
         method: "PUT",
@@ -79,31 +78,34 @@ class HealthcarePortal extends Component {
           "Content-Type": "application/json",
         },
       });
-  
+
       if (!response.ok) {
         throw new Error(`Error: ${response.statusText}`);
       }
-  
+
       this.props.onStatusUpdate();
-      
+
       // Fetch updated appointments after status change
       this.fetchAppointments(this.state.selectedDate);
     } catch (error) {
       console.error("Error updating status:", error);
     }
   };
-  
-  
-  
 
-  renderAppointments = () => {
+  toggleModal = () => {
+    this.setState((prevState) => ({ showModal: !prevState.showModal }));
+  };
+
+  renderAppointments = (limit = null) => {
     const { appointments } = this.state;
 
     if (!appointments.length) {
       return <p>No appointment requests available for the selected date.</p>;
     }
 
-    return appointments.map((appointment, index) => (
+    const visibleAppointments = limit ? appointments.slice(0, limit) : appointments;
+
+    return visibleAppointments.map((appointment, index) => (
       <div key={index} className="appointment-card">
         <div>
           <span className="patient-name">
@@ -114,18 +116,18 @@ class HealthcarePortal extends Component {
           </div>
         </div>
         <div className="appointment-actions">
-        <button
-    className="accept-btn"
-    onClick={() => this.handleStatusUpdate(appointment.appointmentId, "ACCEPTED")}
-  >
-    ✔
-  </button>
-  <button
-    className="reject-btn"
-    onClick={() => this.handleStatusUpdate(appointment.appointmentId, "REJECTED")}
-  >
-    ✘
-  </button>
+          <button
+            className="accept-btn"
+            onClick={() => this.handleStatusUpdate(appointment.appointmentId, "ACCEPTED")}
+          >
+            ✔
+          </button>
+          <button
+            className="reject-btn"
+            onClick={() => this.handleStatusUpdate(appointment.appointmentId, "REJECTED")}
+          >
+            ✘
+          </button>
         </div>
       </div>
     ));
@@ -165,7 +167,7 @@ class HealthcarePortal extends Component {
   };
 
   render() {
-    const { currentDate } = this.state;
+    const { currentDate, showModal, appointments } = this.state;
     const monthName = currentDate.toLocaleString('default', { month: 'long' });
     const year = currentDate.getFullYear();
 
@@ -174,7 +176,12 @@ class HealthcarePortal extends Component {
         {/* Appointment Section */}
         <div className="appointments-section">
           <h3>Appointment Requests</h3>
-          {this.renderAppointments()}
+          {this.renderAppointments(3)}
+          {appointments.length > 3 && (
+            <button className="see-all-btn" onClick={this.toggleModal}>
+              See All
+            </button>
+          )}
         </div>
 
         {/* Calendar Section */}
@@ -193,7 +200,19 @@ class HealthcarePortal extends Component {
             {this.renderCalendarDates()}
           </div>
         </div>
-    
+
+        {/* Modal for all appointments */}
+        {showModal && (
+          <div className="modal-overlay" onClick={this.toggleModal}>
+            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+              <h3>All Appointment Requests</h3>
+              {this.renderAppointments()}
+              <button className="close-modal-btn" onClick={this.toggleModal}>
+                Close
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     );
   }
