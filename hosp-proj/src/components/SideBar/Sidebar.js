@@ -133,7 +133,7 @@ const Sidebar = () => {
         </div>
         <ul className="menu">
   <li onClick={() => (window.location.href = "http://localhost:3000/jayahospital")}>
-    <i className="icon">&#x1F3E0;</i> Home
+    <i className="icon">&#x1F4CB;</i> Book Availablity
   </li>
   <li onClick={handleLogout}>
     <i className="icon">&#x274C;</i> Logout

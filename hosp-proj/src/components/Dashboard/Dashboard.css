@@ -93,7 +93,8 @@
   }
   
   .header-diagnosis,
-  .header-time {
+  .header-time ,
+  .header-payment-status{
     font-weight: bold;
   }
   

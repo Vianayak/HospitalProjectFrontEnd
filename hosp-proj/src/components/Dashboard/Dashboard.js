@@ -117,6 +117,8 @@ const Dashboard = ({ selectedDate }) => {
         <div className="appointment-header">
           <span className="header-diagnosis">Name/Diagnosis</span>
           <span className="header-time">Time</span>
+          <span className="header-payment-status">Payment Status</span>
+         
         </div>
 
         {/* Show loading message if appointments are being fetched */}
@@ -133,6 +135,11 @@ const Dashboard = ({ selectedDate }) => {
                 className={patient.status === "On Going" ? "status ongoing" : "time"}
               >
                 {patient.time}
+              </span>
+              <span
+                className={patient.paymentstatus === "Paid" ? "status Paid" : "Not Paid"}
+              >
+                {patient.paymentstatus}
               </span>
             </li>
           ))}
@@ -165,6 +172,10 @@ const Dashboard = ({ selectedDate }) => {
             <div className="appointment-row">
               <label>Time:</label>
               <span>{patient.time}</span>
+            </div>
+            <div className="appointment-row">
+              <label>Payment Status:</label>
+              <span>{patient.paymentstatus}</span>
             </div>
           </li>
         ))}
