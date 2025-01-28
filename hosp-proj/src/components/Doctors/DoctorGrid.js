@@ -194,7 +194,7 @@ const DoctorGrid = () => {
       </div>
       {doctors.length > 6 && (
         <div className="doctor-buttons">
-          <button onClick={() => navigate("/doctor-cards")}>More Doctors</button>
+          <button onClick={() => navigate("/book-appointments-page")}>More Doctors</button>
         </div>
       )}
       {/* Modal for Doctor Details */}

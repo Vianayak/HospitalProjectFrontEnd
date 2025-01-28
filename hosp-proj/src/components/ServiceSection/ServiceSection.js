@@ -10,7 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 
 const services = [
-  { id: 1, icon: faCalendarCheck, title: "Book Appointment", path: "/doctor-cards" },
+  { id: 1, icon: faCalendarCheck, title: "Book Appointment", path: "/book-appointments-page" },
   { id: 2, icon: faClipboardCheck, title: "Book Health Check-Up", path: "#" },
   { id: 3, icon: faUserMd, title: "Consult Online", path: "/consult" },
   { id: 4, icon: faPills, title: "Buy Medicine", path: "#" },
@@ -27,7 +27,7 @@ const ServiceSection = () => {
     if (path === "/consult") {
       setIsDialogOpen(true); // Open Dialog when "Consult Online" is clicked
     } else {
-      if (path === "/doctor-cards") {
+      if (path === "/book-appointments-page") {
         sessionStorage.setItem("validNavigation", "true"); // Set valid navigation flag for doctor-cards
       }
       navigate(path); // Navigate to the specified path for other services

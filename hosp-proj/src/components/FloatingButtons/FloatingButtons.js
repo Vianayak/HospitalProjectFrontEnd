@@ -6,7 +6,7 @@ const FloatingButtons = () => {
   const navigate = useNavigate();
 
   const handleRedirect = () => {
-    navigate("/doctor-cards");
+    navigate("/book-appointments-page");
   };
 
   return (

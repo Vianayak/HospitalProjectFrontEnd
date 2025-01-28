@@ -65,7 +65,7 @@ const [icon, setIcon] = useState(eyeOff);
   
         toast.success("Login successful!", {
           onClose: () => {
-            navigate("/sidebar"); // Navigate to sidebar after successful login
+            navigate("/doctors-dashboard-page"); // Navigate to sidebar after successful login
           },
         });
       } else {
@@ -85,7 +85,7 @@ const [icon, setIcon] = useState(eyeOff);
   const handleForgotPassword = (e) => {
     e.preventDefault();
     sessionStorage.setItem("validNavigation", "true"); // Set valid navigation flag
-    navigate("/forgot"); // Navigate to forgot password page
+    navigate("/forgot-password-page"); // Navigate to forgot password page
   };
 
   const handleSignUp = (e) => {
@@ -162,7 +162,7 @@ const [icon, setIcon] = useState(eyeOff);
             {isLoading ? "Logging in..." : "Login"}
           </button>
           <a
-            href="/forgot"
+            href="/forgot-password-page"
             className="forgot-password"
             onClick={handleForgotPassword}
           >

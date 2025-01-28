@@ -18,6 +18,7 @@ import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
 import Sidebar from "./components/SideBar/Sidebar";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 
+// Overlay component to display content in the popup
 const Overlay = ({ children, className = "" }) => (
   <div className={`overlay ${className}`}>
     <div className="popup">{children}</div>
@@ -46,7 +47,8 @@ const AppContent = ({ scrollToHealthNews, healthNewsRef }) => {
 
   const defaultRoute = "/jayahospitals";
 
-  const hideHeaderFooterRoutes = ["/user-appointment", "/sidebar"];
+  // Add '/doctors-dashboard-page' to hide header and footer
+  const hideHeaderFooterRoutes = ["/user-appointment", "/doctors-dashboard-page"];
   const shouldHideHeaderFooter = hideHeaderFooterRoutes.includes(location.pathname);
 
   useEffect(() => {
@@ -79,7 +81,7 @@ const AppContent = ({ scrollToHealthNews, healthNewsRef }) => {
 
   return (
     <div className="App">
-      {/* Conditionally render Navbar and Footer */}
+      {/* Conditionally render Navbar and Footer, but exclude Sidebar page */}
       {!shouldHideHeaderFooter && <Navbar scrollToHealthNews={scrollToHealthNews} />}
 
       <Routes>
@@ -101,7 +103,7 @@ const AppContent = ({ scrollToHealthNews, healthNewsRef }) => {
 
         {/* Routes with Navigation Guard */}
         <Route
-          path="/doctor-cards"
+          path="/book-appointments-page"
           element={
             isAllowed ? (
               <DoctorList />
@@ -143,7 +145,7 @@ const AppContent = ({ scrollToHealthNews, healthNewsRef }) => {
           }
         />
         <Route
-          path="/forgot"
+          path="/forgot-password-page"
           element={
             isAllowed ? (
               <Overlay className="login-overlay">
@@ -155,7 +157,7 @@ const AppContent = ({ scrollToHealthNews, healthNewsRef }) => {
           }
         />
         <Route
-          path="/sidebar"
+          path="/doctors-dashboard-page"
           element={
             isAllowed ? (
               <ProtectedRoute>
@@ -171,6 +173,7 @@ const AppContent = ({ scrollToHealthNews, healthNewsRef }) => {
         <Route path="*" element={<Navigate to={defaultRoute} replace />} />
       </Routes>
 
+      {/* Conditionally render Footer, but exclude Sidebar page */}
       {!shouldHideHeaderFooter && <Footer />}
     </div>
   );

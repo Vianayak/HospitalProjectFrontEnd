@@ -40,7 +40,7 @@ function MyNavbar({ scrollToHealthNews }) {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="ml-auto" id="exe">
                         <Nav.Link as={Link} to="/" onClick={() => handleNavigation('/')}>About Us</Nav.Link>
-                        <Nav.Link as={Link} to="/doctor-cards" onClick={() => handleNavigation('/doctor-cards')}>Our Doctors</Nav.Link>
+                        <Nav.Link as={Link} to="/book-appointments-page" onClick={() => handleNavigation('/book-appointments-page')}>Our Doctors</Nav.Link>
                         <NavDropdown
                             title={
                                 <span
