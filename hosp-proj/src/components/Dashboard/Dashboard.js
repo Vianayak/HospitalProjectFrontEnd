@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import "./Dashboard.css";
@@ -14,10 +14,17 @@ const Dashboard = () => {
   const [showPopup, setShowPopup] = useState(false); 
   const [selectedDate, setSelectedDate] = useState(new Date());
 
+  const prevDateRef = useRef(null);
+
 
   const doctorDetails = JSON.parse(localStorage.getItem("doctorDetails"));
 
   useEffect(() => {
+    // Skip if selected date has not changed
+    if (prevDateRef.current && prevDateRef.current === selectedDate.toISOString()) {
+      return;
+    }
+
     if (doctorDetails && selectedDate) {
       fetchAppointments(selectedDate)
         .then((appointmentsData) => {
@@ -25,7 +32,11 @@ const Dashboard = () => {
         })
         .catch((error) => console.error("Error fetching appointments:", error));
     }
+
+    // Update previous date
+    prevDateRef.current = selectedDate.toISOString();
   }, [doctorDetails, selectedDate]);
+
 
   useEffect(() => {
     if (doctorDetails && selectedDate) {
@@ -36,7 +47,7 @@ const Dashboard = () => {
   const fetchAppointments = async (date) => {
     const formattedDate = date.toISOString().split("T")[0];
     const doctorRegNum = doctorDetails.regestrationNum;
-    const apiUrl = `http://localhost:8081/api/book-appointment/appointments-with-issues-accepted?date=${formattedDate}&doctorRegNum=${doctorRegNum}`;
+    const apiUrl = `http://localhost:8081/api/book-appointment/appointments-for-date?date=${formattedDate}&doctorRegNum=${doctorRegNum}`;
 
     const response = await fetch(apiUrl);
     if (response.ok) {
@@ -131,18 +142,13 @@ const Dashboard = () => {
                 <h4>
                   {patient.firstName} {patient.lastName}
                 </h4>
-                <p>{patient.issues.join(", ")}</p>
+                <p>{patient.issue}</p>
               </div>
-              <span
-                className={patient.status === "On Going" ? "status ongoing" : "time"}
-              >
-                {patient.time}
-              </span>
-              <span
-                className={patient.paymentstatus === "Paid" ? "status Paid" : "Not Paid"}
-              >
-                {patient.paymentstatus}
-              </span>
+              <div>
+                <h4>
+                  {patient.time}
+                  </h4>
+              </div>
             </li>
           ))}
         </ul>
@@ -172,15 +178,11 @@ const Dashboard = () => {
             </div>
             <div className="appointment-row">
               <label>Diagnosis:</label>
-              <span>{patient.issues.join(", ")}</span>
+              <span>{patient.issue}</span>
             </div>
             <div className="appointment-row">
               <label>Time:</label>
               <span>{patient.time}</span>
-            </div>
-            <div className="appointment-row">
-              <label>Payment Status:</label>
-              <span>{patient.paymentstatus}</span>
             </div>
           </li>
         ))}
