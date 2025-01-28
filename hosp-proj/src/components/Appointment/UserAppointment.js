@@ -173,6 +173,34 @@ const UserAppointment = () => {
     }
   }, [loading]);
 
+  const fetchUserDetails = useCallback(async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get(`http://localhost:8082/api/user/user-details?email=${email}`);
+      if (response.data) {
+        const patient = response.data;
+        setFormData({
+          ...formData,
+          firstName: patient.firstName,
+          lastName: patient.lastName,
+          phone: patient.mobileNumber,
+          regNum: patient.registrationNumber,
+        });
+      }
+    } catch (error) {
+      console.error("Error fetching user details:", error);
+    } finally {
+      setLoading(false);
+    }
+  }, [email]);
+
+  useEffect(() => {
+    if (email) {
+      fetchUserDetails();
+    }
+  }, [email, fetchUserDetails]);
+
+
   return (
     <>
     <Loader loading={loading} />
@@ -202,7 +230,7 @@ const UserAppointment = () => {
       
         <div className="content">
           <div className="user-details">
-            <h2>APJ1.0002836055 (Vinayak Banoth)</h2>
+            <h2> {formData.regNum ? `${formData.regNum} (${formData.firstName} ${formData.lastName})` : "New user"}</h2>
             <h2 className="uhid-note">Fill Your Personal Details.</h2>
             <form className="details-form">
             <div className="form-group2">
