@@ -6,7 +6,7 @@ const DashboardHeader = (props) => {
   const [stats, setStats] = useState({
     totalAppointments: 0,
     todayPatients: 0,
-    todaysAppointments: 0,
+    
   });
 
   // Function to get today's date in YYYY-MM-DD format
@@ -43,7 +43,7 @@ const DashboardHeader = (props) => {
         setStats({
           totalAppointments: data.totalTreatedPatientsByDoctor,
           todayPatients: data.acceptedAppointments, // Ensure your API sends this field
-          todaysAppointments: data.totalAppointments, // Adjust the field as per API
+         
         });
       } catch (error) {
         console.error('Error fetching stats:', error);
@@ -73,14 +73,7 @@ const DashboardHeader = (props) => {
             <p className="stat-label"> Today</p>
           </div>
         </div>
-        <div className="stat-box">
-          <FaClock className="stat-icon" />
-          <div>
-            <h3>Today's Appointments</h3>
-            <h4 className="stat-number">{stats.todaysAppointments}</h4>
-            <p className="stat-label"> Today</p>
-          </div>
-        </div>
+       
       </div>
     </div>
   );
