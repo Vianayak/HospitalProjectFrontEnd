@@ -216,7 +216,7 @@ const UserAppointment = () => {
         <div className="content">
           <div className="user-details">
             <h2>APJ1.0002836055 (Vinayak Banoth)</h2>
-            <p className="uhid-note">Fill Your Personal Details.</p>
+            <h2 className="uhid-note">Fill Your Personal Details.</h2>
             <form className="details-form">
             <div className="form-group2">
   <label>First Name</label>

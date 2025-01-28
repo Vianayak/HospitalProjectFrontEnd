@@ -131,9 +131,12 @@ const DoctorCard = ({ doctor }) => {
     return "unknown";
   };
 
+  // Apply the blur effect when the popup is open
+  const bodyClass = showPopup || showSchedulePopup ? "body-blur" : "";
+
   return (
     <>
-      <div className="content-wrapper1">
+      <div className={`content-wrapper1 ${bodyClass}`}>
         <ToastContainer />
         <div className="doctor-card">
           <div className="doctor-image">
