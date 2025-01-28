@@ -147,11 +147,11 @@ const Sidebar = () => {
       <div className="dashboard-content">
         <DashboardHeader selectedDate={selectedDate} statusUpdated={statusUpdated} />
         <Dashboard selectedDate={selectedDate} />
-        <HealthcarePortal
+        {/* <HealthcarePortal
           selectedDate={selectedDate}
           setSelectedDate={setSelectedDate}
           onStatusUpdate={handleStatusUpdate}
-        />
+        /> */}
       </div>
       {showPasswordForm && (
         <div className="popup-overlay">

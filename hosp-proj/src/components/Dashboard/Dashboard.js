@@ -2,15 +2,18 @@ import React, { useEffect, useState } from "react";
 import { Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import "./Dashboard.css";
+import HealthcarePortal from "../HealthcarePortal/HealthcarePortal";
 
 // Register Chart.js components
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const Dashboard = ({ selectedDate }) => {
+const Dashboard = () => {
   const [appointments, setAppointments] = useState([]);
   const [totalEarnings, setTotalEarnings] = useState(0);
   const [todayEarnings, setTodayEarnings] = useState(0);
-  const [showPopup, setShowPopup] = useState(false); // State to manage popup visibility
+  const [showPopup, setShowPopup] = useState(false); 
+  const [selectedDate, setSelectedDate] = useState(new Date());
+
 
   const doctorDetails = JSON.parse(localStorage.getItem("doctorDetails"));
 
@@ -117,7 +120,6 @@ const Dashboard = ({ selectedDate }) => {
         <div className="appointment-header">
           <span className="header-diagnosis">Name/Diagnosis</span>
           <span className="header-time">Time</span>
-          <span className="header-payment-status">Payment Status</span>
          
         </div>
 
@@ -152,6 +154,9 @@ const Dashboard = ({ selectedDate }) => {
           </p>
         )}
       </div>
+
+      <HealthcarePortal setSelectedDate={setSelectedDate} />
+
 
      {/* Popup for all appointments */}
 {showPopup && (
