@@ -6,6 +6,7 @@ const FloatingButtons = () => {
   const navigate = useNavigate();
 
   const handleRedirect = () => {
+    sessionStorage.setItem("validNavigation", "true");
     navigate("/book-appointments-page");
   };
 
