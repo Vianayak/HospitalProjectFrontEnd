@@ -145,8 +145,8 @@ const Sidebar = () => {
 
       </div>
       <div className="dashboard-content">
-        <DashboardHeader selectedDate={selectedDate} statusUpdated={statusUpdated} />
-        <Dashboard selectedDate={selectedDate} />
+        <DashboardHeader selectedDate={selectedDate} setSelectedDate={setSelectedDate}/>
+        <Dashboard selectedDate={selectedDate} setSelectedDate={setSelectedDate}/>
         {/* <HealthcarePortal
           selectedDate={selectedDate}
           setSelectedDate={setSelectedDate}

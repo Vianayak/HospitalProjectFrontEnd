@@ -12,11 +12,28 @@ class HealthcarePortal extends Component {
 
   handleDateClick = (day) => {
     const { currentDate } = this.state;
-    const selectedDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), day, 12, 0, 0);
-    this.setState({ selectedDate });
+    
+    // Create a new date object, setting the time to 00:00:00
+    const selectedDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
+  
+    // Fix for time zone issue: Ensure that the selected date is converted to the correct UTC time
+    // Get the UTC equivalent by converting the date to UTC milliseconds
+    const utcSelectedDate = new Date(Date.UTC(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate()));
+  
+    // Log both selectedDate and utcSelectedDate to debug
+    console.log('Selected Date:', selectedDate);
+    console.log('UTC Selected Date:', utcSelectedDate);
+  
+    // Update the state with the correct selected date
+    this.setState({ selectedDate: utcSelectedDate });
+  
+    // Pass the date to the parent component (Dashboard)
     this.props.setSelectedDate(selectedDate);
   };
-
+  
+  
+  
+  
   handleNextMonth = () => {
     const { currentDate } = this.state;
     const nextMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1);

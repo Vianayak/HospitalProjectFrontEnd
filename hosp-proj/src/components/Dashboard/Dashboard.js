@@ -7,12 +7,11 @@ import HealthcarePortal from "../HealthcarePortal/HealthcarePortal";
 // Register Chart.js components
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const Dashboard = () => {
+const Dashboard = ({selectedDate, setSelectedDate}) => {
   const [appointments, setAppointments] = useState([]);
   const [totalEarnings, setTotalEarnings] = useState(0);
   const [todayEarnings, setTodayEarnings] = useState(0);
   const [showPopup, setShowPopup] = useState(false); 
-  const [selectedDate, setSelectedDate] = useState(new Date());
 
   const prevDateRef = useRef(null);
 
@@ -44,22 +43,29 @@ const Dashboard = () => {
     }
   }, [doctorDetails, selectedDate]);
 
-  const fetchAppointments = async (date) => {
-    const formattedDate = date.toISOString().split("T")[0];
-    const doctorRegNum = doctorDetails.regestrationNum;
-    const apiUrl = `http://localhost:8081/api/book-appointment/appointments-for-date?date=${formattedDate}&doctorRegNum=${doctorRegNum}`;
+  
 
+  const fetchAppointments = async (date) => {
+    // Use local date instead of converting it to UTC
+    const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
+    const doctorRegNum = doctorDetails.regestrationNum;
+    console.log(formattedDate, doctorRegNum);
+  
+    const apiUrl = `http://localhost:8081/api/book-appointment/appointments-for-date?date=${formattedDate}&doctorRegNum=${doctorRegNum}`;
+  
     const response = await fetch(apiUrl);
     if (response.ok) {
       const data = await response.json();
+      console.log(data);
       return data;
     }
     throw new Error("Failed to fetch appointments");
   };
+  
 
   const fetchEarnings = async (date) => {
     try {
-      const formattedDate = date.toISOString().split("T")[0];
+      const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
       const doctorRegNum = doctorDetails.regestrationNum;
       const apiUrl = `http://localhost:8081/api/book-appointment/earnings?date=${formattedDate}&doctorRegNum=${doctorRegNum}`;
 

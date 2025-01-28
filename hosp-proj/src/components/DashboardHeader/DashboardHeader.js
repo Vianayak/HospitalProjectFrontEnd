@@ -1,35 +1,31 @@
 import React, { useState, useEffect } from 'react';
-import { FaUserAlt, FaCalendarAlt, FaClock } from 'react-icons/fa';
+import { FaUserAlt, FaCalendarAlt } from 'react-icons/fa';
+import PropTypes from 'prop-types';
 import './DashboardHeader.css';
 
-const DashboardHeader = (props) => {
+const DashboardHeader = ({ selectedDate,setSelectedDate}) => {
   const [stats, setStats] = useState({
     totalAppointments: 0,
     todayPatients: 0,
-    
   });
 
-  // Function to get today's date in YYYY-MM-DD format
   const getTodayDate = () => {
     const today = new Date();
-    const year = today.getFullYear();
-    const month = String(today.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
-    const day = String(today.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`; // Returning the date as a string
+    return today.toISOString().split('T')[0];
   };
 
-  // Function to get the doctor's registration number dynamically (assuming it's stored in localStorage)
   const getDoctorRegNum = () => {
-    // You can fetch the doctor registration number from context, Redux, or localStorage
-    // Example: Fetching from localStorage
-    const doctorData = JSON.parse(localStorage.getItem('doctorDetails')); // Replace with your actual method
-    return doctorData ? doctorData.regestrationNum : null; // Ensure you handle if doctor data is not found
+    const doctorData = JSON.parse(localStorage.getItem('doctorDetails'));
+    return doctorData ? doctorData.regestrationNum : null;
   };
 
   useEffect(() => {
+    console.log('Selected Date:', selectedDate);
     const fetchStats = async () => {
-      const selectedDate = props.selectedDate.toISOString().split('T')[0];  // Get today's date dynamically
-      const doctorRegNum = getDoctorRegNum(); // Fetch doctor's registration number dynamically
+      const formattedDate = selectedDate
+        ? `${selectedDate.getFullYear()}-${(selectedDate.getMonth() + 1).toString().padStart(2, '0')}-${selectedDate.getDate().toString().padStart(2, '0')}`
+        : getTodayDate();
+      const doctorRegNum = getDoctorRegNum();
 
       if (!doctorRegNum) {
         console.error('Doctor registration number is not available!');
@@ -37,13 +33,14 @@ const DashboardHeader = (props) => {
       }
 
       try {
-        // Replace this URL with your actual API endpoint
-        const response = await fetch(`http://localhost:8081/api/book-appointment/stats?date=${selectedDate}&doctorRegNum=${doctorRegNum}`);
+        const response = await fetch(
+          `http://localhost:8081/api/book-appointment/stats?date=${formattedDate}&doctorRegNum=${doctorRegNum}`
+        );
         const data = await response.json();
+        console.log(data);
         setStats({
-          totalAppointments: data.totalTreatedPatientsByDoctor,
-          todayPatients: data.acceptedAppointments, // Ensure your API sends this field
-         
+          totalAppointments: data.totalAppointments,
+          todayPatients: data.todayAppointments,
         });
       } catch (error) {
         console.error('Error fetching stats:', error);
@@ -51,7 +48,7 @@ const DashboardHeader = (props) => {
     };
 
     fetchStats();
-  }, [props.statusUpdated]);
+  }, [selectedDate]);
 
   return (
     <div className="header-container">
@@ -62,7 +59,7 @@ const DashboardHeader = (props) => {
           <div>
             <h3>Total Patients</h3>
             <h4 className="stat-number">{stats.totalAppointments}</h4>
-            <p className="stat-label"> Today</p>
+            <p className="stat-label">Today</p>
           </div>
         </div>
         <div className="stat-box">
@@ -70,13 +67,18 @@ const DashboardHeader = (props) => {
           <div>
             <h3>Today's Patients</h3>
             <h4 className="stat-number">{stats.todayPatients}</h4>
-            <p className="stat-label"> Today</p>
+            <p className="stat-label">Today</p>
           </div>
         </div>
-       
       </div>
     </div>
   );
 };
+
+DashboardHeader.propTypes = {
+  selectedDate: PropTypes.instanceOf(Date).isRequired,
+};
+
+
 
 export default DashboardHeader;
