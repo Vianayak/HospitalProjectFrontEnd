@@ -5,54 +5,15 @@ class HealthcarePortal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      appointments: [], // Holds appointment data
       currentDate: new Date(), // Current month/year
       selectedDate: new Date(), // Selected date
-      doctorDetails: null, // Holds doctor details from localStorage
-      showModal: false, // Controls visibility of the modal
     };
   }
-
-  componentDidMount() {
-    // Load doctor details from localStorage
-    const storedDoctorDetails = localStorage.getItem("doctorDetails");
-    if (storedDoctorDetails) {
-      this.setState({ doctorDetails: JSON.parse(storedDoctorDetails) }, () => {
-        this.fetchAppointments(this.state.selectedDate);
-      });
-    }
-  }
-
-  fetchAppointments = async (date) => {
-    const { doctorDetails } = this.state;
-    if (!doctorDetails) {
-      console.error("Doctor details are not available.");
-      return;
-    }
-
-    const formattedDate = date.toISOString().split('T')[0]; // Format date as YYYY-MM-DD
-    const doctorRegNum = doctorDetails.regestrationNum; // Assuming "registrationNum" is the correct key
-
-    const apiUrl = `http://localhost:8081/api/book-appointment/appointments-with-issues?date=${formattedDate}&doctorRegNum=${doctorRegNum}`;
-
-    try {
-      const response = await fetch(apiUrl);
-      if (!response.ok) {
-        throw new Error(`Error: ${response.statusText}`);
-      }
-      const data = await response.json();
-      this.setState({ appointments: data });
-    } catch (error) {
-      console.error('Error fetching appointment data:', error);
-    }
-  };
 
   handleDateClick = (day) => {
     const { currentDate } = this.state;
     const selectedDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), day, 12, 0, 0);
-    this.setState({ selectedDate }, () => {
-      this.fetchAppointments(selectedDate);
-    });
+    this.setState({ selectedDate });
     this.props.setSelectedDate(selectedDate);
   };
 
@@ -66,71 +27,6 @@ class HealthcarePortal extends Component {
     const { currentDate } = this.state;
     const prevMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1);
     this.setState({ currentDate: prevMonth });
-  };
-
-  handleStatusUpdate = async (appointmentId, status) => {
-    const apiUrl = `http://localhost:8081/api/book-appointment/${appointmentId}/?status=${status}`;
-
-    try {
-      const response = await fetch(apiUrl, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error(`Error: ${response.statusText}`);
-      }
-
-      this.props.onStatusUpdate();
-
-      // Fetch updated appointments after status change
-      this.fetchAppointments(this.state.selectedDate);
-    } catch (error) {
-      console.error("Error updating status:", error);
-    }
-  };
-
-  toggleModal = () => {
-    this.setState((prevState) => ({ showModal: !prevState.showModal }));
-  };
-
-  renderAppointments = (limit = null) => {
-    const { appointments } = this.state;
-
-    if (!appointments.length) {
-      return <p>No appointment requests available for the selected date.</p>;
-    }
-
-    const visibleAppointments = limit ? appointments.slice(0, limit) : appointments;
-
-    return visibleAppointments.map((appointment, index) => (
-      <div key={index} className="appointment-card">
-        <div>
-          <span className="patient-name">
-            {appointment.firstName} {appointment.lastName}
-          </span>
-          <div className="patient-issue">
-            {appointment.issues.join(', ')}
-          </div>
-        </div>
-        <div className="appointment-actions">
-          <button
-            className="accept-btn"
-            onClick={() => this.handleStatusUpdate(appointment.appointmentId, "ACCEPTED")}
-          >
-            ✔
-          </button>
-          <button
-            className="reject-btn"
-            onClick={() => this.handleStatusUpdate(appointment.appointmentId, "REJECTED")}
-          >
-            ✘
-          </button>
-        </div>
-      </div>
-    ));
   };
 
   renderCalendarDates = () => {
@@ -167,23 +63,12 @@ class HealthcarePortal extends Component {
   };
 
   render() {
-    const { currentDate, showModal, appointments } = this.state;
+    const { currentDate } = this.state;
     const monthName = currentDate.toLocaleString('default', { month: 'long' });
     const year = currentDate.getFullYear();
 
     return (
       <div className="healthcare-portal">
-        {/* Appointment Section */}
-        <div className="appointments-section">
-          <h3>Appointment Requests</h3>
-          {this.renderAppointments(3)}
-          {appointments.length > 3 && (
-            <button className="see-all-btn" onClick={this.toggleModal}>
-              See All
-            </button>
-          )}
-        </div>
-
         {/* Calendar Section */}
         <div className="calendar-widget">
           <h3>Calendar</h3>
@@ -200,19 +85,6 @@ class HealthcarePortal extends Component {
             {this.renderCalendarDates()}
           </div>
         </div>
-
-        {/* Modal for all appointments */}
-        {showModal && (
-          <div className="modal-overlay" onClick={this.toggleModal}>
-            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-              <h3>All Appointment Requests</h3>
-              {this.renderAppointments()}
-              <button className="close-modal-btn" onClick={this.toggleModal}>
-                Close
-              </button>
-            </div>
-          </div>
-        )}
       </div>
     );
   }
