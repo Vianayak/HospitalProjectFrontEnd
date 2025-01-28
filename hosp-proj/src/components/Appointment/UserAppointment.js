@@ -23,6 +23,8 @@ const UserAppointment = () => {
   const { date, timeSlot, email, doctorDetails, timeOfDay } = location.state || {};
   const [loading, setLoading] = useState(false);
 
+  const [remainingChars, setRemainingChars] = useState(50);
+
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -30,27 +32,17 @@ const UserAppointment = () => {
     email: email || "",
     dob: "",
     gender: "",
-    issues: [],
+    issue: "",
   });
 
-  const [issueSuggestions, setIssueSuggestions] = useState([]);
   const [formErrors, setFormErrors] = useState({});
   const [isFormValid, setIsFormValid] = useState(false);
   const [touchedFields, setTouchedFields] = useState({});
   const [isTermsChecked, setIsTermsChecked] = useState(false);
 
-  const [selectedIssues, setSelectedIssues] = useState([]);
+  
 
-  useEffect(() => {
-    // Fetch the issues list (assuming you have an API for this)
-    axios.get("http://localhost:8081/api/issues/all")
-      .then((response) => {
-        setIssueSuggestions(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching issues:", error);
-      });
-  }, []);
+
 
   const validateForm = useCallback(() => {
     const errors = {};
@@ -59,13 +51,13 @@ const UserAppointment = () => {
     if (!formData.phone || !/^\d{10}$/.test(formData.phone)) errors.phone = "Valid 10-digit phone number is required.";
     if (!formData.dob) errors.dob = "Date of Birth is required.";
     if (!formData.gender) errors.gender = "Gender is required.";
-    if (selectedIssues.length === 0) errors.issues = "Please select at least one issue.";
+    if (!formData.issue) errors.issue = "Issue is required";
 
     setFormErrors(errors);
 
     const isValid = Object.keys(errors).length === 0 && isTermsChecked;
     setIsFormValid(isValid);
-  }, [formData, selectedIssues, isTermsChecked]);
+  }, [formData, isTermsChecked]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -97,7 +89,7 @@ const UserAppointment = () => {
         scheduledDate: date,
         scheduledTime: timeSlot,
         slot: timeOfDay,
-        issueIds: selectedIssues.map((issue) => issue.id),
+        issue: formData.issue,
       });
 
       const amountInPaise = data.amount * 100;
@@ -171,12 +163,7 @@ const UserAppointment = () => {
     }
   };
   
-  const handleIssuesChange = (updatedIssues) => {
-    setTouchedFields((prev) => ({ ...prev, issues: true })); // Mark issues as touched
-    setSelectedIssues(updatedIssues);
-    validateForm(); // Trigger validation when the issues change
-  };
-  
+ 
 
   useEffect(() => {
     if (loading) {
@@ -307,25 +294,31 @@ const UserAppointment = () => {
               
 
               <div className="form-group2">
-                <label>Issues</label>
-                <MultiSelectDropdown
-                  selectedItems={selectedIssues}
-                  onChange={handleIssuesChange}
-                  suggestions={issueSuggestions}
-                />
-                <div>
-                  {selectedIssues.length > 0 ? (
-                    selectedIssues.map((issue) => (
-                      <span key={issue.id}>{issue.issueName}</span>
-                    ))
-                  ) : (
-                    <p>No issues selected</p>
-                  )}
-                </div>
-                {touchedFields.issues && formErrors.issues && (
-    <span className="error1">{formErrors.issues}</span> // Error message for issues
-  )}
-              </div>
+  <label>Issue</label>
+  <textarea
+    name="issue"
+    placeholder="Describe your issue (up to 50 characters)"
+    value={formData.issue}
+    onChange={(e) => {
+      handleInputChange(e); // Keep existing handler logic
+      setRemainingChars(50 - e.target.value.length); // Update remaining characters
+    }}
+    onFocus={handleInputFocus} // Track focus
+    className={
+      formErrors.issue && touchedFields.issue ? "error1-input" : ""
+    }
+    maxLength="50" // Restrict input to 50 characters
+    rows="4" // Number of visible lines
+  />
+  <span className="remaining-chars">
+    {remainingChars} characters remaining
+  </span>
+  <span className="error1">
+    {touchedFields.issue && formErrors.issue ? formErrors.issue : ""}
+  </span>
+</div>
+
+
             </form>
           </div>
 
