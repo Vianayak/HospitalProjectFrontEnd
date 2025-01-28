@@ -132,13 +132,17 @@ const Sidebar = () => {
           )}
         </div>
         <ul className="menu">
-          <li onClick={handleLogout}>
-            <i className="icon">&#x274C;</i> Logout
-          </li>
-          <li onClick={() => setShowPasswordForm(true)}>
-            <i className="icon">&#x1F512;</i> Change Password
-          </li>
-        </ul>
+  <li onClick={() => (window.location.href = "http://localhost:3000/jayahospital")}>
+    <i className="icon">&#x1F3E0;</i> Home
+  </li>
+  <li onClick={handleLogout}>
+    <i className="icon">&#x274C;</i> Logout
+  </li>
+  <li onClick={() => setShowPasswordForm(true)}>
+    <i className="icon">&#x1F512;</i> Change Password
+  </li>
+</ul>
+
       </div>
       <div className="dashboard-content">
         <DashboardHeader selectedDate={selectedDate} statusUpdated={statusUpdated} />
