@@ -16,11 +16,11 @@
     background: white;
     padding: 20px;
     border-radius: 10px;
-    width: 800px;
+    width: 1000px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 500px;
+    height: 550px;
   }
   
   /* Header */
@@ -33,8 +33,9 @@
   
   /* Calendar section */
   .appointment-calendar {
-    width: 100%;
+    width: 80%;
     text-align: center;
+    height: 600px; 
   }
   
   .appointment-calendar-header {
@@ -58,24 +59,26 @@
   }
   
   .appointment-day {
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
     display: flex;
     align-items: center;
     justify-content: center;
     background: #f0f0f0;
     border-radius: 50%;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 14px;
   }
   
   .appointment-day:hover {
     background: #d1c4e9;
+  
   }
   
   .appointment-selected {
     background: #5a2eca;
     color: white;
+    
   }
   
   .appointment-today {
@@ -135,11 +138,12 @@
     display: flex;
     justify-content: space-between;
     width: 100%;
+ 
     
   }
   
   .save, .cancel {
-    padding: 10px;
+    padding: 20px;
     width: 45%;
     border: none;
     border-radius: 5px;
@@ -147,9 +151,74 @@
    
   }
   
-  .appointment-save .appointment-cancel {
+  .appointment-save .appointment-cancel button{
     background-color:#5a2eca;
     color: red;
+    cursor: pointer;
+  }
+  .day {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    margin: 5px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .day:hover {
+    background-color: #f0f0f0;
+    color: #5a2eca;
+  }
+  
+  .selected {
+    background-color: #5a2eca;
+    color: white;
+  }
+  
+  .disabled {
+    background-color: #ddd;
+    color: #aaa;
+    cursor: not-allowed;
+  }
+  
+  .day-header {
+    text-align: center;
+    font-weight: bold;
+  }
+  
+  .appointment-calendar-header button {
+    padding: 5px 10px;
+    margin: 0 5px;
+    cursor: pointer;
+  }
+  
+  .book-btn {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .appointment-calendar-cancel- uttotn {
+    background-color: #f44336;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .appointment-calendar-book-btn:hover {
+    background-color: #45a049;
+  }
+  
+  .appointment-calendar-cancel-btn:hover {
+    background-color: #e53935;
   }
   
  
