@@ -17,7 +17,7 @@ import HealthNewsImages from "./components/health/HealthNewsImages";
 import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
 import Sidebar from "./components/SideBar/Sidebar";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
-
+import BookAvailability from "./components/BookAvailability/BookAvailability";
 // Overlay component to display content in the popup
 const Overlay = ({ children, className = "" }) => (
   <div className={`overlay ${className}`}>
@@ -132,6 +132,18 @@ const AppContent = ({ scrollToHealthNews, healthNewsRef }) => {
             )
           }
         />
+ <Route
+  path="/book-availability"
+  element={
+    isAllowed ? (
+      <BookAvailability/>
+    ) : (
+      <Navigate to="/login" replace />
+    )
+  }
+/>
+
+
         <Route
           path="/signup"
           element={

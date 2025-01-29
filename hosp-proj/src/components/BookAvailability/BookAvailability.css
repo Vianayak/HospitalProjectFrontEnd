@@ -1,0 +1,106 @@
+.book-availability-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .book-availability-popup {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    width: 400px;
+  }
+  
+  .calendar-container {
+    margin: 20px 0;
+  }
+  
+  .calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: #5a2eca;
+    margin-bottom: 10px;
+  }
+  
+  .month-nav {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  
+  .calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    text-align: center;
+  }
+  
+  .calendar-day-header {
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .calendar-day {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f0f0f0;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .calendar-day:hover {
+    background: #d1c4e9;
+  }
+  
+  .selected {
+    background: #5a2eca;
+    color: white;
+    font-weight: bold;
+  }
+  
+  .book-availability-dropdown {
+    width: 100%;
+    padding: 8px;
+    margin-top: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  .book-availability-actions {
+    margin-top: 20px;
+  }
+  
+  .book-availability-save-btn,
+  .book-availability-cancel-btn {
+    padding: 10px;
+    width: 45%;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .book-availability-save-btn {
+    background: #5a2eca;
+    color: white;
+  }
+  
+  .book-availability-cancel-btn {
+    background: #ccc;
+  }
+  

@@ -5,6 +5,8 @@ import Dashboard from '../Dashboard/Dashboard';
 import HealthcarePortal from '../HealthcarePortal/HealthcarePortal';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import BookAvailability from '../BookAvailability/BookAvailability';
+
 
 const Sidebar = () => {
   const [doctorDetails, setDoctorDetails] = useState(null);
@@ -17,7 +19,12 @@ const Sidebar = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const [statusUpdated, setStatusUpdated] = useState(false);
+  const [showBookAvailability, setShowBookAvailability] = useState(false);
 
+  const handleAvailability = () => {
+    setShowBookAvailability(true);
+  };
+  
   const passwordCriteria = {
     length: formData.password.length >= 8,
     uppercase: /[A-Z]/.test(formData.password),
@@ -38,6 +45,9 @@ const Sidebar = () => {
     localStorage.removeItem("doctorDetails");
     window.location.href = "/login";
   };
+
+  
+  
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -132,8 +142,8 @@ const Sidebar = () => {
           )}
         </div>
         <ul className="menu">
-  <li onClick={() => (window.location.href = "http://localhost:3000/jayahospital")}>
-    <i className="icon">&#x1F4CB;</i> Book Availablity
+  <li onClick={handleAvailability}>
+    <i className="icon">&#x1F4CB;</i> Book Availability
   </li>
   <li onClick={handleLogout}>
     <i className="icon">&#x274C;</i> Logout
@@ -142,6 +152,7 @@ const Sidebar = () => {
     <i className="icon">&#x1F512;</i> Change Password
   </li>
 </ul>
+{showBookAvailability && <BookAvailability onClose={() => setShowBookAvailability(false)} />}
 
       </div>
       <div className="dashboard-content">
