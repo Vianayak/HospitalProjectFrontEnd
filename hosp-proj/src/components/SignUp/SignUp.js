@@ -123,7 +123,7 @@ const SignIn = () => {
           specialization:formData.specialization,
           firstName: formData.firstName,
           lastName: formData.lastName,
-          consultationfee:formData.consultationfee,
+          consultationFee:formData.consultationfee,
           mobileNumber: formData.mobileNumber,
           experience: formData.experience
         }));
