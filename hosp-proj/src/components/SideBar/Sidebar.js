@@ -5,8 +5,10 @@ import Dashboard from '../Dashboard/Dashboard';
 import HealthcarePortal from '../HealthcarePortal/HealthcarePortal';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import { useNavigate } from 'react-router-dom';
 const Sidebar = () => {
+
+  const navigate = useNavigate();
   const [doctorDetails, setDoctorDetails] = useState(null);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [showPasswordForm, setShowPasswordForm] = useState(false);
@@ -36,7 +38,9 @@ const Sidebar = () => {
   const handleLogout = () => {
     localStorage.removeItem("authToken");
     localStorage.removeItem("doctorDetails");
-    window.location.href = "/login";
+
+    sessionStorage.setItem("validNavigation", "true"); // Set valid navigation flag
+        navigate("/login"); // Navigate to the path
   };
 
   const handleInputChange = (e) => {
