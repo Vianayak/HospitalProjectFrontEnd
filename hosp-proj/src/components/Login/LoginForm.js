@@ -56,19 +56,36 @@ const [role, setRole] = useState("Doctor");
         const responseData = await response.json();
         const token = responseData.token;
         localStorage.setItem("authToken", token);
-  
-        if (responseData.doctorDetails) {
-          localStorage.setItem("doctorDetails", JSON.stringify(responseData.doctorDetails));
+
+        if(responseData.role === 'doctor'){
+          if (responseData.doctorDetails) {
+            localStorage.setItem("doctorDetails", JSON.stringify(responseData.doctorDetails));
+          }
+    
+          // Set valid navigation flag before navigating
+          sessionStorage.setItem("validNavigation", "true");
+    
+          toast.success("Login successful!", {
+            onClose: () => {
+              navigate("/doctors-dashboard-page"); // Navigate to sidebar after successful login
+            },
+          });
+        }else{
+          if (responseData.patientDetails) {
+            localStorage.setItem("patientDetails", JSON.stringify(responseData.patientDetails));
+          }
+    
+          // Set valid navigation flag before navigating
+          sessionStorage.setItem("validNavigation", "true");
+    
+          toast.success("Login successful!", {
+            onClose: () => {
+              navigate("/patient-dashboard-page"); // Navigate to sidebar after successful login
+            },
+          });
         }
   
-        // Set valid navigation flag before navigating
-        sessionStorage.setItem("validNavigation", "true");
-  
-        toast.success("Login successful!", {
-          onClose: () => {
-            navigate("/doctors-dashboard-page"); // Navigate to sidebar after successful login
-          },
-        });
+        
       } else {
         toast.error("Invalid credentials. Please try again.");
       }

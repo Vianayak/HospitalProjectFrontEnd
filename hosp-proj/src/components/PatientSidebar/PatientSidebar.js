@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import './Sidebar.css';
-import DashboardHeader from '../DashboardHeader/DashboardHeader';
-import Dashboard from '../Dashboard/Dashboard';
+import './PatientSidebar.css';
+import PatientDashboardHeader from '../PatientDashboardHeader/PatientDashboardHeader';
+import PatientDashboard from '../PatientDashboard/PatientDashboard';
 import HealthcarePortal from '../HealthcarePortal/HealthcarePortal';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
-const Sidebar = () => {
+const PatientSidebar = () => {
 
   const navigate = useNavigate();
   const [patientDetails, setpatientDetails] = useState(null);
@@ -111,26 +111,21 @@ const Sidebar = () => {
     }
   };
 
-  const handleStatusUpdate = () => {
-    setStatusUpdated((prev) => !prev);
-  };
+
 
   return (
     <div className="layout">
-      <div className="sidebar">
+      <div className="PatientSidebar">
         <div className="profile-section">
           {patientDetails ? (
             <>
-              <h3>{patientDetails.name}</h3>
+              <h3>{patientDetails.firstName} {patientDetails.lastName}</h3>
             </>
           ) : (
             <p>Loading profile...</p>
           )}
         </div>
         <ul className="menu">
-  <li onClick={() => (window.location.href = "http://localhost:3000/jayahospital")}>
-    <i className="icon">&#x1F4CB;</i> Book Availablity
-  </li>
   <li onClick={handleLogout}>
     <i className="icon">&#x274C;</i> Logout
   </li>
@@ -141,8 +136,8 @@ const Sidebar = () => {
 
       </div>
       <div className="dashboard-content">
-        <DashboardHeader selectedDate={selectedDate} setSelectedDate={setSelectedDate}/>
-        <Dashboard selectedDate={selectedDate} setSelectedDate={setSelectedDate}/>
+        <PatientDashboardHeader selectedDate={selectedDate} setSelectedDate={setSelectedDate}/>
+        <PatientDashboard selectedDate={selectedDate} setSelectedDate={setSelectedDate}/>
         {/* <HealthcarePortal
           selectedDate={selectedDate}
           setSelectedDate={setSelectedDate}
@@ -152,7 +147,7 @@ const Sidebar = () => {
       {showPasswordForm && (
         <div className="popup-overlay">
           <div className="popup-container3">
-            <h2 className="change-password1">Change Password</h2>  
+            <h2 className="change-password2">Change Password</h2>  
             <form onSubmit={handleSubmit}>
               <div className="form-group3">
                 <div className="input-row">
@@ -212,4 +207,4 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
+export default PatientSidebar;

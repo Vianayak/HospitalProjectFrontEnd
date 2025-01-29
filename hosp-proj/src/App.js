@@ -18,6 +18,8 @@ import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
 import Sidebar from "./components/SideBar/Sidebar";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import BookAvailability from "./components/BookAvailability/BookAvailability";
+import PatientSidebar from "./components/PatientSidebar/PatientSidebar";
+
 // Overlay component to display content in the popup
 const Overlay = ({ children, className = "" }) => (
   <div className={`overlay ${className}`}>
@@ -48,7 +50,7 @@ const AppContent = ({ scrollToHealthNews, healthNewsRef }) => {
   const defaultRoute = "/jayahospitals";
 
   // Add '/doctors-dashboard-page' to hide header and footer
-  const hideHeaderFooterRoutes = ["/user-appointment", "/doctors-dashboard-page"];
+  const hideHeaderFooterRoutes = ["/user-appointment", "/doctors-dashboard-page", "/patient-dashboard-page"];
   const shouldHideHeaderFooter = hideHeaderFooterRoutes.includes(location.pathname);
 
   useEffect(() => {
@@ -174,6 +176,19 @@ const AppContent = ({ scrollToHealthNews, healthNewsRef }) => {
             isAllowed ? (
               <ProtectedRoute>
                 <Sidebar />
+              </ProtectedRoute>
+            ) : (
+              <Navigate to={defaultRoute} replace />
+            )
+          }
+        />
+
+        <Route
+          path="/patient-dashboard-page"
+          element={
+            isAllowed ? (
+              <ProtectedRoute>
+                <PatientSidebar />
               </ProtectedRoute>
             ) : (
               <Navigate to={defaultRoute} replace />
