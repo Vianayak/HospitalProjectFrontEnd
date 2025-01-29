@@ -73,6 +73,16 @@
     font-weight: bold;
   }
   
+  .today {
+    background: #5a2eca;
+    font-weight: bold;
+    color: black;
+  }
+  
+  .empty {
+    visibility: hidden;
+  }
+  
   .book-availability-dropdown {
     width: 100%;
     padding: 8px;

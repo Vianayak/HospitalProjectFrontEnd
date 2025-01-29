@@ -23,31 +23,31 @@ const BookAvailability = ({ onClose }) => {
     const firstDay = new Date(year, month, 1).getDay(); // First day of the month (0=Sunday)
     const daysInMonth = new Date(year, month + 1, 0).getDate(); // Total days in the month
     const currentDate = new Date(); // Get today's date
-  
+
     const daysArray = []; // Start with an empty array
-  
+
     // Fill empty slots for alignment, but don't add extra previous month's dates
     for (let i = 0; i < firstDay; i++) {
-      daysArray.push(null);
+      daysArray.push(null); // These are empty slots for days before the 1st of the month
     }
-  
+
     // Fill actual dates of the month
     for (let i = 1; i <= daysInMonth; i++) {
       const day = new Date(year, month, i);
-      daysArray.push(day.toISOString().split("T")[0]);
+      daysArray.push(day.toISOString().split("T")[0]); // Add actual date to the grid
     }
-  
+
     setCalendarDays(daysArray);
   };
-  
+
   const handleDateSelection = (date) => {
     if (date && date !== "null") setSelectedDate(date);
   };
-  
+
   const handleMonthChange = (increment) => {
     let newMonth = currentMonth + increment;
     let newYear = currentYear;
-  
+
     if (newMonth < 0) {
       newMonth = 11;
       newYear -= 1;
@@ -55,11 +55,10 @@ const BookAvailability = ({ onClose }) => {
       newMonth = 0;
       newYear += 1;
     }
-  
+
     setCurrentMonth(newMonth);
     setCurrentYear(newYear);
   };
-  
 
   const handleBooking = () => {
     if (!selectedDate) {
@@ -92,8 +91,12 @@ const BookAvailability = ({ onClose }) => {
             {calendarDays.map((date, index) => (
               <div 
                 key={index} 
-                className={`calendar-day ${date === selectedDate ? "selected" : ""}`} 
-                onClick={() => handleDateSelection(date)}
+                className={`calendar-day 
+                  ${date === selectedDate ? "selected" : ""} 
+                  ${date === new Date().toISOString().split("T")[0] ? "today" : ""}
+                  ${date === null ? "empty" : ""}
+                `}
+                onClick={() => date && handleDateSelection(date)}
               >
                 {date ? new Date(date).getDate() : ""}
               </div>
