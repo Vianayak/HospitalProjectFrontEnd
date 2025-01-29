@@ -158,3 +158,57 @@
 .back-arrow:hover {
   color: #ccc; /* Change color on hover */
 }
+
+
+
+.role-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.role-toggle label {
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  margin: 0 10px;
+  cursor: pointer;
+}
+
+.role-toggle input {
+  appearance: none;
+  width: 40px;
+  height: 20px;
+  background: #ccc;
+  border-radius: 10px;
+  position: relative;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.role-toggle input:checked {
+  background: black;
+}
+
+.role-toggle input:before {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  background: white;
+  border-radius: 50%;
+  top: 1px;
+  left: 2px;
+  transition: 0.3s;
+}
+
+.role-toggle input:checked:before {
+  left: 20px;
+}
+
+.role-toggle label.active {
+  color: white;
+}
+
+

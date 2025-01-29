@@ -22,6 +22,7 @@ function LoginForm() {
   const [password, setPassword] = useState("");
 const [type, setType] = useState('password');
 const [icon, setIcon] = useState(eyeOff);
+const [role, setRole] = useState("Doctor");
 
   useEffect(() => {
     setFormData({ username: "", password: "", rememberMe: false });
@@ -119,8 +120,18 @@ const [icon, setIcon] = useState(eyeOff);
   ></i>
           <img src="/Assets/Images/whitelogos.png" alt="Logo" className="logo" />
           <span>JAYA HOSPITALS</span>
+          <div className="role-toggle">
+            <label className={role === "Doctor" ? "active" : ""}>Doctor</label>
+            <input
+              type="checkbox"
+              checked={role === "Patient"}
+              onChange={() => setRole(role === "Doctor" ? "Patient" : "Doctor")}
+            />
+            <label className={role === "Patient" ? "active" : ""}>Patient</label>
+          </div>
           <h2>LOG IN</h2>
         </div>
+        
         <form onSubmit={handleSubmit}>
           <div className="input-group">
             <label>
@@ -168,13 +179,11 @@ const [icon, setIcon] = useState(eyeOff);
           >
             Forgot Password?
           </a>
-          <a
-            href="/SignUp"
-            className="SignUp"
-            onClick={handleSignUp}
-          >
-            Sign Up
-          </a>
+          {role === "Doctor" && (
+    <a href="/SignUp" className="SignUp" onClick={handleSignUp}>
+      Sign Up
+    </a>
+  )}
         </form>
       </div>
     </div>
