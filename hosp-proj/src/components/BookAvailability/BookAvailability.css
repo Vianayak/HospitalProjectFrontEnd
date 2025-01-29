@@ -1,4 +1,5 @@
-.book-availability-overlay {
+/* Overlay for modal */
+.appointment-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -10,48 +11,53 @@
     align-items: center;
   }
   
-  .book-availability-popup {
+  /* Popup container */
+  .appointment-popup {
     background: white;
     padding: 20px;
     border-radius: 10px;
+    width: 800px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 500px;
+  }
+  
+  /* Header */
+  .appointment-header {
+    font-size: 22px;
+    font-weight: bold;
+    color: #5a2eca;
+    margin-bottom: 15px;
+  }
+  
+  /* Calendar section */
+  .appointment-calendar {
+    width: 100%;
     text-align: center;
-    width: 400px;
   }
   
-  .calendar-container {
-    margin: 20px 0;
-  }
-  
-  .calendar-header {
+  .appointment-calendar-header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
     font-size: 18px;
     font-weight: bold;
     color: #5a2eca;
     margin-bottom: 10px;
   }
   
-  .month-nav {
-    background: none;
-    border: none;
-    font-size: 20px;
-    cursor: pointer;
-  }
-  
-  .calendar-grid {
+  .appointment-grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     gap: 5px;
-    text-align: center;
   }
   
-  .calendar-day-header {
+  .appointment-day-header {
     font-weight: bold;
     color: #333;
   }
   
-  .calendar-day {
+  .appointment-day {
     width: 40px;
     height: 40px;
     display: flex;
@@ -63,54 +69,88 @@
     font-size: 16px;
   }
   
-  .calendar-day:hover {
+  .appointment-day:hover {
     background: #d1c4e9;
   }
   
-  .selected {
+  .appointment-selected {
     background: #5a2eca;
     color: white;
-    font-weight: bold;
   }
   
-  .today {
+  .appointment-today {
     background: #5a2eca;
-    font-weight: bold;
     color: black;
   }
   
-  .empty {
+  .appointment-empty {
     visibility: hidden;
   }
   
-  .book-availability-dropdown {
+  /* Details section */
+  .appointment-details {
+    width: 100%;
+    margin-top: 15px;
+  }
+  
+  label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  select {
     width: 100%;
     padding: 8px;
-    margin-top: 10px;
     border-radius: 5px;
     border: 1px solid #ccc;
   }
   
-  .book-availability-actions {
-    margin-top: 20px;
+  /* Time buttons */
+  .appointment-time-buttons {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    
   }
   
-  .book-availability-save-btn,
-  .book-availability-cancel-btn {
+  .appointment-time-buttons button {
     padding: 10px;
-    width: 45%;
-    margin: 5px;
-    border: none;
     border-radius: 5px;
     cursor: pointer;
+    background-color: #a998c6;
+    border: none;
+   
   }
   
-  .book-availability-save-btn {
-    background: #5a2eca;
+  .appointment-time-buttons .selected {
+    background-color: #5a2eca;
     color: white;
   }
   
-  .book-availability-cancel-btn {
-    background: #ccc;
+  /* Action buttons */
+  .appointment-actions {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    
   }
+  
+  .save, .cancel {
+    padding: 10px;
+    width: 45%;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+   
+  }
+  
+  .appointment-save .appointment-cancel {
+    background-color:#5a2eca;
+    color: red;
+  }
+  
+ 
   
