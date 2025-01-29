@@ -8,8 +8,8 @@ const SignIn = () => {
   const [formData, setFormData] = useState({
     email: "",
     specialization: "",
-    location: "",
-    role: "",
+    
+   
     firstName: "",
     lastName: "",
     mobileNumber: "",
@@ -32,12 +32,8 @@ const SignIn = () => {
     if (!formData.email || !/\S+@\S+\.\S+/.test(formData.email)) {
       errors.email = "Valid email is required.";
     }
-    if (!formData.location) {
-      errors.location = "Location is required.";
-    }
-    if (!formData.role) {
-      errors.role = "Role is required.";
-    }
+   
+    
     if (!formData.firstName) {
       errors.firstName = "First name is required.";
     }
@@ -48,8 +44,8 @@ const SignIn = () => {
       errors.mobileNumber = "Valid mobile number is required.";
     }
 
-    // Additional validations for the "doctor" role
-    if (formData.role === "doctor") {
+  
+    
       if (!formData.specialization) {
         errors.specialization = "Specialization is required.";
       }
@@ -66,7 +62,7 @@ const SignIn = () => {
       if (!formData.experience) {
         errors.experience = "Experience is required.";
       }
-    }
+    
 
     setFormErrors(errors);
     setIsFormValid(Object.keys(errors).length === 0);
@@ -126,8 +122,8 @@ const SignIn = () => {
         // Append user data fields (converted to a JSON string)
         formDataToSend.append("user", JSON.stringify({
           email: formData.email,
-          role: formData.role,
-          location: formData.location,
+         
+      
           specialization:formData.specialization,
           firstName: formData.firstName,
           lastName: formData.lastName,
@@ -275,88 +271,9 @@ const SignIn = () => {
           </>
         )}
 
+      
+
         {currentStep === 2 && (
-          <>
-            <div className="form-group1">
-              <label>Location</label>
-              <select
-                name="location"
-                value={formData.location}
-                onChange={handleInputChange}
-                onFocus={handleInputFocus}
-                className={formErrors.location && touchedFields.location ? "error-input" : ""}
-                placeholder="Select your state"
-              >
-                <option value="" disabled>
-                  Select Location
-                </option>
-                <option value="andhra-pradesh">Andhra Pradesh</option>
-  <option value="arunachal-pradesh">Arunachal Pradesh</option>
-  <option value="assam">Assam</option>
-  <option value="bihar">Bihar</option>
-  <option value="chhattisgarh">Chhattisgarh</option>
-  <option value="goa">Goa</option>
-  <option value="gujarat">Gujarat</option>
-  <option value="haryana">Haryana</option>
-  <option value="himachal-pradesh">Himachal Pradesh</option>
-  <option value="jharkhand">Jharkhand</option>
-  <option value="karnataka">Karnataka</option>
-  <option value="kerala">Kerala</option>
-  <option value="madhya-pradesh">Madhya Pradesh</option>
-  <option value="maharashtra">Maharashtra</option>
-  <option value="manipur">Manipur</option>
-  <option value="meghalaya">Meghalaya</option>
-  <option value="mizoram">Mizoram</option>
-  <option value="nagaland">Nagaland</option>
-  <option value="odisha">Odisha</option>
-  <option value="punjab">Punjab</option>
-  <option value="rajasthan">Rajasthan</option>
-  <option value="sikkim">Sikkim</option>
-  <option value="tamil-nadu">Tamil Nadu</option>
-  <option value="telangana">Telangana</option>
-  <option value="tripura">Tripura</option>
-  <option value="uttar-pradesh">Uttar Pradesh</option>
-  <option value="uttarakhand">Uttarakhand</option>
-  <option value="west-bengal">West Bengal</option>
-  <option value="andaman-nicobar">Andaman and Nicobar Islands</option>
-  <option value="chandigarh">Chandigarh</option>
-  <option value="dadra-nagar-haveli">Dadra and Nagar Haveli and Daman and Diu</option>
-  <option value="delhi">Delhi</option>
-  <option value="jammu-kashmir">Jammu and Kashmir</option>
-  <option value="ladakh">Ladakh</option>
-  <option value="lakshadweep">Lakshadweep</option>
-  <option value="puducherry">Puducherry</option>
-
-              </select>
-              {touchedFields.location && formErrors.location && (
-            <span className="error">{formErrors.location}</span>
-          )}
-            </div>
-
-            <div className="form-group1">
-              <label>Role</label>
-              <select
-                name="role"
-                value={formData.role}
-                onChange={handleInputChange}
-                onFocus={handleInputFocus}
-                className={formErrors.role && touchedFields.role ? "error-input" : ""}
-                placeholder="select role"
-                >
-                <option value="" disabled>
-                  Select Role
-                </option>
-                <option value="doctor">Doctor</option>
-                <option value="patient">Patient</option>
-              </select>
-              {touchedFields.role && formErrors.role && (
-            <span className="error">{formErrors.role}</span>
-          )}
-            </div>
-          </>
-        )}
-
-        {currentStep === 3 && formData.role === "doctor" && (
           <>
          <div className="form-group1">
   <label>Upload Profile Image</label>
@@ -428,32 +345,24 @@ const SignIn = () => {
 
           {/* Show Next button only if we are not on the last step */}
           {currentStep === 1 && (
-            <button type="button" onClick={handleNextStep} disabled={currentStep === 2 && formData.role === "patient" && !isFormValid} className="next">
+            <button type="button" onClick={handleNextStep} disabled={currentStep === 2  && !isFormValid} className="next">
               Next &#8594;
             </button>
           )}
 
-           {currentStep === 2 && formData.role === 'doctor' && (
-            <button type="button" onClick={handleNextStep} className="next">
-              Next &#8594;
-            </button>
-          )}
+           
         </div>
 
 
 
-        {currentStep === 2 && formData.role === "patient" && (
+        {currentStep === 2  && (
     <button type="submit" className="signin-button" disabled={!isFormValid}>
       {isLoading ? "Submitting..." : "Submit"}
     </button>
 
 )}
 
-        {currentStep === 3 && formData.role === "doctor" && (
-          <button type="submit" className="signin-button" disabled={!isFormValid}>
-           {isLoading ? "Submitting..." : "Submit"}
-          </button>
-        )}
+       
       </form>
       <ToastContainer />
     </div>
