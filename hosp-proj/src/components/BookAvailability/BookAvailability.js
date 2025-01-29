@@ -6,18 +6,30 @@ import "react-toastify/dist/ReactToastify.css";
 const BookAvailability = ({ onClose }) => {
   const [doctorDetails, setDoctorDetails] = useState(null);
   const [selectedDates, setSelectedDates] = useState([]);
-  const [slotDuration, setSlotDuration] = useState("15");
+  const [slotDuration, setSlotDuration] = useState("20");
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
   const [calendarDays, setCalendarDays] = useState([]);
   const [selectedTimes, setSelectedTimes] = useState([]);
+
   useEffect(() => {
     const storedDoctorDetails = localStorage.getItem("doctorDetails");
     if (storedDoctorDetails) {
-      setDoctorDetails(JSON.parse(storedDoctorDetails));
+      try {
+        const parsedDoctorDetails = JSON.parse(storedDoctorDetails);
+        setDoctorDetails(parsedDoctorDetails);
+        console.log("Doctor Details from LocalStorage:", parsedDoctorDetails);
+      } catch (error) {
+        console.error("Error parsing doctor details from localStorage:", error);
+      }
+    } else {
+      console.warn("No doctor details found in localStorage");
     }
     generateCalendar(currentMonth, currentYear);
   }, [currentMonth, currentYear]);
+  
+
+  let docRegNum = doctorDetails?.regestrationNum || "UNKNOWN";
 
   const generateCalendar = (month, year) => {
     const firstDay = new Date(year, month, 1).getDay();
@@ -54,16 +66,95 @@ const BookAvailability = ({ onClose }) => {
     setCurrentYear(newDate.getFullYear());
   };
 
+  const generateTimeSlots = (timeRange, duration) => {
+    let slots = [];
+    let [startHour, endHour] = timeRange; 
+  
+    for (let hour = startHour; hour < endHour; hour++) {
+      for (let minutes = 0; minutes < 60; minutes += duration) {
+        let start = `${hour}:${String(minutes).padStart(2, "0")}`;
+  
+        let endHourCalc = hour;
+        let endMin = minutes + duration;
+  
+        if (endMin >= 60) {
+          endMin -= 60;
+          endHourCalc += 1;
+        }
+  
+        let end = `${endHourCalc}:${String(endMin).padStart(2, "0")}`;
+        slots.push(`${start}-${end}`);
+      }
+    }
+  
+    return slots;
+  };
+  
+  
+  
   const handleBooking = () => {
     if (selectedDates.length === 0) {
       toast.error("Please select at least one date.");
       return;
     }
-    toast.success(
-      `Availability booked for ${selectedDates.join(", ")} with ${slotDuration}-minute slots.`
-    );
-    onClose();
+    if (selectedTimes.length === 0) {
+      toast.error("Please select at least one time slot.");
+      return;
+    }
+    
+    // Ensure slotDuration is valid
+    const slotDur = Number(slotDuration);
+    if (isNaN(slotDur) || slotDur <= 0) {
+      toast.error("Invalid slot duration. Please select a valid option.");
+      return;
+    }
+  
+    // Time ranges mapping
+    const timeRanges = {
+      Morning: [9, 12], // 9 AM - 12 PM
+      Afternoon: [14, 17], // 2 PM - 5 PM
+      Evening: [19, 22], // 7 PM - 10 PM
+    };
+  
+    let slotData = [];
+  
+    selectedDates.forEach((date) => {
+      selectedTimes.forEach((time) => {
+        let slots = generateTimeSlots(timeRanges[time], slotDur);
+        slots.forEach((slot) => {
+          slotData.push({
+            slot: time.toUpperCase(),
+            time: slot,
+            date: date,
+            docRegNum: docRegNum,
+          });
+        });
+      });
+    });
+  
+    console.log("Final Slots Data:", slotData);
+  
+    fetch("http://localhost:8081/api/doctor-slots/save", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(slotData),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        toast.success("Availability booked successfully!");
+        console.log("Response:", data);
+        onClose();
+      })
+      .catch((error) => {
+        console.error("Error saving availability:", error);
+        toast.error("Failed to book availability.");
+      });
   };
+  
+  
+  
 
   return (
     <div className="appointment-overlay">
@@ -131,7 +222,6 @@ const BookAvailability = ({ onClose }) => {
             </div>
           
             <select value={slotDuration} onChange={(e) => setSlotDuration(e.target.value)}>
-              <option value="15">15 Minutes</option>
               <option value="20">20 Minutes</option>
               <option value="30">30 Minutes</option>
             </select>
