@@ -8,13 +8,12 @@ const SignIn = () => {
   const [formData, setFormData] = useState({
     email: "",
     specialization: "",
-    
-   
     firstName: "",
     lastName: "",
     mobileNumber: "",
     experience: "",
     profileImage: null,
+    consultationfee:"",
   });
 
   const [currentStep, setCurrentStep] = useState(1); // Step for fields
@@ -32,7 +31,9 @@ const SignIn = () => {
     if (!formData.email || !/\S+@\S+\.\S+/.test(formData.email)) {
       errors.email = "Valid email is required.";
     }
-   
+   if(!formData.consultationfee){
+    errors.consultationfee= "Enter Consultation Fee.";
+   }
     
     if (!formData.firstName) {
       errors.firstName = "First name is required.";
@@ -42,10 +43,7 @@ const SignIn = () => {
     }
     if (!formData.mobileNumber || !/^\d{10}$/.test(formData.mobileNumber)) {
       errors.mobileNumber = "Valid mobile number is required.";
-    }
-
-  
-    
+    }    
       if (!formData.specialization) {
         errors.specialization = "Specialization is required.";
       }
@@ -122,11 +120,10 @@ const SignIn = () => {
         // Append user data fields (converted to a JSON string)
         formDataToSend.append("user", JSON.stringify({
           email: formData.email,
-         
-      
           specialization:formData.specialization,
           firstName: formData.firstName,
           lastName: formData.lastName,
+          consultationfee:formData.consultationfee,
           mobileNumber: formData.mobileNumber,
           experience: formData.experience
         }));
@@ -331,6 +328,22 @@ const SignIn = () => {
           <span className="error">{formErrors.experience}</span>
             )}
             </div>
+
+            <div className="form-group1">
+              <label>Consultation Fee</label>
+              <input
+                type="text"
+                name="consultationfee"
+                value={formData.consultationfee}
+                onChange={handleInputChange}
+                onFocus={handleInputFocus}
+                className={formErrors.consultationfee && touchedFields.consultationfee ? "error-input" : ""}
+                placeholder="Enter Consultation Fee"
+              />
+              {touchedFields.consultationfee && formErrors.consultationfee && (
+            <span className="error">{formErrors.consultationfee}</span>
+          )}
+            </div>
           </>
         )}
 
@@ -348,6 +361,7 @@ const SignIn = () => {
             <button type="button" onClick={handleNextStep} disabled={currentStep === 2  && !isFormValid} className="next">
               Next &#8594;
             </button>
+            
           )}
 
            
