@@ -6,11 +6,18 @@ import "react-toastify/dist/ReactToastify.css";
 const BookAvailability = ({ onClose }) => {
   const [doctorDetails, setDoctorDetails] = useState(null);
   const [selectedDates, setSelectedDates] = useState([]);
-  const [slotDuration, setSlotDuration] = useState("20");
+  const [slotDuration, setSlotDuration] = useState(20);
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
   const [calendarDays, setCalendarDays] = useState([]);
   const [selectedTimes, setSelectedTimes] = useState([]);
+  const [bookedSlots, setBookedSlots] = useState({});
+
+  const timeRanges = {
+    Morning: [10, 12], // 9 AM - 12 PM
+    Afternoon: [13, 15], // 1 PM - 3 PM
+    Evening: [16, 18], // 4 PM - 6 PM
+  };
 
   useEffect(() => {
     const storedDoctorDetails = localStorage.getItem("doctorDetails");
@@ -18,18 +25,15 @@ const BookAvailability = ({ onClose }) => {
       try {
         const parsedDoctorDetails = JSON.parse(storedDoctorDetails);
         setDoctorDetails(parsedDoctorDetails);
-        console.log("Doctor Details from LocalStorage:", parsedDoctorDetails);
       } catch (error) {
-        console.error("Error parsing doctor details from localStorage:", error);
+        console.error("Error parsing doctor details:", error);
       }
-    } else {
-      console.warn("No doctor details found in localStorage");
     }
     generateCalendar(currentMonth, currentYear);
+    fetchBookedSlots();
   }, [currentMonth, currentYear]);
-  
 
-  let docRegNum = doctorDetails?.regestrationNum || "UNKNOWN";
+  const docRegNum = doctorDetails?.regestrationNum || "UNKNOWN";
 
   const generateCalendar = (month, year) => {
     const firstDay = new Date(year, month, 1).getDay();
@@ -48,15 +52,14 @@ const BookAvailability = ({ onClose }) => {
 
     const today = new Date().toISOString().split("T")[0];
     if (date < today) {
-      // Disable past date selection
       toast.error("You cannot select past dates.");
       return;
     }
 
     setSelectedDates((prevDates) =>
       prevDates.includes(date)
-        ? prevDates.filter((d) => d !== date) // Remove if already selected
-        : [...prevDates, date] // Add if not selected
+        ? prevDates.filter((d) => d !== date)
+        : [...prevDates, date]
     );
   };
 
@@ -66,32 +69,31 @@ const BookAvailability = ({ onClose }) => {
     setCurrentYear(newDate.getFullYear());
   };
 
-  const generateTimeSlots = (timeRange, duration) => {
-    let slots = [];
-    let [startHour, endHour] = timeRange; 
+  const generateTimeSlots = (startHour, endHour, duration, date) => {  
+    let slots = [];  
   
-    for (let hour = startHour; hour < endHour; hour++) {
-      for (let minutes = 0; minutes < 60; minutes += duration) {
-        let start = `${hour}:${String(minutes).padStart(2, "0")}`;
+    for (let hour = startHour; hour < endHour; hour++) {  
+      for (let minutes = 0; minutes < 60; minutes += duration) {  
+        let formattedStart = `${hour}:${String(minutes).padStart(2, "0")}`;  
+        let endHourCalc = hour;  
+        let endMin = minutes + duration;  
   
-        let endHourCalc = hour;
-        let endMin = minutes + duration;
+        if (endMin >= 60) {  
+          endMin -= 60;  
+          endHourCalc += 1;  
+        }  
   
-        if (endMin >= 60) {
-          endMin -= 60;
-          endHourCalc += 1;
-        }
+        let formattedEnd = `${endHourCalc}:${String(endMin).padStart(2, "0")}`;  
+        let timeSlot = `${formattedStart}-${formattedEnd}`;  
+        let isBooked = bookedSlots[date]?.some(slot => slot.time === timeSlot);  
   
-        let end = `${endHourCalc}:${String(endMin).padStart(2, "0")}`;
-        slots.push(`${start}-${end}`);
-      }
-    }
+        slots.push({ timeSlot, isBooked });  
+      }  
+    }  
   
-    return slots;
+    return slots;  
   };
-  
-  
-  
+
   const handleBooking = () => {
     if (selectedDates.length === 0) {
       toast.error("Please select at least one date.");
@@ -101,39 +103,20 @@ const BookAvailability = ({ onClose }) => {
       toast.error("Please select at least one time slot.");
       return;
     }
-    
-    // Ensure slotDuration is valid
-    const slotDur = Number(slotDuration);
-    if (isNaN(slotDur) || slotDur <= 0) {
-      toast.error("Invalid slot duration. Please select a valid option.");
-      return;
-    }
-  
-    // Time ranges mapping
-    const timeRanges = {
-      Morning: [9, 12], // 9 AM - 12 PM
-      Afternoon: [14, 17], // 2 PM - 5 PM
-      Evening: [19, 22], // 7 PM - 10 PM
-    };
-  
+
     let slotData = [];
-  
+
     selectedDates.forEach((date) => {
       selectedTimes.forEach((time) => {
-        let slots = generateTimeSlots(timeRanges[time], slotDur);
-        slots.forEach((slot) => {
-          slotData.push({
-            slot: time.toUpperCase(),
-            time: slot,
-            date: date,
-            docRegNum: docRegNum,
-          });
+        slotData.push({
+          slot: time,
+          time: time,
+          date: date,
+          docRegNum: docRegNum,
         });
       });
     });
-  
-    console.log("Final Slots Data:", slotData);
-  
+
     fetch("http://localhost:8081/api/doctor-slots/save", {
       method: "POST",
       headers: {
@@ -142,19 +125,32 @@ const BookAvailability = ({ onClose }) => {
       body: JSON.stringify(slotData),
     })
       .then((response) => response.json())
-      .then((data) => {
+      .then(() => {
         toast.success("Availability booked successfully!");
-        console.log("Response:", data);
         onClose();
+        fetchBookedSlots();
       })
-      .catch((error) => {
-        console.error("Error saving availability:", error);
+      .catch(() => {
         toast.error("Failed to book availability.");
       });
   };
-  
-  
-  
+
+  const fetchBookedSlots = () => {  
+  fetch("http://localhost:8081/api/doctor-slots/getBookedSlots")  
+    .then((response) => response.json())  
+    .then((data) => {  
+      const formattedSlots = {};  
+      data.forEach(slot => {  
+        const { date, time } = slot; // Assuming each slot has a date and time property  
+        if (!formattedSlots[date]) {  
+          formattedSlots[date] = [];  
+        }  
+        formattedSlots[date].push({ time });  
+      });  
+      setBookedSlots(formattedSlots);  
+    })  
+    .catch((error) => console.error("Error fetching booked slots:", error));  
+};
 
   return (
     <div className="appointment-overlay">
@@ -164,7 +160,6 @@ const BookAvailability = ({ onClose }) => {
         </h2>
 
         <div className="content">
-          {/* Calendar Section */}
           <div className="appointment-calendar">
             <div className="appointment-calendar-header">
               <button onClick={() => handleMonthChange(-1)}>&lt;</button>
@@ -178,64 +173,72 @@ const BookAvailability = ({ onClose }) => {
             </div>
 
             <div className="appointment-grid">
-              {["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"].map((day) => (
-                <div key={day} className="day-header">
-                  {day}
+              {calendarDays.map((date, index) => (
+                <div
+                  key={index}
+                  className={`day ${selectedDates.includes(date) ? "selected" : ""}`}
+                  onClick={() => handleDateSelection(date)}
+                >
+                  {date ? new Date(date).getDate() : ""}
                 </div>
               ))}
-              {calendarDays.map((date, index) => {
-                const isPastDate =
-                  date && date < new Date().toISOString().split("T")[0];
-
-                return (
-                  <div
-                    key={index}
-                    className={`day ${
-                      isPastDate
-                        ? "disabled" // Apply disabled style for past dates
-                        : selectedDates.includes(date)
-                        ? "selected"
-                        : ""
-                    }`}
-                    onClick={() => !isPastDate && handleDateSelection(date)} // Disable click for past dates
-                  >
-                    {date ? new Date(date).getDate() : ""}
-                  </div>
-                );
-              })}
             </div>
           </div>
 
-          {/* Slot Duration Section */}
           <div className="appointment-details">
-          <label>Slot Duration:</label>
-          <div className="appointment-time-buttons">
-              {["Morning", "Afternoon", "Evening"].map(time => (
-                <button
-                  key={time}
-                  className={selectedTimes.includes(time) ? "selected" : ""}
-                  onClick={() => setSelectedTimes(prev => prev.includes(time) ? prev.filter(t => t !== time) : [...prev, time])}
-                >
-                  {time}
-                </button>
-              ))}
-            </div>
-          
-            <select value={slotDuration} onChange={(e) => setSlotDuration(e.target.value)}>
+            <label>Slot Duration:</label>
+            <select
+              value={slotDuration}
+              onChange={(e) => setSlotDuration(Number(e.target.value))}
+            >
               <option value="20">20 Minutes</option>
               <option value="30">30 Minutes</option>
             </select>
-            
-            
-            <div className="appointment-actions">
-              <button onClick={handleBooking} className="appointment-save">Confirm</button>
-              <button onClick={onClose} className="appointment-cancel">Cancel</button>
-            </div>
-         </div>
 
-         </div>
-       </div>
-       </div>
+            <div className="appointment-time-buttons">
+              {Object.keys(timeRanges).map((timeRangeKey) => (
+                <div key={timeRangeKey}>
+                  <strong>{timeRangeKey}</strong>
+                  <div className="slot-grid">
+                    {generateTimeSlots(
+                      timeRanges[timeRangeKey][0],
+                      timeRanges[timeRangeKey][1],
+                      slotDuration,
+                      selectedDates[0]
+                    ).map(({ timeSlot, isBooked }) => (
+                      <button
+                        key={timeSlot}
+                        className={`time-slot ${isBooked ? "booked" : ""} ${
+                          selectedTimes.includes(timeSlot) ? "selected" : ""
+                        }`}
+                        onClick={() =>
+                          !isBooked &&
+                          setSelectedTimes((prev) =>
+                            prev.includes(timeSlot)
+                              ? prev.filter((t) => t !== timeSlot)
+                              : [...prev, timeSlot]
+                          )
+                        }
+                        disabled={isBooked}
+                      >
+                        {timeSlot}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <button onClick={handleBooking} className="appointment-save">
+              Confirm
+            </button>
+            <button onClick={onClose} className="appointment-cancel">
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 

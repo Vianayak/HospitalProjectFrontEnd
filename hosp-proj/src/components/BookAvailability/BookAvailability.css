@@ -20,7 +20,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 550px;
+    height: 750px;
   }
   
   /* Header */
@@ -222,4 +222,23 @@
   }
   
  
+  .time-slot {
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #a998c6;
+    border: none;
+    margin: 5px;
+  }
+  
+  .time-slot.selected {
+    background-color: #5a2eca;
+    color: white;
+  }
+  
+  .time-slot.booked {
+    background-color: red;
+    color: white;
+    cursor: not-allowed;
+  }
   
