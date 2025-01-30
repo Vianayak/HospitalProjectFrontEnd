@@ -20,6 +20,7 @@ const DoctorGrid = () => {
   const [countdown, setCountdown] = useState(0);
   const [canResendOtp, setCanResendOtp] = useState(true);
   const [blockedSlots, setBlockedSlots] = useState([]);
+    const [doctorSchedule, setDoctorSchedule] = useState([]);
 
   const navigate = useNavigate();
 
@@ -149,7 +150,8 @@ const DoctorGrid = () => {
         `http://localhost:8081/api/doctors/doctor-schedule?regNum=${doctor.regestrationNum}`
       );
       if (Array.isArray(response.data)) {
-        setBlockedSlots(response.data);
+        console.log(response.data);
+        setDoctorSchedule(response.data);
       } else {
         console.warn("Expected an array, but got", response.data);
       }
@@ -159,7 +161,13 @@ const DoctorGrid = () => {
   };
 
   const isSlotBlocked = (slotTime) => {
-    return blockedSlots.some(item => item.date === date && item.time === slotTime);
+    const scheduleForDate = doctorSchedule.find(item => item.date === date);
+    return scheduleForDate?.blockedSlots?.includes(slotTime);
+  };
+  
+  const getAvailableSlots = () => {
+    const scheduleForDate = doctorSchedule.find(item => item.date === date);
+    return scheduleForDate?.availableSlots || [];
   };
 
   // Only show first 6 doctors in the grid
@@ -239,15 +247,16 @@ const DoctorGrid = () => {
 
       {showSchedulePopup && (
         <SchedulePopup
-          date={date}
-          setDate={setDate}
-          selectedTimeSlot={selectedTimeSlot}
-          setSelectedTimeSlot={setSelectedTimeSlot}
-          isSlotBlocked={isSlotBlocked}
-          handleConfirmAppointment={handleConfirmAppointment}
-          handleClosePopup={handleClosePopup}
-          setShowSchedulePopup={setShowSchedulePopup}
-        />
+        date={date}
+        setDate={setDate}
+        selectedTimeSlot={selectedTimeSlot}
+        setSelectedTimeSlot={setSelectedTimeSlot}
+        isSlotBlocked={isSlotBlocked}
+        handleConfirmAppointment={handleConfirmAppointment}
+        handleClosePopup={handleClosePopup}
+        setShowSchedulePopup={setShowSchedulePopup}
+        availableSlots={getAvailableSlots()} // Pass dynamically available slots
+      />
       )}
       <ToastContainer />
     </>
