@@ -193,10 +193,15 @@ const DoctorGrid = () => {
         )}
       </div>
       {doctors.length > 6 && (
-        <div className="doctor-buttons">
-          <button onClick={() => navigate("/book-appointments-page")}>More Doctors</button>
-        </div>
-      )}
+  <div className="doctor-buttons">
+    <button onClick={() => {
+      sessionStorage.setItem("validNavigation", "true"); // Store in sessionStorage
+      navigate("/book-appointments-page"); // Navigate to the desired page
+    }}>
+      More Doctors
+    </button>
+  </div>
+)}
       {/* Modal for Doctor Details */}
       {isModalOpen && selectedDoctor && (
         <div className="modal">

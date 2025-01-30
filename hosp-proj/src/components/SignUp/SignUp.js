@@ -125,7 +125,8 @@ const SignIn = () => {
           lastName: formData.lastName,
           consultationFee:formData.consultationfee,
           mobileNumber: formData.mobileNumber,
-          experience: formData.experience
+          experience: formData.experience,
+          role:"doctor"
         }));
         
         // Append the profile image if it exists

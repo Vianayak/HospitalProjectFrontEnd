@@ -17,6 +17,8 @@ const DoctorCard = ({ doctor }) => {
   const [blockedSlots, setBlockedSlots] = useState([]);
   const [countdown, setCountdown] = useState(30); // Initialize countdown state
   const [canResendOtp, setCanResendOtp] = useState(true); // To manage OTP resend functionality
+  const [doctorSchedule, setDoctorSchedule] = useState([]);
+
   
   const navigate = useNavigate();
 
@@ -27,7 +29,7 @@ const DoctorCard = ({ doctor }) => {
           `http://localhost:8081/api/doctors/doctor-schedule?regNum=${doctor.regestrationNum}`
         );
         if (Array.isArray(response.data)) {
-          setBlockedSlots(response.data);
+          setDoctorSchedule(response.data);
         } else {
           console.warn("Expected an array, but got", response.data);
         }
@@ -35,13 +37,21 @@ const DoctorCard = ({ doctor }) => {
         console.error("Error fetching doctor schedule:", error);
       }
     };
-
+  
     fetchDoctorSchedule();
   }, [doctor.regestrationNum]);
+  
 
   const isSlotBlocked = (slotTime) => {
-    return blockedSlots.some(item => item.date === date && item.time === slotTime);
+    const scheduleForDate = doctorSchedule.find(item => item.date === date);
+    return scheduleForDate?.blockedSlots?.includes(slotTime);
   };
+  
+  const getAvailableSlots = () => {
+    const scheduleForDate = doctorSchedule.find(item => item.date === date);
+    return scheduleForDate?.availableSlots || [];
+  };
+  
 
   const handleBookAppointment = () => {
     setShowPopup(true);
@@ -170,15 +180,17 @@ const DoctorCard = ({ doctor }) => {
 
       {showSchedulePopup && (
         <SchedulePopup
-          date={date}
-          setDate={setDate}
-          selectedTimeSlot={selectedTimeSlot}
-          setSelectedTimeSlot={setSelectedTimeSlot}
-          isSlotBlocked={isSlotBlocked}
-          handleConfirmAppointment={handleConfirmAppointment}
-          handleClosePopup={handleClosePopup}
-          setShowSchedulePopup={setShowSchedulePopup}
-        />
+        date={date}
+        setDate={setDate}
+        selectedTimeSlot={selectedTimeSlot}
+        setSelectedTimeSlot={setSelectedTimeSlot}
+        isSlotBlocked={isSlotBlocked}
+        handleConfirmAppointment={handleConfirmAppointment}
+        handleClosePopup={handleClosePopup}
+        setShowSchedulePopup={setShowSchedulePopup}
+        availableSlots={getAvailableSlots()} // Pass dynamically available slots
+      />
+      
       )}
     </>
   );
