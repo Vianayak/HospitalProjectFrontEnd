@@ -50,48 +50,4 @@
 
 .carousel-container:hover .carousel-track {
   animation-play-state: paused;
-
-}
-
-/* 📱 Responsive Design */
-@media (max-width: 1200px) {
-  .carousel-container {
-      width: 95%; /* Increase width */
-  }
-  .carousel-card {
-      width: 180px; /* Slightly smaller cards */
-  }
-}
-
-@media (max-width: 992px) {
-  .carousel-container {
-      width: 100%; /* Full width */
-  }
-  .carousel-card {
-      width: 160px; /* Adjust card size */
-  }
-}
-
-@media (max-width: 768px) {
-  .carousel-track {
-      gap: 15px; /* Reduce spacing */
-  }
-  .carousel-card {
-      width: 140px;
-  }
-}
-
-@media (max-width: 576px) {
-  .carousel-container {
-      width: 100%;
-  }
-  .carousel-card {
-      width: 120px; /* Smaller cards */
-  }
-}
-
-@media (max-width: 400px) {
-  .carousel-container5 {
-      width: 100px; /* Reduce card width further */
-  }
 }
