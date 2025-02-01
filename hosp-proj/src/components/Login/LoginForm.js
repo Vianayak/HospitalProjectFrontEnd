@@ -56,6 +56,13 @@ const [role, setRole] = useState("Doctor");
         const responseData = await response.json();
         const token = responseData.token;
         localStorage.setItem("authToken", token);
+        const userRole=responseData.role;
+
+        if ((userRole === "doctor" && role !== "Doctor") || (userRole === "patient" && role !== "Patient")) {
+          toast.error("Role mismatch. Please select the correct role.");
+          setIsLoading(false); // Stop loader if role mismatch
+          return;
+        }
 
         if(responseData.role === 'doctor'){
           if (responseData.doctorDetails) {
@@ -160,6 +167,7 @@ const [role, setRole] = useState("Doctor");
               value={formData.username}
               onChange={handleInputChange}
               required
+              disabled={isLoading}
             />
           </div>
           <div className="input-group">
@@ -172,6 +180,7 @@ const [role, setRole] = useState("Doctor");
               value={formData.password}
               onChange={handleInputChange}
               required
+              disabled={isLoading}
             />
             <span className="flex justify-around items-center password-icon" onClick={handleToggle}>
                   <Icon class="absolute mr-10" icon={icon} size={25}/>
@@ -183,6 +192,7 @@ const [role, setRole] = useState("Doctor");
               name="rememberMe"
               checked={formData.rememberMe}
               onChange={handleInputChange}
+              disabled={isLoading}
             />
             <label>Remember me</label>
           </div>
