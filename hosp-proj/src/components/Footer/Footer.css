@@ -1,91 +1,152 @@
 .footer {
-    display: flex;
-    flex-wrap: wrap;
-    background-color: #0b0d27;
-    color: white;
-    padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  background-color: #0b0d27;
+  color: white;
+  padding: 20px;
+  justify-content: space-between;
+}
+
+.footer-left {
+  flex: 1;
+  max-width: 300px;
+  margin-right: 20px;
+}
+
+.footer-logo {
+  width: 150px;
+}
+
+.footer-tagline {
+  margin: 10px 0;
+  font-weight: bold;
+}
+
+.footer-newsletter p {
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.newsletter-input {
+  display: flex;
+  gap: 10px;
+}
+
+.newsletter-input input {
+  flex: 1;
+  padding: 8px;
+  border-radius: 4px;
+  border: none;
+}
+
+.newsletter-input button {
+  padding: 8px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.footer-apps-title {
+  margin-top: 20px;
+  font-weight: bold;
+}
+
+.footer-apps img {
+  width: 120px;
+  margin-right: 10px;
+}
+
+.footer-links {
+  display: flex;
+  flex: 3;
+  justify-content: space-between;
+}
+
+.footer-column {
+  flex: 1;
+  margin-right: 20px;
+}
+
+.footer-column h4 {
+  margin-bottom: 10px;
+  border-bottom: 2px solid orange;
+  display: inline-block;
+}
+
+.footer-column ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-column li {
+  margin: 5px 0;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.footer-column li:hover {
+  text-decoration: underline;
+}
+
+/* 📱 Responsive Design */
+@media (max-width: 1200px) {
+  .footer {
+      flex-direction: row;
+      flex-wrap: wrap;
   }
-  
-  .footer-left {
-    flex: 1;
-    max-width: 300px;
-    margin-right: 20px;
-  }
-  
-  .footer-logo {
-    width: 150px;
-  }
-  
-  .footer-tagline {
-    margin: 10px 0;
-    font-weight: bold;
-  }
-  
-  .footer-newsletter p {
-    margin-bottom: 10px;
-    font-size: 14px;
-  }
-  
-  .newsletter-input {
-    display: flex;
-    gap: 10px;
-  }
-  
-  .newsletter-input input {
-    flex: 1;
-    padding: 8px;
-    border-radius: 4px;
-    border: none;
-  }
-  
-  .newsletter-input button {
-    padding: 8px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .footer-apps-title {
-    margin-top: 20px;
-    font-weight: bold;
-  }
-  
-  .footer-apps img {
-    width: 120px;
-    margin-right: 10px;
-  }
-  
   .footer-links {
-    display: flex;
-    flex: 3;
-    justify-content: space-between;
+      flex-wrap: wrap;
   }
-  
   .footer-column {
-    flex: 1;
-    margin-right: 20px;
+      flex: 1 1 30%;
   }
-  
-  .footer-column h4 {
-    margin-bottom: 10px;
-    border-bottom: 2px solid orange;
-    display: inline-block;
+}
+
+@media (max-width: 992px) {
+  .footer {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
   }
-  
-  .footer-column ul {
-    list-style: none;
-    padding: 0;
+  .footer-left {
+      max-width: 100%;
+      text-align: center;
+      margin-bottom: 20px;
   }
-  
-  .footer-column li {
-    margin: 5px 0;
-    font-size: 14px;
-    cursor: pointer;
+  .footer-links {
+      flex-direction: column;
+      align-items: center;
   }
-  
-  .footer-column li:hover {
-    text-decoration: underline;
+  .footer-column {
+      flex: 1 1 100%;
+      margin-bottom: 15px;
   }
-  
+}
+
+@media (max-width: 768px) {
+  .footer {
+      padding: 20px 10px;
+  }
+  .newsletter-input {
+      flex-direction: column;
+  }
+  .newsletter-input input,
+  .newsletter-input button {
+      width: 100%;
+  }
+}
+
+@media (max-width: 576px) {
+  .footer {
+      padding: 15px;
+      width: 780px;
+  }
+  .footer-column {
+      text-align: center;
+  }
+  .footer-apps img {
+      width: 100px;
+  }
+}
