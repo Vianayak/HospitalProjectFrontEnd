@@ -49,6 +49,7 @@
 @media (max-width: 480px) {
     .custom-carousel {
         margin-top: 60px;
+        width: 800px;
     }
     .custom-carousel img {
         object-fit: scale-down; /* Scale the image down for very small screens */

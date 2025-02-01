@@ -1,6 +1,5 @@
 .App {
   text-align: center;
-  
 }
 
 .App-logo {
@@ -10,7 +9,7 @@
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+      animation: App-logo-spin infinite 20s linear;
   }
 }
 
@@ -31,42 +30,38 @@
 
 @keyframes App-logo-spin {
   from {
-    transform: rotate(0deg);
+      transform: rotate(0deg);
   }
   to {
-    transform: rotate(360deg);
+      transform: rotate(360deg);
   }
 }
 
-/* Content section styling for user-details and appointment-details side by side */
+/* Content Section */
 .content {
   display: flex;
   justify-content: space-between;
   padding: 20px;
-  background-color: #f1f1f1; /* Set a background color for both sections */
+  background-color: #f1f1f1;
 }
 
-/* Style for UserDetails and AppointmentDetails components */
 .content > div {
-  width: 48%; /* Adjust width as needed */
+  width: 48%;
   box-sizing: border-box;
-  background-color: #fff; /* White background for each component */
+  background-color: #fff;
   padding: 20px;
   border-radius: 10px;
-  border: 1px solid #ddd; /* Border for each component */
+  border: 1px solid #ddd;
 }
 
-/* Adding a dividing line between the two components */
 .content > div + div {
-  margin-left: 4%; /* Space between components */
+  margin-left: 4%;
 }
 
-/* Optional margin between components */
 .content > div:last-child {
-  margin-left: 20px; /* Adds some space between the right-side component */
+  margin-left: 20px;
 }
 
-/* Optional, if you want the sections to have the same height */
 .content > div {
   display: flex;
   flex-direction: column;
@@ -74,21 +69,18 @@
   justify-content: space-between;
 }
 
-/* Responsive design for smaller screens */
 @media (max-width: 768px) {
   .content {
-    flex-direction: column; /* Stack components vertically */
-    align-items: center;
+      flex-direction: column;
+      align-items: center;
   }
 
   .content > div {
-    width: 100%; /* Full width for components on small screens */
-    margin-bottom: 20px; /* Adds space between components */
+      width: 100%;
+      margin-bottom: 20px;
   }
 
   .content > div:last-child {
-    margin-bottom: 0; /* Remove bottom margin for last component */
+      margin-bottom: 0;
   }
 }
-
-
