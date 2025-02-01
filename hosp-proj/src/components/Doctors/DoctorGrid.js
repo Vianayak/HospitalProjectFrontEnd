@@ -191,7 +191,6 @@ const DoctorGrid = () => {
               </div>
               <h3>{doctor.name}</h3>
               <p>Specialization: {doctor.specialization}</p>
-              <p>Location: {doctor.location}</p>
               <div className="doctor-buttons">
                 <button onClick={() => handleViewDetails(doctor)}>View Details</button>
                 <button onClick={() => handleBookAppointment(doctor)}>Book Appointment</button>
