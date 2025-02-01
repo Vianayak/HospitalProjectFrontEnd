@@ -1,22 +1,25 @@
 import React, { useState, useEffect } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import "./BookAvailability.css";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const BookAvailability = ({ onClose }) => {
+
+const BookAvailability = ({ onClose, fetchBookedSlotsOnOpen }) => {
   const [doctorDetails, setDoctorDetails] = useState(null);
-  const [selectedDates, setSelectedDates] = useState([]);
+  const [selectedDate, setSelectedDate] = useState(null);
   const [slotDuration, setSlotDuration] = useState(20);
-  const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
-  const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
-  const [calendarDays, setCalendarDays] = useState([]);
   const [selectedTimes, setSelectedTimes] = useState([]);
   const [bookedSlots, setBookedSlots] = useState({});
 
+  const [selectedDates, setSelectedDates] = useState([]);
+
+
   const timeRanges = {
-    Morning: [10, 12], // 9 AM - 12 PM
-    Afternoon: [13, 15], // 1 PM - 3 PM
-    Evening: [16, 18], // 4 PM - 6 PM
+    Morning: [9, 12],
+    Afternoon: [13, 15],
+    Evening: [16, 18],
   };
 
   useEffect(() => {
@@ -29,70 +32,64 @@ const BookAvailability = ({ onClose }) => {
         console.error("Error parsing doctor details:", error);
       }
     }
-    generateCalendar(currentMonth, currentYear);
-    fetchBookedSlots();
-  }, [currentMonth, currentYear]);
+  }, []);
+  
+  useEffect(() => {
+    if (doctorDetails && fetchBookedSlotsOnOpen) {
+      console.log("Fetching booked slots for:", doctorDetails.regestrationNum);
+      fetchBookedSlots();
+    }
+  }, [doctorDetails, fetchBookedSlotsOnOpen]);
+  
+  
+  
 
   const docRegNum = doctorDetails?.regestrationNum || "UNKNOWN";
 
-  const generateCalendar = (month, year) => {
-    const firstDay = new Date(year, month, 1).getDay();
-    const daysInMonth = new Date(year, month + 1, 0).getDate();
-    const daysArray = Array.from({ length: firstDay }, () => null);
-
-    for (let i = 1; i <= daysInMonth; i++) {
-      const day = new Date(year, month, i);
-      daysArray.push(day.toISOString().split("T")[0]);
-    }
-    setCalendarDays(daysArray);
-  };
-
-  const handleDateSelection = (date) => {
-    if (!date) return;
-
-    const today = new Date().toISOString().split("T")[0];
-    if (date < today) {
-      toast.error("You cannot select past dates.");
-      return;
-    }
-
-    setSelectedDates((prevDates) =>
-      prevDates.includes(date)
-        ? prevDates.filter((d) => d !== date)
-        : [...prevDates, date]
+  const handleDateChange = (date) => {
+    const localDate = new Date(date);
+    localDate.setHours(0, 0, 0, 0); // Remove time part
+  
+    setSelectedDates((prev) =>
+      prev.some((d) => d.getTime() === localDate.getTime())
+        ? prev.filter((d) => d.getTime() !== localDate.getTime())
+        : [...prev, localDate]
     );
+  
+    setSelectedDate(localDate); // ✅ Update selected date
+    setSelectedTimes([]); // ✅ Clear previously selected time slots
   };
-
-  const handleMonthChange = (increment) => {
-    const newDate = new Date(currentYear, currentMonth + increment);
-    setCurrentMonth(newDate.getMonth());
-    setCurrentYear(newDate.getFullYear());
+  
+  
+  
+  
+  const generateTimeSlots = (startHour, endHour, duration) => {
+    let slots = [];
+    let selectedDateFormatted = selectedDate ? selectedDate.toLocaleDateString("en-CA") : null; // Ensure it's only formatted when selected
+  
+    for (let hour = startHour; hour < endHour; hour++) {
+      for (let minutes = 0; minutes < 60; minutes += duration) {
+        let formattedStart = `${hour}:${String(minutes).padStart(2, "0")}`;
+        let endHourCalc = hour;
+        let endMin = minutes + duration;
+        if (endMin >= 60) {
+          endMin -= 60;
+          endHourCalc += 1;
+        }
+        let formattedEnd = `${endHourCalc}:${String(endMin).padStart(2, "0")}`;
+        let timeSlot = `${formattedStart}-${formattedEnd}`;
+  
+        // ✅ Check if the slot is booked **only if a date is selected**
+        let isBooked =
+          selectedDateFormatted &&
+          bookedSlots[selectedDateFormatted]?.some((slot) => slot.time === timeSlot);
+  
+        slots.push({ timeSlot, isBooked });
+      }
+    }
+    return slots;
   };
-
-  const generateTimeSlots = (startHour, endHour, duration, date) => {  
-    let slots = [];  
   
-    for (let hour = startHour; hour < endHour; hour++) {  
-      for (let minutes = 0; minutes < 60; minutes += duration) {  
-        let formattedStart = `${hour}:${String(minutes).padStart(2, "0")}`;  
-        let endHourCalc = hour;  
-        let endMin = minutes + duration;  
-  
-        if (endMin >= 60) {  
-          endMin -= 60;  
-          endHourCalc += 1;  
-        }  
-  
-        let formattedEnd = `${endHourCalc}:${String(endMin).padStart(2, "0")}`;  
-        let timeSlot = `${formattedStart}-${formattedEnd}`;  
-        let isBooked = bookedSlots[date]?.some(slot => slot.time === timeSlot);  
-  
-        slots.push({ timeSlot, isBooked });  
-      }  
-    }  
-  
-    return slots;  
-  };
 
   const handleBooking = () => {
     if (selectedDates.length === 0) {
@@ -103,20 +100,16 @@ const BookAvailability = ({ onClose }) => {
       toast.error("Please select at least one time slot.");
       return;
     }
-
-    let slotData = [];
-
-    selectedDates.forEach((date) => {
-      selectedTimes.forEach((time) => {
-        slotData.push({
-          slot: time,
-          time: time,
-          date: date,
-          docRegNum: docRegNum,
-        });
-      });
-    });
-
+  
+    let slotData = selectedDates.flatMap((date) =>
+      selectedTimes.map((time) => ({
+        slot: time,
+        time: time,
+        date: date.toLocaleDateString("en-CA"), // Ensures YYYY-MM-DD without shifting
+        docRegNum: docRegNum,
+      }))
+    );
+  
     fetch("http://localhost:8081/api/doctor-slots/save", {
       method: "POST",
       headers: {
@@ -134,23 +127,31 @@ const BookAvailability = ({ onClose }) => {
         toast.error("Failed to book availability.");
       });
   };
+  
 
-  const fetchBookedSlots = () => {  
-  fetch("http://localhost:8081/api/doctor-slots/getBookedSlots")  
-    .then((response) => response.json())  
-    .then((data) => {  
-      const formattedSlots = {};  
-      data.forEach(slot => {  
-        const { date, time } = slot; // Assuming each slot has a date and time property  
-        if (!formattedSlots[date]) {  
-          formattedSlots[date] = [];  
-        }  
-        formattedSlots[date].push({ time });  
-      });  
-      setBookedSlots(formattedSlots);  
-    })  
-    .catch((error) => console.error("Error fetching booked slots:", error));  
-};
+  const fetchBookedSlots = () => {
+    fetch(`http://localhost:8081/api/doctor-slots/get/${docRegNum}`)
+      .then(response => response.json())
+      .then(data => {
+        const formattedSlots = {};
+  
+        data.forEach(slot => {
+          let formattedDate = slot.date; // Directly use the API's date format (YYYY-MM-DD)
+  
+          if (!formattedSlots[formattedDate]) {
+            formattedSlots[formattedDate] = [];
+          }
+  
+          formattedSlots[formattedDate].push({ time: slot.time }); // Store time correctly
+        });
+  
+        console.log("reg:", docRegNum);
+        console.log("Updated Booked Slots:", formattedSlots);
+        setBookedSlots(formattedSlots);
+      })
+      .catch(error => console.error("Error fetching booked slots:", error));
+  };
+  
 
   return (
     <div className="appointment-overlay">
@@ -161,28 +162,26 @@ const BookAvailability = ({ onClose }) => {
 
         <div className="content">
           <div className="appointment-calendar">
-            <div className="appointment-calendar-header">
-              <button onClick={() => handleMonthChange(-1)}>&lt;</button>
-              <span>
-                {new Date(currentYear, currentMonth).toLocaleString("default", {
-                  month: "long",
-                })}{" "}
-                {currentYear}
-              </span>
-              <button onClick={() => handleMonthChange(1)}>&gt;</button>
-            </div>
+            <label>Select a Date:</label>
+            <DatePicker
+  selected={null} // Since we are selecting multiple dates
+  onChange={handleDateChange}
+  minDate={new Date()}
+  inline
+  highlightDates={selectedDates}
+/>
 
-            <div className="appointment-grid">
-              {calendarDays.map((date, index) => (
-                <div
-                  key={index}
-                  className={`day ${selectedDates.includes(date) ? "selected" : ""}`}
-                  onClick={() => handleDateSelection(date)}
-                >
-                  {date ? new Date(date).getDate() : ""}
-                </div>
-              ))}
-            </div>
+
+<div className="calendar-buttons">
+    <button onClick={handleBooking} className="appointment-save">
+      Confirm
+    </button>
+    <button onClick={onClose} className="appointment-cancel">
+      Cancel
+    </button>
+  </div>
+
+
           </div>
 
           <div className="appointment-details">
@@ -196,49 +195,42 @@ const BookAvailability = ({ onClose }) => {
             </select>
 
             <div className="appointment-time-buttons">
-              {Object.keys(timeRanges).map((timeRangeKey) => (
+              {Object.keys(timeRanges).map(timeRangeKey => (
                 <div key={timeRangeKey}>
                   <strong>{timeRangeKey}</strong>
                   <div className="slot-grid">
                     {generateTimeSlots(
                       timeRanges[timeRangeKey][0],
                       timeRanges[timeRangeKey][1],
-                      slotDuration,
-                      selectedDates[0]
+                      slotDuration
                     ).map(({ timeSlot, isBooked }) => (
                       <button
-                        key={timeSlot}
-                        className={`time-slot ${isBooked ? "booked" : ""} ${
-                          selectedTimes.includes(timeSlot) ? "selected" : ""
-                        }`}
-                        onClick={() =>
-                          !isBooked &&
-                          setSelectedTimes((prev) =>
-                            prev.includes(timeSlot)
-                              ? prev.filter((t) => t !== timeSlot)
-                              : [...prev, timeSlot]
-                          )
-                        }
-                        disabled={isBooked}
-                      >
-                        {timeSlot}
-                      </button>
+  key={timeSlot}
+  className={`time-slot ${isBooked ? "booked" : ""} ${selectedTimes.includes(timeSlot) ? "selected" : ""}`}
+  onClick={() =>
+    !isBooked &&
+    setSelectedTimes(prev =>
+      prev.includes(timeSlot) ? prev.filter(t => t !== timeSlot) : [...prev, timeSlot]
+    )
+  }
+  disabled={isBooked} // ✅ Ensures only booked slots for selected date are disabled
+>
+  {timeSlot}
+</button>
+
                     ))}
                   </div>
                 </div>
               ))}
             </div>
 
-            <button onClick={handleBooking} className="appointment-save">
-              Confirm
-            </button>
-            <button onClick={onClose} className="appointment-cancel">
-              Cancel
-            </button>
+            
           </div>
         </div>
       </div>
+      <ToastContainer />
     </div>
+    
   );
 };
 
