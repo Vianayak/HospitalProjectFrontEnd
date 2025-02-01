@@ -109,8 +109,11 @@ const Sidebar = () => {
         if (changePasswordResponse.ok) {
           toast.success("Password reset successfully", {
             onClose: () => {
-              setShowPasswordForm(false);
-              setButtonDisabled(false);
+              localStorage.removeItem("authToken");
+              localStorage.removeItem("doctorDetails");
+  
+              sessionStorage.setItem("validNavigation", "true"); // Set valid navigation flag
+              navigate("/login"); // Navigate to login page
             },
           });
         } else {

@@ -123,10 +123,10 @@ const PatientDashboard = ({selectedDate, setSelectedDate}) => {
         <div>
           <ul className="legend">
             <li>
-              <span className="legend-color new-patients"></span> Today's Earnings
+              <span className="legend-color new-patients"></span> Today's Payments
             </li>
             <li>
-              <span className="legend-color old-patients"></span> Total Earnings
+              <span className="legend-color old-patients"></span> Total Payments
             </li>
           </ul>
         </div>

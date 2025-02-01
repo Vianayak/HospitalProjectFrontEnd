@@ -54,7 +54,7 @@ const PatientDashboardHeader = ({ selectedDate,setSelectedDate}) => {
         <div className="stat-box">
           <FaUserAlt className="stat-icon" />
           <div>
-            <h3>Total Patients</h3>
+            <h3>Total Appointments</h3>
             <h4 className="stat-number">{stats.totalConsultations}</h4>
             <p className="stat-label">Today</p>
           </div>
@@ -62,7 +62,7 @@ const PatientDashboardHeader = ({ selectedDate,setSelectedDate}) => {
         <div className="stat-box">
           <FaCalendarAlt className="stat-icon" />
           <div>
-            <h3>Today's Patients</h3>
+            <h3>Today's Appointments</h3>
             <h4 className="stat-number">{stats.todayConsultations}</h4>
             <p className="stat-label">Today</p>
           </div>
