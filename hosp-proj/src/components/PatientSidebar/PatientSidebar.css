@@ -132,18 +132,18 @@
   }
 
 
-  .profile-section {
+  .profile-section1 {
     display: flex;
     align-items: center;
     padding: 10px;
   }
   
-  .profile-info {
+  .profile-info1 {
     display: flex;
     align-items: center;
   }
   
-  .profile-icon {
+  .profile-icon1 {
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -151,7 +151,7 @@
     object-fit: cover; /* Ensures image is contained properly */
   }
   
-  .profile-section h3 {
+  .profile-section1 h3 {
     font-size: 1.2rem;
     margin: 0;
   }

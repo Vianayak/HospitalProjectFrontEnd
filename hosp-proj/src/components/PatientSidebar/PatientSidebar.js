@@ -119,11 +119,11 @@ const PatientSidebar = () => {
   return (
     <div className="layout">
       <div className="PatientSidebar">
-        <div className="profile-section">
+        <div className="profile-section1">
           {patientDetails ? (
             <>
-            <div className="profile-info">
-        <FaUserCircle className="profile-icon" /> {/* React icon used here */}
+            <div className="profile-info1">
+        <FaUserCircle className="profile-icon1" /> {/* React icon used here */}
         <h3>{patientDetails.firstName} {patientDetails.lastName}</h3>
       </div>
             </>
