@@ -30,6 +30,7 @@ const Sidebar = () => {
     setShowBookAvailability(true);
   };
   
+  
   const passwordCriteria = {
     length: formData.password.length >= 8,
     uppercase: /[A-Z]/.test(formData.password),
@@ -159,7 +160,13 @@ const Sidebar = () => {
     <i className="icon">&#x1F512;</i> Change Password
   </li>
 </ul>
-{showBookAvailability && <BookAvailability onClose={() => setShowBookAvailability(false)} />}
+{showBookAvailability && (
+  <BookAvailability 
+    onClose={() => setShowBookAvailability(false)} 
+    fetchBookedSlotsOnOpen={true} 
+  />
+)}
+
 
       </div>
       <div className="dashboard-content">
