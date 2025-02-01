@@ -58,6 +58,7 @@
   @media (max-width: 480px) {
     .doctor-grid {
       grid-template-columns: 1fr;
+      width: 750px;
     }
   }
   
