@@ -20,7 +20,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-
     height: 670px;
   }
   
@@ -124,7 +123,7 @@
     padding: 10px;
     border-radius: 5px;
     cursor: pointer;
-    background-color: #1eb92d;
+    background-color: #a998c6;
     border: none;
     color: #333;
    
@@ -244,4 +243,6 @@
     background-color: red;
     color: white;
     cursor: not-allowed;
+    
   }
+  
