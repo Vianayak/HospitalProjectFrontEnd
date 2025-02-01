@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { FaUserCircle } from 'react-icons/fa';
 import { Dialog, DialogActions, DialogContent, DialogTitle, Button, TextField } from "@mui/material";
 import axios from "axios";
+import Calendar from "react-calendar";
 
 
 const PatientSidebar = () => {
@@ -123,38 +124,35 @@ const PatientSidebar = () => {
 
 
 
-  useEffect(() => {
-    setMeetings([
-      { id: 1, doctor: "Dr. Smith", time: "10:00 AM", link: "https://meet.example.com/123" },
-      { id: 2, doctor: "Dr. Johnson", time: "2:00 PM", link: "https://meet.example.com/456" },
-      { id: 1, doctor: "Dr. Smith", time: "10:00 AM", link: "https://meet.example.com/123" },
-      { id: 2, doctor: "Dr. Johnson", time: "2:00 PM", link: "https://meet.example.com/456" },
-      { id: 1, doctor: "Dr. Smith", time: "10:00 AM", link: "https://meet.example.com/123" },
-      { id: 2, doctor: "Dr. Johnson", time: "2:00 PM", link: "https://meet.example.com/456" },
-    ]);
-  }, []);
 
 
+  const handleDateChange = (date) => {
+    console.log("Selected date before formatting:", date);  // Log selected date
+    setSelectedDate(date);
+    
+    // Format the date to 'yyyy-MM-dd'
+    const localDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
 
-  const handleMeetingSubmit = async () => {
-    try {
-      // Make API request to validate the password
-      const response = await axios.post("http://localhost:8081/api/meet/validateMeet", { meetingId: meetingId });
-
-      // If password is correct, redirect to the meeting link
-      const meetingLink = response.data;
-      console.log(meetingLink); // Assuming the meeting link is returned in the response
-      window.location.href = meetingLink;
-      setIsDialogOpen(false); // Close the dialog after successful redirection
-    } catch (error) {
-      // Handle errors like incorrect password or failed API call
-      if (error.response) {
-        toast.error(error.response.data); // Show error message from backend
-      } else {
-        toast.error("An error occurred. Please try again later.");
-      }
+  // Format the adjusted date to 'yyyy-MM-dd'
+  const formattedDate = localDate.toISOString().split('T')[0];
+  console.log("Formatted date for API call:", formattedDate); // Log formatted date
+  
+    const email = patientDetails.email;
+  
+    // Make the API call with formatted date and email
+    axios.get(`http://localhost:8081/api/meet/getMeetingList?date=${formattedDate}&email=${email}`)
+  .then((response) => {
+    if (response.data) {
+      setMeetings(response.data); // Append the response data
     }
+  })
+  .catch((error) => {
+    console.error('Error fetching meetings:', error);
+  });
+
   };
+  
+  
 
 
   return (
@@ -252,66 +250,43 @@ const PatientSidebar = () => {
           </div>
         </div>
       )}
+      
       {showMeetingsPopup && (
         <div className="popup-overlay1">
           <div className="popup-container1">
             <h2>Upcoming Meetings</h2>
-            <ul className="meeting-list">
+            <div className="meetings-content">
+              {/* Left side: Calendar */}
+              <div className="calendar-section">
+              <Calendar
+                  onChange={handleDateChange}
+                  value={selectedDate}
+                  minDate={new Date()}
+                />
+              </div>
+
+              {/* Right side: Meetings List */}
+              <div className="meetings-list">
               {meetings.length > 0 ? (
-                meetings.map((meeting) => (
-                  <li key={meeting.id} className="meeting-item">
-                    <p><strong>Doctor:</strong> {meeting.doctor}</p>
-                    <p><strong>Time:</strong> {meeting.time}</p>
-                    <button
-  className="meet-button"
-  onClick={() => {
-    setMeetingId(meeting.id);
-    setIsDialogOpen(true);
-  }}
->
-  Meet
-</button>
-                  </li>
-                ))
-              ) : (
-                <p>No meetings scheduled.</p>
-              )}
-            </ul>
+                  meetings.map((meeting) => (
+                    <div key={meeting.id} className="meeting-item">
+                      <p><strong>Doctor:</strong> {meeting.name}</p>
+                      <p><strong>Time:</strong> {meeting.time}</p>
+                      <a href={meeting.patientUrl} target="_blank" rel="noopener noreferrer">
+                        <button className="meet-button">Join Meeting</button>
+                      </a>
+                    </div>
+                  ))
+                ) : (
+                  <p>No meetings scheduled for this date.</p>
+                )}
+              </div>
+            </div>
             <button className="close-button1" onClick={() => setShowMeetingsPopup(false)}>Close</button>
           </div>
         </div>
       )}
-      <Dialog
-        open={isDialogOpen}
-        onClose={() => setIsDialogOpen(false)}
-        maxWidth="xs" // Set a maximum width to keep the dialog in proportion
-        fullWidth
-      >
-        <DialogTitle>Enter Meeting Id</DialogTitle>
-        <DialogContent>
-          <TextField
-            autoFocus
-            fullWidth
-            label="Meeting Id"
-            type="Meeting Id"
-            value={meetingId}
-            onChange={(e) => setMeetingId(e.target.value)}
-            variant="outlined"
-            margin="normal" // Ensures space around the input
-            InputLabelProps={{
-              shrink: true, // This ensures the label stays above the input field
-            }}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setIsDialogOpen(false)} color="secondary">
-            Cancel
-          </Button>
-          <Button onClick={handleMeetingSubmit} color="primary">
-            Submit
-          </Button>
-        </DialogActions>
-      </Dialog>
+      
       <ToastContainer />
     </div>
   );
