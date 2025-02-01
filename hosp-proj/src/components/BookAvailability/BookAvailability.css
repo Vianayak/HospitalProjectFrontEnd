@@ -29,11 +29,16 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+<<<<<<< HEAD
+    height: 670px;
+  }
+=======
     background-color: white;
     border-radius: 10px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
     padding: 20px;
 }
+>>>>>>> b484b79176b625641f60984c687a6aedf454ff55
   
   /* Header */
   .appointment-header {
@@ -47,11 +52,17 @@
     width: 100%; /* Adjusted to fit the container properly */
     max-width: 350px; /* Restricts calendar width */
     text-align: center;
+<<<<<<< HEAD
+    height: 600px; 
+    
+  }
+=======
     height: auto; /* Allows flexible height */
     display: flex;
     flex-direction: column;
     align-items: center;
 }
+>>>>>>> b484b79176b625641f60984c687a6aedf454ff55
   
   .appointment-calendar-header {
     display: flex;
@@ -137,8 +148,9 @@
     padding: 10px;
     border-radius: 5px;
     cursor: pointer;
-    background-color: #a998c6;
+    background-color: #f44336;
     border: none;
+    color: #333;
    
   }
   
