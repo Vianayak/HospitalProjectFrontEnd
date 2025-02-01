@@ -77,7 +77,7 @@ const UserAppointment = () => {
     setLoading(true);
     try {
       const { data } = await axios.post("http://localhost:8081/api/book-appointment/initiate", {
-        amount: 500,
+        amount: doctorDetails.consultationFee,
         currency: "INR",
         firstName: formData.firstName,
         lastName: formData.lastName,
@@ -122,7 +122,7 @@ const UserAppointment = () => {
         prefill: {
           name: doctorDetails?.name || "Praveen kumar",
           email: formData.email || "parvez@gmail.com",
-          contact: "8919967393",
+          contact: formData.phone,
         },
         theme: {
           color: "#3399cc",
@@ -364,10 +364,6 @@ const UserAppointment = () => {
               <div>
                 <h4>Doctor</h4>
                 <p>{doctorDetails?.name}</p>
-              </div>
-              <div>
-                <h4>Location</h4>
-                <p>{doctorDetails?.location}</p>
               </div>
             </div>
             <div className="terms">
