@@ -252,8 +252,8 @@ const PatientSidebar = () => {
       )}
       
       {showMeetingsPopup && (
-        <div className="popup-overlay1">
-          <div className="popup-container1">
+        <div className="popup-overlay2">
+          <div className="popup-container2">
             <h2>Upcoming Meetings</h2>
             <div className="meetings-content">
               {/* Left side: Calendar */}

@@ -157,7 +157,7 @@
   }
 
 
-  .popup-overlay1 {
+  .popup-overlay2 {
     position: fixed;
     top: 0;
     left: 0;
@@ -169,7 +169,7 @@
     align-items: center;
   }
   
-  .popup-container1 {
+  .popup-container2 {
     background: white;
     width: 60%;
     max-width: 800px;

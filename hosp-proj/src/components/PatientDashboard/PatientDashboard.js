@@ -180,7 +180,7 @@ const PatientDashboard = ({selectedDate, setSelectedDate}) => {
           <li key={patient.appointmentId}>
             <div className="appointment-row">
               <label>Name:</label>
-              <span>{`${patient.firstName} ${patient.lastName}`}</span>
+              <span>{`${patient.name}`}</span>
             </div>
             <div className="appointment-row">
               <label>Diagnosis:</label>
