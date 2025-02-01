@@ -6,6 +6,9 @@ import HealthcarePortal from '../HealthcarePortal/HealthcarePortal';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
+import { FaUserCircle } from 'react-icons/fa';
+
+
 const PatientSidebar = () => {
 
   const navigate = useNavigate();
@@ -119,7 +122,10 @@ const PatientSidebar = () => {
         <div className="profile-section">
           {patientDetails ? (
             <>
-              <h3>{patientDetails.firstName} {patientDetails.lastName}</h3>
+            <div className="profile-info">
+        <FaUserCircle className="profile-icon" /> {/* React icon used here */}
+        <h3>{patientDetails.firstName} {patientDetails.lastName}</h3>
+      </div>
             </>
           ) : (
             <p>Loading profile...</p>
