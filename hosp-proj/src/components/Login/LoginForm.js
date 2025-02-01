@@ -139,7 +139,9 @@ const [role, setRole] = useState("Doctor");
     className="fas fa-arrow-left back-arrow"
     onClick={() => {
       // Navigate to the Jaya Hospitals page
-      navigate("/jayahospitals");
+      if (!isLoading) {
+                navigate("/jayahospitals");
+              }
     }}
   ></i>
           <img src="/Assets/Images/whitelogos.png" alt="Logo" className="logo" />
@@ -150,6 +152,7 @@ const [role, setRole] = useState("Doctor");
               type="checkbox"
               checked={role === "Patient"}
               onChange={() => setRole(role === "Doctor" ? "Patient" : "Doctor")}
+              disabled={isLoading}
             />
             <label className={role === "Patient" ? "active" : ""}>Patient</label>
           </div>
