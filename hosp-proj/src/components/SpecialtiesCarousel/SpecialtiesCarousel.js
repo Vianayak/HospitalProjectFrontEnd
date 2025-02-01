@@ -31,7 +31,7 @@ const SpecialtiesCarousel = () => {
   <header>
     <h1>Specialties</h1>
   </header>
-    <div className="carousel-container">
+    <div className="carousel-container5">
       <div className="carousel-track">
         {specialties.map((specialty, index) => (
           <div className="carousel-card" key={index}>
