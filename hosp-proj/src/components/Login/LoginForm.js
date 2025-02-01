@@ -133,7 +133,7 @@ const [role, setRole] = useState("Doctor");
   return (
     <div className="overlay">
       <div className="login-container">
-        <ToastContainer position="top-center" autoClose={3000} />
+        <ToastContainer autoClose={3000} />
         <div className="login-header">
         <i
     className="fas fa-arrow-left back-arrow"
