@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/HospitalFrontEnd/static/css/main.87b28e9f.css",
-    "main.js": "/HospitalFrontEnd/static/js/main.30a42394.js",
-    "static/js/488.9377654d.chunk.js": "/HospitalFrontEnd/static/js/488.9377654d.chunk.js",
-    "static/media/image5.jpg": "/HospitalFrontEnd/static/media/image5.607a683d84ca616ae972.jpg",
-    "index.html": "/HospitalFrontEnd/index.html",
-    "main.87b28e9f.css.map": "/HospitalFrontEnd/static/css/main.87b28e9f.css.map",
-    "main.30a42394.js.map": "/HospitalFrontEnd/static/js/main.30a42394.js.map",
-    "488.9377654d.chunk.js.map": "/HospitalFrontEnd/static/js/488.9377654d.chunk.js.map"
+    "main.css": "/HospitalFrontEnd/jayahospitals/static/css/main.fe3490cc.css",
+    "main.js": "/HospitalFrontEnd/jayahospitals/static/js/main.3490c749.js",
+    "static/js/488.9377654d.chunk.js": "/HospitalFrontEnd/jayahospitals/static/js/488.9377654d.chunk.js",
+    "static/media/image5.jpg": "/HospitalFrontEnd/jayahospitals/static/media/image5.607a683d84ca616ae972.jpg",
+    "index.html": "/HospitalFrontEnd/jayahospitals/index.html",
+    "main.fe3490cc.css.map": "/HospitalFrontEnd/jayahospitals/static/css/main.fe3490cc.css.map",
+    "main.3490c749.js.map": "/HospitalFrontEnd/jayahospitals/static/js/main.3490c749.js.map",
+    "488.9377654d.chunk.js.map": "/HospitalFrontEnd/jayahospitals/static/js/488.9377654d.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.87b28e9f.css",
-    "static/js/main.30a42394.js"
+    "static/css/main.fe3490cc.css",
+    "static/js/main.3490c749.js"
   ]
 }
