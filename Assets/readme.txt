@@ -1,0 +1,1 @@
+only images,favicons and other things
