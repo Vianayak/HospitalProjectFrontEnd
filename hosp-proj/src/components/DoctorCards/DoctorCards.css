@@ -1,120 +1,177 @@
-/* For the container holding the cards */
-.doctor-list {
- 
-  grid-template-columns: repeat(2, 1fr); /* Two cards per row */
-  /* Spacing between cards */
-  padding: 20px;
-  margin: 0 auto; /* Center the grid on the page */
-  max-width: 1200px; /* Limit the maximum width */
+/* For the container holding the cards */  
+.doctor-list {  
+  display: grid;  
+  grid-template-columns: repeat(2, 1fr); /* Two cards per row */  
+  padding: 20px;  
+  margin: 0 auto; /* Center the grid on the page */  
+  max-width: 1200px; /* Limit the maximum width */  
+}  
 
-}
+/* For each doctor card */  
+.doctor-card {  
+  display: flex;  
+  flex-direction: row; /* Align items horizontally */  
+  width: 550px; /* Width of the card */  
+  height: 300px; /* Height of the card */  
+  border: 1px solid #5A3ECA;  
+  border-radius: 8px;  
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);  
+  overflow: hidden;  
+  background-color: #fff;  
+  transition: transform 0.3s ease, box-shadow 0.3s ease;  
+}  
 
-/* For each doctor card */
-.doctor-card {
-  display: flex;
-  flex-direction: row; /* Align items horizontally */
-  width: 550px; /* Increase the width of the card */
-  height: 300px; /* Adjust the height of the card */
-  border: 1px solid #5A3ECA;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  background-color: #fff;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
+.doctor-card:hover {  
+  transform: scale(1.05); /* Slight zoom on hover */  
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);  
+}  
 
-.doctor-card:hover {
-  transform: scale(1.05); /* Slight zoom on hover */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
+/* Rectangular image aligned to the left */  
+.doctor-card img {  
+  width: 250px; /* Width of the rectangular image */  
+  height: 100%; /* Stretch image to card height */  
+  object-fit: cover; /* Ensures the image covers the available space */  
+  margin-right: 15px; /* Space between the image and the text */  
+}  
 
-/* Rectangular image aligned to the left */
-.doctor-card img {
-  width: 250px; /* Width of the rectangular image */
-  height: 100%; /* Stretch image to card height */
-  object-fit: cover; /* Ensures the image covers the available space */
-  margin-right: 15px; /* Space between the image and the text */
-}
+/* Doctor details */  
+.doctor-details {  
+  padding: 10px;  
+  display: flex;  
+  flex-direction: column; /* Align text vertically */  
+  justify-content: center; /* Center the text vertically */  
+  flex-grow: 1; /* Ensures details section grows to fill space */  
+}  
 
-/* Doctor details */
-.doctor-details {
-  padding: 10px;
-  display: flex;
-  flex-direction: column; /* Align text vertically */
-  justify-content: center; /* Center the text vertically */
-  flex-grow: 1; /* Ensures details section grows to fill space */
-}
+.doctor-name {  
+  font-size: 1.2em;  
+  margin: 0 0 10px;  
+  font-weight: bold;  
+  color: #333;  
+}  
 
-.doctor-name {
-  font-size: 1.2em;
-  margin: 0 0 10px;
-  font-weight: bold;
-  color: #333;
-}
+.doctor-speciality,  
+.doctor-experience,  
+.doctor-location {  
+  margin: 5px 0;  
+  color: #555;  
+}  
 
-.doctor-speciality,
-.doctor-experience,
-.doctor-location {
-  margin: 5px 0;
-  color: #555;
-}
+.book-appointment-button {  
+  margin-top: 10px;  
+  padding: 10px 15px;  
+  background-color: #5A3ECA;  
+  color: white;  
+  border: none;  
+  border-radius: 5px;  
+  cursor: pointer;  
+  transition: background-color 0.3s ease;  
+}  
 
-.book-appointment-button {
-  margin-top: 10px;
-  padding: 10px 15px;
-  background-color: #5A3ECA;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
+.book-appointment-button:hover {  
+  background-color: #5A3ECA;  
+}  
 
-.book-appointment-button:hover {
-  background-color: #5A3ECA;
-}
+.content-wrapper1 {  
+  margin-top: 100px; /* Set this to the height of your navbar */  
+}  
 
+.doctor-availability {  
+  color: red;  
+}  
 
-.content-wrapper1 {
-  margin-top: 100px; /* Set this to the height of your navbar */
-}
+.align-left {  
+  text-align: left; /* Ensures text is aligned to the left */  
+}  
 
-.doctor-availability{
-  color:red;
-}
+.time-slot.blocked {  
+  background-color: #b0b0b0;  
+  color: white;  
+  cursor: not-allowed;  
+  pointer-events: none;  
+}  
 
-.align-left {
-  text-align: left; /* Ensures text is aligned to the left */
- 
-}
+.time-slot.blocked:hover {  
+  background-color: #b0b0b0;  
+}  
 
+.header-logo {  
+  width: 50px; /* Adjust the width of the image */  
+  height: 50px; /* Set height to maintain consistency */  
+  margin-bottom: 10px;  
+}  
 
-.time-slot.blocked {
-  background-color: #b0b0b0;
-  color: white;
-  cursor: not-allowed;
-  pointer-events: none;
-}
+/* CSS for the blur effect */  
+.body-blur {  
+  filter: blur(5px);  
+  pointer-events: none; /* Optional: Prevent interaction with the blurred content */  
+  transition: filter 0.3s ease;  
+}  
 
-.time-slot.blocked:hover {
-  background-color: #b0b0b0;
-}
+/* Optional: Add a transition for smooth background unblurring */  
+.content-wrapper1 {  
+  transition: filter 0.3s ease;  
+}  
 
+/* Responsive Styles */  
 
-.header-logo {
-  width: 50px; /* Adjust the width of the image */
-  height: 50px; /* Set height to maintain consistency */
-margin-bottom: 10px;
- 
-}
-/* CSS for the blur effect */
-.body-blur {
-  filter: blur(5px);
-  pointer-events: none; /* Optional: Prevent interaction with the blurred content */
-  transition: filter 0.3s ease;
-}
+/* Mobile devices */  
+@media (max-width: 480px) {  
+  .doctor-list {  
+    grid-template-columns: 1fr; /* One card per row */  
+    padding: 10px; /* Reduce padding */  
+  }  
 
-/* Optional: Add a transition for smooth background unblurring */
-.content-wrapper1 {
-  transition: filter 0.3s ease;
+  .doctor-card {  
+    width: 100%; /* Full width of the screen */  
+    height: auto; /* Allow height to adjust based on content */  
+    flex-direction: column; /* Stack image and details vertically */  
+  }  
+
+  .doctor-card img {  
+    width: 100%; /* Make image full width */  
+    height: auto; /* Maintain aspect ratio */  
+  }  
+
+  .doctor-name {  
+    font-size: 1.1em; /* Slightly smaller font size */  
+  }  
+
+  .book-appointment-button {  
+    padding: 8px 12px; /* Adjust button size */  
+  }  
+}  
+
+/* Tablets */  
+@media (min-width: 481px) and (max-width: 768px) {  
+  .doctor-list {  
+    grid-template-columns: repeat(2, 1fr); /* Two cards per row */  
+    padding: 15px; /* Adjust padding for tablets */  
+  }  
+
+  .doctor-card {  
+    width: 100%; /* Full width of the card */  
+    height: auto; /* Allow height to adjust based on content */  
+  }  
+
+  .doctor-name {  
+    font-size: 1.15em; /* Slightly smaller font size */  
+  }  
+}  
+
+/* Desktop */  
+@media (min-width: 769px) {  
+  .doctor-list {  
+    grid-template-columns: repeat(2, 1fr); /* Two cards per row */  
+    padding: 20px; /* Original padding */  
+  }  
+
+  .doctor-card {  
+    width: 550px; /* Original width */  
+    height: 300px; /* Original height */  
+  }  
+
+  .doctor-name {  
+    font-size: 1.2em; /* Original font size */  
+  }  
 }
