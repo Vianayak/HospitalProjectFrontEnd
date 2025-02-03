@@ -1,6 +1,6 @@
 /* For the container holding the cards */
 .doctor-list {
-  display: grid;
+ 
   grid-template-columns: repeat(2, 1fr); /* Two cards per row */
   /* Spacing between cards */
   padding: 20px;
