@@ -6,17 +6,17 @@
     background-color: #fff;
     padding: 20px 0;
     padding-top: 50px;
-  }
-  
-  /* Track for the items */
-  .carousel-track {
+}
+
+/* Track for the items */
+.carousel-track {
     display: flex;
     gap: 20px; /* Spacing between items */
     animation: infiniteScroll 20s linear infinite; /* Smooth infinite animation */
-  }
-  
-  /* Individual cards */
-  .carousel-card {
+}
+
+/* Individual cards */
+.carousel-card {
     flex: 0 0 auto; /* Prevents shrinking */
     width: 200px; /* Set consistent card width */
     text-align: center;
@@ -24,30 +24,81 @@
     border-radius: 10px;
     background: #f7f7f7;
     padding: 10px;
-  }
-  
-  .carousel-card img {
+}
+
+.carousel-card img {
     width: 100px;
     height: auto;
     margin-bottom: 10px;
-  }
-  
-  .carousel-card p {
+}
+
+.carousel-card p {
     margin: 0;
     font-size: 14px;
     font-weight: bold;
-  }
-  
-  /* Infinite scrolling animation */
-  @keyframes infiniteScroll {
+}
+
+/* Infinite scrolling animation */
+@keyframes infiniteScroll {
     0% {
-      transform: translateX(0); /* Start position */
+        transform: translateX(0); /* Start position */
     }
     100% {
-      transform: translateX(-50%); /* Move halfway (matches duplicate size) */
-  }
+        transform: translateX(-50%); /* Move halfway (matches duplicate size) */
+    }
 }
 
 .carousel-container:hover .carousel-track {
-  animation-play-state: paused;
+    animation-play-state: paused;
+}
+
+/* 📱 Responsive Design */
+@media (max-width: 1200px) {
+    .carousel-card {
+        width: 180px; /* Reduce width slightly */
+    }
+    .carousel-track {
+        gap: 15px; /* Reduce spacing */
+    }
+}
+
+@media (max-width: 992px) {
+    .carousel-card {
+        width: 160px; /* Smaller cards */
+    }
+    .carousel-track {
+        gap: 10px;
+    }
+}
+
+@media (max-width: 768px) {
+    .carousel-container {
+        padding: 15px 0;
+        width: 720px;
+    }
+    .carousel-card {
+        width: 140px;
+    }
+    .carousel-card img {
+        width: 80px;
+    }
+    .carousel-track {
+        animation: infiniteScroll 25s linear infinite; /* Slow down animation */
+    }
+}
+
+@media (max-width: 576px) {
+    .carousel-card {
+        width: 120px; /* Smaller cards for mobile */
+        padding: 8px;
+    }
+    .carousel-card img {
+        width: 70px;
+    }
+    .carousel-card p {
+        font-size: 12px;
+    }
+    .carousel-track {
+        gap: 5px;
+    }
 }
