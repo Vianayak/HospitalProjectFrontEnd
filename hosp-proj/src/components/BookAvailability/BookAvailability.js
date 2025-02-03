@@ -17,7 +17,7 @@ const BookAvailability = ({ onClose, fetchBookedSlotsOnOpen }) => {
 
 
   const timeRanges = {
-    Morning: [9, 12],
+    Morning: [10, 12],
     Afternoon: [13, 15],
     Evening: [16, 18],
   };
@@ -172,14 +172,7 @@ const BookAvailability = ({ onClose, fetchBookedSlotsOnOpen }) => {
 />
 
 
-<div className="calendar-buttons">
-    <button onClick={handleBooking} className="appointment-save">
-      Confirm
-    </button>
-    <button onClick={onClose} className="appointment-cancel">
-      Cancel
-    </button>
-  </div>
+
 
 
           </div>
@@ -218,13 +211,25 @@ const BookAvailability = ({ onClose, fetchBookedSlotsOnOpen }) => {
   {timeSlot}
 </button>
 
+
                     ))}
+                    
                   </div>
+                  
                 </div>
+                
               ))}
+              
             </div>
 
-            
+            <div className="calendar-buttons">
+    <button onClick={handleBooking} className="appointment-save">
+      Confirm
+    </button>
+    <button onClick={onClose} className="appointment-cancel">
+      Cancel
+    </button>
+  </div>
           </div>
         </div>
       </div>
