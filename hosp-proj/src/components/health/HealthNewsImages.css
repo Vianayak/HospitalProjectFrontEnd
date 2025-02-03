@@ -1,48 +1,51 @@
+/* News Container */
 .news-container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center; /* Center the articles in the container */
-  gap: 65px; /* Reduce the gap between articles */
-  padding: 0 20px; /* Add space to the left and right */
+  justify-content: center; /* Center the articles */
+  gap: 40px; /* Adjust gap for smaller screens */
+  padding: 0 20px; 
   margin-bottom: 80px;
-  position: relative; /* Make it relative to position arrows correctly */
+  position: relative; /* Position arrows correctly */
   margin-top: 50px;
 }
 
+/* News Item */
 .news-item {
-  flex: 1 1 calc(25% - 20px); /* Adjust width for 4 items per row with spacing */
-  max-width: 280px; /* Optional: Limit the maximum width of each item */
-  margin: 0; /* Remove extra margin (gap handles spacing) */
-  position: relative;
-  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover effect */
+  flex: 1 1 calc(25% - 20px); /* Default: 4 items per row */
+  max-width: 280px; 
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .news-item:hover {
-  transform: scale(1.05); /* Slightly enlarge the item */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Add a subtle shadow for hover effect */
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
+/* Image Styling */
 .news-item img {
-  width: 100%; /* Ensures the image fills the container width */
-  height: 200px; /* Set a fixed height for all images */
-  object-fit: cover; /* Crops the image to maintain aspect ratio */
+  width: 100%;
+  height: 200px; /* Fixed height */
+  object-fit: cover;
   border-radius: 8px;
 }
 
+/* Title & Link */
 .news-item .carousel-title {
   font-size: 14px;
   margin-top: 10px;
-  color: #333; /* Improve text contrast */
-  text-align: center; /* Center-align the title text */
+  color: #333;
+  text-align: center;
 }
 
 .news-item .carousel-link {
   text-decoration: none;
   color: #ff5722;
   display: block;
-  text-align: center; /* Center-align the link */
+  text-align: center;
 }
 
+/* Navigation Arrows */
 .next-arrow,
 .prev-arrow {
   background: none;
@@ -51,19 +54,77 @@
   cursor: pointer;
   color: #5A3ECA;
   position: absolute;
-  top: 50%; /* Vertically center the arrows */
+  top: 50%;
   transform: translateY(-50%);
-  z-index: 10; /* Ensure arrows are on top of other elements */
+  z-index: 10;
 }
 
+/* Positioning arrows for desktop */
 .next-arrow {
-  right: 100px; /* Position arrow outside the container */
+  right: 100px;
 }
 
 .prev-arrow {
-  left: 200px; /* Position arrow outside the container */
+  left: 100px;
 }
 
-h2{
-  margin-top: 50px;
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .news-item {
+    flex: 1 1 calc(33.33% - 20px); /* 3 items per row */
+  }
+  .next-arrow {
+    right: 50px;
+  }
+  .prev-arrow {
+    left: 50px;
+  }
+}
+
+@media (max-width: 768px) {
+  .news-item {
+    flex: 1 1 calc(50% - 20px); /* 2 items per row */
+  }
+  .next-arrow {
+    right: 20px;
+  }
+  .prev-arrow {
+    left: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .news-item {
+    flex: 1 1 100%; /* 1 item per row */
+  
+  }
+  .next-arrow,
+  .prev-arrow {
+    font-size: 24px; /* Smaller arrows */
+  }
+  h2 {
+    font-size: 20px;
+  }
+}
+@media (max-width: 1024px) {
+  .news-container {
+    max-width: 900px; /* Adjust width */
+    padding: 0 15px;
+  }
+}
+
+/* For Small Tablets & Large Phones */
+@media (max-width: 768px) {
+  .news-container {
+    max-width: 700px;
+    padding: 0 10px;
+  }
+}
+
+/* For Mobile Screens */
+@media (max-width: 480px) {
+  .news-container {
+    width: 750px; /* Full width for small devices */
+    padding: 0 5px;  /* Reduce side padding */
+  }
 }

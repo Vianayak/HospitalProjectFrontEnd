@@ -1,72 +1,140 @@
-.container {  
-    max-width: 1450px;  
-    margin: 0 auto;  
-    text-align: center;  
-    padding: 40px 20px;  
-    background-color: #f0f8ff;  
-    border-radius: 10px;  
-    padding-top: 50px;
-  }  
-  
-  .container h2 {  
-    font-size: 24px;  
-    color: #333;  
-    margin-bottom: 10px;  
-  }  
-  
-  .container p {  
-    font-size: 16px;  
-    color: #666;  
-    margin-bottom: 30px;  
-  }  
-  
-  .hospital-section {  
-    background: #d8efef;  
-    display: grid;  
-    grid-template-columns: repeat(4, 1fr);  /* Updated to 4 columns */  
-    gap: 20px;  
-    padding-top: 20px;  
-  }  
-  
-  .hospital-card {  
-    padding: 20px;  
-    background: #fff;  
-    border-radius: 10px;  
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);  
-    transition: transform 0.3s ease, box-shadow 0.3s ease;  
-  }  
-  
-  .hospital-card:hover {  
-    transform: translateY(-5px);  
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); 
+/* Container styling */
+.hospital-container {
+  max-width: 1300px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 40px 20px;
+  background-color: #f0f8ff;
+  border-radius: 10px;
+}
 
-  }  
-  
-  .hospital-icon {  
-    font-size: 40px;  
-    color: #5A3ECA;  
-    margin-bottom: 10px;  
-  }  
-  
-  .hospital-card h3 {  
-    font-size: 18px;  
-    color: #333;  
-    margin: 0;  
-  }
-  .hospital-section {  
-    background: #d8efef;  
-    display: grid;  
-    grid-template-columns: repeat(4, 1fr);  
-    gap: 20px;  
-    padding: 20px 20px 20px 20px; 
-   
-  }
+/* Title and Description */
+.hospital-title {
+  font-size: 26px;
+  color: #333;
+  margin-bottom: 15px;
+}
 
-  .header-section{
-    text-align: center;
+.hospital-description {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 30px;
+}
+
+/* Grid layout */
+.hospital-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  padding-top: 20px;
+}
+
+/* Individual hospital item */
+.hospital-item {
+  padding: 20px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover effect */
+.hospital-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+  border: 3px solid #5A3ECA;
+}
+
+/* Icon styling */
+.hospital-icon {
+  font-size: 40px;
+  color: #5A3ECA;
+  margin-bottom: 10px;
+}
+
+/* Hospital Name */
+.hospital-name {
+  font-size: 18px;
+  color: #333;
+  margin: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .hospital-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
   }
-  .hospital-card:hover {  
-    transform: translateY(-5px);  
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);  
-    border: 3px solid #5A3ECA;  
+}
+
+@media (max-width: 768px) {
+  .hospital-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hospital-grid {
+      grid-template-columns: repeat(1, 1fr);
+  }
+  .hospital-container {
+      padding: 30px 15px;
+      width: 750px;
+  }
+  .hospital-title {
+      font-size: 22px;
+  }
+  .hospital-description {
+      font-size: 14px;
+  }
+  .hospital-item {
+      padding: 15px;
+  }
+  .hospital-icon {
+      font-size: 35px;
+  }
+  .hospital-name {
+      font-size: 16px;
+  }
+}
+/* Title and Description */
+.hospital-title {
+  font-size: 26px;  /* Default for large screens */
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.hospital-description {
+  font-size: 16px; /* Default for large screens */
+  color: #666;
+  margin-bottom: 30px;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .hospital-title {
+      font-size: 24px; /* Slightly smaller on tablets */
+  }
+  .hospital-description {
+      font-size: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hospital-title {
+      font-size: 22px; /* Adjusting for smaller tablets */
+  }
+  .hospital-description {
+      font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hospital-title {
+      font-size: 20px; /* Smaller for mobile screens */
+  }
+  .hospital-description {
+      font-size: 13px;
+  }
 }
