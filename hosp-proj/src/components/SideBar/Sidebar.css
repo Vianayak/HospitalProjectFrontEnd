@@ -4,27 +4,18 @@
    
   }
   /* Override react-sidenav background */
-.sidenav {
-  background-color: #007bff !important;  /* Change to your desired color */
-  width: 250px !important;  /* Adjust width if needed */
-}
+  .sidenav---sidenav---_2tBP {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1006;
+    min-width: 64px;
+    background: #5a2eca !important;
+    transition: min-width 0.2s;
+    height: 900px;
 
-/* Change NavItem background color */
-.sidenav .sidenav-nav {
-  background-color: #0056b3 !important; /* Darker shade */
-}
-
-/* Hover effect for items */
-.sidenav-nav .nav-item:hover {
-  background-color: #004080 !important;
-}
-
-/* Change color of icons & text */
-.sidenav-nav .nav-text, .sidenav-nav .nav-icon {
-  color: white !important;
-}
-
-
+  }
   
   .profile-section {
     text-align: center;
