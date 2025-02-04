@@ -3,6 +3,8 @@ import { FaUserAlt, FaCalendarAlt } from 'react-icons/fa';
 import PropTypes from 'prop-types';
 import './DashboardHeader.css';
 
+import { useNavigate } from 'react-router-dom';
+
 const DashboardHeader = ({ selectedDate,setSelectedDate}) => {
   const [stats, setStats] = useState({
     totalAppointments: 0,
@@ -14,10 +16,27 @@ const DashboardHeader = ({ selectedDate,setSelectedDate}) => {
     return today.toISOString().split('T')[0];
   };
 
+  const [doctorDetails, setDoctorDetails] = useState(null);
   const getDoctorRegNum = () => {
     const doctorData = JSON.parse(localStorage.getItem('doctorDetails'));
     return doctorData ? doctorData.regestrationNum : null;
   };
+
+
+  useEffect(() => {
+     const storedDoctorDetails = localStorage.getItem("doctorDetails");
+     if (storedDoctorDetails) {
+       setDoctorDetails(JSON.parse(storedDoctorDetails));
+     }
+   }, []);
+   const navigate = useNavigate();
+   const handleLogout = () => {
+     localStorage.removeItem("authToken");
+     localStorage.removeItem("doctorDetails");
+ 
+     sessionStorage.setItem("validNavigation", "true"); // Set valid navigation flag
+         navigate("/login"); // Navigate to the path
+   };
 
   useEffect(() => {
     console.log('Selected Date:', selectedDate);
@@ -52,9 +71,24 @@ const DashboardHeader = ({ selectedDate,setSelectedDate}) => {
 
   return (
     <div className="header-container">
-      <h2 className="header-title">Dashboard</h2>
+      <div className="profile-section">
+          {doctorDetails ? (
+            <>
+              <img
+                src={`http://localhost:8081/${doctorDetails.imagePath}`}
+                alt="Profile"
+                className="profile-image"
+              />
+              <h3>Dr. {doctorDetails.name}</h3>
+              <p>{doctorDetails.specialization}</p>
+              <p>{doctorDetails.location}</p>
+            </>
+          ) : (
+            <p>Loading profile...</p>
+          )}
+      </div>
       <div className="stats-container">
-        <div className="stat-box">
+        <div className="stat-box"> 
           <FaUserAlt className="stat-icon" />
           <div>
             <h3>Total Patients</h3>

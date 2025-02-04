@@ -5,7 +5,10 @@ import Dashboard from '../Dashboard/Dashboard';
 import HealthcarePortal from '../HealthcarePortal/HealthcarePortal';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import SideNav, { Toggle, Nav, NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
 
+// Be sure to include styles at some point, probably during your bootstraping
+import '@trendmicro/react-sidenav/dist/react-sidenav.css';
 import BookAvailability from '../BookAvailability/BookAvailability';
 
 
@@ -134,44 +137,45 @@ const Sidebar = () => {
   };
 
   return (
+
     <div className="layout">
-      <div className="sidebar">
-        <div className="profile-section">
-          {doctorDetails ? (
-            <>
-              <img
-                src={`http://localhost:8081/${doctorDetails.imagePath}`}
-                alt="Profile"
-                className="profile-image"
-              />
-              <h3>Dr. {doctorDetails.name}</h3>
-              <p>{doctorDetails.specialization}</p>
-              <p>{doctorDetails.location}</p>
-            </>
-          ) : (
-            <p>Loading profile...</p>
-          )}
-        </div>
-        <ul className="menu">
-  <li onClick={handleAvailability}>
-    <i className="icon">&#x1F4CB;</i> Book Availability
-  </li>
-  <li onClick={handleLogout}>
-    <i className="icon">&#x274C;</i> Logout
-  </li>
-  <li onClick={() => setShowPasswordForm(true)}>
-    <i className="icon">&#x1F512;</i> Change Password
-  </li>
-</ul>
-{showBookAvailability && (
-  <BookAvailability 
-    onClose={() => setShowBookAvailability(false)} 
-    fetchBookedSlotsOnOpen={true} 
-  />
-)}
-
-
-      </div>
+      <SideNav
+    onSelect={(selected) => {
+        // Add your code here
+    }}
+>
+    <SideNav.Toggle />
+    
+    <SideNav.Nav defaultSelected="Book Availability">
+        <NavItem eventKey="Book Availability">
+            <NavIcon onClick={handleAvailability}>
+                <i className="fas fa-clipboard" style={{ fontSize: '1.75em' }} />
+            </NavIcon>
+            <NavText>
+                Book Availability
+            </NavText >
+        </NavItem >
+        <NavItem eventKey="logout">
+            <NavIcon onClick={handleLogout}>
+                <i className="fas fa-sign-out-alt" style={{ fontSize: '1.75em' }} />
+            </NavIcon>
+            <NavText>
+                Logout
+            </NavText>
+          
+        </NavItem>
+        <NavItem eventKey="changepassword">
+            <NavIcon onClick={() => setShowPasswordForm(true)}>
+                <i className="fas fa-lock" style={{ fontSize: '1.75em' }} />
+            </NavIcon>
+            <NavText>
+            Change Password
+            </NavText>
+          
+        </NavItem>
+    </SideNav.Nav>
+</SideNav>
+      
       <div className="dashboard-content">
         <DashboardHeader selectedDate={selectedDate} setSelectedDate={setSelectedDate}/>
         <Dashboard selectedDate={selectedDate} setSelectedDate={setSelectedDate}/>

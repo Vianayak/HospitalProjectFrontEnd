@@ -1,20 +1,30 @@
 /* Layout container */
 .layout {
     display: flex; /* Ensures sidebar and dashboard content are side by side */
+   
   }
-  
-  /* Sidebar styles */
-  .sidebar {
-    position: sticky;
-  top: 0; /* Ensures it sticks to the top of the page */
-    width: 250px;
-    padding: 20px;
-    margin-top: 40px;
-    height: 100vh; /* Makes it extend to the full height of the viewport */
-  overflow-y: auto; /* Ensures content inside can scroll */
-  z-index: 1000; /* Ensures the sidebar stays on top of other content */
-  background-color: #fff; /* Background color to ensure it covers content behind it */
-  }
+  /* Override react-sidenav background */
+.sidenav {
+  background-color: #007bff !important;  /* Change to your desired color */
+  width: 250px !important;  /* Adjust width if needed */
+}
+
+/* Change NavItem background color */
+.sidenav .sidenav-nav {
+  background-color: #0056b3 !important; /* Darker shade */
+}
+
+/* Hover effect for items */
+.sidenav-nav .nav-item:hover {
+  background-color: #004080 !important;
+}
+
+/* Change color of icons & text */
+.sidenav-nav .nav-text, .sidenav-nav .nav-icon {
+  color: white !important;
+}
+
+
   
   .profile-section {
     text-align: center;
