@@ -187,30 +187,33 @@ const Sidebar = () => {
             <h2 className="change-password1">Change Password</h2>  
             <form onSubmit={handleSubmit}>
               <div className="form-group3">
-                <div className="input-row">
-                  <div className="input-container">
-                    <label>Password</label>
-                    <input
-                      type="password"
-                      name="password"
-                      className="popup-input"
-                      placeholder="Enter new password"
-                      value={formData.password}
-                      onChange={handleInputChange}
-                    />
-                  </div>
-                  <div className="input-container">
-                    <label>Confirm Password</label>
-                    <input
-                      type="password"
-                      name="confirmPassword"
-                      className="popup-input"
-                      placeholder="Confirm new password"
-                      value={formData.confirmPassword}
-                      onChange={handleInputChange}
-                    />
-                  </div>
-                </div>
+              <div className="input-row">
+              <div className="input-group">
+  <label>Password</label>
+  <input
+    type="password"
+    name="password"
+    className="popup-input"
+    placeholder="Enter new password"
+    value={formData.password}
+    onChange={handleInputChange}
+  />
+</div>
+
+<div className="input-group">
+  <label>Confirm Password</label>
+  <input
+    type="password"
+    name="confirmPassword"
+    className="popup-input"
+    placeholder="Confirm new password"
+    value={formData.confirmPassword}
+    onChange={handleInputChange}
+  />
+</div>
+
+</div>
+
               </div>
               <ul className="password-criteria">
                 <li style={{ color: passwordCriteria.length ? 'green' : 'red' }}>At least 8 characters</li>

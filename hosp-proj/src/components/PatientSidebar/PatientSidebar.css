@@ -306,3 +306,25 @@
     opacity: 0.5;
   }
   
+
+  .input-group1 {
+    display: flex;
+    align-items: center; /* Align label and input in the same row */
+    gap: 10px; /* Space between label and input */
+    margin-bottom: 15px; /* Space between rows */
+  }
+  
+  .input-group1 label {
+    min-width: 120px; /* Adjust width based on label length */
+    font-size: 14px;
+    color: #333;
+    font-weight: bold;
+  }
+  
+  .input-group1 input {
+    flex: 1; /* Make input take the remaining space */
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  

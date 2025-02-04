@@ -203,7 +203,7 @@ const PatientSidebar = () => {
             <form onSubmit={handleSubmit}>
               <div className="form-group3">
                 <div className="input-row">
-                  <div className="input-container">
+                  <div className="input-group">
                     <label>Password</label>
                     <input
                       type="password"
@@ -214,7 +214,7 @@ const PatientSidebar = () => {
                       onChange={handleInputChange}
                     />
                   </div>
-                  <div className="input-container">
+                  <div className="input-group">
                     <label>Confirm Password</label>
                     <input
                       type="password"
