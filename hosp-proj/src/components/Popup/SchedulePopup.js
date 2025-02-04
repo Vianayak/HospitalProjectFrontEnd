@@ -54,7 +54,7 @@ const SchedulePopup = ({
         <button className="popup-close" onClick={() => setShowSchedulePopup(false)}>&times;</button>
         <div className="schedule-content">
           <h3>Schedule Your Appointment Timing</h3>
-          <input type="date" value={date} onChange={(e) => setDate(e.target.value)} />
+          <input type="date" value={date} onChange={(e) => setDate(e.target.value)} min={today}/>
 
           <div className="time-slots">
             {availableSlots.length > 0 ? (
