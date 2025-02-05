@@ -203,14 +203,24 @@ const [role, setRole] = useState("Doctor");
             {isLoading ? "Logging in..." : "Login"}
           </button>
           <a
-            href="/forgot-password-page"
-            className="forgot-password"
-            onClick={handleForgotPassword}
-          >
+  href="/forgot-password-page"
+  className={`forgot-password ${isLoading ? "disabled-link" : ""}`}
+  onClick={(e) => {
+    if (isLoading) e.preventDefault();
+    else handleForgotPassword(e);
+  }}
+>
             Forgot Password?
           </a>
           {role === "Doctor" && (
-    <a href="/SignUp" className="SignUp" onClick={handleSignUp}>
+    <a
+    href="/SignUp"
+    className={`SignUp ${isLoading ? "disabled-link" : ""}`}
+    onClick={(e) => {
+      if (isLoading) e.preventDefault();
+      else handleSignUp(e);
+    }}
+  >
       Sign Up
     </a>
   )}
