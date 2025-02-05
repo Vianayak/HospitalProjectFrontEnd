@@ -4,6 +4,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import "./ForgotPassword.css";
 import axios from "axios";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Loader = () => (
   <div className="loader-overlay">
@@ -24,6 +25,17 @@ const ForgotPassword = () => {
   const [countdown, setCountdown] = useState(0);
   const [canResendOtp, setCanResendOtp] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const [showPassword, setShowPassword] = useState(false);
+const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword((prev) => !prev);
+  };
+  
+  const toggleConfirmPasswordVisibility = () => {
+    setShowConfirmPassword((prev) => !prev);
+  };
 
   const navigate = useNavigate();
 
