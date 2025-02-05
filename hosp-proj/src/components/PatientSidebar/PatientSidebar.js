@@ -16,6 +16,8 @@ const PatientSidebar = () => {
 
   const navigate = useNavigate();
   const [patientDetails, setpatientDetails] = useState(null);
+  
+    const [sidebarOpen, setSidebarOpen] = useState(false); // Sidebar state
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [showPasswordForm, setShowPasswordForm] = useState(false);
   const [formData, setFormData] = useState({
@@ -43,6 +45,17 @@ const PatientSidebar = () => {
       setpatientDetails(JSON.parse(storedpatientDetails));
     }
   }, []);
+   useEffect(() => {
+      const handleClickOutside = (event) => {
+          if (sidebarOpen && !event.target.closest(".sidebar") && !event.target.closest(".burger-menu")) {
+              setSidebarOpen(false);
+          }
+      };
+      document.addEventListener("click", handleClickOutside);
+      return () => {
+          document.removeEventListener("click", handleClickOutside);
+      };
+  }, [sidebarOpen]);
 
   const handleLogout = () => {
     localStorage.removeItem("authToken");
@@ -160,9 +173,12 @@ const PatientSidebar = () => {
 
 
   return (
-    <div className="layout">
-      <div className="PatientSidebar">
-        <div className="profile-section1">
+ <div className="layout">
+    
+
+    {/* Sidebar */}
+    <div className={`sidebar ${sidebarOpen ? "active" : ""}`}>
+        <div className="profile-section">
           {patientDetails ? (
             <>
             <div className="profile-info1">
