@@ -5,10 +5,7 @@ import Dashboard from '../Dashboard/Dashboard';
 import HealthcarePortal from '../HealthcarePortal/HealthcarePortal';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import SideNav, { Toggle, Nav, NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
 
-// Be sure to include styles at some point, probably during your bootstraping
-import '@trendmicro/react-sidenav/dist/react-sidenav.css';
 import BookAvailability from '../BookAvailability/BookAvailability';
 
 
@@ -20,6 +17,8 @@ const Sidebar = () => {
   const [doctorDetails, setDoctorDetails] = useState(null);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [showPasswordForm, setShowPasswordForm] = useState(false);
+
+  const [sidebarOpen, setSidebarOpen] = useState(false); // Sidebar state
   const [formData, setFormData] = useState({
     password: "",
     confirmPassword: "",
@@ -48,6 +47,18 @@ const Sidebar = () => {
       setDoctorDetails(JSON.parse(storedDoctorDetails));
     }
   }, []);
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+        if (sidebarOpen && !event.target.closest(".sidebar") && !event.target.closest(".burger-menu")) {
+            setSidebarOpen(false);
+        }
+    };
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+        document.removeEventListener("click", handleClickOutside);
+    };
+}, [sidebarOpen]);
+
 
   const handleLogout = () => {
     localStorage.removeItem("authToken");
@@ -56,10 +67,6 @@ const Sidebar = () => {
     sessionStorage.setItem("validNavigation", "true"); // Set valid navigation flag
         navigate("/login"); // Navigate to the path
   };
-
-  
-  
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -67,7 +74,6 @@ const Sidebar = () => {
       [name]: value,
     }));
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -75,25 +81,20 @@ const Sidebar = () => {
       toast.error("Passwords do not match!");
       return;
     }
-
     if (!Object.values(passwordCriteria).every(Boolean)) {
       toast.error("Please meet all password criteria.");
       return;
     }
-
     const token = localStorage.getItem("authToken");
-
     try {
       setIsLoading(true);
       setButtonDisabled(true);
-
       const response = await fetch("http://localhost:8082/api/user/protected-endpoint", {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-
       if (response.ok) {
         const changePasswordResponse = await fetch("http://localhost:8082/api/user/change-password", {
           method: "POST",
@@ -107,7 +108,6 @@ const Sidebar = () => {
             newPassword: formData.password,
           }),
         });
-
         const data = await changePasswordResponse.json();
         if (changePasswordResponse.ok) {
           toast.success("Password reset successfully", {
@@ -131,51 +131,53 @@ const Sidebar = () => {
       setIsLoading(false);
     }
   };
-
   const handleStatusUpdate = () => {
     setStatusUpdated((prev) => !prev);
   };
-
+  const toggleMenu = () => {
+    setSidebarOpen((prev) => !prev);
+    console.log("Sidebar state:", !sidebarOpen);
+};
   return (
-
     <div className="layout">
-      <SideNav
-    onSelect={(selected) => {
-        // Add your code here
-    }}
->
-    <SideNav.Toggle />
     
-    <SideNav.Nav defaultSelected="Book Availability">
-        <NavItem eventKey="Book Availability">
-            <NavIcon onClick={handleAvailability}>
-                <i className="fas fa-clipboard" style={{ fontSize: '1.75em' }} />
-            </NavIcon>
-            <NavText>
-                Book Availability
-            </NavText >
-        </NavItem >
-        <NavItem eventKey="logout">
-            <NavIcon onClick={handleLogout}>
-                <i className="fas fa-sign-out-alt" style={{ fontSize: '1.75em' }} />
-            </NavIcon>
-            <NavText>
-                Logout
-            </NavText>
-          
-        </NavItem>
-        <NavItem eventKey="changepassword">
-            <NavIcon onClick={() => setShowPasswordForm(true)}>
-                <i className="fas fa-lock" style={{ fontSize: '1.75em' }} />
-            </NavIcon>
-            <NavText>
-            Change Password
-            </NavText>
-          
-        </NavItem>
-    </SideNav.Nav>
-</SideNav>
-      
+
+    {/* Sidebar */}
+    <div className={`sidebar ${sidebarOpen ? "active" : ""}`}>
+        <div className="profile-section">
+          {doctorDetails ? (
+            <>
+              <img
+                src={`http://localhost:8081/${doctorDetails.imagePath}`}
+                alt="Profile"
+                className="profile-image"
+              />
+              <h3>Dr. {doctorDetails.name}</h3>
+              <p>{doctorDetails.specialization}</p>
+              <p>{doctorDetails.location}</p>
+            </>
+          ) : (
+            <p>Loading profile...</p>
+          )}
+        </div>
+        <ul className="menu">
+  <li onClick={handleAvailability}>
+    <i className="icon">&#x1F4CB;</i> Book Availability
+  </li>
+  <li onClick={handleLogout}>
+    <i className="icon">&#x274C;</i> Logout
+  </li>
+  <li onClick={() => setShowPasswordForm(true)}>
+    <i className="icon">&#x1F512;</i> Change Password
+  </li>
+</ul>
+{showBookAvailability && (
+  <BookAvailability 
+    onClose={() => setShowBookAvailability(false)} 
+    fetchBookedSlotsOnOpen={true} 
+  />
+)}
+      </div>
       <div className="dashboard-content">
         <DashboardHeader selectedDate={selectedDate} setSelectedDate={setSelectedDate}/>
         <Dashboard selectedDate={selectedDate} setSelectedDate={setSelectedDate}/>
@@ -191,33 +193,30 @@ const Sidebar = () => {
             <h2 className="change-password1">Change Password</h2>  
             <form onSubmit={handleSubmit}>
               <div className="form-group3">
-              <div className="input-row">
-              <div className="input-group">
-  <label>Password</label>
-  <input
-    type="password"
-    name="password"
-    className="popup-input"
-    placeholder="Enter new password"
-    value={formData.password}
-    onChange={handleInputChange}
-  />
-</div>
-
-<div className="input-group">
-  <label>Confirm Password</label>
-  <input
-    type="password"
-    name="confirmPassword"
-    className="popup-input"
-    placeholder="Confirm new password"
-    value={formData.confirmPassword}
-    onChange={handleInputChange}
-  />
-</div>
-
-</div>
-
+                <div className="input-row">
+                  <div className="input-container">
+                    <label>Password</label>
+                    <input
+                      type="password"
+                      name="password"
+                      className="popup-input"
+                      placeholder="Enter new password"
+                      value={formData.password}
+                      onChange={handleInputChange}
+                    />
+                  </div>
+                  <div className="input-container">
+                    <label>Confirm Password</label>
+                    <input
+                      type="password"
+                      name="confirmPassword"
+                      className="popup-input"
+                      placeholder="Confirm new password"
+                      value={formData.confirmPassword}
+                      onChange={handleInputChange}
+                    />
+                  </div>
+                </div>
               </div>
               <ul className="password-criteria">
                 <li style={{ color: passwordCriteria.length ? 'green' : 'red' }}>At least 8 characters</li>
@@ -250,5 +249,4 @@ const Sidebar = () => {
     </div>
   );
 };
-
 export default Sidebar;
