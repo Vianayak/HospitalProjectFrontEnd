@@ -223,7 +223,6 @@ const DoctorGrid = () => {
               <div className="doctor-info">
                 <h3>{selectedDoctor.name}</h3>
                 <p>Specialization: {selectedDoctor.specialization}</p>
-                <p>Location: {selectedDoctor.location}</p>
                 <p>Registration Number: {selectedDoctor.regestrationNum}</p>
               </div>
             </div>
