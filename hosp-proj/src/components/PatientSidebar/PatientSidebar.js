@@ -92,7 +92,7 @@ const PatientSidebar = () => {
       setIsLoading(true);
       setButtonDisabled(true);
 
-      const response = await fetch("https://quiet-nuclear-discs-galleries.trycloudflare.com/api/user/protected-endpoint", {
+      const response = await fetch("http://localhost:8082/api/user/protected-endpoint", {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -100,7 +100,7 @@ const PatientSidebar = () => {
       });
 
       if (response.ok) {
-        const changePasswordResponse = await fetch("https://quiet-nuclear-discs-galleries.trycloudflare.com/api/user/change-password", {
+        const changePasswordResponse = await fetch("http://localhost:8082/api/user/change-password", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -157,7 +157,7 @@ const PatientSidebar = () => {
     const email = patientDetails.email;
   
     // Make the API call with formatted date and email
-    axios.get(`https://blond-beautifully-dis-singing.trycloudflare.com/api/meet/getMeetingList?date=${formattedDate}&email=${email}`)
+    axios.get(`http://localhost:8081/api/meet/getMeetingList?date=${formattedDate}&email=${email}`)
   .then((response) => {
     if (response.data) {
       setMeetings(response.data); // Append the response data

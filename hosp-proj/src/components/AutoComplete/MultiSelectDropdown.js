@@ -12,7 +12,7 @@ const MultiSelectDropdown = ({ selectedItems = [], onChange }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("https://blond-beautifully-dis-singing.trycloudflare.com/api/issues/all");
+        const response = await fetch("http://localhost:8081/api/issues/all");
         const result = await response.json();
         setData(result);
       } catch (error) {

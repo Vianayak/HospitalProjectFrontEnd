@@ -89,14 +89,14 @@ const Sidebar = () => {
     try {
       setIsLoading(true);
       setButtonDisabled(true);
-      const response = await fetch("https://quiet-nuclear-discs-galleries.trycloudflare.com/api/user/protected-endpoint", {
+      const response = await fetch("http://localhost:8082/api/user/protected-endpoint", {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
       if (response.ok) {
-        const changePasswordResponse = await fetch("https://quiet-nuclear-discs-galleries.trycloudflare.com/api/user/change-password", {
+        const changePasswordResponse = await fetch("http://localhost:8082/api/user/change-password", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -148,7 +148,7 @@ const Sidebar = () => {
           {doctorDetails ? (
             <>
               <img
-                src={`https://blond-beautifully-dis-singing.trycloudflare.com/${doctorDetails.imagePath}`}
+                src={`http://localhost:8081/${doctorDetails.imagePath}`}
                 alt="Profile"
                 className="profile-image"
               />

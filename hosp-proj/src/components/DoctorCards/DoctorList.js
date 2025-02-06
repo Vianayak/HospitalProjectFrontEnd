@@ -9,7 +9,7 @@ const DoctorList = () => {
   useEffect(() => {
     // Fetching data from the backend
     axios
-      .get("https://blond-beautifully-dis-singing.trycloudflare.com/api/doctors/doctors-list")
+      .get("http://localhost:8081/api/doctors/doctors-list")
       .then((response) => {
         setDoctors(response.data); // Update state with fetched data
       })

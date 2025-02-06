@@ -76,7 +76,7 @@ const UserAppointment = () => {
   const handlePayToProceed = async () => {
     setLoading(true);
     try {
-      const { data } = await axios.post("https://blond-beautifully-dis-singing.trycloudflare.com/api/book-appointment/initiate", {
+      const { data } = await axios.post("http://localhost:8081/api/book-appointment/initiate", {
         amount: doctorDetails.consultationFee,
         currency: "INR",
         firstName: formData.firstName,
@@ -104,7 +104,7 @@ const UserAppointment = () => {
         order_id: data.razorpayOrderId,
         handler: function (response) {
           const { razorpay_payment_id, razorpay_order_id, razorpay_signature } = response;
-          axios.post("https://blond-beautifully-dis-singing.trycloudflare.com/api/book-appointment/verify-payment", {
+          axios.post("http://localhost:8081/api/book-appointment/verify-payment", {
             razorpay_payment_id,
             razorpay_order_id,
             razorpay_signature,
@@ -176,7 +176,7 @@ const UserAppointment = () => {
   const fetchUserDetails = useCallback(async () => {
     try {
       setLoading(true);
-      const response = await axios.get(`https://quiet-nuclear-discs-galleries.trycloudflare.com/api/user/user-details?email=${email}`);
+      const response = await axios.get(`http://localhost:8082/api/user/user-details?email=${email}`);
       if (response.data) {
         const patient = response.data;
         setFormData({

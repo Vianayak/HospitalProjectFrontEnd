@@ -51,7 +51,7 @@ const PatientDashboard = ({selectedDate, setSelectedDate}) => {
     const email = PatientDetails.email;
     console.log(formattedDate, email);
   
-    const apiUrl = `https://blond-beautifully-dis-singing.trycloudflare.com/api/book-appointment/doctors-for-date?email=${email}&date=${formattedDate}`;
+    const apiUrl = `http://localhost:8081/api/book-appointment/doctors-for-date?email=${email}&date=${formattedDate}`;
     
   
     const response = await fetch(apiUrl);
@@ -68,7 +68,7 @@ const PatientDashboard = ({selectedDate, setSelectedDate}) => {
     try {
       const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
       const email = PatientDetails.email;
-      const apiUrl = `https://blond-beautifully-dis-singing.trycloudflare.com /api/book-appointment/payments?date=${formattedDate}&email=${email}`;
+      const apiUrl = `http://localhost:8081/api/book-appointment/payments?date=${formattedDate}&email=${email}`;
 
       const response = await fetch(apiUrl);
       if (response.ok) {

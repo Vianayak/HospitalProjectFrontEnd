@@ -83,7 +83,7 @@ const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     setLoading(true);
     try {
       const response = await fetch(
-        `https://quiet-nuclear-discs-galleries.trycloudflare.com/api/user/forgot-otp?email=${encodeURIComponent(formData.email)}`,
+        `http://localhost:8082/api/user/forgot-otp?email=${encodeURIComponent(formData.email)}`,
         { method: "POST" }
       );
 
@@ -128,7 +128,7 @@ const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     setLoading(true);
     try {
       const response = await fetch(
-        `https://quiet-nuclear-discs-galleries.trycloudflare.com/api/user/forgot-otp?email=${encodeURIComponent(formData.email)}`,
+        `http://localhost:8082/api/user/forgot-otp?email=${encodeURIComponent(formData.email)}`,
         { method: "POST" }
       );
 
@@ -160,7 +160,7 @@ const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     }
     setLoading(true);
     try {
-      const response = await axios.post("https://blond-beautifully-dis-singing.trycloudflare.com/api/otp/verifyOtp", null, {
+      const response = await axios.post("http://localhost:8081/api/otp/verifyOtp", null, {
         params: {
           email: formData.email,
           otp: formData.otp,
@@ -204,7 +204,7 @@ const [showConfirmPassword, setShowConfirmPassword] = useState(false);
       };
   
       // Send the DTO in the request body
-      const response = await axios.post("https://quiet-nuclear-discs-galleries.trycloudflare.com/api/user/reset-password", dto, {
+      const response = await axios.post("http://localhost:8082/api/user/reset-password", dto, {
         headers: {
           "Content-Type": "application/json", // Set the header for JSON data
         },

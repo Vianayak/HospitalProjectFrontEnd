@@ -28,7 +28,7 @@ const DoctorGrid = () => {
     if (!email) return;
     try {
       const response = await fetch(
-        `https://blond-beautifully-dis-singing.trycloudflare.com/api/otp/sendOtp?email=${encodeURIComponent(email)}`,
+        `http://localhost:8081/api/otp/sendOtp?email=${encodeURIComponent(email)}`,
         { method: "POST" }
       );
       if (!response.ok) {
@@ -52,7 +52,7 @@ const DoctorGrid = () => {
   const handleVerifyOtp = async () => {
     if (!otp) return;
     try {
-      const response = await axios.post("https://blond-beautifully-dis-singing.trycloudflare.com/api/otp/verifyOtp", null, {
+      const response = await axios.post("http://localhost:8081/api/otp/verifyOtp", null, {
         params: { email, otp }
       });
       setShowPopup(false);
@@ -102,7 +102,7 @@ const DoctorGrid = () => {
   useEffect(() => {
     const fetchDoctors = async () => {
       try {
-        const response = await fetch("https://blond-beautifully-dis-singing.trycloudflare.com/api/doctors/doctors-list");
+        const response = await fetch("http://localhost:8081/api/doctors/doctors-list");
         if (!response.ok) {
           throw new Error(`HTTP Error: ${response.status}`);
         }
@@ -147,7 +147,7 @@ const DoctorGrid = () => {
 
     try {
       const response = await axios.get(
-        `https://blond-beautifully-dis-singing.trycloudflare.com/api/doctors/doctor-schedule?regNum=${doctor.regestrationNum}`
+        `http://localhost:8081/api/doctors/doctor-schedule?regNum=${doctor.regestrationNum}`
       );
       if (Array.isArray(response.data)) {
         console.log(response.data);
@@ -187,7 +187,7 @@ const DoctorGrid = () => {
             <div key={doctor.id} className="doctor-cards">
               <div className="doctor-image">
                 {/* Dynamically set image source from the backend */}
-                <img src={`https://blond-beautifully-dis-singing.trycloudflare.com/${doctor.imagePath}`} alt={doctor.name} />
+                <img src={`http://localhost:8081/${doctor.imagePath}`} alt={doctor.name} />
               </div>
               <h3>{doctor.name}</h3>
               <p>Specialization: {doctor.specialization}</p>
@@ -218,7 +218,7 @@ const DoctorGrid = () => {
             <div className="doctor-detail">
               <div className="doctor-image">
                 {/* Dynamically set image source from the backend */}
-                <img src={`https://blond-beautifully-dis-singing.trycloudflare.com/${selectedDoctor.imagePath}`} alt={selectedDoctor.name} />
+                <img src={`http://localhost:8081/${selectedDoctor.imagePath}`} alt={selectedDoctor.name} />
               </div>
               <div className="doctor-info">
                 <h3>{selectedDoctor.name}</h3>

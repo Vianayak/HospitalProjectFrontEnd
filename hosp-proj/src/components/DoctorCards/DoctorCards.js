@@ -26,7 +26,7 @@ const DoctorCard = ({ doctor }) => {
     const fetchDoctorSchedule = async () => {
       try {
         const response = await axios.get(
-          `https://blond-beautifully-dis-singing.trycloudflare.com/api/doctors/doctor-schedule?regNum=${doctor.regestrationNum}`
+          `http://localhost:8081/api/doctors/doctor-schedule?regNum=${doctor.regestrationNum}`
         );
         if (Array.isArray(response.data)) {
           setDoctorSchedule(response.data);
@@ -66,7 +66,7 @@ const DoctorCard = ({ doctor }) => {
     if (!email) return;
     try {
       const response = await fetch(
-        `https://blond-beautifully-dis-singing.trycloudflare.com/api/otp/sendOtp?email=${encodeURIComponent(email)}`,
+        `http://localhost:8081/api/otp/sendOtp?email=${encodeURIComponent(email)}`,
         { method: "POST" }
       );
       if (!response.ok) {
@@ -103,7 +103,7 @@ const DoctorCard = ({ doctor }) => {
   const handleVerifyOtp = async () => {
     if (!otp) return;
     try {
-      const response = await axios.post("https://blond-beautifully-dis-singing.trycloudflare.com/api/otp/verifyOtp", null, {
+      const response = await axios.post("http://localhost:8081/api/otp/verifyOtp", null, {
         params: { email, otp }
       });
       setShowPopup(false);
@@ -150,7 +150,7 @@ const DoctorCard = ({ doctor }) => {
         <ToastContainer />
         <div className="doctor-card">
           <div className="doctor-image">
-            <img src={`https://blond-beautifully-dis-singing.trycloudflare.com/${doctor.imagePath}`} alt={doctor.name} />
+            <img src={`http://localhost:8081/${doctor.imagePath}`} alt={doctor.name} />
           </div>
           <div className="doctor-details">
             <h3 className="doctor-name">{doctor.name}</h3>

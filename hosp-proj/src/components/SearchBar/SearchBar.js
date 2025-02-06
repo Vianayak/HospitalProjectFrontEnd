@@ -13,7 +13,7 @@ const SearchBar = () => {
   useEffect(() => {
     const fetchDoctors = async () => {
       try {
-        const response = await fetch("https://blond-beautifully-dis-singing.trycloudflare.com/api/doctors/doctors-list");
+        const response = await fetch("http://localhost:8081/api/doctors/doctors-list");
         const data = await response.json();
         setDoctors(data);
       } catch (error) {
@@ -76,7 +76,7 @@ const SearchBar = () => {
       onClick={() => handleResultClick(doctor)}
     >
       <img
-        src={`https://blond-beautifully-dis-singing.trycloudflare.com/${doctor.imagePath}`}
+        src={`http://localhost:8081/${doctor.imagePath}`}
         alt={doctor.name}
         className="doctor-image"
       />
@@ -102,7 +102,7 @@ const SearchBar = () => {
             <h2>Doctor Details</h2>
             <div className="doctor-detail">
               <div className="doctor-image">
-              <img src={`https://blond-beautifully-dis-singing.trycloudflare.com/${selectedDoctor.imagePath}`} alt={selectedDoctor.name} />
+              <img src={`http://localhost:8081/${selectedDoctor.imagePath}`} alt={selectedDoctor.name} />
               </div>
               <div className="doctor-info">
                 <h3>{selectedDoctor.name}</h3>
