@@ -41,7 +41,7 @@ const [role, setRole] = useState("Doctor");
     setIsLoading(true); // Show loader
   
     try {
-      const response = await fetch("http://localhost:8082/api/user/login", {
+      const response = await fetch("https://quiet-nuclear-discs-galleries.trycloudflare.com/api/user/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

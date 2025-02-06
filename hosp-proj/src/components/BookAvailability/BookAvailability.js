@@ -110,7 +110,7 @@ const BookAvailability = ({ onClose, fetchBookedSlotsOnOpen }) => {
       }))
     );
   
-    fetch("http://localhost:8081/api/doctor-slots/save", {
+    fetch("https://blond-beautifully-dis-singing.trycloudflare.com/api/doctor-slots/save", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -130,7 +130,7 @@ const BookAvailability = ({ onClose, fetchBookedSlotsOnOpen }) => {
   
 
   const fetchBookedSlots = () => {
-    fetch(`http://localhost:8081/api/doctor-slots/get/${docRegNum}`)
+    fetch(`https://blond-beautifully-dis-singing.trycloudflare.com/api/doctor-slots/get/${docRegNum}`)
       .then(response => response.json())
       .then(data => {
         const formattedSlots = {};

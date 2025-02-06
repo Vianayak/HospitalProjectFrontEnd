@@ -37,7 +37,7 @@ const ServiceSection = () => {
   const handleMeetingSubmit = async () => {
     try {
       // Make API request to validate the password
-      const response = await axios.post("http://localhost:8081/api/meet/validateMeet", { meetingId: meetingId });
+      const response = await axios.post("https://blond-beautifully-dis-singing.trycloudflare.com/api/meet/validateMeet", { meetingId: meetingId });
 
       // If password is correct, redirect to the meeting link
       const meetingLink = response.data;

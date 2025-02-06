@@ -31,7 +31,7 @@ const PatientDashboardHeader = ({ selectedDate,setSelectedDate}) => {
 
       try {
         const response = await fetch(
-          `http://localhost:8081/api/book-appointment/patient-stats?date=${formattedDate}&email=${email}`
+          `https://blond-beautifully-dis-singing.trycloudflare.com/api/book-appointment/patient-stats?date=${formattedDate}&email=${email}`
         );
         const data = await response.json();
         console.log(data);

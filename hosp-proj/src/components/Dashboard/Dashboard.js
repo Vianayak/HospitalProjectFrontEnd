@@ -51,7 +51,7 @@ const Dashboard = ({selectedDate, setSelectedDate}) => {
     const doctorRegNum = doctorDetails.regestrationNum;
     console.log(formattedDate, doctorRegNum);
   
-    const apiUrl = `http://localhost:8081/api/book-appointment/appointments-for-date?date=${formattedDate}&doctorRegNum=${doctorRegNum}`;
+    const apiUrl = `https://blond-beautifully-dis-singing.trycloudflare.com/api/book-appointment/appointments-for-date?date=${formattedDate}&doctorRegNum=${doctorRegNum}`;
   
     const response = await fetch(apiUrl);
     if (response.ok) {
@@ -67,7 +67,7 @@ const Dashboard = ({selectedDate, setSelectedDate}) => {
     try {
       const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
       const doctorRegNum = doctorDetails.regestrationNum;
-      const apiUrl = `http://localhost:8081/api/book-appointment/earnings?date=${formattedDate}&doctorRegNum=${doctorRegNum}`;
+      const apiUrl = `https://blond-beautifully-dis-singing.trycloudflare.com/api/book-appointment/earnings?date=${formattedDate}&doctorRegNum=${doctorRegNum}`;
 
       const response = await fetch(apiUrl);
       if (response.ok) {
