@@ -5,6 +5,7 @@ import { useLocation, useNavigate, Link } from "react-router-dom";
 import "./UserAppointment.css";
 import axios from "axios";
 import { FaHome } from "react-icons/fa";
+import MultiSelectDropdown from "../AutoComplete/MultiSelectDropdown";
 
 const Loader = ({ loading }) => (
   <>
@@ -63,6 +64,10 @@ const UserAppointment = () => {
     setFormData({ ...formData, [name]: value });
     validateForm();
   };
+
+  
+  
+
   const handleTermsChange = () => {
     setIsTermsChecked((prev) => !prev);
     validateForm();
@@ -157,6 +162,9 @@ const UserAppointment = () => {
       validateForm();
     }
   };
+  
+ 
+
   useEffect(() => {
     if (loading) {
       document.body.classList.add("loading");

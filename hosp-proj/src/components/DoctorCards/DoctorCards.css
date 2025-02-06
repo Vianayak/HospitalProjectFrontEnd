@@ -159,19 +159,15 @@
   }  
 }  
 
-/* Desktop */  
-@media (min-width: 769px) {  
-  .doctor-list {  
-    grid-template-columns: repeat(2, 1fr); /* Two cards per row */  
-    padding: 20px; /* Original padding */  
-  }  
+@media (max-width: 768px) {
+  .doctor-list {
+    grid-template-columns: repeat(2, 1fr); /* Two doctor cards per row */
+  }
+}
 
-  .doctor-card {  
-    width: 550px; /* Original width */  
-    height: 300px; /* Original height */  
-  }  
-
-  .doctor-name {  
-    font-size: 1.2em; /* Original font size */  
-  }  
+@media (max-width: 480px) {
+  .doctor-list {
+    grid-template-columns: repeat(2, 1fr); /* Maintain two cards per row */
+    width: 800px;
+  }
 }
