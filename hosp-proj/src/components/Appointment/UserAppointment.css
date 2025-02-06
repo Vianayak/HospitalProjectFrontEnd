@@ -21,7 +21,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 30px;
+ 
   background-color: #f8f9fa;
   min-height: 70vh;
   margin-top: 100px;  /* Added margin-top to ensure content doesn't get hidden behind the fixed header */
