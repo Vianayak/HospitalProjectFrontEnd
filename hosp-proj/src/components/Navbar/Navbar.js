@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
-import { Link, useNavigate } from 'react-router-dom'; // Import useNavigate hook
+import { Link, useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './MyNavbar.css';
 import SearchBar from '../SearchBar/SearchBar';
 
 function MyNavbar({ scrollToHealthNews }) {
     const [showDropdown, setShowDropdown] = useState('');
-    const navigate = useNavigate(); // Initialize the useNavigate hook
+    const [expanded, setExpanded] = useState(false);
+    const navigate = useNavigate();
 
     const handleMouseEnter = (dropdown) => {
         setShowDropdown(dropdown);
@@ -17,17 +18,16 @@ function MyNavbar({ scrollToHealthNews }) {
         setShowDropdown('');
     };
 
-    // Function to handle navigation and setting the validNavigation flag
     const handleNavigation = (path) => {
-        sessionStorage.setItem("validNavigation", "true"); // Set valid navigation flag
-        navigate(path); // Navigate to the path
+        sessionStorage.setItem("validNavigation", "true");
+        navigate(path);
+        setExpanded(false);
     };
 
     return (
         <header>
-            <Navbar bg="white" variant="light" expand="lg" className="sticky-navbar">
+            <Navbar bg="white" variant="light" expand="lg" className="sticky-navbar" expanded={expanded}>
                 <Navbar.Brand>
-                    {/* Use Link to redirect to the main page */}
                     <Link to="/jayahospitals" className="navbar-logo-link" onClick={() => handleNavigation('/jayahospitals')}>
                         <img
                             src="/Assets/Images/NewLogo.jpeg"
@@ -36,21 +36,13 @@ function MyNavbar({ scrollToHealthNews }) {
                         />
                     </Link>
                 </Navbar.Brand>
-                <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                <Navbar.Toggle aria-controls="basic-navbar-nav" onClick={() => setExpanded(!expanded)} />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="ml-auto" id="exe">
                         <Nav.Link as={Link} to="/" onClick={() => handleNavigation('/')}>About Us</Nav.Link>
                         <Nav.Link as={Link} to="/book-appointments-page" onClick={() => handleNavigation('/book-appointments-page')}>Our Doctors</Nav.Link>
                         <NavDropdown
-                            title={
-                                <span
-                                    className={`dropdown-title ${
-                                        showDropdown === 'speciality' ? 'active' : ''
-                                    }`}
-                                >
-                                    Speciality
-                                </span>
-                            }
+                            title={<span className={`dropdown-title ${showDropdown === 'speciality' ? 'active' : ''}`}>Speciality</span>}
                             id="speciality-dropdown"
                             show={showDropdown === 'speciality'}
                             onMouseEnter={() => handleMouseEnter('speciality')}
@@ -60,15 +52,7 @@ function MyNavbar({ scrollToHealthNews }) {
                             <NavDropdown.Item as={Link} to="/ent" onClick={() => handleNavigation('/ent')}>ENT</NavDropdown.Item>
                         </NavDropdown>
                         <NavDropdown
-                            title={
-                                <span
-                                    className={`dropdown-title ${
-                                        showDropdown === 'patient-info' ? 'active' : ''
-                                    }`}
-                                >
-                                    Patient Info
-                                </span>
-                            }
+                            title={<span className={`dropdown-title ${showDropdown === 'patient-info' ? 'active' : ''}`}>Patient Info</span>}
                             id="patient-info-dropdown"
                             show={showDropdown === 'patient-info'}
                             onMouseEnter={() => handleMouseEnter('patient-info')}
@@ -80,15 +64,7 @@ function MyNavbar({ scrollToHealthNews }) {
                             </NavDropdown.Item>
                         </NavDropdown>
                         <NavDropdown
-                            title={ 
-                                <span
-                                    className={`dropdown-title ${
-                                        showDropdown === 'hospitals' ? 'active' : ''
-                                    }`}
-                                >
-                                    Hospitals
-                                </span>
-                            }
+                            title={<span className={`dropdown-title ${showDropdown === 'hospitals' ? 'active' : ''}`}>Hospitals</span>}
                             id="hospitals-dropdown"
                             show={showDropdown === 'hospitals'}
                             onMouseEnter={() => handleMouseEnter('hospitals')}
@@ -103,7 +79,6 @@ function MyNavbar({ scrollToHealthNews }) {
                 <div className="search-bar-container">
                     <SearchBar />
                 </div>
-
                 <div className="login-button1">
                     <Link to="/login" onClick={() => handleNavigation('/login')}>
                         <button>Log In</button>
