@@ -140,10 +140,6 @@
  }
   
   
-  button[type="button"]:disabled {
-    background-color: #ddd;
-    cursor: not-allowed;
-  }
   
 
  /* Add this to your SignUp.css */

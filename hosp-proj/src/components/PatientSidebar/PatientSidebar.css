@@ -217,11 +217,13 @@
   
   .close-button1 {
     margin-top: 10px;
-    background: red;
+    background: #5a3eca; 
     color: white;
     padding: 8px;
     border: none;
     cursor: pointer;
+    width: 100px;
+    margin-left: 300px;
   }
   
   /* Modern Calendar Styling */
@@ -327,4 +329,58 @@
     border: 1px solid #ccc;
     border-radius: 4px;
   }
-  
+  /* Mobile View Styles */
+@media (max-width: 768px) {
+  .layout {
+    flex-direction: column; /* Stack sidebar and content vertically */
+  }
+
+  .PatientSidebar {
+    position: relative;
+    width: 100%;
+    height: auto;
+    margin-top: 0;
+    padding: 10px;
+    overflow-y: visible;
+  }
+
+  .dashboard-content {
+    padding: 10px;
+  }
+
+  .form-group3 {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .form-group3 label {
+    text-align: left;
+    flex-basis: auto;
+  }
+
+  .form-group3 input {
+    width: 100%;
+  }
+
+  .popup-container2 {
+    width: 90%;
+    height: auto;
+  }
+
+  .meetings-content {
+    flex-direction: column;
+  }
+
+  .calendar-section {
+    border-right: none;
+    padding-right: 0;
+  }
+
+  .meetings-list {
+    max-height: 300px;
+  }
+
+  .react-calendar {
+    max-width: 100%;
+  }
+}
