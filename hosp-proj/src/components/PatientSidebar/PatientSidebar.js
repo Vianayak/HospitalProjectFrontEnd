@@ -138,11 +138,6 @@ const PatientSidebar = () => {
     }
   };
 
-
-
-
-
-
   const handleDateChange = (date) => {
     console.log("Selected date before formatting:", date);  // Log selected date
     setSelectedDate(date);

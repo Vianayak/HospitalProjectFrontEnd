@@ -5,9 +5,10 @@ import Dashboard from '../Dashboard/Dashboard';
 import HealthcarePortal from '../HealthcarePortal/HealthcarePortal';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import axios from "axios";
 import BookAvailability from '../BookAvailability/BookAvailability';
 
+import Calendar from "react-calendar";
 
 import { useNavigate } from 'react-router-dom';
 
@@ -25,9 +26,10 @@ const Sidebar = () => {
   });
   const [isLoading, setIsLoading] = useState(false);
   const [buttonDisabled, setButtonDisabled] = useState(false);
-  const [statusUpdated, setStatusUpdated] = useState(false);
   const [showBookAvailability, setShowBookAvailability] = useState(false);
 
+  const [meetings, setMeetings] = useState([]);
+  const [showMeetingsPopup, setShowMeetingsPopup] = useState(false);
   const handleAvailability = () => {
     setShowBookAvailability(true);
   };
@@ -40,7 +42,31 @@ const Sidebar = () => {
     number: /\d/.test(formData.password),
     specialChar: /[@$!%*?&]/.test(formData.password),
   };
+  const handleDateChange = (date) => {
+    console.log("Selected date before formatting:", date);  // Log selected date
+    setSelectedDate(date);
+    
+    // Format the date to 'yyyy-MM-dd'
+    const localDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
 
+  // Format the adjusted date to 'yyyy-MM-dd'
+  const formattedDate = localDate.toISOString().split('T')[0];
+  console.log("Formatted date for API call:", formattedDate); // Log formatted date
+  
+    const email = doctorDetails.email;
+  
+    // Make the API call with formatted date and email
+    axios.get(`http://localhost:8081/api/meet/getMeetingList?date=${formattedDate}&email=${email}`)
+  .then((response) => {
+    if (response.data) {
+      setMeetings(response.data); // Append the response data
+    }
+  })
+  .catch((error) => {
+    console.error('Error fetching meetings:', error);
+  });
+
+  };
   useEffect(() => {
     const storedDoctorDetails = localStorage.getItem("doctorDetails");
     if (storedDoctorDetails) {
@@ -131,9 +157,7 @@ const Sidebar = () => {
       setIsLoading(false);
     }
   };
-  const handleStatusUpdate = () => {
-    setStatusUpdated((prev) => !prev);
-  };
+ 
   const toggleMenu = () => {
     setSidebarOpen((prev) => !prev);
     console.log("Sidebar state:", !sidebarOpen);
@@ -161,6 +185,9 @@ const Sidebar = () => {
           )}
         </div>
         <ul className="menu">
+        <li onClick={() => setShowMeetingsPopup(true)}>
+            <i className="icon">&#x1F4DD;</i> Meetings
+          </li>
   <li onClick={handleAvailability}>
     <i className="icon">&#x1F4CB;</i> Book Availability
   </li>
@@ -244,7 +271,42 @@ const Sidebar = () => {
             </form>
           </div>
         </div>
+      )} {showMeetingsPopup && (
+        <div className="popup-overlay2">
+          <div className="popup-container2">
+            <h2>Upcoming Meetings</h2>
+            <div className="meetings-content">
+              {/* Left side: Calendar */}
+              <div className="calendar-section">
+              <Calendar
+                  onChange={handleDateChange}
+                  value={selectedDate}
+                  minDate={new Date()}
+                />
+              </div>
+
+              {/* Right side: Meetings List */}
+              <div className="meetings-list">
+              {meetings.length > 0 ? (
+                  meetings.map((meeting) => (
+                    <div key={meeting.id} className="meeting-item">
+                      <p><strong>Doctor:</strong> {meeting.name}</p>
+                      <p><strong>Time:</strong> {meeting.time}</p>
+                      <a href={meeting.patientUrl} target="_blank" rel="noopener noreferrer">
+                        <button className="meet-button">Join Meeting</button>
+                      </a>
+                    </div>
+                  ))
+                ) : (
+                  <p>No meetings scheduled for this date.</p>
+                )}
+              </div>
+            </div>
+            <button className="close-button1" onClick={() => setShowMeetingsPopup(false)}>Close</button>
+          </div>
+        </div>
       )}
+      
       <ToastContainer />
     </div>
   );
