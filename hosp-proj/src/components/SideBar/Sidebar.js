@@ -221,7 +221,7 @@ const Sidebar = () => {
             <form onSubmit={handleSubmit}>
               <div className="form-group3">
                 <div className="input-row">
-                  <div className="input-container">
+                  <div className="input-container3">
                     <label>Password</label>
                     <input
                       type="password"
@@ -232,7 +232,7 @@ const Sidebar = () => {
                       onChange={handleInputChange}
                     />
                   </div>
-                  <div className="input-container">
+                  <div className="input-container3">
                     <label>Confirm Password</label>
                     <input
                       type="password"
