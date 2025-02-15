@@ -26,7 +26,7 @@
 
 /* Login container styles */
 .login-container {
-  background: linear-gradient(135deg, #6e8efb, #a777e3);
+  background: linear-gradient(135deg, #00A4CCFF, #FF3600);
   border-radius: 8px;
   padding: 20px 40px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
@@ -40,7 +40,7 @@
 
 /* Additional styling for the form */
 .login-header .logo {
-  width: 50px;
+  width: 100px;
   height: 50px;
 }
 

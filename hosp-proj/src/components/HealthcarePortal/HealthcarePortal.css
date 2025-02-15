@@ -33,7 +33,7 @@ body {
 .calendar-widget h3 {
   margin-bottom: 20px;
   font-size: 20px;
-  color: #5a3eca;
+  color: #FF3600;
 }
 
 /* Appointment Card */
@@ -120,7 +120,7 @@ body {
 }
 
 .days-grid .day.selected {
-  background: #5a3eca;
+  background: #FF3600;
   color: white;
   border-radius: 50%;
 }
@@ -158,7 +158,7 @@ body {
 
 .modal-header h3 {
   margin: 0;
-  color: #5a3eca;
+  color: #FF3600;
 }
 
 .close-modal-btn {
@@ -178,7 +178,7 @@ body {
   display: block;
   margin: 20px auto;
   padding: 10px 20px;
-  background-color: #5a3eca;
+  background-color: #FF3600;
   color: white;
   border: none;
   border-radius: 5px;

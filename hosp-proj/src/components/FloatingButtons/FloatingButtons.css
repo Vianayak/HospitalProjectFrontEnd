@@ -40,15 +40,15 @@
   }
   
   .health-check-button {
-    background-color: #5A3ECA; /* Blue */
+    background-color: #FF3600; /* Blue */
   }
   
   .appointment-button {
-    background-color: #ff5722; /* Orange */
+    background-color: #00A4CCFF; /* Orange */
   }
   
   .health-check-button:hover {
-    background-color: #5A3ECA;
+    background-color: #FF3600;
   }
   
   .appointment-button:hover {

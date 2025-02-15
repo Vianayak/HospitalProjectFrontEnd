@@ -5,7 +5,6 @@ import { useLocation, useNavigate, Link } from "react-router-dom";
 import "./UserAppointment.css";
 import axios from "axios";
 import { FaHome } from "react-icons/fa";
-import MultiSelectDropdown from "../AutoComplete/MultiSelectDropdown";
 
 const Loader = ({ loading }) => (
   <>
@@ -98,9 +97,9 @@ const UserAppointment = () => {
         key: "rzp_test_K5qGcFdtNC8hvm",
         amount: amountInPaise,
         currency: data.currency,
-        name: "Jaya Hospitals",
+        name: "TechSpryn",
         description: "Test Transaction",
-        image: "Assets/images/HeaderLogo.png",
+        image: "Assets/images/whitelogos.png",
         order_id: data.razorpayOrderId,
         handler: function (response) {
           const { razorpay_payment_id, razorpay_order_id, razorpay_signature } = response;
@@ -216,12 +215,12 @@ const UserAppointment = () => {
         </Link>
         <div className="header-content">
           <h1>
-            <img
+            {/* <img
               src="Assets/Images/whitelogos.png"
               alt="Jaya Hospitals Logo"
               className="header-logo"
-            />
-            JAYA HOSPITALS
+            /> */}
+            TechSpryn
           </h1>
         </div>
       </header>

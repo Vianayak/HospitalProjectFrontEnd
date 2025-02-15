@@ -58,7 +58,10 @@
     height: 100%;
     object-fit: cover;
   }
-  
+  .header-logo-techspryn{
+    width: 50%;
+    height: 50% ;
+  }
   /* Form section */
   .popup-form {
     flex: 1;
@@ -66,7 +69,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    background-color: #5A3ECA;
+    background-color: #FF3600;
     color: #fff;
   }
   
@@ -90,7 +93,7 @@
   }
   
   .popup-button {
-    background-color: #ff5722;
+    background-color: #00A4CCFF;
     color: #fff;
     padding: 10px 15px;
     border: none;
@@ -100,7 +103,7 @@
   }
   
   .popup-button:hover {
-    background-color: #cc0000;
+    background-color: rgb(4, 81, 101);
   }
   
 /* Overlay */
@@ -138,7 +141,7 @@
 .schedule-button {
   width: 100%;
   padding: 10px;
-  background-color: #5A3ECA;
+  background-color: #FF3600;
   color: white;
   border: none;
   border-radius: 5px;
@@ -147,7 +150,7 @@
 }
 
 .schedule-button:hover {
-  background-color: #5A3ECA;
+  background-color: #FF3600;
 }
 
 
@@ -164,11 +167,11 @@
   border: none;
   font-size: 20px;
   cursor: pointer;
-  color: #5A3ECA /* Arrow color */
+  color: #FF3600 /* Arrow color */
 }
 
 .arrow-button:hover {
-  color: #5A3ECA; /* Hover effect */
+  color: #FF3600; /* Hover effect */
 }
 
 /* Date Selection */
@@ -180,19 +183,19 @@
 
 .date {
   padding: 10px 15px;
-  border: 1px solid #5A3ECA;
+  border: 1px solid #FF3600;
   border-radius: 5px;
   background: #f9f9f9;
   font-size: 14px;
   cursor: pointer;
   text-align: center;
-  color: #5A3ECA;
+  color: #FF3600;
   font-weight: 600;
 }
 
 /* CSS for the selected date */
 .date.active {
-  background-color: #5A3ECA; /* Background color for the selected date */
+  background-color: #FF3600; /* Background color for the selected date */
   color: #fff; /* Text color for the selected date */
   font-weight: bold; /* Bold text for the selected date */
   border: none; /* Remove border when selected */
@@ -219,27 +222,27 @@
 /* Time Slot Button */
 .time-slot {
   padding: 10px 15px;
-  border: 1px solid #5A3ECA;
+  border: 1px solid #FF3600;
   border-radius: 5px;
   background: #f9f9f9;
   cursor: pointer;
   font-size: 14px;
   text-align: center;
-  color: #5A3ECA;
+  color: #FF3600;
   font-weight: 600;
   transition: background 0.3s ease, color 0.3s ease; /* Smooth hover effect */
 }
 
 /* Hover Effect for Time Slot */
 .time-slot:hover {
-  background: #5A3ECA;
+  background: #FF3600;
   color: #fff;
   border: none;
 }
 
 /* Active (Selected) Time Slot */
 .time-slot.active {
-  background-color: #5A3ECA; /* Background color for the selected time slot */
+  background-color: #FF3600; /* Background color for the selected time slot */
   color: #fff; /* Text color for the selected time slot */
   font-weight: bold; /* Bold text for the selected time slot */
   border: none; /* Remove border when selected */
@@ -248,7 +251,7 @@
 
 /* Prevent hover effect on active (selected) slot */
 .time-slot.active:hover {
-  background-color: #5A3ECA; /* Keep the same active background on hover */
+  background-color: #FF3600; /* Keep the same active background on hover */
   color: #fff; /* Keep the same active text color */
   border: none; /* Ensure the border stays removed */
   cursor: default; /* Change cursor to default when hovering over active slot */
@@ -265,7 +268,7 @@
 
 /* Continue Button */
 .continue-button {
-  background: #5A3ECA;
+  background: #FF3600;
   color: #fff;
   padding: 10px 20px;
   border: none;
@@ -279,20 +282,20 @@
 }
 
 .continue-button:hover {
-  background: #5A3ECA;
+  background: #FF3600;
 }
 
 
 
 /* Modify hover state for unselected dates */
 .date:hover {
-  background: #5A3ECA; /* A different background color on hover for unselected dates */
+  background: #FF3600; /* A different background color on hover for unselected dates */
   color: #fff;
   border: none;
 }
 
 .selected-date{
-color :  #5A3ECA;
+color :  #FF3600;
 font-weight: 600;
 }
 /* Styling for the container */
@@ -312,7 +315,7 @@ font-weight: 600;
 .date-picker-container label {
   font-size: 16px;
   font-weight: bold;
-  color: #5A3ECA;
+  color: #FF3600;
   margin-right: 10px; /* Space between label and input */
   margin-top: 5px;
 }
@@ -323,20 +326,20 @@ font-weight: 600;
   font-size: 14px;
   width: 60%;
   border-radius: 4px;
-  border: 1px solid #5A3ECA;
+  border: 1px solid #FF3600;
   background-color: #fff;
   transition: border-color 0.3s ease;
 }
 
 /* Focus style for the input */
 .date-picker-container .date-input:focus {
-  border-color: #5A3ECA;
+  border-color: #FF3600;
   outline: none;
 }
 
 /* Optional: Add some hover effect */
 .date-input:hover {
-  border-color: #5A3ECA;
+  border-color: #FF3600;
 }
 
 .resend-otp-container {

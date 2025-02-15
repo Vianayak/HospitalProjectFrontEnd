@@ -42,14 +42,14 @@
   
   .stat-icon {
     font-size: 30px;
-    color: #5A3ECA;
+    color: #FF3600;
     background-color: #f0f8ff; /* Optional: Set the circle's background color */
     border-radius: 50%; /* Makes the background a circle */
     padding: 15px; /* Adds space around the icon inside the circle */
     display: inline-flex; /* Centers the icon within the circle */
     align-items: center; /* Vertical centering */
     justify-content: center; /* Horizontal centering */
-    border: 3px solid #5A3ECA; /* Optional: Add a border around the circle */
+    border: 3px solid #FF3600; /* Optional: Add a border around the circle */
     width: 60px; /* Adjust circle width */
     height: 60px; /* Adjust circle height */
   }
@@ -75,7 +75,7 @@
   
   .action-icon {
     font-size: 24px;
-    color: #5A3ECA;
+    color: #FF3600;
     cursor: pointer;
   }
   

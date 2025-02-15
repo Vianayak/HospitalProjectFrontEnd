@@ -208,7 +208,7 @@
   }
   
   .meet-button {
-    background-color: #5a3eca;
+    background-color: #FF3600;
     color: white;
     padding: 8px 12px;
     border: none;
@@ -217,7 +217,7 @@
   
   .close-button1 {
     margin-top: 10px;
-    background: #5a3eca; 
+    background: #FF3600; 
     color: white;
     padding: 8px;
     border: none;
@@ -243,7 +243,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: #5a3eca;
+    background: #FF3600;
     color: white;
     padding: 10px;
     border-radius: 8px;
@@ -283,7 +283,7 @@
   }
   
   .react-calendar__tile--active {
-    background: #5a3eca !important;
+    background: #FF3600 !important;
     color: white !important;
     font-weight: bold;
     border-radius: 8px;

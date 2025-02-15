@@ -46,10 +46,10 @@ const OtpPopup = ({ email, setEmail, otp, setOtp, handleSendOtp, handleResendOtp
               <h4>
                 <img
                   src="Assets/Images/whitelogos.png"
-                  alt="Jaya Hospitals Logo"
-                  className="header-logo"
+                  alt="TechSpryn "
+                  className="header-logo-techspryn"
                 />
-                JAYA HOSPITALS
+              
               </h4>
             </header>
             <input

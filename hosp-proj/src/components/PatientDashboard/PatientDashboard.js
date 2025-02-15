@@ -89,7 +89,7 @@ const PatientDashboard = ({selectedDate, setSelectedDate}) => {
     datasets: [
       {
         data: [todayPayments, totalPayments],
-        backgroundColor: ["#fde047", "#2563eb"],
+        backgroundColor: ["#00A4CCFF", "#FF3600"],
         hoverBackgroundColor: ["#facc15", "#1d4ed8"],
       },
     ],

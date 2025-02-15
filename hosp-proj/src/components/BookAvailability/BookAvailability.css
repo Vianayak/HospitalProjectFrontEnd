@@ -39,7 +39,7 @@
   .appointment-header {
     font-size: 22px;
     font-weight: bold;
-    color: #5a2eca;
+    color: #FF3600;
     margin-bottom: 15px;
   }
   
@@ -137,7 +137,7 @@
     padding: 10px;
     border-radius: 5px;
     cursor: pointer;
-    background-color: #a998c6;
+    background-color: #FF3600;
     border: none;
     color: #333;
    
@@ -242,13 +242,13 @@
     padding: 10px;
     border-radius: 5px;
     cursor: pointer;
-    background-color: #a998c6;
+    background-color: #00A4CCFF;
     border: none;
     margin: 5px;
   }
   
   .time-slot.selected {
-    background-color: #5a2eca;
+    background-color: #00A4CCFF;
     color: white;
   }
   

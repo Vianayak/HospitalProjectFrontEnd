@@ -32,7 +32,7 @@
 
 #exe a:hover,
 #exe .dropdown-item:hover {
-  color: #5A3ECA;
+  color: #FF3600;
 }
 
 .dropdown-title::after {
@@ -89,7 +89,7 @@
 
 .login-button1 button{
  
-  background-color: #5A3ECA;
+  background-color: #FF3600;
   color: #fff;
   border: none;
   padding: 10px 20px;

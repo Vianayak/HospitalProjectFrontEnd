@@ -1,6 +1,6 @@
 /* Header */
 .header1 {
-  background-color: #5a3eca;
+  background-color: #FF3600;
   color: white;
   padding: 30px;
   font-size: 24px;
@@ -89,16 +89,16 @@
 .form-group2 select {
   padding: 8px 12px;
   font-size: 14px;
-  border: 1px solid #5a3eca;
+  border: 1px solid #FF3600;
   border-radius: 4px;
   width: 280px;
-  color: #5a3eca;
+  color: #FF3600;
   background: #fff;
 }
 
 .form-group2 input:focus,
 .form-group2 select:focus {
-  border-color: #5a3eca;
+  border-color: #FF3600;
   outline: none;
 }
 
@@ -127,7 +127,7 @@
   display: flex;
   align-items: center;
   font-weight: normal;
-  color: #5a3eca;
+  color: #FF3600;
   gap: 5px;
 }
 
@@ -173,7 +173,7 @@
 }
 
 .terms a {
-  color: #5a3eca;
+  color: #FF3600;
   text-decoration: none;
 }
 
@@ -185,7 +185,7 @@
 .confirm-btn {
   margin-top: 20px;
   padding: 15px 25px;
-  background-color: #5a3eca;
+  background-color: #FF3600;
   color: white;
   font-weight: bold;
   border: none;
@@ -197,7 +197,7 @@
 }
 
 .confirm-btn:hover {
-  background-color: #4a32b3;
+  background-color: #00A4CCFF;
 }
 
 .confirm-btn:disabled {
@@ -349,16 +349,16 @@ textarea {
   resize: none; /* Disable manual resizing */
   padding: 8px 12px; /* Same padding as input fields */
   font-size: 14px; /* Match font size of input fields */
-  border: 1px solid #5a3eca; /* Same border as input fields */
+  border: 1px solid #FF3600; /* Same border as input fields */
   border-radius: 4px; /* Match the border-radius of input fields */
   background: #fff; /* Same background color */
-  color: #5a3eca; /* Same text color */
+  color: #FF3600; /* Same text color */
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
   box-sizing: border-box; /* Ensure padding is included in width and height */
 }
 
 textarea:focus {
-  border-color: #5a3eca; /* Focus border color */
+  border-color: #FF3600; /* Focus border color */
   box-shadow: 0 0 5px rgba(90, 62, 202, 0.3); /* Focus shadow */
   outline: none;
 }
@@ -384,7 +384,7 @@ textarea:read-only {
 
 .remaining-chars {
   font-size: 12px;
-  color: #5a3eca; /* Match the design */
+  color: #FF3600; /* Match the design */
   text-align: right; /* Align to the right */
   margin-top: 5px; /* Add spacing above the counter */
 }
