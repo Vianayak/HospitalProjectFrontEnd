@@ -45,7 +45,7 @@ const OtpPopup = ({ email, setEmail, otp, setOtp, handleSendOtp, handleResendOtp
             <header className="header">
               <h4>
                 <img
-                  src="Assets/Images/whitelogos.png"
+                  src="Assets/Images/TechSpryn_New.png"
                   alt="TechSpryn "
                   className="header-logo-techspryn"
                 />

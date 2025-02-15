@@ -195,8 +195,7 @@ const SignIn = () => {
       </div>
       <div className="signin-header">
         <div className="login-header">
-          <img src="/Assets/Images/whitelogos.png" alt="Logo" className="logo" />
-          <span>JAYA HOSPITALS</span>
+          <img src="/Assets/Images/TechSpryn_New.png" alt="Logo" className="logo" />
         </div>
         <h2>Sign In</h2>
       </div>

@@ -99,7 +99,7 @@ const UserAppointment = () => {
         currency: data.currency,
         name: "TechSpryn",
         description: "Test Transaction",
-        image: "Assets/images/whitelogos.png",
+        image: "Assets/Images/TechSpryn_New.png",
         order_id: data.razorpayOrderId,
         handler: function (response) {
           const { razorpay_payment_id, razorpay_order_id, razorpay_signature } = response;
@@ -124,7 +124,7 @@ const UserAppointment = () => {
           contact: formData.phone,
         },
         theme: {
-          color: "#3399cc",
+          color: "#00A4CCFF", // Change this to your desired accent color
         },
       };
 
@@ -220,7 +220,10 @@ const UserAppointment = () => {
               alt="Jaya Hospitals Logo"
               className="header-logo"
             /> */}
-            TechSpryn
+            <img
+            src="Assets/Images/TechSpryn_New.png"
+            alt="TechSpryn Logo"
+            className="header-logo"></img>
           </h1>
         </div>
       </header>

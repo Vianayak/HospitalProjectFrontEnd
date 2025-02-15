@@ -69,7 +69,7 @@
 }  
 
 .book-appointment-button:hover {  
-  background-color: #FF3600;  
+  background: linear-gradient(135deg, #00A4CCFF, #FF3600);
 }  
 
 .content-wrapper1 {  

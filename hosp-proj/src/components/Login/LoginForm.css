@@ -33,15 +33,17 @@
   width: 100%;
   max-width: 400px;
   text-align: center;
-  color: white;
+  color: rgb(158, 171, 174);
   position: relative; /* Ensure stacking context for form */
   z-index: 1; /* Ensure it stays above the blurred background */
 }
 
 /* Additional styling for the form */
 .login-header .logo {
-  width: 100px;
-  height: 50px;
+  width: 230px;
+  height: 180px;
+  margin-bottom: -40px;
+  margin-right: 20px;
 }
 
 .input-group {
@@ -76,7 +78,7 @@
   padding: 10px;
   border: none;
   border-radius: 4px;
-  background-color: #4e69e0;
+  background-color: #FF3600;
   color: white;
   cursor: pointer;
   font-size: 16px;
@@ -84,6 +86,10 @@
   position: relative; /* Ensure proper stacking within its parent */
   z-index: 2; /* Ensure it stays above the background and other elements */
 }
+
+.login-button:hover {
+  background: linear-gradient(135deg, #00A4CCFF, #FF3600);
+  }
 
 
 
@@ -171,7 +177,7 @@
 .role-toggle label {
   font-size: 16px;
   font-weight: bold;
-  color: #fff;
+  color: #00A4CCFF;
   margin: 0 10px;
   cursor: pointer;
 }
@@ -196,7 +202,7 @@
   position: absolute;
   width: 18px;
   height: 18px;
-  background: white;
+  background: #FF3600;
   border-radius: 50%;
   top: 1px;
   left: 2px;
@@ -208,7 +214,7 @@
 }
 
 .role-toggle label.active {
-  color: white;
+  color: #FF3600;
 }
 
 

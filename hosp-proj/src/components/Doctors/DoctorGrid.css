@@ -45,7 +45,7 @@
   }
   
   .doctor-buttons button:hover {
-    background-color: #4A32A3; /* A slightly darker shade for hover */
+    background: linear-gradient(135deg, #00A4CCFF, #FF3600);
   transform: scale(1.05);
   }
   

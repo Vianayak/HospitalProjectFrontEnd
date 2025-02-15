@@ -99,6 +99,11 @@
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
+.login-button1 button:hover{
+ 
+  background: linear-gradient(135deg, #00A4CCFF, #FF3600);
+}
+
 .login-container1:hover .login-text {
   display: none; /* Hide the text on hover */
 }

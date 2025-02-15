@@ -59,7 +59,7 @@
     object-fit: cover;
   }
   .header-logo-techspryn{
-    width: 50%;
+    width: 75%;
     height: 50% ;
   }
   /* Form section */
@@ -69,7 +69,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    background-color: #FF3600;
+    background: linear-gradient(135deg, #00A4CCFF, #FF3600);
     color: #fff;
   }
   
@@ -93,7 +93,7 @@
   }
   
   .popup-button {
-    background-color: #00A4CCFF;
+    background-color: #FF3600;
     color: #fff;
     padding: 10px 15px;
     border: none;
@@ -103,7 +103,7 @@
   }
   
   .popup-button:hover {
-    background-color: rgb(4, 81, 101);
+    background: linear-gradient(135deg, #00A4CCFF, #FF3600);
   }
   
 /* Overlay */
@@ -124,7 +124,7 @@
 .schedule-popup {
   width: 700px;
   max-width: 90%;
-  background: #fff;
+  background: linear-gradient(135deg, #00A4CCFF, #FF3600);
   border-radius: 15px; /* Softer corners */
   padding: 20px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Stronger shadow for elevation */
@@ -228,7 +228,6 @@
   cursor: pointer;
   font-size: 14px;
   text-align: center;
-  color: #FF3600;
   font-weight: 600;
   transition: background 0.3s ease, color 0.3s ease; /* Smooth hover effect */
 }
@@ -282,7 +281,7 @@
 }
 
 .continue-button:hover {
-  background: #FF3600;
+  background: linear-gradient(135deg, #00A4CCFF, #FF3600);
 }
 
 

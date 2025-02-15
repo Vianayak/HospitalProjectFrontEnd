@@ -1,7 +1,7 @@
 .footer {
   display: flex;
   flex-wrap: wrap;
-  background-color: #00A4CCFF;
+  background: linear-gradient(135deg, #00A4CCFF, #FF3600);
   color: white;
   padding: 20px;
   justify-content: space-between;
@@ -14,7 +14,8 @@
 }
 
 .footer-logo {
-  width: 150px;
+  width: 200px;
+  height: 200px;
 }
 
 .footer-tagline {

@@ -144,7 +144,7 @@ const [role, setRole] = useState("Doctor");
               }
     }}
   ></i>
-          <img src="/Assets/Images/whitelogos.png" alt="Logo" className="logo" />
+          <img src="/Assets/Images/TechSpryn_New.png" alt="Logo" className="logo" />
           {/* <span>JAYA HOSPITALS</span> */}
           <div className="role-toggle">
             <label className={role === "Doctor" ? "active" : ""}>Doctor</label>

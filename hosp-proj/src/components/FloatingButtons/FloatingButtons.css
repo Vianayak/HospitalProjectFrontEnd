@@ -44,14 +44,14 @@
   }
   
   .appointment-button {
-    background-color: #00A4CCFF; /* Orange */
+    background: linear-gradient(135deg, #00A4CCFF, #FF3600);
   }
   
-  .health-check-button:hover {
+  /* .health-check-button:hover {
     background-color: #FF3600;
-  }
+  } */
   
-  .appointment-button:hover {
+  /* .appointment-button:hover {
     background-color: #e64a19;
-  }
+  } */
   

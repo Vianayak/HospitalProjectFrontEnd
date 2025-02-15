@@ -1,6 +1,6 @@
 /* Header */
 .header1 {
-  background-color: #FF3600;
+  background: linear-gradient(135deg, #00A4CCFF, #FF3600);
   color: white;
   padding: 30px;
   font-size: 24px;
@@ -92,7 +92,6 @@
   border: 1px solid #FF3600;
   border-radius: 4px;
   width: 280px;
-  color: #FF3600;
   background: #fff;
 }
 
@@ -197,7 +196,7 @@
 }
 
 .confirm-btn:hover {
-  background-color: #00A4CCFF;
+  background: linear-gradient(135deg, #00A4CCFF, #FF3600);
 }
 
 .confirm-btn:disabled {
@@ -235,7 +234,7 @@
 }
 
 .home-icon:hover {
-  color: #ffd700; /* Change color on hover */
+  color: #FF3600;
 }
 
 .header-content {
@@ -248,8 +247,9 @@
 }
 
 .header-logo {
-  width: 70px;
-  height: 60px;
+  width: 300px;
+  height: 300px;
+  margin-top: 20px;
 }
 
 .header-title {
@@ -352,7 +352,6 @@ textarea {
   border: 1px solid #FF3600; /* Same border as input fields */
   border-radius: 4px; /* Match the border-radius of input fields */
   background: #fff; /* Same background color */
-  color: #FF3600; /* Same text color */
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
   box-sizing: border-box; /* Ensure padding is included in width and height */
 }

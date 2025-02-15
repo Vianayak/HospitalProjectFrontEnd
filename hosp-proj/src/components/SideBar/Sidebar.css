@@ -112,7 +112,7 @@
     gap: 10px;  /* Space between label and input */
   }
   .popup-container3 {
-    background-color: #fff;
+    background: linear-gradient(135deg, #00A4CCFF, #FF3600);
     width: 500px;
     height: 550px;
   }
@@ -121,8 +121,25 @@
     width: 60%;
     margin-left: 60px;
     margin-right: 100px;
+    background-color: #FF3600;
   }
 
+  .forgot-password-button:hover {
+    width: 60%;
+    margin-left: 60px;
+    margin-right: 100px;
+    background: linear-gradient(135deg, #00A4CCFF, #FF3600);
+  }
+
+
+  .cancel-button{
+    background-color: #de836a;
+  }
+
+
+  .cancel-button:hover{
+    background: linear-gradient(135deg, #00A4CCFF, #FF3600);
+  }
   .change-password1 {
     text-align: center;
   }
@@ -156,3 +173,7 @@
     border-radius: 4px;
   }
   
+
+  .close-button1:hover{
+    background: linear-gradient(135deg, #00A4CCFF, #FF3600);
+  }
