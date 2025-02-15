@@ -107,7 +107,7 @@
   }
   
   .popup-container3 {
-    background-color: #fff;
+    background: linear-gradient(135deg, #00A4CCFF, #FF3600);
     width: 500px;
     height: 550px;
   }
@@ -116,6 +116,23 @@
     width: 60%;
     margin-left: 60px;
     margin-right: 100px;
+    background-color: #f76941;
+  }
+
+  .forgot-password-button:hover {
+    width: 60%;
+    margin-left: 60px;
+    margin-right: 100px;
+    background: linear-gradient(135deg, #00A4CCFF, #FF3600);
+  }
+
+  .cancel-button{
+    background-color: #de836a;
+  }
+
+
+  .cancel-button:hover{
+    background: linear-gradient(135deg, #00A4CCFF, #FF3600);
   }
 
   .change-password2 {
@@ -207,8 +224,8 @@
     border-radius: 5px;
   }
   
-  .meet-button {
-    background-color: #FF3600;
+  .meet-button1 {
+    background-color: #f76941;
     color: white;
     padding: 8px 12px;
     border: none;
@@ -217,7 +234,7 @@
   
   .close-button1 {
     margin-top: 10px;
-    background: #FF3600; 
+    background: #f76941; 
     color: white;
     padding: 8px;
     border: none;

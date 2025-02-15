@@ -93,7 +93,7 @@
   }
   
   .popup-button {
-    background-color: #FF3600;
+    background-color: #f76941;
     color: #fff;
     padding: 10px 15px;
     border: none;
@@ -141,7 +141,7 @@
 .schedule-button {
   width: 100%;
   padding: 10px;
-  background-color: #FF3600;
+  background-color: #f76941;
   color: white;
   border: none;
   border-radius: 5px;
@@ -150,7 +150,7 @@
 }
 
 .schedule-button:hover {
-  background-color: #FF3600;
+  background-color: #f76941;
 }
 
 
@@ -267,7 +267,7 @@
 
 /* Continue Button */
 .continue-button {
-  background: #FF3600;
+  background: #f76941;
   color: #fff;
   padding: 10px 20px;
   border: none;
