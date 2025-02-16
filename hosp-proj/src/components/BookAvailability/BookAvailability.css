@@ -137,7 +137,7 @@
     padding: 10px;
     border-radius: 5px;
     cursor: pointer;
-    background-color: #FF3600;
+    background-color: #f44336;
     border: none;
     color: #333;
    
@@ -169,7 +169,7 @@
   
   .appointment-save .appointment-cancel button{
     background-color:#5a2eca;
-    color: red;
+    color: #c30010;
     cursor: pointer;
   }
   .day {

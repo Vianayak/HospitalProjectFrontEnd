@@ -111,7 +111,7 @@ const UserAppointment = () => {
             toast.success("Appointment Successfully Booked!", {
               onClose: () => {
                 setLoading(false);
-                navigate("/jayahospitals");
+                navigate("/techSpryn");
               },
             });
           }).catch((error) => {
@@ -210,7 +210,7 @@ const UserAppointment = () => {
   </div>
   <div className="content-wrapper">
       <header className="header1">
-        <Link to="/jayahospitals" className="home-icon-link">
+        <Link to="/techSpryn" className="home-icon-link">
           <FaHome className="home-icon" />
         </Link>
         <div className="header-content">

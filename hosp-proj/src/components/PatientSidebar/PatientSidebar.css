@@ -117,6 +117,7 @@
     margin-left: 60px;
     margin-right: 100px;
     background-color: #f76941;
+    margin-bottom: 15px;
   }
 
   .forgot-password-button:hover {
@@ -260,7 +261,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: #FF3600;
+    
+  background: linear-gradient(135deg, #00A4CCFF, #FF3600);
     color: white;
     padding: 10px;
     border-radius: 8px;

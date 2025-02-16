@@ -47,7 +47,7 @@ const AppContent = ({ scrollToHealthNews, healthNewsRef }) => {
   const navigate = useNavigate();
   const [isAllowed, setIsAllowed] = useState(false);
 
-  const defaultRoute = "/jayahospitals";
+  const defaultRoute = "/techSpryn";
 
   // Add '/doctors-dashboard-page' to hide header and footer
   const hideHeaderFooterRoutes = ["/user-appointment", "/doctors-dashboard-page", "/patient-dashboard-page"];
@@ -88,7 +88,7 @@ const AppContent = ({ scrollToHealthNews, healthNewsRef }) => {
 
       <Routes>
         <Route
-          path="/jayahospitals"
+          path="/techSpryn"
           element={
             <>
               <HeroSection />
@@ -101,7 +101,7 @@ const AppContent = ({ scrollToHealthNews, healthNewsRef }) => {
             </>
           }
         />
-        <Route path="/" element={<Navigate to="/jayahospitals" replace />} />
+        <Route path="/" element={<Navigate to="/techSpryn" replace />} />
 
         {/* Routes with Navigation Guard */}
         <Route

@@ -28,7 +28,7 @@ function MyNavbar({ scrollToHealthNews }) {
         <header>
             <Navbar bg="white" variant="light" expand="lg" className="sticky-navbar" expanded={expanded}>
                 <Navbar.Brand>
-                    <Link to="/jayahospitals" className="navbar-logo-link" onClick={() => handleNavigation('/jayahospitals')}>
+                    <Link to="/techSpryn" className="navbar-logo-link" onClick={() => handleNavigation('/techSpryn')}>
                         <img
                             src="/Assets/Images/TechSprynLogo.png"
                             alt="Jaya Hospitals Logo"

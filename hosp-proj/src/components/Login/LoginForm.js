@@ -140,7 +140,7 @@ const [role, setRole] = useState("Doctor");
     onClick={() => {
       // Navigate to the Jaya Hospitals page
       if (!isLoading) {
-                navigate("/jayahospitals");
+                navigate("/techSpryn");
               }
     }}
   ></i>
