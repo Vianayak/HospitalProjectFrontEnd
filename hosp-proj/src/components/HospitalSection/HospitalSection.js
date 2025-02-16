@@ -17,7 +17,7 @@ const HospitalsSection = () => {
     <div className="hospital-container">
     <h1 className="hospital-title">Hospitals in Telangana</h1>
     <p className="hospital-description">
-      Jaya Hospitals is one of the best healthcare providers in India, with over 10,000 beds across 73
+      TechSpryn is one of the best healthcare providers in India, with over 10,000 beds across 73
       hospitals, 5000+ pharmacies, 300+ clinics, 1100+ diagnostic centers, and 200+ telemedicine units.
     </p>
     <div className="hospital-grid">

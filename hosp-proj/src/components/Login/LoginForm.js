@@ -138,14 +138,14 @@ const [role, setRole] = useState("Doctor");
         <i
     className="fas fa-arrow-left back-arrow"
     onClick={() => {
-      // Navigate to the Jaya Hospitals page
+      // Navigate to the techSpryn Hospitals page
       if (!isLoading) {
                 navigate("/techSpryn");
               }
     }}
   ></i>
           <img src="/Assets/Images/TechSpryn_New.png" alt="Logo" className="logo" />
-          {/* <span>JAYA HOSPITALS</span> */}
+       
           <div className="role-toggle">
             <label className={role === "Doctor" ? "active" : ""}>Doctor</label>
             <input

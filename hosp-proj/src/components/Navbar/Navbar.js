@@ -31,7 +31,7 @@ function MyNavbar({ scrollToHealthNews }) {
                     <Link to="/techSpryn" className="navbar-logo-link" onClick={() => handleNavigation('/techSpryn')}>
                         <img
                             src="/Assets/Images/TechSprynLogo.png"
-                            alt="Jaya Hospitals Logo"
+                            alt="TechSpryn Logo"
                             className="navbar-logo"
                         />
                     </Link>
