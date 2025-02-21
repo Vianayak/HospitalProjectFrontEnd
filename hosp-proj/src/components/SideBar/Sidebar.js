@@ -56,7 +56,7 @@ const Sidebar = () => {
     const email = doctorDetails.email;
   
     // Make the API call with formatted date and email
-    axios.get(`http://localhost:8081/api/meet/getMeetingList?date=${formattedDate}&email=${email}`)
+    axios.get(`http://localhost:8081/api/meet/getDoctorMeetingList?date=${formattedDate}&email=${email}`)
   .then((response) => {
     if (response.data) {
       setMeetings(response.data); // Append the response data
@@ -162,6 +162,43 @@ const Sidebar = () => {
     setSidebarOpen((prev) => !prev);
     console.log("Sidebar state:", !sidebarOpen);
 };
+
+const [showEprescriptionPopup, setShowEprescriptionPopup] = useState(false);
+const [patients, setPatients] = useState([]);
+
+const handleEprescriptionClick = () => {
+  setShowEprescriptionPopup(true);
+};
+
+const fetchPatients = (date) => {
+  const localDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+
+  // Format the adjusted date to 'yyyy-MM-dd'
+  const formattedDate = localDate.toISOString().split('T')[0];
+  console.log("Formatted date for API call:", formattedDate); // Log formatted date
+  const email=doctorDetails.email;
+  console.log("Hi");
+  console.log(formattedDate,email);
+
+  axios.get(`http://localhost:8081/api/meet/getDoctorMeetingList?date=${formattedDate}&email=${email}`)
+    .then(response => {
+      setPatients(response.data);
+    })
+    .catch(error => {
+      console.error("Error fetching patients:", error);
+    });
+};
+
+const handleDateChangeForPrescription = (date) => {
+  setSelectedDate(date);
+  fetchPatients(date);
+};
+
+const handleGeneratePrescription = (patientId) => {
+  console.log(`Generating prescription for patient ID: ${patientId}`);
+};
+
+
   return (
     <div className="layout">
     
@@ -190,6 +227,9 @@ const Sidebar = () => {
           </li>
   <li onClick={handleAvailability}>
     <i className="icon">&#x1F4CB;</i> Book Availability
+  </li>
+  <li onClick={handleEprescriptionClick}>
+    <i className="icon">&#x1F4D6;</i> E-Prescription
   </li>
   <li onClick={handleLogout}>
     <i className="icon">&#x274C;</i> Logout
@@ -307,6 +347,44 @@ const Sidebar = () => {
         </div>
       )}
       
+      {showEprescriptionPopup && (
+  <div className="popup-overlay2">
+    <div className="popup-container2">
+      <h2>E-Prescription</h2>
+      <div className="prescription-content">
+        {/* Left: Calendar */}
+        <div className="calendar-section">
+          <Calendar
+            onChange={handleDateChangeForPrescription}
+            value={selectedDate}
+            minDate={new Date()}
+          />
+        </div>
+
+        {/* Right: Patients List */}
+        <div className="patients-list">
+          {patients.length > 0 ? (
+            patients.map((patient) => (
+              <div key={patient.id} className="patient-item">
+                <p><strong>Name:</strong> {patient.name}</p>
+                <button 
+                  className="prescription-button"
+                  onClick={() => handleGeneratePrescription(patient.id)}
+                >
+                  Generate Prescription
+                </button>
+              </div>
+            ))
+          ) : (
+            <p>No patients available for this date.</p>
+          )}
+        </div>
+      </div>
+      <button className="close-button1" onClick={() => setShowEprescriptionPopup(false)}>Close</button>
+    </div>
+  </div>
+)}
+
       <ToastContainer />
     </div>
   );
