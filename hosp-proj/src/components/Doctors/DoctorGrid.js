@@ -200,7 +200,7 @@ const DoctorGrid = () => {
         )}
       </div>
       {doctors.length > 6 && (
-  <div className="doctor-buttons">
+  <div className="doctor-buttons" a>
     <button onClick={() => {
       sessionStorage.setItem("validNavigation", "true"); // Store in sessionStorage
       navigate("/book-appointments-page"); // Navigate to the desired page
