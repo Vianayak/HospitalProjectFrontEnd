@@ -194,8 +194,9 @@ const handleDateChangeForPrescription = (date) => {
   fetchPatients(date);
 };
 
-const handleGeneratePrescription = (patientId) => {
-  console.log(`Generating prescription for patient ID: ${patientId}`);
+const handleGeneratePrescription=()=>{
+  sessionStorage.setItem("validNavigation", "true");
+  navigate(`/generate-prescription`);
 };
 
 
@@ -369,7 +370,7 @@ const handleGeneratePrescription = (patientId) => {
                 <p><strong>Name:</strong> {patient.name}</p>
                 <button 
                   className="prescription-button"
-                  onClick={() => handleGeneratePrescription(patient.id)}
+                  onClick={handleGeneratePrescription}
                 >
                   Generate Prescription
                 </button>

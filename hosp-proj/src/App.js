@@ -19,6 +19,7 @@ import Sidebar from "./components/SideBar/Sidebar";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import BookAvailability from "./components/BookAvailability/BookAvailability";
 import PatientSidebar from "./components/PatientSidebar/PatientSidebar";
+import GeneratePrescription from "./components/GeneratePrescription/GeneratePrescription";
 
 // Overlay component to display content in the popup
 const Overlay = ({ children, className = "" }) => (
@@ -50,7 +51,7 @@ const AppContent = ({ scrollToHealthNews, healthNewsRef }) => {
   const defaultRoute = "/techSpryn";
 
   // Add '/doctors-dashboard-page' to hide header and footer
-  const hideHeaderFooterRoutes = ["/user-appointment", "/doctors-dashboard-page", "/patient-dashboard-page"];
+  const hideHeaderFooterRoutes = ["/user-appointment", "/doctors-dashboard-page", "/patient-dashboard-page" ,"/generate-prescription"];
   const shouldHideHeaderFooter = hideHeaderFooterRoutes.includes(location.pathname);
 
   useEffect(() => {
@@ -143,6 +144,9 @@ const AppContent = ({ scrollToHealthNews, healthNewsRef }) => {
       <Navigate to="/login" replace />
     )
   }
+
+
+  
 />
 
 
@@ -195,6 +199,16 @@ const AppContent = ({ scrollToHealthNews, healthNewsRef }) => {
             )
           }
         />
+        <Route
+  path="/generate-prescription"
+  element={
+    isAllowed ? (
+      <GeneratePrescription/>
+    ) : (
+      <Navigate to="/login" replace />
+    )
+  }
+  />
 
         {/* Catch-All Route */}
         <Route path="*" element={<Navigate to={defaultRoute} replace />} />
