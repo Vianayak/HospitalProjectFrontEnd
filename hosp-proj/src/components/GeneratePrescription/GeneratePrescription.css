@@ -80,7 +80,6 @@ h2 {
 
 
 
-
 /* Add button is now below */
 .add-button {
     position: fixed;
@@ -292,6 +291,7 @@ h2 {
     display: flex;
     gap: 10px;
     margin-top: 10px;
+   
   }
   
   .upload-button, .cancel-button {
@@ -301,8 +301,12 @@ h2 {
     border-radius: 5px;
     cursor: pointer;
     transition: 0.3s ease-in-out;
+    
   }
-  
+
+  .button-group , .upload-button{
+    margin-left: 150px;
+  }
   .upload-button {
     background-color: #ff5500;
     color: white;
