@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./GeneratePrescription.css";
+import axios from "axios";
 
 const GeneratePrescription = () => {
   const [tablets, setTablets] = useState([]);
@@ -63,6 +64,39 @@ const GeneratePrescription = () => {
 
   const handleCloseModal = () => {
     setSelectedTablet(null);
+  };
+
+
+  const handleUpload = async () => {
+    const doctorRegNum = "DOC123";
+    const patientRegNum = "PAT456";
+  
+    // Prepare the tablet data
+    const tabletData = tablets.map((tablet) => ({
+      name: tablet.name,
+      days: tablet.days,
+      slots: tablet.slots,
+      timing: tablet.timing,
+    }));
+  
+
+    console.log(tabletData);
+    try {
+      const response = await axios.post(
+        "http://localhost:8081/api/tablets/saveTablets",
+        tabletData,
+        {
+          params: { doctorRegNum, patientRegNum },
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+      
+      console.log("Success:", response.data);
+      alert("Tablets saved successfully!");
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Failed to save tablets.");
+    }
   };
 
   return (
@@ -239,7 +273,17 @@ const GeneratePrescription = () => {
           value={doctorNotes}
           onChange={(e) => setDoctorNotes(e.target.value)}
         ></textarea>
+        <div className="button-group">
+        <button className="upload-button" onClick={handleUpload}>
+  Upload
+</button>
+    <button className="cancel-button" onClick={() => setDoctorNotes("")}>
+      Cancel
+    </button>
+  </div>
       </div>
+
+      
 
       {selectedTablet && (
   <div className="modal-overlay7">
