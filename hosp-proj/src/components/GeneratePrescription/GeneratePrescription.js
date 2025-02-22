@@ -316,7 +316,7 @@ const GeneratePrescription = () => {
 
       {selectedTablet && (  
         <div className="modal-overlay">  
-          <div className="modal-content">  
+          <div className="modal-content7">  
             <h3>Tablet Details</h3>  
             <p><strong>Tablet Name:</strong> {selectedTablet.name}</p>  
             <p><strong>No. of Days:</strong> {selectedTablet.days}</p>  
@@ -331,7 +331,7 @@ const GeneratePrescription = () => {
                   </li>  
                 ))}  
             </ul>  
-            <button onClick={handleCloseModal} className="close-modal">Close</button>  
+            <button onClick={handleCloseModal} className="close-modal7">Close</button>  
           </div>  
         </div>  
       )}  
