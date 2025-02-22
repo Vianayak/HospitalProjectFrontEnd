@@ -283,3 +283,39 @@ h2 {
   content: "←";
   font-size: 28px;
 }
+
+
+
+.button-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  
+  .upload-button, .cancel-button {
+    padding: 8px 16px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+  }
+  
+  .upload-button {
+    background-color: #ff5500;
+    color: white;
+  }
+  
+  .upload-button:hover {
+    background: linear-gradient(135deg, #00A4CCFF, #FF3600);
+  }
+  
+  .cancel-button {
+    background-color: #dc3545;
+    color: white;
+  }
+  
+  .cancel-button:hover {
+    background-color: #b90202;
+  }
+  
