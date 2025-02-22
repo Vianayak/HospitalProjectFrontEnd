@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 import "./GeneratePrescription.css";
 
-import { useNavigate } from "react-router-dom"; // Import useNavigate
 const GeneratePrescription = () => {
-
-  const navigate = useNavigate(); // Initialize navigate function
   const [tablets, setTablets] = useState([]);
   const [selectedTablet, setSelectedTablet] = useState(null);
   const [doctorNotes, setDoctorNotes] = useState(""); // State for doctor's notes
@@ -67,16 +64,12 @@ const GeneratePrescription = () => {
   const handleCloseModal = () => {
     setSelectedTablet(null);
   };
-  const handleBack = () => {
-    navigate("/doctors-dashboard-page"); // Navigate to the Doctor's Dashboard
-  };
+
   return (
-
+    
     <div className="generate-prescription-container">
+      <h2 className="heading-prescription">Generate Prescription</h2>
 
-<button onClick={handleBack} className="back-button"></button>
-      <h2 >Generate Prescription</h2>
-      
       {/* Dynamic Fields */}
       <div className="prescription-fields">
         {tablets.map((tablet, index) => (
