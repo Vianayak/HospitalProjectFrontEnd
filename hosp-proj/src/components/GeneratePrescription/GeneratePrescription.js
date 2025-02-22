@@ -100,8 +100,9 @@ const GeneratePrescription = () => {
   };
 
   return (
+    
     <div className="generate-prescription-container">
-      <h2>Generate Prescription</h2>
+      <h2 className="heading-prescription">Generate Prescription</h2>
 
       {/* Dynamic Fields */}
       <div className="prescription-fields">
