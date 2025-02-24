@@ -1,6 +1,9 @@
 import React, { useState } from "react";  
 import "./GeneratePrescription.css"; // Importing the CSS styles  
 import axios from "axios";  
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 const GeneratePrescription = () => {  
   const [tablets, setTablets] = useState([]);  
@@ -69,9 +72,9 @@ const GeneratePrescription = () => {
         }  
     });  
 
-    // If there are validation errors, display them  
+    // If there are validation errors, show toast messages  
     if (errors.length > 0) {  
-        alert(errors.join(" "));  
+        errors.forEach((error) => toast.error(error));  
         return;
     }  
 
@@ -79,7 +82,9 @@ const GeneratePrescription = () => {
     const newTablets = [...tablets];  
     newTablets[index].saved = true;  
     setTablets(newTablets);  
+    toast.success("Tablet saved successfully!");
 };
+
 
 
   const handleEditTablet = (index) => {  
@@ -116,41 +121,43 @@ const GeneratePrescription = () => {
   const handleUpload = async () => {  
     const errors = validateTablets();  
     if (errors.length > 0) {  
-      setErrors(errors);  
-      return;  
+        errors.forEach((error) => toast.error(error));  
+        return;  
     }  
-    setErrors([]); // Reset errors if there are none  
+    setErrors([]);  
 
     const doctorRegNum = "DOC123";  
     const patientRegNum = "PAT456";  
 
     const tabletData = tablets.map((tablet) => ({  
-      name: tablet.name,  
-      days: tablet.days,  
-      slots: tablet.slots,  
-      timing: tablet.timing,  
+        name: tablet.name,  
+        days: tablet.days,  
+        slots: tablet.slots,  
+        timing: tablet.timing,  
     }));  
 
     try {  
-      const response = await axios.post(  
-        "http://localhost:8081/api/tablets/saveTablets",  
-        tabletData,  
-        {  
-          params: { doctorRegNum, patientRegNum },  
-          headers: { "Content-Type": "application/json" },  
-        }  
-      );  
+        const response = await axios.post(  
+            "http://localhost:8081/api/tablets/saveTablets",  
+            tabletData,  
+            {  
+                params: { doctorRegNum, patientRegNum },  
+                headers: { "Content-Type": "application/json" },  
+            }  
+        );  
 
-      console.log("Success:", response.data);  
-      alert("Tablets saved successfully!");  
+        console.log("Success:", response.data);  
+        toast.success("Tablets saved successfully!");  
     } catch (error) {  
-      console.error("Error:", error);  
-      alert("Failed to save tablets.");  
+        console.error("Error:", error);  
+        toast.error("Failed to save tablets.");  
     }  
-  };  
+};
+
 
   return (  
     <div className="generate-prescription-container">  
+     <ToastContainer position="top-right" autoClose={3000} />
       <h2 className="heading-prescription">Generate Prescription</h2>  
 
       {/* Displaying Validation Errors */}  
