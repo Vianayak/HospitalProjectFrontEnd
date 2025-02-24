@@ -62,16 +62,25 @@ const GeneratePrescription = () => {
         errors.push("At least one slot must be selected.");  
     }  
 
+    // Ensure each checked slot has a selected radio button
+    Object.entries(tablet.slots).forEach(([slot, isChecked]) => {  
+        if (isChecked && !tablet.timing[slot]) {  
+            errors.push(`Timing must be selected for ${slot}.`);  
+        }  
+    });  
+
     // If there are validation errors, display them  
     if (errors.length > 0) {  
-        alert(errors.join(" ")); // Displaying all error messages in one alert  
-    } else {  
-        // If no errors, mark the tablet as saved  
-        const newTablets = [...tablets];  
-        newTablets[index].saved = true; // Mark as saved  
-        setTablets(newTablets);  
+        alert(errors.join(" "));  
+        return;
     }  
+
+    // If no errors, mark the tablet as saved  
+    const newTablets = [...tablets];  
+    newTablets[index].saved = true;  
+    setTablets(newTablets);  
 };
+
 
   const handleEditTablet = (index) => {  
     const newTablets = [...tablets];  
