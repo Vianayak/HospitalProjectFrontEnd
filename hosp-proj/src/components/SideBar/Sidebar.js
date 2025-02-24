@@ -59,6 +59,7 @@ const Sidebar = () => {
     axios.get(`http://localhost:8081/api/meet/getDoctorMeetingList?date=${formattedDate}&email=${email}`)
   .then((response) => {
     if (response.data) {
+      console.log(response.data);
       setMeetings(response.data); // Append the response data
     }
   })
@@ -89,6 +90,8 @@ const Sidebar = () => {
   const handleLogout = () => {
     localStorage.removeItem("authToken");
     localStorage.removeItem("doctorDetails");
+    localStorage.removeItem("userDetails");
+    localStorage.removeItem("selectedUserDetails");
 
     sessionStorage.setItem("validNavigation", "true"); // Set valid navigation flag
         navigate("/login"); // Navigate to the path
@@ -171,17 +174,23 @@ const handleEprescriptionClick = () => {
 };
 
 const fetchPatients = (date) => {
-  const localDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
 
+
+
+  const localDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+  
   // Format the adjusted date to 'yyyy-MM-dd'
   const formattedDate = localDate.toISOString().split('T')[0];
   console.log("Formatted date for API call:", formattedDate); // Log formatted date
-  const email=doctorDetails.email;
-  console.log("Hi");
-  console.log(formattedDate,email);
 
-  axios.get(`http://localhost:8081/api/meet/getDoctorMeetingList?date=${formattedDate}&email=${email}`)
+  const email = doctorDetails.email;
+  console.log("Fetching patient details for:", formattedDate, email);
+
+  axios.get(`http://localhost:8081/api/tablets/patientDetails?date=${formattedDate}&email=${email}`)
     .then(response => {
+      console.log("Response received:", response.data); // Log response
+      const userDetailsArray = response.data.map(item => item.userDetails);
+      localStorage.setItem("userDetails", JSON.stringify(userDetailsArray));
       setPatients(response.data);
     })
     .catch(error => {
@@ -189,15 +198,23 @@ const fetchPatients = (date) => {
     });
 };
 
+
 const handleDateChangeForPrescription = (date) => {
   setSelectedDate(date);
   fetchPatients(date);
 };
 
-const handleGeneratePrescription=()=>{
+const handleGeneratePrescription = (userDetails) => {
+  if (!userDetails) {
+    toast.error("User details not available!");
+    return;
+  }
+
+  localStorage.setItem("selectedUserDetails", JSON.stringify(userDetails));
   sessionStorage.setItem("validNavigation", "true");
   navigate(`/generate-prescription`);
 };
+
 
 
   return (
@@ -333,7 +350,7 @@ const handleGeneratePrescription=()=>{
                     <div key={meeting.id} className="meeting-item">
                       <p><strong>Doctor:</strong> {meeting.name}</p>
                       <p><strong>Time:</strong> {meeting.time}</p>
-                      <a href={meeting.patientUrl} target="_blank" rel="noopener noreferrer">
+                      <a href={meeting.url} target="_blank" rel="noopener noreferrer">
                         <button className="meet-button1">Join Meeting</button>
                       </a>
                     </div>
@@ -367,10 +384,12 @@ const handleGeneratePrescription=()=>{
           {patients.length > 0 ? (
             patients.map((patient) => (
               <div key={patient.id} className="patient-item">
-                <p><strong>Name:</strong> {patient.name}</p>
+                <p><strong>Name:</strong> {patient.meeting.name}</p>
+                <p>Reg Num:{patient.userDetails.registrationNumber}</p>
+                <p>Time:{patient.meeting.time}</p>
                 <button 
                   className="prescription-button"
-                  onClick={handleGeneratePrescription}
+                  onClick={() => handleGeneratePrescription(patient.userDetails)}
                 >
                   Generate Prescription
                 </button>

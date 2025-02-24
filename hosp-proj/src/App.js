@@ -54,6 +54,23 @@ const AppContent = ({ scrollToHealthNews, healthNewsRef }) => {
   const hideHeaderFooterRoutes = ["/user-appointment", "/doctors-dashboard-page", "/patient-dashboard-page" ,"/generate-prescription"];
   const shouldHideHeaderFooter = hideHeaderFooterRoutes.includes(location.pathname);
 
+
+  useEffect(() => {
+    const handleReload = (event) => {
+      if (event.persisted) return; // Ignore if restored from cache
+      localStorage.clear();
+    };
+
+    window.addEventListener("beforeunload", handleReload);
+    window.addEventListener("pageshow", handleReload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleReload);
+      window.removeEventListener("pageshow", handleReload);
+    };
+  }, []);
+  
+
   useEffect(() => {
     if (!shouldHideHeaderFooter) {
       localStorage.removeItem("authToken");

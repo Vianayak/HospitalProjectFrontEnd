@@ -1,4 +1,4 @@
-import React, { useState } from "react";  
+import React, { useState , useEffect} from "react";  
 import "./GeneratePrescription.css"; // Importing the CSS styles  
 import axios from "axios";  
 
@@ -7,6 +7,8 @@ const GeneratePrescription = () => {
   const [selectedTablet, setSelectedTablet] = useState(null);  
   const [doctorNotes, setDoctorNotes] = useState("");  
   const [errors, setErrors] = useState([]); // State for storing validation errors  
+  const [doctorDetails, setDoctorDetails] = useState(null);
+  const [patient, setPatientDetails] = useState(null);
 
   const handleAddTablet = () => {  
     setTablets([  
@@ -21,6 +23,21 @@ const GeneratePrescription = () => {
       }  
     ]);  
   };  
+
+  useEffect(() => {
+      const storedDoctorDetails = localStorage.getItem("doctorDetails");
+      if (storedDoctorDetails) {
+        setDoctorDetails(JSON.parse(storedDoctorDetails));
+      }
+    }, []);
+
+
+    useEffect(() => {
+      const storedPatientDetails = localStorage.getItem("selectedUserDetails");
+      if (storedPatientDetails) {
+        setPatientDetails(JSON.parse(storedPatientDetails));
+      }
+    }, []);
 
   const handleInputChange = (index, field, value) => {  
     const newTablets = [...tablets];  
@@ -111,9 +128,13 @@ const GeneratePrescription = () => {
       return;  
     }  
     setErrors([]); // Reset errors if there are none  
+ 
 
-    const doctorRegNum = "DOC123";  
-    const patientRegNum = "PAT456";  
+    const doctorRegNum=doctorDetails.regestrationNum;
+    const patientRegNum=patient.registrationNumber;
+
+    console.log(doctorRegNum);
+    console.log(patientRegNum);
 
     const tabletData = tablets.map((tablet) => ({  
       name: tablet.name,  
@@ -122,12 +143,14 @@ const GeneratePrescription = () => {
       timing: tablet.timing,  
     }));  
 
+    console.log(tabletData);
+
     try {  
       const response = await axios.post(  
         "http://localhost:8081/api/tablets/saveTablets",  
         tabletData,  
         {  
-          params: { doctorRegNum, patientRegNum },  
+          params: { doctorRegNum, patientRegNum ,doctorNotes},  
           headers: { "Content-Type": "application/json" },  
         }  
       );  
