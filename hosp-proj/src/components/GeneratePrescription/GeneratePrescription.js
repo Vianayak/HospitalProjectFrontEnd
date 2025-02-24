@@ -1,6 +1,9 @@
 import React, { useState , useEffect} from "react";  
 import "./GeneratePrescription.css"; // Importing the CSS styles  
 import axios from "axios";  
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 const GeneratePrescription = () => {  
   const [tablets, setTablets] = useState([]);  
@@ -79,16 +82,27 @@ const GeneratePrescription = () => {
         errors.push("At least one slot must be selected.");  
     }  
 
-    // If there are validation errors, display them  
+    // Ensure each checked slot has a selected radio button
+    Object.entries(tablet.slots).forEach(([slot, isChecked]) => {  
+        if (isChecked && !tablet.timing[slot]) {  
+            errors.push(`Timing must be selected for ${slot}.`);  
+        }  
+    });  
+
+    // If there are validation errors, show toast messages  
     if (errors.length > 0) {  
-        alert(errors.join(" ")); // Displaying all error messages in one alert  
-    } else {  
-        // If no errors, mark the tablet as saved  
-        const newTablets = [...tablets];  
-        newTablets[index].saved = true; // Mark as saved  
-        setTablets(newTablets);  
+        errors.forEach((error) => toast.error(error));  
+        return;
     }  
+
+    // If no errors, mark the tablet as saved  
+    const newTablets = [...tablets];  
+    newTablets[index].saved = true;  
+    setTablets(newTablets);  
+    toast.success("Tablet saved successfully!");
 };
+
+
 
   const handleEditTablet = (index) => {  
     const newTablets = [...tablets];  
@@ -124,11 +138,10 @@ const GeneratePrescription = () => {
   const handleUpload = async () => {  
     const errors = validateTablets();  
     if (errors.length > 0) {  
-      setErrors(errors);  
-      return;  
+        errors.forEach((error) => toast.error(error));  
+        return;  
     }  
-    setErrors([]); // Reset errors if there are none  
- 
+    setErrors([]);  
 
     const doctorRegNum=doctorDetails.regestrationNum;
     const patientRegNum=patient.registrationNumber;
@@ -137,10 +150,10 @@ const GeneratePrescription = () => {
     console.log(patientRegNum);
 
     const tabletData = tablets.map((tablet) => ({  
-      name: tablet.name,  
-      days: tablet.days,  
-      slots: tablet.slots,  
-      timing: tablet.timing,  
+        name: tablet.name,  
+        days: tablet.days,  
+        slots: tablet.slots,  
+        timing: tablet.timing,  
     }));  
 
     console.log(tabletData);
@@ -155,16 +168,18 @@ const GeneratePrescription = () => {
         }  
       );  
 
-      console.log("Success:", response.data);  
-      alert("Tablets saved successfully!");  
+        console.log("Success:", response.data);  
+        toast.success("Tablets saved successfully!");  
     } catch (error) {  
-      console.error("Error:", error);  
-      alert("Failed to save tablets.");  
+        console.error("Error:", error);  
+        toast.error("Failed to save tablets.");  
     }  
-  };  
+};
+
 
   return (  
     <div className="generate-prescription-container">  
+     <ToastContainer position="top-right" autoClose={3000} />
       <h2 className="heading-prescription">Generate Prescription</h2>  
 
       {/* Displaying Validation Errors */}  
