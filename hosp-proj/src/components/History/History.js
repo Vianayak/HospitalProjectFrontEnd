@@ -34,16 +34,23 @@ const History = () => {
 
   return (
     <div className="history-page">
+        
       <h2 className="history-title">History Page</h2>
       
       {/* Search Input */}
-      <input
-        type="text"
-        className="history-search-input"
-        placeholder="Search by Reg No, Patient Name, or Date"
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-      />
+     <div className="search-container">
+  <div className="search-wrapper">
+ <input
+      type="text"
+      className="history-search-input"
+      placeholder="Search by Reg No, Patient Name, or Date"
+      value={searchQuery}
+      onChange={(e) => setSearchQuery(e.target.value)}
+    />
+  </div>
+</div>
+
+
       
       <div className="history-table-container">
         <table className="history-table">
