@@ -45,6 +45,7 @@ const Sidebar = () => {
   }; 
   const handleHistory = () => {  
     console.log("Navigating to history...");  // Check if this is triggered
+    sessionStorage.setItem("validNavigation", "true");
     navigate(`/history`);
   };
   const passwordCriteria = {
