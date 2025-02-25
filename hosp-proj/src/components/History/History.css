@@ -1,0 +1,134 @@
+/* Container for the history page */
+.history-page {
+    padding: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
+    background-size: cover;
+    background-color: rgba(255, 255, 255, 0.7); /* Semi-transparent background */
+
+  }
+  
+  /* Title Styling */
+  .history-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #FF3600;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  /* Table Styling */
+  .history-table-container {
+    overflow-x: auto;
+    margin-top: 30px;
+    
+  }
+  
+  .history-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 15px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+
+    background: linear-gradient(135deg, #00A4CCFF, #FF3600);
+    /* background: url('/public/Assets/Images/image5.jpg') no-repeat center center/cover; */
+  }
+  
+  /* Header Styling */
+  .history-table-header {
+    background-color: #007bff;
+    color: white;
+    padding: 12px 15px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 600;
+  }
+  
+  /* Reg No Column Header Styling */
+  .history-table-reg-no {
+    background-color: #007bff; /* Blue background */
+    color: white; /* White text color */
+    padding: 12px 15px;
+    text-align: center;
+    font-size: 14px;
+  }
+  
+  /* Table Body Styling */
+  .history-table-cell {
+    padding: 12px 15px;
+    text-align: center;
+    border-top: 1px solid #ddd;
+    font-size: 14px;
+    color: #540606;
+  }
+  
+  /* Hover effect for table rows */
+  .history-table tbody tr:hover {
+    cursor: pointer;
+  }
+  
+  /* Prescription Button Styling */
+  .prescription-btn {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .prescription-btn:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+  }
+  
+  /* Icon inside button */
+  .icon {
+    font-size: 18px;
+    vertical-align: middle;
+  }
+  
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .history-table-header,
+    .history-table-cell {
+      font-size: 12px;
+      padding: 10px;
+    }
+  
+    .history-title {
+      font-size: 24px;
+    }
+  
+    .history-table-container {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .history-title {
+      font-size: 20px;
+    }
+  
+    .history-table-header,
+    .history-table-cell {
+      font-size: 10px;
+      padding: 8px;
+    }
+  
+    .prescription-btn {
+      font-size: 12px;
+      padding: 6px 10px;
+    }
+  
+    .icon {
+      font-size: 16px;
+    }
+  }
+  
