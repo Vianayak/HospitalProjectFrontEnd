@@ -1,13 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';  
 import './Sidebar.css';
 import DashboardHeader from '../DashboardHeader/DashboardHeader';
-import Dashboard from '../Dashboard/Dashboard';
-import HealthcarePortal from '../HealthcarePortal/HealthcarePortal';
+import Dashboard from '../Dashboard/Dashboard'; 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
 import BookAvailability from '../BookAvailability/BookAvailability';
-
 import Calendar from "react-calendar";
 
 import { useNavigate } from 'react-router-dom';
@@ -45,10 +43,10 @@ const Sidebar = () => {
       setShowDropdown(false); // Close dropdown if clicking outside  
     }  
   }; 
-  const handleDropdownItem2 = () => {  
-    // Handle dropdown item 2 click  
-    console.log('Dropdown Item 2 Clicked');  
-  };  
+  const handleHistory = () => {  
+    console.log("Navigating to history...");  // Check if this is triggered
+    navigate(`/history`);
+  };
   const passwordCriteria = {
     length: formData.password.length >= 8,
     uppercase: /[A-Z]/.test(formData.password),
@@ -273,7 +271,7 @@ const handleGeneratePrescription = (userDetails) => {
   {showDropdown && (  
     <ul ref={dropdownRef} className={`dropdown-sidenav1 ${showDropdown ? 'active' : ''}`}> 
       <li onClick={handleEprescriptionClick}> <i className="icon">&#x1F4D6;</i>Generate E-Prescription</li>  
-      <li onClick={handleDropdownItem2}>  
+      <li onClick={handleHistory}>  
     <i className="icon">&#x231B;</i> History 
   </li>
     </ul>  
