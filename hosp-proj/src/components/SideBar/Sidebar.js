@@ -247,7 +247,7 @@ const handleGeneratePrescription = (userDetails) => {
     <i className="icon">&#x1F4CB;</i> Book Availability
   </li>
   <li onClick={handleEprescriptionClick}>
-    <i className="icon">&#x1F4D6;</i> E-Prescription
+    <i className="icon">&#x1F4D6;</i> Generate-E-Prescription
   </li>
   <li onClick={handleLogout}>
     <i className="icon">&#x274C;</i> Logout
@@ -368,7 +368,7 @@ const handleGeneratePrescription = (userDetails) => {
       {showEprescriptionPopup && (
   <div className="popup-overlay2">
     <div className="popup-container2">
-      <h2>E-Prescription</h2>
+      <h2>Generate-E-Prescription</h2>
       <div className="prescription-content">
         {/* Left: Calendar */}
         <div className="calendar-section">
