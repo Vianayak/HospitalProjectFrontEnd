@@ -144,10 +144,10 @@ const GeneratePrescription = () => {
     setErrors([]);  
 
     const doctorRegNum=doctorDetails.regestrationNum;
-    const patientRegNum=patient.registrationNumber;
+    const patientEmail=patient.email;
 
     console.log(doctorRegNum);
-    console.log(patientRegNum);
+    console.log(patientEmail);
 
     const tabletData = tablets.map((tablet) => ({  
         name: tablet.name,  
@@ -163,7 +163,7 @@ const GeneratePrescription = () => {
         "http://localhost:8081/api/tablets/saveTablets",  
         tabletData,  
         {  
-          params: { doctorRegNum, patientRegNum ,doctorNotes},  
+          params: { doctorRegNum, patientEmail ,doctorNotes},  
           headers: { "Content-Type": "application/json" },  
         }  
       );  
