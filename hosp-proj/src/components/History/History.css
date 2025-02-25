@@ -40,8 +40,7 @@
   
   /* Header Styling */
   .history-table-header {
-    background-color: #007bff;
-    color: white;
+    color: black;
     padding: 12px 15px;
     text-align: center;
     font-size: 16px;
@@ -50,8 +49,7 @@
   
   /* Reg No Column Header Styling */
   .history-table-reg-no {
-    background-color: #007bff; /* Blue background */
-    color: white; /* White text color */
+    color: black; /* White text color */
     padding: 12px 15px;
     text-align: center;
     font-size: 14px;
