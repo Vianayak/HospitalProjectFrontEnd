@@ -34,7 +34,7 @@
     overflow: hidden;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 
-    background: linear-gradient(135deg, #00A4CCFF, #FF3600);
+    background:white
     /* background: url('/public/Assets/Images/image5.jpg') no-repeat center center/cover; */
   }
   
