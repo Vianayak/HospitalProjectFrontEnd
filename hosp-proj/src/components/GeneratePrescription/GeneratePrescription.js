@@ -180,7 +180,7 @@ const GeneratePrescription = () => {
   return (  
     <div className="generate-prescription-container">  
      <ToastContainer position="top-right" autoClose={3000} />
-      <h2 className="heading-prescription">Generate Prescription</h2>  
+      <h2 className="heading-prescription">Generate E-Prescription</h2>  
 
       {/* Displaying Validation Errors */}  
       {errors.length > 0 && (  
