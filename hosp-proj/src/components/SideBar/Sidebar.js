@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';  
 import './Sidebar.css';
 import DashboardHeader from '../DashboardHeader/DashboardHeader';
 import Dashboard from '../Dashboard/Dashboard';
@@ -18,6 +18,7 @@ const Sidebar = () => {
   const [doctorDetails, setDoctorDetails] = useState(null);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [showPasswordForm, setShowPasswordForm] = useState(false);
+  const dropdownRef = useRef(null); // Create a ref for the dropdown  
 
   const [sidebarOpen, setSidebarOpen] = useState(false); // Sidebar state
   const [formData, setFormData] = useState({
@@ -34,7 +35,20 @@ const Sidebar = () => {
     setShowBookAvailability(true);
   };
   
-  
+  const [showDropdown, setShowDropdown] = useState(false);  
+
+  const handleDropdownToggle = () => {  
+    setShowDropdown(prev => !prev); // Toggle dropdown visibility  
+  };   
+  const handleCloseDropdown = (e) => {  
+    if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {  
+      setShowDropdown(false); // Close dropdown if clicking outside  
+    }  
+  }; 
+  const handleDropdownItem2 = () => {  
+    // Handle dropdown item 2 click  
+    console.log('Dropdown Item 2 Clicked');  
+  };  
   const passwordCriteria = {
     length: formData.password.length >= 8,
     uppercase: /[A-Z]/.test(formData.password),
@@ -68,6 +82,14 @@ const Sidebar = () => {
   });
 
   };
+  useEffect(() => {  
+    document.addEventListener('mousedown', handleCloseDropdown);  
+    
+    return () => {  
+      document.removeEventListener('mousedown', handleCloseDropdown); // Cleanup  
+    };  
+  }, []); // Empty dependency array so it runs on mount and unmount  
+
   useEffect(() => {
     const storedDoctorDetails = localStorage.getItem("doctorDetails");
     if (storedDoctorDetails) {
@@ -246,15 +268,25 @@ const handleGeneratePrescription = (userDetails) => {
   <li onClick={handleAvailability}>
     <i className="icon">&#x1F4CB;</i> Book Availability
   </li>
-  <li onClick={handleEprescriptionClick}>
-    <i className="icon">&#x1F4D6;</i> Generate-E-Prescription
+  <li className="dropdown-toggle" onClick={handleDropdownToggle}>  
+  <i className="icon">&#x1F4C4;</i>E-Prescription   
+  {showDropdown && (  
+    <ul ref={dropdownRef} className={`dropdown-sidenav1 ${showDropdown ? 'active' : ''}`}> 
+      <li onClick={handleEprescriptionClick}> <i className="icon">&#x1F4D6;</i>Generate E-Prescription</li>  
+      <li onClick={handleDropdownItem2}>  
+    <i className="icon">&#x231B;</i> History 
+  </li>
+    </ul>  
+  )}  
+</li>
+<li onClick={() => setShowPasswordForm(true)}>
+    <i className="icon">&#x1F512;</i> Change Password
   </li>
   <li onClick={handleLogout}>
     <i className="icon">&#x274C;</i> Logout
   </li>
-  <li onClick={() => setShowPasswordForm(true)}>
-    <i className="icon">&#x1F512;</i> Change Password
-  </li>
+ 
+ 
 </ul>
 {showBookAvailability && (
   <BookAvailability 

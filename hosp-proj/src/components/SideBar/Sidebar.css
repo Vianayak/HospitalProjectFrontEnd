@@ -3,6 +3,66 @@
     display: flex; /* Ensures sidebar and dashboard content are side by side */
    
   }
+  /* Styles for the main E-Prescription list item */  
+.dropdown-toggle {  
+  position: relative; /* Needed for positioning the dropdown */  
+}  
+
+/* Base styles for the dropdown menu */  
+.dropdown-sidenav1 {  
+  display: none; /* Initially hidden */  
+  position: absolute; /* Position relative to parent */  
+  left: 0; /* Align dropdown with the parent item */  
+  top: 100%; /* Position below the parent */  
+  background-color: #ffffff; /* White background */  
+  border: 1px solid #ccc; /* Light gray border */  
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */  
+  z-index: 1000; /* Ensure it appears above other elements */  
+  list-style-type: none; /* Remove bullet points */  
+  padding: 0; /* Remove padding */  
+  margin: 5px 0 0 0; /* Space from the parent item */  
+  width: 230px; /* Fixed width for the dropdown */  
+}  
+
+/* Show the dropdown when it's active */  
+.dropdown-sidenav1.active {  
+  display: block; /* Show dropdown */  
+}  
+
+/* Styles for dropdown items */  
+.dropdown-sidenav1 li {  
+  padding: 12px 15px; /* Padding for items */  
+  cursor: pointer; /* Change cursor on hover */  
+  transition: background-color 0.3s; /* Transition for background colors */  
+}  
+
+/* Hover effect for dropdown items */  
+.dropdown-sidenav1 li:hover {  
+  background-color: #f0f0f0; /* Light gray background on hover */  
+}  
+
+/* Styles for icons in the dropdown */  
+.dropdown-sidenav1 li .icon {  
+  margin-right: 10px; /* Space between icon and text */  
+  vertical-align: middle; /* Align icon vertically in the middle */  
+}  
+
+/* Optional: Add transition effects for dropdown */  
+@keyframes showDropdown {  
+  from {  
+    opacity: 0;  
+    transform: translateY(-10px); /* Slightly move up */  
+  }  
+  to {  
+    opacity: 1;  
+    transform: translateY(0); /* End position */  
+  }  
+}  
+
+/* Animate dropdown appearance when active */  
+.dropdown-sidenav1.active {  
+  animation: showDropdown 0.3s ease; /* Animation on active */  
+}
   /* Override react-sidenav background */
   .sidenav---sidenav---_2tBP {
     position: absolute;
