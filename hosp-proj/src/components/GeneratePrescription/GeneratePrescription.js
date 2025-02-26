@@ -3,6 +3,7 @@ import "./GeneratePrescription.css"; // Importing the CSS styles
 import axios from "axios";  
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
 
 const GeneratePrescription = () => {  
@@ -12,6 +13,7 @@ const GeneratePrescription = () => {
   const [errors, setErrors] = useState([]); // State for storing validation errors  
   const [doctorDetails, setDoctorDetails] = useState(null);
   const [patient, setPatientDetails] = useState(null);
+    const navigate = useNavigate();
 
   const handleAddTablet = () => {  
     setTablets([  
@@ -173,8 +175,20 @@ const GeneratePrescription = () => {
     } catch (error) {  
         console.error("Error:", error);  
         toast.error("Failed to save tablets.");  
+    }finally{
+      sessionStorage.setItem("validNavigation", "true");
+
+      // Navigate to user appointment page
+      navigate("/doctors-dashboard-page");
     }  
 };
+
+const handleCancel=()=>{
+  sessionStorage.setItem("validNavigation", "true");
+
+          // Navigate to user appointment page
+          navigate("/doctors-dashboard-page");
+}
 
 
   return (  
@@ -348,7 +362,9 @@ const GeneratePrescription = () => {
         
         <div className="button-group">  
           <button className="upload-button" onClick={handleUpload}>Upload</button>  
-          <button className="cancel-button" onClick={() => setDoctorNotes("")}>Cancel</button>  
+          <button className="cancel-button" onClick={handleCancel}>
+          Cancel
+        </button>
         </div>  
       </div>  
 
