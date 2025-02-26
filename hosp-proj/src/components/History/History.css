@@ -65,9 +65,9 @@
   }
   
   /* Hover effect for table rows */
-  .history-table tbody tr:hover {
+  /* .history-table tbody tr:hover {
     cursor: pointer;
-  }
+  } */
   
   /* Prescription Button Styling */
   .prescription-btn {
