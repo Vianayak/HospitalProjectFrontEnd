@@ -4,9 +4,7 @@
     max-width: 1200px;
     margin: 0 auto;
     border-radius: 8px;
-    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
     background-size: cover;
-    background-color: rgba(255, 255, 255, 0.7); /* Semi-transparent background */
 
   }
   
@@ -32,9 +30,6 @@
     border-spacing: 15px;
     border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-
-    background:white
     /* background: url('/public/Assets/Images/image5.jpg') no-repeat center center/cover; */
   }
   
@@ -160,4 +155,17 @@
     outline: none;
     border-color: #007bff;
   }
+
+
+  .back-arrow12 {
+    position: absolute; /* Adjust positioning as needed */
+    cursor: pointer;
+    font-size: 20px; /* Adjust size as needed */
+    color: rgb(245, 18, 18); /* Adjust color as needed */
+  }
+  
+  .back-arrow12:hover {
+    color: #0056b3;
+  }
+  
   

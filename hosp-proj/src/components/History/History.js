@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import './History.css';
+import { useNavigate } from "react-router-dom";
 
 const History = () => {
   const [historyData, setHistoryData] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const storedDoctor = JSON.parse(localStorage.getItem('doctorDetails'));
@@ -88,10 +90,19 @@ const formatTime = (timeStr) => {
   return timeStr.slice(0, 5); // Extracts only "HH:MM" (ignores seconds & milliseconds)
 };
 
+const handleBack=()=>{
+  sessionStorage.setItem("validNavigation", "true");
+  navigate("/doctors-dashboard-page");
+}
+
 
 
   return (
     <div className="history-page">
+
+      <div className="back-arrow12" onClick={handleBack}>
+      <i className="fas fa-arrow-left"></i>
+      </div>
         
       <h2 className="history-title">History Page</h2>
 

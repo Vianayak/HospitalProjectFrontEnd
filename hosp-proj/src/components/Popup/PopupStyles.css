@@ -350,12 +350,13 @@ font-weight: 600;
 
 
 .resend-link {
-  color: #f22424;
+  color: #d9d8f1;
   text-decoration: none;
   cursor: pointer;
   font-size: 14px;
 }
 
 .resend-link:hover {
+  color: #ec9244;
   text-decoration: underline;
 }

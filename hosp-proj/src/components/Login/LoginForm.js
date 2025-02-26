@@ -156,7 +156,6 @@ const [role, setRole] = useState("Doctor");
             />
             <label className={role === "Patient" ? "active" : ""}>Patient</label>
           </div>
-          <h2>LOG IN</h2>
         </div>
         
         <form onSubmit={handleSubmit}>

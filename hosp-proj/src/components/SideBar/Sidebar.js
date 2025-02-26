@@ -254,7 +254,6 @@ const handleGeneratePrescription = (userDetails) => {
               />
               <h3>Dr. {doctorDetails.name}</h3>
               <p>{doctorDetails.specialization}</p>
-              <p>{doctorDetails.location}</p>
             </>
           ) : (
             <p>Loading profile...</p>
@@ -267,23 +266,35 @@ const handleGeneratePrescription = (userDetails) => {
   <li onClick={handleAvailability}>
     <i className="icon">&#x1F4CB;</i> Book Availability
   </li>
-  <li className="dropdown-toggle" onClick={handleDropdownToggle}>  
-  <i className="icon">&#x1F4C4;</i>E-Prescription   
-  {showDropdown && (  
-    <ul ref={dropdownRef} className={`dropdown-sidenav1 ${showDropdown ? 'active' : ''}`}> 
-      <li onClick={handleEprescriptionClick}> <i className="icon">&#x1F4D6;</i>Generate E-Prescription</li>  
-      <li onClick={handleHistory}>  
-    <i className="icon">&#x231B;</i> History 
-  </li>
-    </ul>  
-  )}  
+  {/* E-Prescription with Hover Dropdown */}
+  <li 
+  className="dropdown-container"
+  onMouseEnter={() => setShowDropdown(true)}
+  onMouseLeave={() => setShowDropdown(false)}
+>
+  <div className="dropdown-toggle">
+    <i className="icon">&#x1F4C4;</i> E-Prescription
+  </div>
+  {showDropdown && (
+    <ul className="dropdown-sidenav below">
+      <li onClick={handleEprescriptionClick}>
+        <i className="icon">&#x1F4D6;</i> Generate E-Prescription
+      </li>
+      <li onClick={handleHistory}>
+        <i className="icon">&#x231B;</i> History
+      </li>
+    </ul>
+  )}
 </li>
+
+<div className={`logout-container ${showDropdown ? "move-down" : ""}`}>
 <li onClick={() => setShowPasswordForm(true)}>
     <i className="icon">&#x1F512;</i> Change Password
   </li>
   <li onClick={handleLogout}>
     <i className="icon">&#x274C;</i> Logout
   </li>
+  </div>
  
  
 </ul>
