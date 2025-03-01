@@ -98,7 +98,7 @@ body {
 }
 
 .weekdays-row span {
-  width: 13%; /* Ensure equal spacing */
+  width: 14%; /* Ensure equal spacing */
   text-align: center;
   padding: 5px;
   font-weight: bold;
@@ -106,7 +106,7 @@ body {
 }
 
 .days-grid .day {
-  width: 11%;
+  width: 14%;
   text-align: center;
   padding: 10px;
   margin-bottom: 5px;
