@@ -4,6 +4,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import "./BookAvailability.css";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Calendar from "react-calendar";
 
 
 const BookAvailability = ({ onClose, fetchBookedSlotsOnOpen }) => {
@@ -161,9 +162,9 @@ const BookAvailability = ({ onClose, fetchBookedSlotsOnOpen }) => {
         </h2>
 
         <div className="content">
-          <div className="appointment-calendar">
+          <div className="calendar-section">
             <label>Select a Date:</label>
-            <DatePicker
+            <Calendar
   selected={null} // Since we are selecting multiple dates
   onChange={handleDateChange}
   minDate={new Date()}
