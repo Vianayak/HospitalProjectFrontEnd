@@ -235,13 +235,16 @@
   
   .close-button1 {
     margin-top: 10px;
-    background: #f76941; 
+    background: #00A4CCFF; 
     color: white;
     padding: 8px;
     border: none;
     cursor: pointer;
     width: 100px;
     margin-left: 300px;
+  }
+  .close-button1:hover {
+ background: #007bff;
   }
   
   /* Modern Calendar Styling */
