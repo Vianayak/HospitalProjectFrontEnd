@@ -171,10 +171,6 @@ const BookAvailability = ({ onClose, fetchBookedSlotsOnOpen }) => {
   highlightDates={selectedDates}
 />
 
-
-
-
-
           </div>
 
           <div className="appointment-details">

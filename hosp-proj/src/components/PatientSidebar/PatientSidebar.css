@@ -262,7 +262,7 @@
     justify-content: space-between;
     align-items: center;
     
-  background: linear-gradient(135deg, #00A4CCFF, #FF3600);
+  background:  #00A4CCFF;
     color: white;
     padding: 10px;
     border-radius: 8px;
@@ -302,7 +302,7 @@
   }
   
   .react-calendar__tile--active {
-    background: #FF3600 !important;
+    background: #00A4CCFF !important;
     color: white !important;
     font-weight: bold;
     border-radius: 8px;
