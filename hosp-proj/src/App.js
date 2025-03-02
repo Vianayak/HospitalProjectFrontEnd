@@ -21,6 +21,7 @@ import BookAvailability from "./components/BookAvailability/BookAvailability";
 import PatientSidebar from "./components/PatientSidebar/PatientSidebar";
 import GeneratePrescription from "./components/GeneratePrescription/GeneratePrescription";
 import History from "./components/History/History";
+import Chatbot from "./components/ChatBot/ChatBot";
 
 // Overlay component to display content in the popup
 const Overlay = ({ children, className = "" }) => (
@@ -115,6 +116,7 @@ const AppContent = ({ scrollToHealthNews, healthNewsRef }) => {
               <DoctorGrid />
               <SpecialtiesCarousel />
               <HospitalSection />
+              <Chatbot />
               <FloatingButtons />
               <HealthNewsImages healthNewsRef={healthNewsRef} />
             </>
