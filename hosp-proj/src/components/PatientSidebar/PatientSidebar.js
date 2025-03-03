@@ -288,7 +288,7 @@ const PatientSidebar = () => {
                       <p><strong>Doctor:</strong> {meeting.name}</p>
                       <p><strong>Time:</strong> {meeting.time}</p>
                       <a href={meeting.patientUrl} target="_blank" rel="noopener noreferrer">
-                        <button className="meet-button">Join Meeting</button>
+                        <button className="meet-button1">Join Meeting</button>
                       </a>
                     </div>
                   ))
