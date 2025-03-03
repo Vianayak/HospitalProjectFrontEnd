@@ -234,26 +234,41 @@
   }
   
  
-  
- 
   .time-slot {
     padding: 10px;
     border-radius: 5px;
     cursor: pointer;
-    border: none;
+    border: 2px solid transparent; /* Ensure space for hover effect */
     margin: 5px;
+    transition: all 0.2s ease-in-out; /* Smooth animation */
+    width: 100px; /* Set fixed width */
+    height: 60px; /* Set fixed height */
+    text-align: center;
   }
   
-  .time-slot.selected {
-    background-color: #00A4CCFF;
+  .time-slot:hover {
+    background-color: rgb(242, 66, 54);
     color: white;
   }
   
-  .time-slot.booked {
+
+.time-slot.selected {
+    background-color: #00A4CCFF;
+    color: white;
+    border-color: #0077b6;
+}
+
+.time-slot.booked {
     background-color: red;
     color: white;
     cursor: not-allowed;
-  }
+}
+
+.time-slot:active {
+    transform: scale(0.95); /* Prevents sudden size changes */
+}
+
+
   
 
   .calendar-buttons {
