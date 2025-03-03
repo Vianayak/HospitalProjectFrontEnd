@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect , useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "./SearchBar.css";
 
@@ -8,6 +8,8 @@ const SearchBar = () => {
   const [doctors, setDoctors] = useState([]);
   const [selectedDoctor, setSelectedDoctor] = useState(null); // For selected doctor to display in modal
   const [isModalOpen, setIsModalOpen] = useState(false); // To manage modal visibility
+  const searchRef = useRef(null); // Reference for handling outside clicks
+
 
   // Fetching doctor data dynamically from the API
   useEffect(() => {
@@ -44,6 +46,9 @@ const SearchBar = () => {
   const handleResultClick = (doctor) => {
     setSelectedDoctor(doctor);
     setIsModalOpen(true); // Open modal when a result is clicked
+
+    setQuery(""); // Clear search input
+    setResults([]); // Close dropdown
   };
 
   // Close modal
@@ -52,6 +57,18 @@ const SearchBar = () => {
     setSelectedDoctor(null);
   };
 
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (searchRef.current && !searchRef.current.contains(event.target)) {
+        setResults([]);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
   return (
     <div className="search-bar-container">
       <div className="search-input-wrapper">
