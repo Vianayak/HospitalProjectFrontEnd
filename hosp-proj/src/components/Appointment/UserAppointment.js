@@ -184,6 +184,8 @@ const UserAppointment = () => {
           lastName: patient.lastName,
           phone: patient.mobileNumber,
           regNum: patient.registrationNumber,
+          dob:patient.dob,
+          gender:patient.gender
         });
       }
     } catch (error) {

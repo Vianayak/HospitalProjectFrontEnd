@@ -155,6 +155,7 @@ const PatientSidebar = () => {
     axios.get(`http://localhost:8081/api/meet/getMeetingList?date=${formattedDate}&email=${email}`)
   .then((response) => {
     if (response.data) {
+      console.log("Meetings:", response.data);
       setMeetings(response.data); // Append the response data
     }
   })
@@ -287,7 +288,7 @@ const PatientSidebar = () => {
                     <div key={meeting.id} className="meeting-item">
                       <p><strong>Doctor:</strong> {meeting.name}</p>
                       <p><strong>Time:</strong> {meeting.time}</p>
-                      <a href={meeting.patientUrl} target="_blank" rel="noopener noreferrer">
+                      <a href={meeting.url} target="_blank" rel="noopener noreferrer">
                         <button className="meet-button">Join Meeting</button>
                       </a>
                     </div>

@@ -195,14 +195,10 @@ const handleEprescriptionClick = () => {
 };
 
 const fetchPatients = (date) => {
-
-
+  localStorage.removeItem("userDetails"); // Clear old data before fetching
 
   const localDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
-  
-  // Format the adjusted date to 'yyyy-MM-dd'
   const formattedDate = localDate.toISOString().split('T')[0];
-  console.log("Formatted date for API call:", formattedDate); // Log formatted date
 
   const email = doctorDetails.email;
   console.log("Fetching patient details for:", formattedDate, email);
@@ -210,14 +206,25 @@ const fetchPatients = (date) => {
   axios.get(`http://localhost:8081/api/tablets/patientDetails?date=${formattedDate}&email=${email}`)
     .then(response => {
       console.log("Response received:", response.data); // Log response
+
+      if (!response.data || response.data.length === 0) {
+        console.warn("No patients found for this date and email.");
+        setPatients([]);  // Ensure state is cleared if no patients are found
+        return;
+      }
+
       const userDetailsArray = response.data.map(item => item.userDetails);
       localStorage.setItem("userDetails", JSON.stringify(userDetailsArray));
-      setPatients(response.data);
+
+      setPatients(response.data);  // Update state only when data is available
     })
     .catch(error => {
       console.error("Error fetching patients:", error);
+      setPatients([]);  // Ensure state is cleared on error
     });
 };
+
+
 
 
 const handleDateChangeForPrescription = (date) => {
