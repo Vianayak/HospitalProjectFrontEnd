@@ -5,6 +5,7 @@
   padding: 20px;  
   margin: 0 auto; /* Center the grid on the page */  
   max-width: 1200px; /* Limit the maximum width */  
+  
 }  
 
 /* For each doctor card */  
@@ -73,7 +74,7 @@
 }  
 
 .content-wrapper1 {  
-  margin-top: 100px; /* Set this to the height of your navbar */  
+  margin-top: 30px; /* Set this to the height of your navbar */  
 }  
 
 .doctor-availability {  

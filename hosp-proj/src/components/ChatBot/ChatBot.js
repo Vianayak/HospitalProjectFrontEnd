@@ -24,10 +24,18 @@ const Chatbot = ({ isOpen, toggleChatbot }) => {
       {isOpen && (
         <div className="chat-window">
           <div className="chat-header">
-         <h3>Chat Assistant</h3>
-            <button className="close-btn" onClick={toggleChatbot}>
+          <button
+  className="close-btn"
+  onClick={(e) => {
+    e.stopPropagation(); // Prevent click event from reaching the background
+    toggleChatbot();
+  }}
+>
   <FaTimes />
 </button>
+         <h3>Chat Assistant</h3>
+        
+
 
           </div>
 
