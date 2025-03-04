@@ -1,19 +1,4 @@
-/* Floating Chat Icon */
-.chat-icon {
-  position: fixed;
-  bottom: 150px;
-  right: 20px;
-  width: 60px;
-  height: 60px;
-  background: #007bff;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-  cursor: pointer;
-  transition: transform 0.2s;
-}
+
 
 .chat-icon:hover {
   transform: scale(1.1);
@@ -22,10 +7,10 @@
 /* Chat Window */
 .chat-window {
   position: fixed;
-  bottom: 80px;
+  bottom: 120px;
   right: 20px;
-  width: 350px;
-  height: 450px;
+  width: 400px;
+  height: 500px;
   background: white;
   border-radius: 10px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
@@ -36,7 +21,7 @@
 
 /* Chat Header */
 .chat-header {
-  background: #007bff;
+  background: #FF3600;
   color: white;
   padding: 15px;
   font-size: 16px;
