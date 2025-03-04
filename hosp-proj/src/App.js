@@ -23,6 +23,9 @@ import GeneratePrescription from "./components/GeneratePrescription/GeneratePres
 import History from "./components/History/History";
 import Chatbot from "./components/ChatBot/ChatBot";
 
+
+
+
 // Overlay component to display content in the popup
 const Overlay = ({ children, className = "" }) => (
   <div className={`overlay ${className}`}>
@@ -37,6 +40,7 @@ function App() {
       healthNewsRef.current.scrollIntoView({ behavior: "smooth" });
     }
   };
+  
 
   return (
     <Router>
@@ -51,7 +55,11 @@ const AppContent = ({ scrollToHealthNews, healthNewsRef }) => {
   const [isAllowed, setIsAllowed] = useState(false);
 
   const defaultRoute = "/techSpryn";
+  const [isChatbotOpen, setIsChatbotOpen] = useState(false);
 
+  const toggleChatbot = () => {
+    setIsChatbotOpen((prev) => !prev);
+  };
   // Add '/doctors-dashboard-page' to hide header and footer
   const hideHeaderFooterRoutes = ["/user-appointment", "/doctors-dashboard-page", "/patient-dashboard-page" ,"/generate-prescription","/login","/history"];
   const shouldHideHeaderFooter = hideHeaderFooterRoutes.includes(location.pathname);
@@ -117,8 +125,10 @@ const AppContent = ({ scrollToHealthNews, healthNewsRef }) => {
               <SpecialtiesCarousel />
               <HospitalSection />
               <Chatbot />
-              <FloatingButtons />
-              <HealthNewsImages healthNewsRef={healthNewsRef} />
+              <FloatingButtons toggleChatbot={toggleChatbot} />
+              
+      <Chatbot isOpen={isChatbotOpen} toggleChatbot={toggleChatbot} />
+ <HealthNewsImages healthNewsRef={healthNewsRef} />
             </>
           }
         />

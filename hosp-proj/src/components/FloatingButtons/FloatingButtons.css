@@ -27,7 +27,7 @@
     margin-right: 10px;
   }
   
-  .health-check-button,
+  .chat-bot-button,
   .appointment-button {
     padding: 10px 20px;
     font-size: 14px;
@@ -39,7 +39,7 @@
     width: 200px; /* Optional: Adjust button width */
   }
   
-  .health-check-button {
+  .chat-bot-button {
     background-color: #FF3600; /* Blue */
   }
   

@@ -1,55 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
 import "./SearchBar.css";
 
-const SearchBar = () => {
+const SearchBar = ({ setSearchTerm }) => {
   const [query, setQuery] = useState("");
-  const [results, setResults] = useState([]);
-  const [doctors, setDoctors] = useState([]);
-  const [selectedDoctor, setSelectedDoctor] = useState(null); // For selected doctor to display in modal
-  const [isModalOpen, setIsModalOpen] = useState(false); // To manage modal visibility
 
-  // Fetching doctor data dynamically from the API
-  useEffect(() => {
-    const fetchDoctors = async () => {
-      try {
-        const response = await fetch("http://localhost:8081/api/doctors/doctors-list");
-        const data = await response.json();
-        setDoctors(data);
-      } catch (error) {
-        console.error("Error fetching doctors:", error);
-      }
-    };
-    fetchDoctors();
-  }, []);
-
-  // Handle search input
+  // Handle search input and pass the value up
   const handleSearch = (e) => {
-    const searchQuery = e.target.value.toLowerCase();
+    const searchQuery = e.target.value;
     setQuery(searchQuery);
-
-    if (!searchQuery) {
-      setResults([]);
-      return;
-    }
-
-    // Filter doctors based on search query
-    const filteredResults = doctors.filter((doctor) =>
-      doctor.name.toLowerCase().includes(searchQuery)
-    );
-    setResults(filteredResults);
-  };
-
-  // Open modal and set the selected doctor
-  const handleResultClick = (doctor) => {
-    setSelectedDoctor(doctor);
-    setIsModalOpen(true); // Open modal when a result is clicked
-  };
-
-  // Close modal
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setSelectedDoctor(null);
+    setSearchTerm(searchQuery); // Pass search term to parent
   };
 
   return (
@@ -58,7 +17,7 @@ const SearchBar = () => {
         <input
           type="text"
           className="navbar-search-input"
-          placeholder="Search Doctor's"
+          placeholder="Search by Doctor or Specialization"
           value={query}
           onChange={handleSearch}
         />
@@ -66,53 +25,6 @@ const SearchBar = () => {
           <i className="fas fa-search"></i>
         </span>
       </div>
-      {query && (
-        <div className="search-results-dropdown">
-          {results.length > 0 ? (
-  results.map((doctor) => (
-    <div
-      key={doctor.id}
-      className="result-card"
-      onClick={() => handleResultClick(doctor)}
-    >
-      <img
-        src={`http://localhost:8081/${doctor.imagePath}`}
-        alt={doctor.name}
-        className="doctor-image"
-      />
-      <div className="doctor-details">
-        <h6>{doctor.name.trim()}</h6>
-        <p>{doctor.specialization}</p>
-        <p>{doctor.location}</p>
-      </div>
-    </div>
-  ))
-) : (
-  <p>No results found for "{query}"</p>
-)}
-
-        </div>
-      )}
-
-      {/* Modal for Doctor Details */}
-      {isModalOpen && selectedDoctor && (
-        <div className="modal">
-          <div className="modal-content1">
-            <span className="close" onClick={closeModal}>×</span>
-            <h2>Doctor Details</h2>
-            <div className="doctor-detail">
-              <div className="doctor-image">
-              <img src={`http://localhost:8081/${selectedDoctor.imagePath}`} alt={selectedDoctor.name} />
-              </div>
-              <div className="doctor-info">
-                <h3>{selectedDoctor.name}</h3>
-                <p>Specialization: {selectedDoctor.specialization}</p>
-                <p>Registration Number: {selectedDoctor.regestrationNum}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

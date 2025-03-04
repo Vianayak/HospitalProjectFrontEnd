@@ -76,9 +76,7 @@ function MyNavbar({ scrollToHealthNews }) {
                         </NavDropdown>
                     </Nav>
                 </Navbar.Collapse>
-                <div className="search-bar-container">
-                    <SearchBar />
-                </div>
+               
                 <div className="login-button1">
                     <Link to="/login" onClick={() => handleNavigation('/login')}>
                         <button>Log In</button>
