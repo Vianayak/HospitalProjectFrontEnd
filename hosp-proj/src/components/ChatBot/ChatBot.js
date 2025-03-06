@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaComments, FaTimes, FaPaperPlane } from "react-icons/fa";
+import { FaComments, FaTimes, FaPaperPlane ,FaRobot} from "react-icons/fa";
 import "./ChatBot.css"; // Import CSS file
 
 const Chatbot = () => {
@@ -39,7 +39,7 @@ const Chatbot = () => {
         <div className="chat-window">
           {/* Header */}
           <div className="chat-header">
-            <h3>Chat Assistant</h3>
+            <h3 > <FaRobot style={{ marginRight: "8px" }} />Doctor Assistant</h3>
             <button className="close-btn" onClick={toggleChat}>
               <FaTimes />
             </button>
