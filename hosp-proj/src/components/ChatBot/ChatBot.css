@@ -20,7 +20,6 @@
 }
 
 
-/* Chat Header */
 .chat-header {
   background: #FF3600;
   color: white;
@@ -30,7 +29,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-top-left-radius: 50px;
+  border-top-right-radius: 50px;
 }
+
 
 .close-btn {
   background: transparent;

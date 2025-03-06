@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaComments, FaTimes, FaPaperPlane } from "react-icons/fa";
+import { FaTimes, FaPaperPlane } from "react-icons/fa";
 import "./ChatBot.css";
 
 const Chatbot = ({ isOpen, toggleChatbot }) => {
@@ -14,7 +14,7 @@ const Chatbot = ({ isOpen, toggleChatbot }) => {
     setInput("");
 
     setTimeout(() => {
-      const botMessage = { text: `🤖 You said: "${input}"`, sender: "bot" };
+      const botMessage = { text: `You said: "${input}"`, sender: "bot" };
       setMessages((prevMessages) => [...prevMessages, botMessage]);
     }, 1000);
   };
@@ -24,25 +24,25 @@ const Chatbot = ({ isOpen, toggleChatbot }) => {
       {isOpen && (
         <div className="chat-window">
           <div className="chat-header">
-          <button
-  className="close-btn"
-  onClick={(e) => {
-    e.stopPropagation(); // Prevent click event from reaching the background
-    toggleChatbot();
-  }}
->
-  <FaTimes />
-</button>
-         <h3>Chat Assistant</h3>
-        
-
-
+            <button
+              className="close-btn"
+              onClick={(e) => {
+                e.stopPropagation();
+                toggleChatbot();
+              }}
+            >
+              <FaTimes />
+            </button>
+            <h3>Chat Assistant</h3>
           </div>
 
           <div className="chat-body">
             {messages.map((msg, index) => (
               <div key={index} className={`chat-bubble ${msg.sender}`}>
-                {msg.text}
+                <span className="profile-icon">
+                  {msg.sender === "user" ? "👤" : "🤖"}
+                </span>
+                <span>{msg.text}</span>
               </div>
             ))}
           </div>
