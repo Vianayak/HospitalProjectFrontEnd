@@ -1,37 +1,66 @@
-
+/* Floating Chat Icon */
+.chat-icon {
+  position: fixed;
+  bottom: 80px;
+  right: 50px;
+  width: 60px;
+  height: 60px;
+  background: #FF3600;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
 
 .chat-icon:hover {
   transform: scale(1.1);
 }
 
+/* Chat Window */
 .chat-window {
   position: fixed;
-  bottom: 120px;
+  bottom: 80px;
   right: 20px;
-  width: 400px; /* Large width */
-  height: 500px; /* Large height */
+  width: 450px;
+  height: 550px;
   background: white;
   border-radius: 10px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: column;
   animation: fadeIn 0.3s ease-in-out;
-  z-index: 99999; /* Ensures it's at the highest level */
+  z-index: 99999; 
 }
 
-
 .chat-header {
-  background: #FF3600;
+  background: #FF3600; /* Your header background color */
   color: white;
-  padding: 15px;
+  padding: 20px;
   font-size: 16px;
   font-weight: bold;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-top-left-radius: 50px;
-  border-top-right-radius: 50px;
+  position: relative;
+  z-index: 1;
 }
+
+/* Adding the wave effect */
+.chat-header::after {
+  content: "";
+  position: absolute;
+  bottom: -10px; /* Moves the wave down */
+  left: 0;
+  width: 100%;
+  height: 40px; /* Height of the wave */
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 1440 320' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%23007bff' fill-opacity='1' d='M0,224L80,213.3C160,203,320,181,480,186.7C640,192,800,224,960,218.7C1120,213,1280,171,1360,149.3L1440,128L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+  background-size: cover;
+  z-index: -1;
+}
+
 
 
 .close-btn {

@@ -125,10 +125,8 @@ const AppContent = ({ scrollToHealthNews, healthNewsRef }) => {
               <SpecialtiesCarousel />
               <HospitalSection />
               <Chatbot />
-              <FloatingButtons toggleChatbot={toggleChatbot} />
-              
-      <Chatbot isOpen={isChatbotOpen} toggleChatbot={toggleChatbot} />
- <HealthNewsImages healthNewsRef={healthNewsRef} />
+              <FloatingButtons />
+              <HealthNewsImages/>
             </>
           }
         />

@@ -2,7 +2,7 @@ import React from "react";
 import "./FloatingButtons.css";
 import { useNavigate } from "react-router-dom";
 
-const FloatingButtons = ({ toggleChatbot }) => {
+const FloatingButtons = () => {
   const navigate = useNavigate();
 
   const handleRedirect = () => {
@@ -12,8 +12,7 @@ const FloatingButtons = ({ toggleChatbot }) => {
 
   return (
     <div className="floating-container">
-      <button className="chat-bot-button"onClick={toggleChatbot}>ChatBot</button>
-      <button className="appointment-button" onClick={handleRedirect}>
+        <button className="appointment-button" onClick={handleRedirect}>
         Book Appointment
       </button>
     </div>
