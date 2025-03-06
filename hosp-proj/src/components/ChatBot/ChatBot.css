@@ -4,20 +4,21 @@
   transform: scale(1.1);
 }
 
-/* Chat Window */
 .chat-window {
   position: fixed;
   bottom: 120px;
   right: 20px;
-  width: 400px;
-  height: 500px;
+  width: 400px; /* Large width */
+  height: 500px; /* Large height */
   background: white;
   border-radius: 10px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: column;
   animation: fadeIn 0.3s ease-in-out;
+  z-index: 99999; /* Ensures it's at the highest level */
 }
+
 
 /* Chat Header */
 .chat-header {
