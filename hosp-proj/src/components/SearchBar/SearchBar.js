@@ -1,14 +1,21 @@
-import React, { useState } from "react";
+
+
+import React, { useState, useEffect } from "react";
 import "./SearchBar.css";
 
-const SearchBar = ({ setSearchTerm }) => {
+const SearchBar = ({ setSearchTerm, searchTerm }) => {
   const [query, setQuery] = useState("");
 
-  // Handle search input and pass the value up
+  useEffect(() => {
+    if (searchTerm) {
+      setQuery(searchTerm); // Set the initial search term from the URL
+    }
+  }, [searchTerm]);
+
   const handleSearch = (e) => {
     const searchQuery = e.target.value;
     setQuery(searchQuery);
-    setSearchTerm(searchQuery); // Pass search term to parent
+    setSearchTerm(searchQuery); // Pass search term to parent component
   };
 
   return (

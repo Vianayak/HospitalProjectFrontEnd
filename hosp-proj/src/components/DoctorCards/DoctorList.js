@@ -18,12 +18,17 @@ const DoctorList = () => {
     axios  
       .get("http://localhost:8081/api/doctors/doctors-list")  
       .then((response) => {  
-        setDoctors(response.data);  
+        setDoctors(response.data);
+
+        // Set specialization as search term if present in URL
+        if (specializationFilter) {
+          setSearchTerm(specializationFilter);
+        }
       })  
       .catch((error) => {  
         console.error("Error fetching doctors data:", error);  
       });  
-  }, []);  
+  }, [specializationFilter]); // Re-run when specialization changes  
 
   // Filter doctors based on search input or selected specialization
   const filteredDoctors = doctors.filter((doctor) =>  
@@ -33,7 +38,8 @@ const DoctorList = () => {
 
   return (  
     <>  
-      <SearchBar setSearchTerm={setSearchTerm} />  
+      {/* Pass the current searchTerm to SearchBar for automatic input */}
+      <SearchBar setSearchTerm={setSearchTerm} searchTerm={searchTerm} />  
 
       <div className="doctor-list-container">  
         <div className="doctor-list">  
@@ -42,7 +48,7 @@ const DoctorList = () => {
               <DoctorCards 
                 key={doctor.id} 
                 doctor={doctor} 
-                highlight={doctor.specialization === specializationFilter} // Highlight match
+                highlight={doctor.specialization.toLowerCase() === searchTerm.toLowerCase()} // Highlight match
               />  
             ))  
           ) : (  
