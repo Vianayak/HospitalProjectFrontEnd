@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from "react";  
-import DoctorCards from "./DoctorCards"; // Ensure this is the correct path  
+import { useLocation } from "react-router-dom"; // Import for reading URL params
+import DoctorCards from "./DoctorCards";  
 import "./DoctorCards.css";  
 import axios from "axios";  
 import SearchBar from "../SearchBar/SearchBar";
 
 const DoctorList = () => {  
-  const [doctors, setDoctors] = useState([]); // Store list of doctors  
-  const [searchTerm, setSearchTerm] = useState(""); // Search term state  
+  const [doctors, setDoctors] = useState([]);  
+  const [searchTerm, setSearchTerm] = useState("");  
+  const location = useLocation(); // Read query params
+
+  // Extract specialization from query params
+  const searchParams = new URLSearchParams(location.search);
+  const specializationFilter = searchParams.get("specialization");
 
   useEffect(() => {  
     axios  
@@ -19,7 +25,7 @@ const DoctorList = () => {
       });  
   }, []);  
 
-  // Filtered doctors based on search term  
+  // Filter doctors based on search input or selected specialization
   const filteredDoctors = doctors.filter((doctor) =>  
     doctor.name.toLowerCase().includes(searchTerm.toLowerCase()) ||  
     doctor.specialization.toLowerCase().includes(searchTerm.toLowerCase())  
@@ -27,14 +33,17 @@ const DoctorList = () => {
 
   return (  
     <>  
-      {/* Pass setSearchTerm to SearchBar */}
       <SearchBar setSearchTerm={setSearchTerm} />  
 
       <div className="doctor-list-container">  
         <div className="doctor-list">  
           {filteredDoctors.length > 0 ? (  
             filteredDoctors.map((doctor) => (  
-              <DoctorCards key={doctor.id} doctor={doctor} />  
+              <DoctorCards 
+                key={doctor.id} 
+                doctor={doctor} 
+                highlight={doctor.specialization === specializationFilter} // Highlight match
+              />  
             ))  
           ) : (  
             <p>No doctors found.</p>  
