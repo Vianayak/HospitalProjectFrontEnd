@@ -79,11 +79,15 @@ const Chatbot = () => {
                 {/* Book Appointment Button */}
                 {msg.sender === "bot" && msg.doctorName && (
                   <button 
-                    className="book-btn" 
-                    onClick={() => navigate(`/book-appointments-page?doctorName=${encodeURIComponent(msg.doctorName)}`)}
-                  >
-                    Book Appointment
-                  </button>
+                  className="book-btn" 
+                  onClick={() => {
+                    sessionStorage.setItem("validNavigation", "true"); // Set session flag
+                    navigate(`/book-appointments-page?doctorName=${encodeURIComponent(msg.doctorName)}`);
+                  }}
+                >
+                  Book Appointment
+                </button>
+                
                 )}
               </div>
             ))}
