@@ -1,21 +1,19 @@
 
-
+import { useNavigate } from "react-router-dom"; // Import navigation
 import React, { useState, useEffect } from "react";
 import "./SearchBar.css";
 
 const SearchBar = ({ setSearchTerm, searchTerm }) => {
-  const [query, setQuery] = useState("");
-
-  useEffect(() => {
-    if (searchTerm) {
-      setQuery(searchTerm); // Set the initial search term from the URL
-    }
-  }, [searchTerm]);
+  const [query, setQuery] = useState(searchTerm || ""); // Use initial search term
+  const navigate = useNavigate(); // Use navigation
 
   const handleSearch = (e) => {
     const searchQuery = e.target.value;
     setQuery(searchQuery);
-    setSearchTerm(searchQuery); // Pass search term to parent component
+    setSearchTerm(searchQuery);
+
+    // Update the URL with the search query
+    navigate(`?search=${encodeURIComponent(searchQuery)}`);
   };
 
   return (
@@ -35,5 +33,4 @@ const SearchBar = ({ setSearchTerm, searchTerm }) => {
     </div>
   );
 };
-
 export default SearchBar;

@@ -31,7 +31,8 @@ const Chatbot = () => {
       const response = await fetch("http://localhost:8081/api/chatBot/generate-response", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(input),
+        body: JSON.stringify({ message: input }),
+
       });
 
       const data = await response.json();
@@ -80,7 +81,8 @@ const Chatbot = () => {
                 {msg.sender === "bot" && msg.specialization && (
                   <button 
                     className="book-btn" 
-                    onClick={() => navigate(`/book-appointments-page?specialization=${msg.specialization}`)}
+                    onClick={() => navigate(`/book-appointments-page?specialization=${encodeURIComponent(msg.specialization)}`)
+                  }
                   >
                     Book Appointment
                   </button>
