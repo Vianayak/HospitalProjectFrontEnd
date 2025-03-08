@@ -10,9 +10,9 @@ const DoctorList = () => {
   const [searchTerm, setSearchTerm] = useState("");  
   const location = useLocation(); // Read query params
 
-  // Extract specialization from query params
+  // Extract doctorName from query params
   const searchParams = new URLSearchParams(location.search);
-  const specializationFilter = searchParams.get("specialization");
+  const doctorNameFilter = searchParams.get("doctorName");
 
   useEffect(() => {  
     axios  
@@ -20,20 +20,19 @@ const DoctorList = () => {
       .then((response) => {  
         setDoctors(response.data);
 
-        // Set specialization as search term if present in URL
-        if (specializationFilter) {
-          setSearchTerm(specializationFilter);
+        // Set doctorName as search term if present in URL
+        if (doctorNameFilter) {
+          setSearchTerm(doctorNameFilter);
         }
       })  
       .catch((error) => {  
         console.error("Error fetching doctors data:", error);  
       });  
-  }, [specializationFilter]); // Re-run when specialization changes  
+  }, [doctorNameFilter]); // Re-run when doctorName changes  
 
-  // Filter doctors based on search input or selected specialization
+  // Filter doctors based on search input or selected doctorName
   const filteredDoctors = doctors.filter((doctor) =>  
-    doctor.name.toLowerCase().includes(searchTerm.toLowerCase()) ||  
-    doctor.specialization.toLowerCase().includes(searchTerm.toLowerCase())  
+    doctor.name.toLowerCase().includes(searchTerm.toLowerCase())  
   );  
 
   return (  
@@ -48,7 +47,6 @@ const DoctorList = () => {
               <DoctorCards 
                 key={doctor.id} 
                 doctor={doctor} 
-                highlight={doctor.specialization.toLowerCase() === searchTerm.toLowerCase()} // Highlight match
               />  
             ))  
           ) : (  
@@ -60,4 +58,4 @@ const DoctorList = () => {
   );  
 };  
 
-export default DoctorList;
+export default DoctorList; 

@@ -32,7 +32,6 @@ const Chatbot = () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: input }),
-
       });
 
       const data = await response.json();
@@ -41,7 +40,7 @@ const Chatbot = () => {
         const botMessages = data.map((doctor) => ({
           text: `Dr. ${doctor.name} - ${doctor.specialization}`,
           sender: "bot",
-          specialization: doctor.specialization, // Store specialization
+          doctorName: doctor.name, // Store doctor name for navigation
         }));
 
         setMessages((prevMessages) => [...prevMessages, ...botMessages]);
@@ -78,11 +77,10 @@ const Chatbot = () => {
                 <span>{msg.text}</span>
 
                 {/* Book Appointment Button */}
-                {msg.sender === "bot" && msg.specialization && (
+                {msg.sender === "bot" && msg.doctorName && (
                   <button 
                     className="book-btn" 
-                    onClick={() => navigate(`/book-appointments-page?specialization=${encodeURIComponent(msg.specialization)}`)
-                  }
+                    onClick={() => navigate(`/book-appointments-page?doctorName=${encodeURIComponent(msg.doctorName)}`)}
                   >
                     Book Appointment
                   </button>

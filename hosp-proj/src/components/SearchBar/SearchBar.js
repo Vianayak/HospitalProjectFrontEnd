@@ -1,6 +1,5 @@
-
 import { useNavigate } from "react-router-dom"; // Import navigation
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./SearchBar.css";
 
 const SearchBar = ({ setSearchTerm, searchTerm }) => {
@@ -12,8 +11,8 @@ const SearchBar = ({ setSearchTerm, searchTerm }) => {
     setQuery(searchQuery);
     setSearchTerm(searchQuery);
 
-    // Update the URL with the search query
-    navigate(`?search=${encodeURIComponent(searchQuery)}`);
+    // Update the URL with the doctor name
+    navigate(`?doctorName=${encodeURIComponent(searchQuery)}`);
   };
 
   return (
@@ -22,7 +21,7 @@ const SearchBar = ({ setSearchTerm, searchTerm }) => {
         <input
           type="text"
           className="navbar-search-input"
-          placeholder="Search by Doctor or Specialization"
+          placeholder="Search by Doctor Name"
           value={query}
           onChange={handleSearch}
         />
@@ -33,4 +32,5 @@ const SearchBar = ({ setSearchTerm, searchTerm }) => {
     </div>
   );
 };
+
 export default SearchBar;
