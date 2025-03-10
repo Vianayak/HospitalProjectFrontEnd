@@ -4,7 +4,7 @@
   right: 50px;
   width: 60px;
   height: 60px;
-  background: #FF3600;
+  background: white;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -13,6 +13,33 @@
   cursor: pointer;
   transition: transform 0.2s;
 }
+.chat-window.maximized {
+  width: 94%;
+  height: 95%;
+  bottom: 5%;
+  right: 5%;
+}
+
+.maximize-btn {
+  background: transparent;
+  border: none;
+  color: white; /* Green color */
+  cursor: pointer;
+  font-size: 18px;
+  transition: color 0.3s ease;
+}
+
+
+.minimize-btn {
+  background: transparent;
+  border: none;
+  color: #dc3545; /* Red color */
+  cursor: pointer;
+  font-size: 18px;
+  transition: color 0.3s ease;
+}
+
+
 .tooltip {
   position: absolute;
   bottom: 65px;

@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { FaComments, FaTimes, FaPaperPlane } from "react-icons/fa";
+import { FaComments, FaTimes, FaPaperPlane, FaExpand, FaCompress } from "react-icons/fa";
 import { Bot } from "lucide-react";
 import { useNavigate } from "react-router-dom"; // Import for navigation
 import "./ChatBot.css";
 
 const Chatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isMaximized, setIsMaximized] = useState(false); // State for maximize/minimize
   const [messages, setMessages] = useState([
     { text: "What is the issue you are experiencing today?", sender: "bot" }
   ]);
@@ -20,6 +21,10 @@ const Chatbot = () => {
     if (!isOpen && messages.length === 0) {
       setMessages([{ text: "What is the issue you are experiencing today?", sender: "bot" }]);
     }
+  };
+
+  const toggleMaximize = () => {
+    setIsMaximized(!isMaximized);
   };
 
   const sendMessage = async () => {
@@ -85,12 +90,18 @@ const Chatbot = () => {
       )}
 
       {isOpen && (
-        <div className="chat-window">
+        <div className={`chat-window ${isMaximized ? "maximized" : ""}`}>
           <div className="chat-header">
             <h3><Bot size={28} style={{ marginRight: "10px" }} /> Doctor Assistance</h3>
-            <button className="close-btn" onClick={toggleChat}>
-              <FaTimes />
-            </button>
+            
+            <div className="chat-header-buttons">
+              <button className="maximize-btn" onClick={toggleMaximize}>
+                {isMaximized ? <FaCompress /> : <FaExpand />}
+              </button>
+              <button className="close-btn" onClick={toggleChat}>
+                <FaTimes />
+              </button>
+            </div>
           </div>
 
           <div className="chat-body">
