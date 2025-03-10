@@ -297,21 +297,36 @@ const SignIn = () => {
 </div>
 
 
-            <div className="form-group1">
-              <label>Specialization</label>
-              <input
-                type="text"
-                name="specialization"
-                value={formData.specialization}
-                onChange={handleInputChange}
-                onFocus={handleInputFocus}
-              className={formErrors.specialization && touchedFields.specialization ? "error-input" : ""}
-              placeholder="Enter your specialization"
-            />
-            {touchedFields.specialization && formErrors.specialization && (
-          <span className="error">{formErrors.specialization}</span>
-            )}
-            </div>
+<div className="form-group1">
+  <label>Specialization</label>
+  <select
+    name="specialization"
+    value={formData.specialization}
+    onChange={handleInputChange}
+    onFocus={handleInputFocus}
+    className={formErrors.specialization && touchedFields.specialization ? "error-input" : ""}
+  >
+    <option value="">Select Specialization</option>
+    <option value="Cardiologist">Cardiologist</option>
+    <option value="Dermatologist">Dermatologist</option>
+    <option value="Endocrinologist">Endocrinologist</option>
+    <option value="Gastroenterologist">Gastroenterologist</option>
+    <option value="Neurologist">Neurologist</option>
+    <option value="Obstetrician-Gynecologist (OB-GYN)">Obstetrician-Gynecologist (OB-GYN)</option>
+    <option value="Ophthalmologist">Ophthalmologist</option>
+    <option value="Orthopedic Surgeon">Orthopedic Surgeon</option>
+    <option value="Pediatrician">Pediatrician</option>
+    <option value="Psychiatrist">Psychiatrist</option>
+    <option value="Pulmonologist">Pulmonologist</option>
+    <option value="Radiologist">Radiologist</option>
+    <option value="Rheumatologist">Rheumatologist</option>
+    <option value="Urologist">Urologist</option>
+  </select>
+  {touchedFields.specialization && formErrors.specialization && (
+    <span className="error">{formErrors.specialization}</span>
+  )}
+</div>
+
 
             <div className="form-group1">
               <label>Experience</label>
