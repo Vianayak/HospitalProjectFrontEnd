@@ -11,6 +11,7 @@ const Chatbot = () => {
   ]);
   const [input, setInput] = useState("");
   const [showTooltip, setShowTooltip] = useState(false); // Tooltip state
+  const [loading, setLoading] = useState(false); // Loading state
 
   const navigate = useNavigate(); // Use for page navigation
 
@@ -28,6 +29,10 @@ const Chatbot = () => {
     setMessages((prevMessages) => [...prevMessages, userMessage]);
     setInput("");
 
+    // Show "Loading..." before fetching the data
+    setLoading(true);
+    setMessages((prevMessages) => [...prevMessages, { text: "Loading...", sender: "bot" }]);
+
     try {
       const response = await fetch("http://localhost:8081/api/chatBot/generate-response", {
         method: "POST",
@@ -37,6 +42,8 @@ const Chatbot = () => {
 
       const data = await response.json();
 
+      setLoading(false); // Stop loading
+
       if (data.length > 0) {
         const botMessages = data.map((doctor) => ({
           text: `Dr. ${doctor.name} - ${doctor.specialization}`,
@@ -44,13 +51,22 @@ const Chatbot = () => {
           doctorName: doctor.name, // Store doctor name for navigation
         }));
 
-        setMessages((prevMessages) => [...prevMessages, ...botMessages]);
+        setMessages((prevMessages) => [
+          ...prevMessages.slice(0, -1), // Remove "Loading..." message
+          ...botMessages
+        ]);
       } else {
-        setMessages((prevMessages) => [...prevMessages, { text: "No doctors found.", sender: "bot" }]);
+        setMessages((prevMessages) => [
+          ...prevMessages.slice(0, -1), // Remove "Loading..." message
+          { text: "No doctors found.", sender: "bot" }
+        ]);
       }
     } catch (error) {
       console.error("Error fetching response:", error);
-      setMessages((prevMessages) => [...prevMessages, { text: "Error connecting to server.", sender: "bot" }]);
+      setMessages((prevMessages) => [
+        ...prevMessages.slice(0, -1), // Remove "Loading..." message
+        { text: "Error connecting to server.", sender: "bot" }
+      ]);
     }
   };
 
@@ -84,7 +100,7 @@ const Chatbot = () => {
                 <span>{msg.text}</span>
 
                 {/* Book Appointment Button */}
-                {msg.sender === "bot" && msg.doctorName && (
+                {msg.sender === "bot" && msg.doctorName && !loading && (
                   <button 
                     className="book-btn" 
                     onClick={() => {
