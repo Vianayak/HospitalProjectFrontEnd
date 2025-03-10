@@ -10,6 +10,7 @@ const Chatbot = () => {
     { text: "What is the issue you are experiencing today?", sender: "bot" }
   ]);
   const [input, setInput] = useState("");
+  const [showTooltip, setShowTooltip] = useState(false); // Tooltip state
 
   const navigate = useNavigate(); // Use for page navigation
 
@@ -56,8 +57,14 @@ const Chatbot = () => {
   return (
     <div className="chatbot-container">
       {!isOpen && (
-        <div className="chat-icon" onClick={toggleChat}>
+        <div
+          className="chat-icon"
+          onClick={toggleChat}
+          onMouseEnter={() => setShowTooltip(true)}
+          onMouseLeave={() => setShowTooltip(false)}
+        >
           <FaComments size={24} color="white" />
+          {showTooltip && <div className="tooltip">Hi! How Can I Assist You Today?</div>}
         </div>
       )}
 
@@ -79,15 +86,14 @@ const Chatbot = () => {
                 {/* Book Appointment Button */}
                 {msg.sender === "bot" && msg.doctorName && (
                   <button 
-                  className="book-btn" 
-                  onClick={() => {
-                    sessionStorage.setItem("validNavigation", "true"); // Set session flag
-                    navigate(`/book-appointments-page?doctorName=${encodeURIComponent(msg.doctorName)}`);
-                  }}
-                >
-                  Book Appointment
-                </button>
-                
+                    className="book-btn" 
+                    onClick={() => {
+                      sessionStorage.setItem("validNavigation", "true"); // Set session flag
+                      navigate(`/book-appointments-page?doctorName=${encodeURIComponent(msg.doctorName)}`);
+                    }}
+                  >
+                    Book Appointment
+                  </button>
                 )}
               </div>
             ))}

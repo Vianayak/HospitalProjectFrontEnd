@@ -13,7 +13,20 @@
   cursor: pointer;
   transition: transform 0.2s;
 }
-
+.tooltip {
+  position: absolute;
+  bottom: 65px;
+  left: 2%;
+  transform: translateX(-50%) translateX(10px); 
+  background-color: #FF3600;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 12px;
+  white-space: nowrap;
+  visibility: visible;
+  opacity: 0.9;
+}
 .chat-message {
   position: fixed;
   bottom: 150px; /* Adjust height as needed */
