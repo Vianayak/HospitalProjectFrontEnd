@@ -22,7 +22,7 @@ import PatientSidebar from "./components/PatientSidebar/PatientSidebar";
 import GeneratePrescription from "./components/GeneratePrescription/GeneratePrescription";
 import History from "./components/History/History";
 import Chatbot from "./components/ChatBot/ChatBot";
-
+import Preloader from "./components/Preloader/Preloader";
 
 
 
@@ -34,6 +34,12 @@ const Overlay = ({ children, className = "" }) => (
 );
 
 function App() {
+  const [loading, setLoading] = useState(true); // State to track loading
+
+  useEffect(() => {
+    setTimeout(() => setLoading(false), 1000); // Simulate loading delay
+  }, []);
+
   const healthNewsRef = useRef(null);
   const scrollToHealthNews = () => {
     if (healthNewsRef.current) {
@@ -43,8 +49,12 @@ function App() {
   
 
   return (
-    <Router>
+  <Router>
+      {loading ? ( 
+        <Preloader /> // Show Preloader while loading
+      ) : (
       <AppContent scrollToHealthNews={scrollToHealthNews} healthNewsRef={healthNewsRef} />
+    )}
     </Router>
   );
 }

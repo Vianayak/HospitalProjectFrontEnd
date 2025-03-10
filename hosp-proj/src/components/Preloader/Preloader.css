@@ -1,0 +1,40 @@
+.preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: #ffffff; /* Change if needed */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+  }
+  
+  .preloader-logo {
+    width: 120px; /* Adjust logo size */
+    height: auto;
+    animation: fadeIn 1.5s ease-in-out infinite alternate;
+  }
+  
+  .loading-text {
+    margin-top: 10px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #3498db; /* Change color if needed */
+    animation: blink 1.5s infinite;
+  }
+  
+  /* Smooth fade-in animation for logo */
+  @keyframes fadeIn {
+    0% { opacity: 0.5; }
+    100% { opacity: 1; }
+  }
+  
+  /* Blinking text effect */
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+  
