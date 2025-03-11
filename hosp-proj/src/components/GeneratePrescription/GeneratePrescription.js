@@ -101,8 +101,8 @@ const GeneratePrescription = () => {
     const newTablets = [...tablets];  
     newTablets[index].saved = true;  
     setTablets(newTablets);  
-    toast.success("Tablet saved successfully!");
 };
+
 
 
 
@@ -145,11 +145,13 @@ const GeneratePrescription = () => {
     }  
     setErrors([]);  
 
-    const doctorRegNum=doctorDetails.regestrationNum;
-    const patientEmail=patient.email;
+    const doctorRegNum = doctorDetails?.regestrationNum;  
+    const patientEmail = patient?.email;  
 
-    console.log(doctorRegNum);
-    console.log(patientEmail);
+    if (!doctorRegNum || !patientEmail) {  
+        toast.error("Doctor or Patient details are missing!");  
+        return;  
+    }  
 
     const tabletData = tablets.map((tablet) => ({  
         name: tablet.name,  
@@ -158,30 +160,29 @@ const GeneratePrescription = () => {
         timing: tablet.timing,  
     }));  
 
-    console.log(tabletData);
-
     try {  
-      const response = await axios.post(  
-        "http://localhost:8081/api/tablets/saveTablets",  
-        tabletData,  
-        {  
-          params: { doctorRegNum, patientEmail ,doctorNotes},  
-          headers: { "Content-Type": "application/json" },  
-        }  
-      );  
+        const response = await axios.post(  
+            "http://localhost:8081/api/tablets/saveTablets",  
+            tabletData,  
+            {  
+                params: { doctorRegNum, patientEmail, doctorNotes },  
+                headers: { "Content-Type": "application/json" },  
+            }  
+        );  
 
         console.log("Success:", response.data);  
-        toast.success("Tablets saved successfully!");  
+        toast.success("Tablets and notes saved successfully!");  
+
+        // After successful upload, navigate to the dashboard  
+        sessionStorage.setItem("validNavigation", "true");  
+        navigate("/doctors-dashboard-page");  
+
     } catch (error) {  
         console.error("Error:", error);  
-        toast.error("Failed to save tablets.");  
-    }finally{
-      sessionStorage.setItem("validNavigation", "true");
-
-      // Navigate to user appointment page
-      navigate("/doctors-dashboard-page");
+        toast.error("Failed to save tablets and notes.");  
     }  
 };
+
 
 const handleCancel=()=>{
   sessionStorage.setItem("validNavigation", "true");
