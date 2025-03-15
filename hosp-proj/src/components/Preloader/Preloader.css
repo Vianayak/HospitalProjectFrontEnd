@@ -13,7 +13,7 @@
   }
   
   .preloader-logo {
-    width: 120px; /* Adjust logo size */
+    width: 500px; /* Adjust logo size */
     height: auto;
     animation: fadeIn 1.5s ease-in-out infinite alternate;
   }

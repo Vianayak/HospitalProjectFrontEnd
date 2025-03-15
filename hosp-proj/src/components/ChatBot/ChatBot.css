@@ -16,8 +16,8 @@
 .chat-window.maximized {
   width: 94%;
   height: 95%;
-  bottom: 5%;
-  right: 5%;
+  bottom: 2%;
+  right: 3%;
 }
 
 .maximize-btn {

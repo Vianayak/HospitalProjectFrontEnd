@@ -84,7 +84,7 @@ const Chatbot = () => {
           onMouseEnter={() => setShowTooltip(true)}
           onMouseLeave={() => setShowTooltip(false)}
         >
-          <FaComments size={24} color="white" />
+          <FaComments size={24} color="#FF3600" />
           {showTooltip && <div className="tooltip">Hi! How Can I Assist You Today?</div>}
         </div>
       )}
