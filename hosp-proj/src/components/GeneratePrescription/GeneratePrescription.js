@@ -13,6 +13,7 @@ const GeneratePrescription = () => {
   const [errors, setErrors] = useState([]); // State for storing validation errors  
   const [doctorDetails, setDoctorDetails] = useState(null);
   const [patient, setPatientDetails] = useState(null);
+  const [feedback, setFeedback] = useState("");
     const navigate = useNavigate();
 
   const handleAddTablet = () => {  
@@ -134,6 +135,10 @@ const GeneratePrescription = () => {
         errorMessages[index] = "At least one slot must be selected";  
       }  
     });  
+
+    if (!feedback) {  
+      errorMessages["feedback"] = "Feedback is required";  
+    } 
     return errorMessages;  
   };  
 
@@ -153,6 +158,11 @@ const GeneratePrescription = () => {
         return;  
     }  
 
+    if (!feedback) {  
+      toast.error("Feedback is required!");  
+      return;  
+  }
+
     const tabletData = tablets.map((tablet) => ({  
         name: tablet.name,  
         days: tablet.days,  
@@ -165,7 +175,7 @@ const GeneratePrescription = () => {
             "http://localhost:8081/api/tablets/saveTablets",  
             tabletData,  
             {  
-                params: { doctorRegNum, patientEmail, doctorNotes },  
+                params: { doctorRegNum, patientEmail, doctorNotes,doctorFeedback: feedback },  
                 headers: { "Content-Type": "application/json" },  
             }  
         );  
@@ -360,6 +370,30 @@ const handleCancel=()=>{
           value={doctorNotes}  
           onChange={(e) => setDoctorNotes(e.target.value)}  
         ></textarea>  
+<div className="feedback-section">
+  <label>Feedback <span style={{ color: "red" }}>*</span>:</label>
+  <div className="feedback-options">
+    <label>
+      <input
+        type="radio"
+        name="feedback"
+        value="Suspicious"
+        onChange={(e) => setFeedback(e.target.value)}
+      /> 
+      suspicious
+    </label>
+    <label>
+      <input
+        type="radio"
+        name="feedback"
+        value="TrustWorthy"
+        onChange={(e) => setFeedback(e.target.value)}
+      /> 
+      TrustWorthy
+    </label>
+  </div>
+</div>
+
         
         <div className="button-group">  
           <button className="upload-button" onClick={handleUpload}>Upload</button>  

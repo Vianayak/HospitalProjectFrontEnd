@@ -244,6 +244,12 @@ const handleGeneratePrescription = (userDetails) => {
 };
 
 
+useEffect(() => {
+  if (showEprescriptionPopup) {
+    fetchPatients(new Date()); // Fetch patients for today when popup opens
+  }
+}, [showEprescriptionPopup]);
+
 
   return (
     <div className="layout">
@@ -424,7 +430,9 @@ const handleGeneratePrescription = (userDetails) => {
           <Calendar
             onChange={handleDateChangeForPrescription}
             value={selectedDate}
-            minDate={new Date()}
+            minDate={new Date()}  // Prevent past dates
+  maxDate={new Date()}  // Prevent future dates
+  tileDisabled={() => true}
           />
         </div>
 
