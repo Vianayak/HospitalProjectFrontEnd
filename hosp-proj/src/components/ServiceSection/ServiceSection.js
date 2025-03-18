@@ -11,7 +11,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const services = [
   { id: 1, icon: faCalendarCheck, title: "Book Appointment", path: "/book-appointments-page" },
-  { id: 2, icon: faClipboardCheck, title: "Book Health Check-Up", path: "#" },
+  { id: 2, icon: faClipboardCheck, title: "Home Services", path: "/home-services" },
   { id: 3, icon: faUserMd, title: "Consult Online", path: "/consult" },
   { id: 4, icon: faPills, title: "Buy Medicine", path: "#" },
   { id: 5, icon: faHospital, title: "Find Hospital", path: "#" },
