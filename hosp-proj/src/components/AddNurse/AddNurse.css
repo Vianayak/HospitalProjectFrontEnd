@@ -50,3 +50,34 @@
 .save-button3:active, .delete-button3:active {
     transform: scale(0.95);
 }
+.confirm-buttons {
+    display: flex;
+    margin-left: 100px;
+    margin-top: 20px;
+  }
+  
+  .confirm-button, .cancel-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: all 0.3s ease-in-out;
+    margin: 0 10px;
+  }
+  
+  .cancel-button {
+    background-color: #ff5500;
+  }
+  
+  .confirm-button:hover, .cancel-button:hover {
+    background: linear-gradient(135deg, #00A4CCFF, #FF3600);
+    transform: scale(1.05);
+  }
+  
+  .confirm-button:active, .cancel-button:active {
+    transform: scale(0.95);
+  }
+  
