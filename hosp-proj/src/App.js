@@ -23,6 +23,7 @@ import GeneratePrescription from "./components/GeneratePrescription/GeneratePres
 import History from "./components/History/History";
 import Chatbot from "./components/ChatBot/ChatBot";
 import Preloader from "./components/Preloader/Preloader";
+import AddNurse from "./components/AddNurse/AddNurse";
 
 
 
@@ -71,7 +72,7 @@ const AppContent = ({ scrollToHealthNews, healthNewsRef }) => {
     setIsChatbotOpen((prev) => !prev);
   };
   // Add '/doctors-dashboard-page' to hide header and footer
-  const hideHeaderFooterRoutes = ["/user-appointment", "/doctors-dashboard-page", "/patient-dashboard-page" ,"/generate-prescription","/login","/history"];
+  const hideHeaderFooterRoutes = ["/user-appointment", "/doctors-dashboard-page", "/patient-dashboard-page" ,"/generate-prescription","/login","/history","/addNurse"];
   const shouldHideHeaderFooter = hideHeaderFooterRoutes.includes(location.pathname);
 
 
@@ -153,6 +154,16 @@ const AppContent = ({ scrollToHealthNews, healthNewsRef }) => {
             )
           }
         />
+        <Route
+        path="/addNurse"
+        element={
+          isAllowed ? (
+            <AddNurse />
+          ) : (
+            <Navigate to={defaultRoute}  replace />
+          )
+        }
+      />
         <Route
           path="/user-appointment"
           element={

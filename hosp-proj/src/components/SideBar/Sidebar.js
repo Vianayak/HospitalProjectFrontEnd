@@ -7,7 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
 import BookAvailability from '../BookAvailability/BookAvailability';
 import Calendar from "react-calendar";
-
+import AddNurse from '../AddNurse/AddNurse';
 import { useNavigate } from 'react-router-dom';
 
 const Sidebar = () => {
@@ -29,12 +29,14 @@ const Sidebar = () => {
 
   const [meetings, setMeetings] = useState([]);
   const [showMeetingsPopup, setShowMeetingsPopup] = useState(false);
+  
   const handleAvailability = () => {
     setShowBookAvailability(true);
   };
   
   const [showDropdown, setShowDropdown] = useState(false);  
 
+ 
   const handleDropdownToggle = () => {  
     setShowDropdown(prev => !prev); // Toggle dropdown visibility  
   };   
@@ -276,6 +278,13 @@ useEffect(() => {
         <li onClick={() => setShowMeetingsPopup(true)}>
             <i className="icon">&#x1F4DD;</i> Meetings
           </li>
+          <li onClick={() => {
+            
+            sessionStorage.setItem("validNavigation", "true");
+            navigate("/addNurse")}}>
+ <i className="icon">&#x1F469;</i> Add Nurse
+</li>
+
   <li onClick={handleAvailability}>
     <i className="icon">&#x1F4CB;</i> Book Availability
   </li>
