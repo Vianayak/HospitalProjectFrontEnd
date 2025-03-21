@@ -4,65 +4,52 @@ import './HealthcarePortal.css';
 class HealthcarePortal extends Component {
   constructor(props) {  
     super(props);  
+    const today = new Date();  
     this.state = {  
-      currentDate: new Date(), // Current month/year  
-      selectedDate: null, // Selected date  
+      currentDate: today, // Current month/year  
+      selectedDate: today, // Initially selected date  
     };  
   }  
 
   handleDateClick = (day) => {  
     const { currentDate } = this.state;  
-
-    // Create a new date object, setting the time to 00:00:00  
     const selectedDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);  
-
-    // Log selectedDate for debugging  
-    console.log('Selected Date:', selectedDate);  
-
-    // Update the state with the selected date  
     this.setState({ selectedDate });  
 
-    // Pass the date to the parent component (Dashboard)  
     if (this.props.setSelectedDate) {  
       this.props.setSelectedDate(selectedDate);  
     }  
   };  
-  
- 
+
   handleNextMonth = () => {  
-    const { currentDate } = this.state;  
-    const nextMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1);  
-    this.setState({ currentDate: nextMonth });  
+    this.setState((prevState) => ({
+      currentDate: new Date(prevState.currentDate.getFullYear(), prevState.currentDate.getMonth() + 1, 1),
+    }));
   };  
 
   handlePreviousMonth = () => {  
-    const { currentDate } = this.state;  
-    const prevMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1);  
-    this.setState({ currentDate: prevMonth });  
+    this.setState((prevState) => ({
+      currentDate: new Date(prevState.currentDate.getFullYear(), prevState.currentDate.getMonth() - 1, 1),
+    }));
   };  
 
-
- 
   renderCalendarDates = () => {  
     const { currentDate, selectedDate } = this.state;  
     const year = currentDate.getFullYear();  
     const month = currentDate.getMonth();  
+    const today = new Date();
 
     const firstDayOfMonth = new Date(year, month, 1);  
     const lastDayOfMonth = new Date(year, month + 1, 0);  
-
-    const startDayOfWeek = firstDayOfMonth.getDay(); // Day of the week (0 = Sunday, 6 = Saturday)  
+    const startDayOfWeek = firstDayOfMonth.getDay();  
 
     const dates = [];  
-    // Add empty placeholders for days before the first day of the month  
     for (let i = 0; i < startDayOfWeek; i++) {  
       dates.push(<span key={`empty-${i}`} className="day empty"></span>);  
     }  
 
-
-    // Add actual dates of the month  
     for (let i = 1; i <= lastDayOfMonth.getDate(); i++) {  
-      const isSelected = selectedDate && selectedDate.getDate() === i && selectedDate.getMonth() === month && selectedDate.getFullYear() === year;  
+      const isSelected = selectedDate.getDate() === i && selectedDate.getMonth() === month && selectedDate.getFullYear() === year;  
       dates.push(  
         <span  
           key={i}  
@@ -84,7 +71,6 @@ class HealthcarePortal extends Component {
 
     return (
       <div className="healthcare-portal">
-        {/* Calendar Section */}
         <div className="calendar-widget">
           <h3>Calendar</h3>
           <div className="calendar-header">
