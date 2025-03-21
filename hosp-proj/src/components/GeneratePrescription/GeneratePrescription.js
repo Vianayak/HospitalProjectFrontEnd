@@ -374,12 +374,14 @@ const handleCancel=()=>{
   <label>Feedback <span style={{ color: "red" }}>*</span>:</label>
   <div className="feedback-options">
     <label>
-      <input
-        type="radio"
-        name="feedback"
-        value="Suspicious"
-        onChange={(e) => setFeedback(e.target.value)}
-      /> 
+    <input
+   type="radio"
+   name="feedback"
+   value="Suspicious"
+   checked={feedback === "Suspicious"}
+   onChange={(e) => setFeedback(e.target.value)}
+/>
+
       suspicious
     </label>
     <label>
