@@ -61,7 +61,7 @@ const BookAvailability = ({ onClose, fetchBookedSlotsOnOpen }) => {
       toast.error("Please select at least one time slot.");
       return;
     }
-
+  
     let slotData = selectedDates.flatMap((date) =>
       selectedTimes.map((time) => ({
         slot: time,
@@ -70,21 +70,28 @@ const BookAvailability = ({ onClose, fetchBookedSlotsOnOpen }) => {
         docRegNum: docRegNum,
       }))
     );
-
+  
     fetch("http://localhost:8081/api/doctor-slots/save", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(slotData),
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to book availability.");
+        }
+        return response.json();
+      })
       .then(() => {
-        toast.success("Availability booked successfully!");
+        toast.success("Slots booked successfully! 🎉"); // Toast notification
+        setSelectedTimes([]); // Clear selected times
+        setSelectedDates([]); // Clear selected dates
         onClose();
-        fetchBookedSlots();
+        fetchBookedSlots(); // Refresh booked slots
       })
       .catch(() => toast.error("Failed to book availability."));
   };
-
+  
   const fetchBookedSlots = () => {
     fetch(`http://localhost:8081/api/doctor-slots/get/${docRegNum}`)
       .then((response) => response.json())
@@ -149,6 +156,8 @@ const BookAvailability = ({ onClose, fetchBookedSlotsOnOpen }) => {
   
 
   return (
+    <>
+        <ToastContainer position="top-right" autoClose={3000} /> 
     <div className="appointment-overlay">
       <div className="appointment-popup">
         <h2 className="appointment-header">
@@ -209,6 +218,7 @@ const BookAvailability = ({ onClose, fetchBookedSlotsOnOpen }) => {
       </div>
       <ToastContainer />
     </div>
+    </>
   );
 };
 
