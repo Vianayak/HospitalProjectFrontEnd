@@ -30,6 +30,9 @@ const ServiceSection = () => {
       if (path === "/book-appointments-page") {
         sessionStorage.setItem("validNavigation", "true"); // Set valid navigation flag for doctor-cards
       }
+      if (path === "/home-services") {
+        sessionStorage.setItem("validNavigation", "true"); // Set valid navigation flag for doctor-cards
+      }
       navigate(path); // Navigate to the specified path for other services
     }
   };

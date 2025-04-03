@@ -284,6 +284,12 @@ useEffect(() => {
             navigate("/addNurse")}}>
  <i className="icon">&#x1F469;</i> Add Nurse
 </li>
+<li onClick={() => {
+    sessionStorage.setItem("validNavigation", "true");
+    navigate("/home-service-request"); // Adjust this navigation path as needed
+  }}>
+    <i className="icon">&#x1F4C5;</i> Home Service Request
+  </li>
 
   <li onClick={handleAvailability}>
     <i className="icon">&#x1F4CB;</i> Book Availability

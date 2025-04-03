@@ -81,3 +81,44 @@
     transform: scale(0.95);
   }
   
+/* Name & Email Styling */
+.nurse-name {
+  color: #007bff; /* Blue color for "Name:" */
+  font-weight: bold;
+}
+
+.nurse-email {
+  color: #28a745; /* Green color for "Email:" */
+  font-weight: bold;
+}
+
+
+
+/* Buttons Styling */
+.edit-button {
+  background-color: #ffc107; /* Yellow background */
+  color: #000; /* Black text */
+  border: none;
+  padding: 6px 12px;
+  margin-left: 10px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.delete-button {
+  background-color: #dc3545; /* Red background */
+  color: #fff; /* White text */
+  border: none;
+  padding: 6px 12px;
+  margin-left: 10px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.edit-button:hover {
+  background-color: #e0a800;
+}
+
+.delete-button1:hover {
+  background-color: #f12f16;
+}

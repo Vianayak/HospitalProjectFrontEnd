@@ -5,31 +5,66 @@ import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 
-const API_BASE_URL = "http://localhost:8081/api/nurses";
+const API_BASE_URL = "http://localhost:8081/api/nurse";
 
 const AddNurse = () => {
   const [nurses, setNurses] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showConfirmButtons, setShowConfirmButtons] = useState(false);
+  const [doctorDetails, setDoctorDetails] = useState(null);
   const navigate = useNavigate();
 
   // Fetch nurses from backend when the component loads
   useEffect(() => {
-    fetchNurses();
-  }, []);
-
-  const fetchNurses = async () => {
-    try {
-      setLoading(true);
-      const response = await axios.get(`${API_BASE_URL}/all`);
-      setNurses(response.data);
-      setLoading(false);
-    } catch (error) {
-      console.error("Error fetching nurses:", error);
-      toast.error("Failed to load nurses.");
-      setLoading(false);
+    if (doctorDetails && doctorDetails.regestrationNum) {
+        fetchNurses();
     }
+}, [doctorDetails]); // Dependency on doctorDetails
+
+
+  useEffect(() => {
+      const storedDoctorDetails = localStorage.getItem("doctorDetails");
+      if (storedDoctorDetails) {
+        setDoctorDetails(JSON.parse(storedDoctorDetails));
+      }
+    }, []);
+
+
+
+    const fetchNurses = async () => {
+      if (!doctorDetails || !doctorDetails.regestrationNum) {
+          console.error("Doctor details are missing.");
+          toast.error("Doctor details not found. Please try again.");
+          return;
+      }
+  
+      try {
+          setLoading(true);
+          const response = await axios.get(`${API_BASE_URL}/all/${doctorDetails.regestrationNum}`);
+  
+          if (response.status === 200) {
+              const nursesData = response.data.map(nurse => ({
+                  ...nurse,
+                  saved: true // Ensure fetched nurses are shown as saved
+              }));
+              setNurses(nursesData);
+          } else {
+              setNurses([]);
+          }
+      } catch (error) {
+          console.error("Error fetching nurses:", error);
+          if (error.response && error.response.status === 404) {
+              setNurses([]);
+              toast.info("There are no nurses available.");
+          } else {
+              toast.error("Failed to load nurses.");
+          }
+      } finally {
+          setLoading(false);
+      }
   };
+  
+  
 
   const handleBack = () => {
     sessionStorage.setItem("validNavigation", "true");
@@ -41,7 +76,7 @@ const AddNurse = () => {
       toast.error("You can only add up to 5 nurses.");
       return;
     }
-    setNurses([...nurses, { id: Date.now(), name: "", location: "", saved: false }]);
+    setNurses([...nurses, { id: Date.now(), name: "", email: "", saved: false }]);
     setShowConfirmButtons(true);
   };
 
@@ -52,22 +87,42 @@ const AddNurse = () => {
   };
 
   const handleSaveNurse = async (index) => {
+    const docRegNum=doctorDetails.regestrationNum;
+
+     console.log(docRegNum);
+
     const nurse = nurses[index];
-    if (!nurse.name || !nurse.location) {
-      toast.error("Nurse name and location are required.");
+    if (!nurse.name || !nurse.email) {
+      toast.error("Nurse name and email are required.");
       return;
     }
 
-    try {
-      const response = await axios.post(`${API_BASE_URL}/save`, nurse);
-      const newNurses = [...nurses];
-      newNurses[index] = response.data;
-      setNurses(newNurses);
-      toast.success("Nurse saved successfully!");
-    } catch (error) {
-      console.error("Error saving nurse:", error);
-      toast.error("Failed to save nurse.");
-    }
+    const nurseDto = {
+      name: nurse.name,
+      email: nurse.email,
+      doctorRegNum: docRegNum // Adding doctor's registration number
+  };
+
+  try {
+    const response = await axios.post(`${API_BASE_URL}/save`, nurseDto);
+
+    console.log(response);
+    setNurses(prevNurses => {
+        const newNurses = [...prevNurses];
+        newNurses[index] = { ...response.data, saved: true }; // Ensure saved nurse is read-only
+        return newNurses;
+    });
+
+    toast.success("Nurse saved successfully!");
+} catch (error) {
+  console.error("Error saving nurse:", error);
+
+  // Extract the error message properly
+  const errorMessage = error.response?.data?.error || "Failed to save nurse. Please try again.";
+
+  // Show the error message in a toast notification
+  toast.error(errorMessage);
+}
   };
 
   const handleEditNurse = (index) => {
@@ -76,20 +131,29 @@ const AddNurse = () => {
     setNurses(newNurses);
   };
 
-  const handleDeleteNurse = async (index, id) => {
-    try {
-      await axios.delete(`${API_BASE_URL}/delete/${id}`);
-      const updatedNurses = nurses.filter((_, i) => i !== index);
-      setNurses(updatedNurses);
-      toast.success("Nurse deleted successfully!");
-      if (updatedNurses.length === 0) {
-        setShowConfirmButtons(false);
-      }
-    } catch (error) {
-      console.error("Error deleting nurse:", error);
-      toast.error("Failed to delete nurse.");
+  const handleDeleteNurse = async (index) => {
+    const nurseId = nurses[index].id; // Get ID from state
+
+    if (!nurseId) {
+        toast.error("Cannot delete nurse without a valid ID.");
+        return;
     }
-  };
+
+    try {
+        await axios.delete(`${API_BASE_URL}/delete/${nurseId}`);
+
+        setNurses(prevNurses => prevNurses.filter((_, i) => i !== index)); // Remove nurse from state
+        toast.success("Nurse deleted successfully!");
+
+        if (nurses.length === 1) {
+            setShowConfirmButtons(false);
+        }
+    } catch (error) {
+        console.error("Error deleting nurse:", error);
+        toast.error("Failed to delete nurse.");
+    }
+};
+
 
   const handleConfirm = async () => {
     try {
@@ -136,11 +200,16 @@ const AddNurse = () => {
             <div key={nurse.id} className="nurse-entry">
               {nurse.saved ? (
                 <div className="nurse-summary">
-                  <span>{nurse.name} - {nurse.location}</span>
-                  <div className="action-icons">
-                    <button onClick={() => handleEditNurse(index)}>✏ Edit</button>
-                    <button onClick={() => handleDeleteNurse(index, nurse.id)}>🗑 Delete</button>
-                  </div>
+                   <span>
+                        <strong className="nurse-name">Name:</strong> 
+                        <span className="name-text">{nurse.name}</span>, 
+                        <strong className="nurse-email"> Email:</strong> 
+                        <span className="email-text">{nurse.email}</span>
+                    </span>
+                    <div className="action-icons">
+                        <button className="edit-button" onClick={() => handleEditNurse(index)}>✏ Edit</button>
+                        <button className="delete-button1" onClick={() => handleDeleteNurse(index, nurse.id)}>🗑 Delete</button>
+                    </div>
                 </div>
               ) : (
                 <div className="nurse-row">
@@ -152,13 +221,12 @@ const AddNurse = () => {
                   />
                   <input
                     type="text"
-                    placeholder="Enter location"
-                    value={nurse.location}
-                    onChange={(e) => handleInputChange(index, "location", e.target.value)}
+                    placeholder="Enter email"
+                    value={nurse.email}
+                    onChange={(e) => handleInputChange(index, "email", e.target.value)}
                   />
                   
                   <button onClick={() => handleSaveNurse(index)} className="save-button3">Save</button>
-                  <button onClick={() => handleDeleteNurse(index, nurse.id)} className="delete-button3">Delete</button>
                 </div>
               )}
             </div>
@@ -167,12 +235,7 @@ const AddNurse = () => {
 
         <button onClick={handleAddNurse} className="add-button">+ Add Nurse</button>
 
-        {showConfirmButtons && (
-          <div className="confirm-buttons">
-            <button onClick={handleConfirm} className="confirm-button">Confirm</button>
-            <button onClick={handleCancel} className="cancel-button">Cancel</button>
-          </div>
-        )}
+        {showConfirmButtons}
       </div>
     </>
   );

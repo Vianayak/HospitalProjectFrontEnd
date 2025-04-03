@@ -24,6 +24,8 @@ import History from "./components/History/History";
 import Chatbot from "./components/ChatBot/ChatBot";
 import Preloader from "./components/Preloader/Preloader";
 import AddNurse from "./components/AddNurse/AddNurse";
+import HomeServices from "./components/HomeServices/HomeServices";
+import HomeServiceRequest from "./components/HomeServiceRequest/HomeServiceRequest";
 
 
 
@@ -72,7 +74,7 @@ const AppContent = ({ scrollToHealthNews, healthNewsRef }) => {
     setIsChatbotOpen((prev) => !prev);
   };
   // Add '/doctors-dashboard-page' to hide header and footer
-  const hideHeaderFooterRoutes = ["/user-appointment", "/doctors-dashboard-page", "/patient-dashboard-page" ,"/generate-prescription","/login","/history","/addNurse"];
+  const hideHeaderFooterRoutes = ["/user-appointment", "/doctors-dashboard-page", "/patient-dashboard-page" ,"/generate-prescription","/login","/history","/addNurse","/home-services","/home-service-request"];
   const shouldHideHeaderFooter = hideHeaderFooterRoutes.includes(location.pathname);
 
 
@@ -149,6 +151,16 @@ const AppContent = ({ scrollToHealthNews, healthNewsRef }) => {
           element={
             isAllowed ? (
               <DoctorList />
+            ) : (
+              <Navigate to={defaultRoute} replace />
+            )
+          }
+        />
+        <Route
+          path="/home-services"
+          element={
+            isAllowed ? (
+              <HomeServices />
             ) : (
               <Navigate to={defaultRoute} replace />
             )
@@ -248,6 +260,19 @@ const AppContent = ({ scrollToHealthNews, healthNewsRef }) => {
     )
   }
   />
+
+<Route
+          path="/home-service-request"
+          element={
+            isAllowed ? (
+              <HomeServiceRequest />
+            ) : (
+              <Navigate to={defaultRoute} replace />
+            )
+          }
+        />
+
+
         <Route
           path="/patient-dashboard-page"
           element={

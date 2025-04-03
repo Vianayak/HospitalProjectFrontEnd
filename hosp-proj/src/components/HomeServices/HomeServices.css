@@ -67,3 +67,106 @@
 .signup-link a:hover {
   text-decoration: underline;
 }
+
+.heading {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.back-arrow {
+  font-size: 24px;
+  cursor: pointer;
+  color: chocolate;
+  position: absolute;
+  left: 20px;
+  top: 20px;
+}
+
+.upload-section {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.upload-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.upload-btn:hover {
+  background-color: #0056b3;
+}
+
+.uploaded-files {
+  margin-top: 20px;
+  text-align: left;
+  padding: 0 20px;
+}
+
+.file-name {
+  font-size: 14px;
+  color: #333;
+  margin-top: 5px;
+}
+
+.booking-details {
+  margin-top: 20px;
+  text-align: left;
+  padding: 0 20px;
+}
+
+.booking-details label {
+  display: block;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.booking-details input,
+.booking-details textarea {
+  width: 30%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.confirm-btn {
+  width: 10%;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 1000px;
+}
+
+
+.confirm-btn {
+  background-color: #28a745;
+  color: white;
+}
+
+.confirm-btn:hover {
+  background-color: #218838;
+}
+
+
+.cancel-btn:hover {
+  background-color: #c82333;
+}
+
+
+.preview-btn{
+ background-color: rgb(255, 157, 0);
+ border: none;
+  border-radius: 3px;
+}

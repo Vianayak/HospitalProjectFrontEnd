@@ -130,7 +130,6 @@ const handleBack=()=>{
               <th className="history-table-header">Date</th>
               <th className="history-table-header">Time</th>
               <th className="history-table-header">Patient Name</th>
-              <th className="history-table-header">Feedback</th>
               <th className="history-table-header">Prescription</th>
             </tr>
           </thead>
@@ -142,7 +141,6 @@ const handleBack=()=>{
                 <td className="history-table-cell">{formatDate(item.generatedDate)}</td>
                 <td className="history-table-cell">{formatTime(item.generatedTime)}</td>
                 <td className="history-table-cell">{item.firstName} {item.lastName}</td>
-                <td className="history-table-cell">{item.doctorfeedback}</td>
                 <td className="history-table-cell">
                   <button 
                     className="prescription-btn"
