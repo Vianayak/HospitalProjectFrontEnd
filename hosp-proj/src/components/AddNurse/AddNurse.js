@@ -87,72 +87,73 @@ const AddNurse = () => {
   };
 
   const handleSaveNurse = async (index) => {
-    const docRegNum=doctorDetails.regestrationNum;
-
-     console.log(docRegNum);
-
+    const docRegNum = doctorDetails.regestrationNum;
     const nurse = nurses[index];
+
     if (!nurse.name || !nurse.email) {
-      toast.error("Nurse name and email are required.");
-      return;
-    }
-
-    const nurseDto = {
-      name: nurse.name,
-      email: nurse.email,
-      doctorRegNum: docRegNum // Adding doctor's registration number
-  };
-
-  try {
-    const response = await axios.post(`${API_BASE_URL}/save`, nurseDto);
-
-    console.log(response);
-    setNurses(prevNurses => {
-        const newNurses = [...prevNurses];
-        newNurses[index] = { ...response.data, saved: true }; // Ensure saved nurse is read-only
-        return newNurses;
-    });
-
-    toast.success("Nurse saved successfully!");
-} catch (error) {
-  console.error("Error saving nurse:", error);
-
-  // Extract the error message properly
-  const errorMessage = error.response?.data?.error || "Failed to save nurse. Please try again.";
-
-  // Show the error message in a toast notification
-  toast.error(errorMessage);
-}
-  };
-
-  const handleEditNurse = (index) => {
-    const newNurses = [...nurses];
-    newNurses[index].saved = false;
-    setNurses(newNurses);
-  };
-
-  const handleDeleteNurse = async (index) => {
-    const nurseId = nurses[index].id; // Get ID from state
-
-    if (!nurseId) {
-        toast.error("Cannot delete nurse without a valid ID.");
+        toast.error("Nurse name and email are required.");
         return;
     }
 
+    const nurseDto = {
+        name: nurse.name,
+        email: nurse.email,
+        doctorRegNum: docRegNum
+    };
+
     try {
-        await axios.delete(`${API_BASE_URL}/delete/${nurseId}`);
-
-        setNurses(prevNurses => prevNurses.filter((_, i) => i !== index)); // Remove nurse from state
-        toast.success("Nurse deleted successfully!");
-
-        if (nurses.length === 1) {
-            setShowConfirmButtons(false);
+        let response;
+        if (nurse.saved) {
+            // If nurse has an ID, update the existing nurse
+            response = await axios.put(`${API_BASE_URL}/update/${nurse.id}`, nurseDto);
+        } else {
+            // If no ID, create a new nurse
+            response = await axios.post(`${API_BASE_URL}/save`, nurseDto);
         }
+
+        setNurses(prevNurses => {
+            const newNurses = [...prevNurses];
+            newNurses[index] = { ...response.data, saved: true }; // Mark as saved
+            return newNurses;
+        });
+
+        toast.success(`Nurse ${nurse.id ? "updated" : "saved"} successfully!`);
     } catch (error) {
-        console.error("Error deleting nurse:", error);
-        toast.error("Failed to delete nurse.");
+        console.error("Error saving nurse:", error);
+        const errorMessage = error.response?.data?.error || "Failed to save nurse. Please try again.";
+        toast.error(errorMessage);
     }
 };
+
+
+const handleEditNurse = (index) => {
+  setNurses(prevNurses => {
+      const newNurses = [...prevNurses];
+      newNurses[index].saved = false; // Allow editing
+      return newNurses;
+  });
+};
+
+
+const handleDeleteNurse = async (index) => {
+  const nurseId = nurses[index].id; 
+
+  if (!nurseId) {
+      toast.error("Cannot delete nurse without a valid ID.");
+      return;
+  }
+
+  try {
+      await axios.delete(`${API_BASE_URL}/delete/${nurseId}`);
+
+      setNurses(prevNurses => prevNurses.filter((_, i) => i !== index)); // Remove from state
+      toast.success("Nurse deleted successfully!");
+  } catch (error) {
+      console.error("Error deleting nurse:", error);
+      toast.error("Failed to delete nurse.");
+  }
+};
+
 
 
   const handleConfirm = async () => {

@@ -45,26 +45,44 @@ const HomeServiceRequest = () => {
 
   // Handle nurse assignment and closing the modal
   const handleAssignNurse = () => {
-    if (selectedNurse) {
-      const updatedRequests = requests.map((req) => 
-        req.id === selectedRequest ? { ...req, status: 'Assigned', nurse: selectedNurse } : req
-      );
-      setRequests(updatedRequests);
-      setModalVisible(false); // Close the modal
+    if (selectedNurse && selectedRequest) {
+      axios
+        .put(`http://localhost:8081/api/home-services/update-status/${selectedRequest}`, {
+          status: "Accepted"
+        })
+        .then((response) => {
+          console.log("Nurse assigned successfully:", response.data);
+
+          // Update request list to reflect assigned nurse
+          const updatedRequests = requests.map((req) =>
+            req.id === selectedRequest ? { ...req, status: "Accepted" } : req
+          );
+          setRequests(updatedRequests);
+
+          // Close modal
+          setModalVisible(false);
+        })
+        .catch((error) => {
+          console.error("Error assigning nurse:", error);
+        });
     } else {
-      alert('Please select a nurse.');
+      alert("Please select a nurse.");
     }
   };
 
+
   // Filter requests based on search query
-  const filteredRequests = requests.filter((item) => {
-    const query = searchQuery.toLowerCase();
-    return (
-      item.patientName.toLowerCase().includes(query) ||
-      item.requestDate.toLowerCase().includes(query) ||
-      item.status.toLowerCase().includes(query)
-    );
-  });
+ // Filter requests based on search query
+const filteredRequests = requests.filter((item) => {
+  const query = searchQuery.toLowerCase();
+  
+  return (
+    (item.patientName?.toLowerCase() || "").includes(query) ||
+    (item.requestDate?.toLowerCase() || "").includes(query) ||
+    (item.status?.toLowerCase() || "").includes(query)
+  );
+});
+
 
   const handleBack = () => {
     sessionStorage.setItem("validNavigation", "true");
@@ -157,6 +175,9 @@ const decodeUrlEncodedString = (encodedString) => {
 
   
 
+  
+  
+
   // Render the modal for assigning a nurse
   const renderModal = () => (
     <div className="modal">
@@ -242,9 +263,13 @@ const decodeUrlEncodedString = (encodedString) => {
                   ) : "Not Available"}
                 </td>
                 <td>
-  <button className="accept-btn" onClick={() => handleAcceptClick(item)}>
-    Accept
-  </button>
+  {item.status !== "Accepted" ? (
+    <button className="accept-btn" onClick={() => handleAcceptClick(item.id)}>
+      Accept
+    </button>
+  ) : (
+    <span className="accepted-text">Accepted</span>
+  )}
 </td>
               </tr>
             ))}
