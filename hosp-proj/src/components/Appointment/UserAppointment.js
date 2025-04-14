@@ -380,7 +380,7 @@ const UserAppointment = () => {
               <label htmlFor="terms">Agree to the Terms & Conditions</label>
             </div>
             <button
-              className="confirm-btn"
+              className="confirm-btn0"
               disabled={!isFormValid}
               onClick={handlePayToProceed}
             >

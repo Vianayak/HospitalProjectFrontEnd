@@ -1,0 +1,21 @@
+.logout-container00 {
+    display: flex;
+    justify-content: flex-end;
+    padding: 20px;
+  }
+  
+  .logout-button00 {
+    padding: 8px 16px;
+    background-color: #ff4d4f;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .nurse-welcome {
+    text-align: center;
+    margin-top: 50px;
+  }
+  

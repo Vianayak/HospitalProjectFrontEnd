@@ -172,7 +172,7 @@ const HomeServices = () => {
       </div>
 
       <div className="buttons">
-        <button className="confirm-btn" onClick={handleConfirm}>Confirm</button>
+        <button className="confirm-btn1" onClick={handleConfirm}>Confirm</button>
       </div>
     </>
   );

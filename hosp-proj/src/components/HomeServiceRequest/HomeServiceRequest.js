@@ -45,10 +45,13 @@ const HomeServiceRequest = () => {
 
   // Handle nurse assignment and closing the modal
   const handleAssignNurse = () => {
+console.log(selectedNurse);
+
     if (selectedNurse && selectedRequest) {
       axios
         .put(`http://localhost:8081/api/home-services/update-status/${selectedRequest}`, {
-          status: "Accepted"
+          status: "Accepted",
+          nurseRegNum: selectedNurse,
         })
         .then((response) => {
           console.log("Nurse assigned successfully:", response.data);
@@ -191,7 +194,7 @@ const decodeUrlEncodedString = (encodedString) => {
           >
             <option value="">--Select Nurse--</option>
             {nurses.map((nurse) => (
-              <option key={nurse.id} value={nurse.id}>{nurse.name}</option>
+              <option key={nurse.registrationNumber} value={nurse.registrationNumber}>{nurse.firstName} {nurse.lastName}</option>
             ))}
           </select>
         </div>

@@ -181,7 +181,7 @@
 }
 
 /* Pay Button */
-.confirm-btn {
+.confirm-btn0 {
   margin-top: 20px;
   padding: 15px 25px;
   background-color: #f76941;
@@ -195,11 +195,11 @@
   transition: background-color 0.3s ease;
 }
 
-.confirm-btn:hover {
+.confirm-btn0:hover {
   background: linear-gradient(135deg, #00A4CCFF, #FF3600);
 }
 
-.confirm-btn:disabled {
+.confirm-btn0:disabled {
   background-color: #b3b3b3;
   cursor: not-allowed;
 }

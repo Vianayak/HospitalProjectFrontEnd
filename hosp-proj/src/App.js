@@ -26,6 +26,7 @@ import Preloader from "./components/Preloader/Preloader";
 import AddNurse from "./components/AddNurse/AddNurse";
 import HomeServices from "./components/HomeServices/HomeServices";
 import HomeServiceRequest from "./components/HomeServiceRequest/HomeServiceRequest";
+import NurseDashboardPage from "./components/NurseDashboardPage/NurseDashboardPage";
 
 
 
@@ -74,7 +75,7 @@ const AppContent = ({ scrollToHealthNews, healthNewsRef }) => {
     setIsChatbotOpen((prev) => !prev);
   };
   // Add '/doctors-dashboard-page' to hide header and footer
-  const hideHeaderFooterRoutes = ["/user-appointment", "/doctors-dashboard-page", "/patient-dashboard-page" ,"/generate-prescription","/login","/history","/addNurse","/home-services","/home-service-request"];
+  const hideHeaderFooterRoutes = ["/user-appointment", "/doctors-dashboard-page", "/patient-dashboard-page" ,"/generate-prescription","/login","/history","/addNurse","/home-services","/home-service-request","/nurse-dashboard-page"];
   const shouldHideHeaderFooter = hideHeaderFooterRoutes.includes(location.pathname);
 
 
@@ -285,6 +286,21 @@ const AppContent = ({ scrollToHealthNews, healthNewsRef }) => {
             )
           }
         />
+
+<Route
+          path="/nurse-dashboard-page"
+          element={
+            isAllowed ? (
+              <ProtectedRoute>
+                <NurseDashboardPage />
+              </ProtectedRoute>
+            ) : (
+              <Navigate to={defaultRoute} replace />
+            )
+          }
+        />
+
+
         <Route
   path="/generate-prescription"
   element={
@@ -295,6 +311,8 @@ const AppContent = ({ scrollToHealthNews, healthNewsRef }) => {
     )
   }
   />
+
+
   
 
         {/* Catch-All Route */}
