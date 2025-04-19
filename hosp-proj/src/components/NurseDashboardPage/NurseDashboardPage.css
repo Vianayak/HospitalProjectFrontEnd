@@ -19,3 +19,48 @@
     margin-top: 50px;
   }
   
+
+  .table-container {
+    padding: 20px;
+  }
+  
+  .nurse-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  
+  .nurse-table th,
+  .nurse-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+  }
+  
+  .nurse-table th {
+    background-color: #1976d2;
+    color: white;
+  }
+  
+  .nurse-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  .nurse-table tr:hover {
+    background-color: #e1f5fe;
+  }
+
+  
+  .start-button {
+    padding: 6px 12px;
+    background-color: #007bff;
+    border: none;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .start-button:hover {
+    background-color: #0056b3;
+  }
+  

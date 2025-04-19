@@ -140,7 +140,7 @@
   margin-top: 20px;
 }
 
-.confirm-btn {
+.confirm-btn000 {
   width: 10%;
   font-size: 16px;
   border: none;
@@ -150,12 +150,12 @@
 }
 
 
-.confirm-btn {
+.confirm-btn0000 {
   background-color: #28a745;
   color: white;
 }
 
-.confirm-btn:hover {
+.confirm-btn000:hover {
   background-color: #218838;
 }
 
@@ -169,4 +169,30 @@
  background-color: rgb(255, 157, 0);
  border: none;
   border-radius: 3px;
+}
+
+
+/* Location Section Styling */
+.location {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #f9f9f9;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.location p {
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+}
+
+.location strong {
+  color: #007bff; /* Blue color for the label */
+}
+
+
+
+.location p {
+  margin: 5px 0;
 }

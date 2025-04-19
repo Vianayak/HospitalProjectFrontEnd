@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./HomeServices.css";
 import * as pdfjsLib from "pdfjs-dist";
@@ -13,6 +13,7 @@ const HomeServices = () => {
   const [reason, setReason] = useState("");
   const [bookingDate, setBookingDate] = useState("");
   const [bookingTime, setBookingTime] = useState("");
+  const [location, setLocation] = useState(null);
 
   const prescriptionInputRef = useRef(null);
   const documentInputRef = useRef(null);
@@ -80,6 +81,7 @@ const HomeServices = () => {
       formData.append("e_prescription", prescription); // Add prescription file as file object
       formData.append("identity", document); // Add document file as file object
       formData.append("docId", extractedID === "Not found" ? null : extractedID); // Add extracted ID
+      formData.append("location", location);
 
       // Send data to backend using fetch
       const response = await fetch("http://localhost:8081/api/home-services/save-service", {
@@ -99,6 +101,27 @@ const HomeServices = () => {
       alert("Error: Could not complete the request.");
     }
   };
+
+  const getLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          setLocation(`Latitude: ${latitude}, Longitude: ${longitude}`);
+        },
+        (error) => {
+          console.error("Error getting location: ", error);
+          setLocation("Location not available");
+        }
+      );
+    } else {
+      alert("Geolocation is not supported by this browser.");
+    }
+  };
+
+  useEffect(() => {
+    getLocation(); // Get location on component mount
+  }, []);
 
   return (
     <>
@@ -171,8 +194,12 @@ const HomeServices = () => {
         />
       </div>
 
+      <div className="location">
+        <p><strong>Current Location:</strong> {location || "Fetching location..."}</p>
+      </div>
+
       <div className="buttons">
-        <button className="confirm-btn1" onClick={handleConfirm}>Confirm</button>
+        <button className="confirm-btn000" onClick={handleConfirm}>Confirm</button>
       </div>
     </>
   );
