@@ -1,13 +1,15 @@
+// NurseDashboardPage.jsx
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./NurseDashboardPage.css";
-import MapModal from "../MapModal/MapModal"; // import your modal
+import MapModal from "../MapModal/MapModal";
+import NurseCalendar from "../NurseCalendar/NurseCalendar"; // Calendar component
 
 const NurseDashboardPage = () => {
   const [nurseName, setNurseName] = useState("");
   const [requests, setRequests] = useState([]);
-  const [showMap, setShowMap] = useState(false); // new
-  const [selectedLocation, setSelectedLocation] = useState(null); // new
+  const [showMap, setShowMap] = useState(false);
+  const [selectedLocation, setSelectedLocation] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -43,8 +45,8 @@ const NurseDashboardPage = () => {
 
   const handleStart = (request) => {
     if (request.location) {
-      setSelectedLocation(request.location); // Set location from API
-      setShowMap(true); // Show the map modal
+      setSelectedLocation(request.location);
+      setShowMap(true);
     } else {
       alert("Location not available for this request.");
     }
@@ -67,7 +69,7 @@ const NurseDashboardPage = () => {
         <h1>Welcome, Nurse {nurseName}!</h1>
       </div>
 
-      <div className="table-container">
+      {/* <div className="table-container">
         <h2>Assigned Home Service Requests</h2>
         {requests.length > 0 ? (
           <table className="nurse-table">
@@ -102,9 +104,12 @@ const NurseDashboardPage = () => {
         ) : (
           <p>No requests assigned yet.</p>
         )}
-      </div>
+      </div> */}
 
-      {/* Render the map modal if showMap is true */}
+      {/* Calendar below table */}
+      {requests.length > 0 && <NurseCalendar requests={requests} />}
+
+      {/* Map modal */}
       {showMap && selectedLocation && (
         <MapModal location={selectedLocation} onClose={closeModal} />
       )}
