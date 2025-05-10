@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import Preloader from "../Preloader/Preloader"; // Import your Preloader
 import "./LoginForm.css";
 
 import { Icon } from "react-icons-kit";
@@ -21,6 +20,7 @@ function LoginForm() {
   const [type, setType] = useState("password");
   const [icon, setIcon] = useState(eyeOff);
   const [role, setRole] = useState("");
+  const [error, setError] = useState("");
 
   useEffect(() => {
     setFormData({ username: "", password: "", rememberMe: false });
@@ -36,9 +36,10 @@ function LoginForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
 
     if (!role) {
-      toast.error("Please select a role.");
+      setError("Please select a role.");
       return;
     }
 
@@ -64,7 +65,7 @@ function LoginForm() {
         localStorage.setItem("authToken", token);
 
         if (userRole.toLowerCase() !== role.toLowerCase()) {
-          toast.error("Role mismatch. Please select the correct role.");
+          setError("Role mismatch. Please select the correct role.");
           setIsLoading(false);
           return;
         }
@@ -79,10 +80,7 @@ function LoginForm() {
               JSON.stringify(responseData.doctorDetails)
             );
           }
-
-          toast.success("Login successful!", {
-            onClose: () => navigate("/doctors-dashboard-page"),
-          });
+          navigate("/doctors-dashboard-page");
 
         } else if (userRole.toLowerCase() === "patient") {
           if (responseData.patientDetails) {
@@ -91,10 +89,7 @@ function LoginForm() {
               JSON.stringify(responseData.patientDetails)
             );
           }
-
-          toast.success("Login successful!", {
-            onClose: () => navigate("/patient-dashboard-page"),
-          });
+          navigate("/patient-dashboard-page");
 
         } else if (userRole.toLowerCase() === "nurse") {
           if (responseData.nurseDetails) {
@@ -103,22 +98,17 @@ function LoginForm() {
               JSON.stringify(responseData.nurseDetails)
             );
           }
-
-          toast.success("Login successful!", {
-            onClose: () => navigate("/nurse-dashboard-page"),
-          });
+          navigate("/nurse-dashboard-page");
         }
 
       } else {
-        toast.error("Invalid credentials. Please try again.");
+        setError("Invalid credentials. Please try again.");
+        setIsLoading(false);
       }
     } catch (error) {
       console.error("Login error:", error);
-      toast.error("Login failed. Please try again later.");
-    } finally {
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 4000);
+      setError("Login failed. Please try again later.");
+      setIsLoading(false);
     }
   };
 
@@ -144,11 +134,13 @@ function LoginForm() {
     }
   };
 
+  if (isLoading) {
+    return <Preloader />;
+  }
+
   return (
     <div className="overlay">
       <div className="login-container">
-        <ToastContainer autoClose={3000} />
-
         <div className="login-header">
           <i
             className="fas fa-arrow-left back-arrow"
@@ -228,8 +220,10 @@ function LoginForm() {
             <label>Remember me</label>
           </div>
 
+          {error && <p className="error-message">{error}</p>}
+
           <button type="submit" className="login-button" disabled={isLoading}>
-            {isLoading ? "Logging in..." : "Login"}
+            Login
           </button>
 
           <a

@@ -1,66 +1,82 @@
+.calendar-container {
+  margin: 2rem auto;
+  padding: 1rem;
+  max-width: 90%;
+  background-color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+}
+
+.calendar-title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  text-align: center;
+  color: #2d2d2d;
+}
+
+.rbc-calendar {
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.rbc-toolbar {
+  background-color: #f7f7f7;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.rbc-toolbar-label {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: #2c3e50;
+}
+
+.rbc-event {
+  background-color: #4caf50 !important;
+  border: none;
+  border-radius: 6px;
+  padding: 2px 6px;
+  font-size: 0.9rem;
+}
+
+.rbc-today {
+  background-color: #e6f7ff !important;
+}
+
+.rbc-time-view {
+  border-radius: 10px;
+}
+
+.rbc-time-slot {
+  border: none;
+}
+
+.rbc-selected {
+  background-color: #2196f3 !important;
+}
+/* NurseDashboardPage.css */
+
 .logout-container00 {
-    display: flex;
-    justify-content: flex-end;
-    padding: 20px;
-  }
-  
-  .logout-button00 {
-    padding: 8px 16px;
-    background-color: #ff4d4f;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-  }
-  
-  .nurse-welcome {
-    text-align: center;
-    margin-top: 50px;
-  }
-  
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+}
 
-  .table-container {
-    padding: 20px;
-  }
-  
-  .nurse-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
-  }
-  
-  .nurse-table th,
-  .nurse-table td {
-    border: 1px solid #ddd;
-    padding: 10px;
-    text-align: left;
-  }
-  
-  .nurse-table th {
-    background-color: #1976d2;
-    color: white;
-  }
-  
-  .nurse-table tr:nth-child(even) {
-    background-color: #f2f2f2;
-  }
-  
-  .nurse-table tr:hover {
-    background-color: #e1f5fe;
-  }
+.logout-button00 {
+  padding: 10px 20px;
+  background-color: #ff4d4f;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
 
-  
-  .start-button {
-    padding: 6px 12px;
-    background-color: #007bff;
-    border: none;
-    color: white;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .start-button:hover {
-    background-color: #0056b3;
-  }
-  
+.logout-button00:hover {
+  background-color: #d9363e;
+}
+
+

@@ -7,9 +7,11 @@ const MapModal = ({ location, onClose }) => {
   const directionsRendererRef = useRef(null);
   const directionsServiceRef = useRef(null);
   const userMarkerRef = useRef(null);
-  const mapInstanceRef = useRef(null); // to use map instance outside
+  const mapInstanceRef = useRef(null);
   const [isGoogleMapsLoaded, setIsGoogleMapsLoaded] = useState(false);
   const [estimatedArrivalTime, setEstimatedArrivalTime] = useState(null);
+
+  const destinationLatLng = useRef(null);
 
   useEffect(() => {
     const loadGoogleMaps = () => {
@@ -39,25 +41,25 @@ const MapModal = ({ location, onClose }) => {
       .split(", ")
       .map(Number);
 
+    destinationLatLng.current = { lat, lng };
+
     if (navigator.geolocation) {
       const map = new window.google.maps.Map(mapRef.current, {
         zoom: 15,
-        center: { lat, lng },
+        center: destinationLatLng.current,
       });
 
       mapInstanceRef.current = map;
 
       directionsServiceRef.current = new window.google.maps.DirectionsService();
       directionsRendererRef.current = new window.google.maps.DirectionsRenderer({
-        suppressMarkers: true, // Hide default A/B markers
+        suppressMarkers: true,
       });
       directionsRendererRef.current.setMap(map);
 
-      const destination = { lat, lng };
-
-      // Custom marker for destination (patient)
+      // Patient marker
       new window.google.maps.Marker({
-        position: destination,
+        position: destinationLatLng.current,
         map,
         title: "Patient Location",
       });
@@ -65,7 +67,7 @@ const MapModal = ({ location, onClose }) => {
       const calculateRoute = (userLat, userLng) => {
         const request = {
           origin: { lat: userLat, lng: userLng },
-          destination: destination,
+          destination: destinationLatLng.current,
           travelMode: "DRIVING",
         };
 
@@ -85,7 +87,7 @@ const MapModal = ({ location, onClose }) => {
           const userLng = position.coords.longitude;
           const userLatLng = { lat: userLat, lng: userLng };
 
-          // Add or update bike icon marker
+          // Update user (ambulance) marker
           if (userMarkerRef.current) {
             userMarkerRef.current.setPosition(userLatLng);
           } else {
@@ -93,18 +95,28 @@ const MapModal = ({ location, onClose }) => {
               position: userLatLng,
               map,
               icon: {
-                url: "https://maps.gstatic.com/mapfiles/ms2/micons/motorcycling.png", // Bike icon
+                url: "https://maps.gstatic.com/mapfiles/ms2/micons/motorcycling.png",
                 scaledSize: new window.google.maps.Size(40, 40),
               },
               title: "You (Ambulance)",
             });
           }
 
-          // Pan map to current position
           mapInstanceRef.current.panTo(userLatLng);
 
-          // Recalculate route
           calculateRoute(userLat, userLng);
+
+          // 🛑 Auto-close if user is close to patient
+          const distance = getDistanceInMeters(
+            userLatLng.lat,
+            userLatLng.lng,
+            destinationLatLng.current.lat,
+            destinationLatLng.current.lng
+          );
+          if (distance <= 30) { // 30 meters threshold
+            alert("You have reached the patient location!");
+            onClose();
+          }
         },
         (error) => {
           console.error("Geolocation error:", error);
@@ -116,7 +128,23 @@ const MapModal = ({ location, onClose }) => {
     return () => {
       if (watchId.current) navigator.geolocation.clearWatch(watchId.current);
     };
-  }, [location, isGoogleMapsLoaded]);
+  }, [location, isGoogleMapsLoaded, onClose]);
+
+  // 🧮 Utility to calculate distance between two lat/lng points
+  const getDistanceInMeters = (lat1, lng1, lat2, lng2) => {
+    const toRad = (value) => (value * Math.PI) / 180;
+    const R = 6371000; // Radius of Earth in meters
+    const dLat = toRad(lat2 - lat1);
+    const dLng = toRad(lng2 - lng1);
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(toRad(lat1)) *
+        Math.cos(toRad(lat2)) *
+        Math.sin(dLng / 2) *
+        Math.sin(dLng / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c;
+  };
 
   return (
     <div className="map-modal-overlay">
@@ -124,12 +152,21 @@ const MapModal = ({ location, onClose }) => {
         <button className="close-btn" onClick={onClose}>
           Close
         </button>
+        <button className="reached-btn" onClick={() => {
+      alert("Reached patient location!");
+      onClose();
+    }}>
+      Reached?
+    </button>
+
         <div ref={mapRef} className="map-container" />
+
         {estimatedArrivalTime && (
           <div className="estimated-arrival-time">
             Estimated Arrival Time: {estimatedArrivalTime}
           </div>
         )}
+
       </div>
     </div>
   );
