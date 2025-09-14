@@ -94,7 +94,7 @@ const UserAppointment = () => {
       const amountInPaise = data.amount * 100;
 
       const options = {
-        key: "rzp_test_K5qGcFdtNC8hvm",
+        key: "rzp_test_KZRYa6VN2YWPGM",
         amount: amountInPaise,
         currency: data.currency,
         name: "TechSpryn",
@@ -395,3 +395,4 @@ const UserAppointment = () => {
 };
 
 export default UserAppointment;
+
